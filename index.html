@@ -552,15 +552,7 @@
           <input id="reading" type="number" placeholder="مثال: 148" />
         </div>
 
-        <div class="field">
-          <label for="level">المستوى</label>
-          <select id="level">
-            <option value="مسيطر">مسيطر</option>
-            <option value="منجز">منجز</option>
-            <option value="عظيم">عظيم</option>
-          </select>
-        </div>
-
+        
         <div class="form-actions">
           <button class="save-btn" id="saveBtn">احفظ بياناتي</button>
           <button class="ghost-btn" id="backBtn">رجوع</button>
@@ -597,9 +589,31 @@
     const goalInput = document.getElementById('goal');
     const carbRatioInput = document.getElementById('carbRatio');
     const readingInput = document.getElementById('reading');
-    const levelInput = document.getElementById('level');
+
 
     const STORAGE_KEY = 'sugarmind_user_card_v1';
+
+
+function calculateLevel(reading) {
+
+  if (reading < 80) {
+    return "يحتاج انتباه";
+  }
+
+  if (reading >= 80 && reading <= 140) {
+    return "عظيم";
+  }
+
+  if (reading > 140 && reading <= 200) {
+    return "منجز";
+  }
+
+  if (reading > 200) {
+    return "مسيطر";
+  }
+
+  return "";
+}
 
     function showScreen(screen){
       homeScreen.classList.remove('active');
