@@ -20,334 +20,1170 @@
       --purple:#8B5CF6;
       --blue:#3B82F6;
       --gold:#FBBF24;
+      --danger:#EF4444;
       --radius:24px;
       --radius-sm:16px;
       --font-family:'Tajawal',sans-serif;
+      --shadow:0 20px 40px rgba(0,0,0,0.25);
     }
 
-    *{box-sizing:border-box;margin:0;padding:0;font-family:var(--font-family);-webkit-tap-highlight-color:transparent}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:var(--font-family);
+      -webkit-tap-highlight-color:transparent;
+    }
 
-    body{background:var(--bg);color:var(--text-primary);min-height:100vh}
+    body{
+      background:
+        radial-gradient(circle at top right, rgba(16,185,129,0.12), transparent 25%),
+        radial-gradient(circle at bottom left, rgba(59,130,246,0.08), transparent 25%),
+        var(--bg);
+      color:var(--text-primary);
+      min-height:100vh;
+    }
 
-    .app{max-width:480px;margin:0 auto;padding:20px;padding-bottom:100px}
+    .app{
+      max-width:480px;
+      margin:0 auto;
+      padding:20px;
+      padding-bottom:120px;
+    }
 
-    /* Header */
-    .header{display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-top:20px}
-    .back-btn{width:44px;height:44px;border-radius:14px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text-primary);text-decoration:none}
-    .header-title{font-size:24px;font-weight:900}
+    .header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-bottom:24px;
+      padding-top:20px;
+    }
 
-    /* Progress Steps */
-    .steps{display:flex;gap:8px;margin-bottom:24px}
-    .step{flex:1;height:4px;background:var(--surface);border-radius:2px;transition:all 0.3s}
-    .step.active{background:var(--primary)}
-    .step.completed{background:var(--primary);opacity:0.5}
+    .back-btn{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:var(--surface);
+      border:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      color:var(--text-primary);
+      text-decoration:none;
+      transition:0.25s;
+    }
 
-    /* Input Card */
-    .input-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-    .input-label{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-secondary);margin-bottom:12px;font-weight:700}
-    .input-field{width:100%;background:transparent;border:2px solid var(--border);border-radius:var(--radius-sm);padding:16px;color:var(--text-primary);font-size:18px;font-weight:700;text-align:center;transition:all 0.3s}
-    .input-field:focus{outline:none;border-color:var(--primary);box-shadow:0 0 20px rgba(16,185,129,0.2)}
+    .back-btn:hover{
+      background:var(--surface-hover);
+      transform:translateY(-2px);
+    }
 
-    /* Options Grid */
-    .options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-    .option{padding:14px 8px;background:var(--bg-elevated);border:2px solid var(--border);border-radius:var(--radius-sm);text-align:center;cursor:pointer;transition:all 0.2s;font-size:13px;font-weight:700;color:var(--text-secondary)}
-    .option:hover{border-color:var(--primary);color:var(--primary)}
-    .option.selected{background:var(--primary);border-color:var(--primary);color:#fff}
+    .header-wrap{flex:1}
 
-    /* Calculate Button */
-    .calc-btn{width:100%;padding:20px;border-radius:var(--radius);background:linear-gradient(135deg,var(--primary),var(--primary-light));border:none;color:#fff;font-size:18px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;margin:24px 0;box-shadow:0 8px 25px rgba(16,185,129,0.3)}
-    .calc-btn:disabled{opacity:0.6;cursor:not-allowed}
+    .header-title{
+      font-size:24px;
+      font-weight:900;
+      margin-bottom:4px;
+    }
 
-    /* Result Card */
-    .result-card{background:var(--surface);border:2px solid var(--primary);border-radius:var(--radius);padding:28px;display:none;animation:flashIn 0.4s ease}
-    .result-card.show{display:block}
-    @keyframes flashIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+    .header-sub{
+      font-size:13px;
+      color:var(--text-secondary);
+      line-height:1.7;
+    }
 
-    .result-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(16,185,129,0.15);border-radius:999px;font-size:12px;font-weight:800;color:var(--primary);margin-bottom:20px}
+    .hero{
+      background:linear-gradient(145deg, rgba(16,185,129,0.12), rgba(255,255,255,0.02));
+      border:1px solid rgba(16,185,129,0.18);
+      border-radius:var(--radius);
+      padding:24px;
+      margin-bottom:22px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
 
-    /* ICR Hero */
-    .icr-hero{text-align:center;padding:32px;background:linear-gradient(145deg,rgba(16,185,129,0.15),rgba(16,185,129,0.02));border-radius:var(--radius);margin-bottom:20px}
-    .icr-number{font-size:64px;font-weight:900;color:var(--primary);line-height:1}
-    .icr-label{font-size:14px;color:var(--text-secondary);margin-top:8px}
+    .hero::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.03) 50%, transparent 65%);
+      transform:translateX(-100%);
+      animation:shine 6s linear infinite;
+    }
 
-    /* Stats Grid */
-    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
-    .stat{padding:16px;background:rgba(255,255,255,0.03);border-radius:var(--radius-sm);text-align:center}
-    .stat-value{font-size:24px;font-weight:900;color:var(--text-primary)}
-    .stat-label{font-size:11px;color:var(--text-secondary);margin-top:4px}
+    @keyframes shine{
+      0%{transform:translateX(-100%)}
+      30%,100%{transform:translateX(100%)}
+    }
 
-    /* AI Insight */
-    .ai-box{background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);border-radius:var(--radius-sm);padding:20px;margin-bottom:20px}
-    .ai-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;color:var(--purple);margin-bottom:10px}
-    .ai-text{font-size:14px;color:var(--text-secondary);line-height:1.8}
-    .ai-loading{display:flex;align-items:center;gap:12px;color:var(--text-secondary)}
-    .ai-dots{display:flex;gap:4px}
-    .ai-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);animation:dotBounce 0.6s infinite}
+    .hero-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(16,185,129,0.12);
+      color:var(--primary-light);
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:16px;
+      border:1px solid rgba(16,185,129,0.2);
+      position:relative;
+      z-index:1;
+    }
+
+    .hero-title{
+      font-size:26px;
+      font-weight:900;
+      line-height:1.5;
+      margin-bottom:10px;
+      position:relative;
+      z-index:1;
+    }
+
+    .hero-text{
+      font-size:14px;
+      color:var(--text-secondary);
+      line-height:1.9;
+      position:relative;
+      z-index:1;
+    }
+
+    .steps{
+      display:flex;
+      gap:8px;
+      margin-bottom:24px;
+    }
+
+    .step{
+      flex:1;
+      height:5px;
+      background:var(--surface);
+      border-radius:999px;
+      transition:all 0.3s;
+    }
+
+    .step.active{
+      background:var(--primary);
+      box-shadow:0 0 20px rgba(16,185,129,0.45);
+    }
+
+    .step.completed{
+      background:var(--primary);
+      opacity:0.45;
+    }
+
+    .input-card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:22px;
+      margin-bottom:16px;
+      box-shadow:var(--shadow);
+    }
+
+    .input-label{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:14px;
+      color:var(--text-secondary);
+      margin-bottom:12px;
+      font-weight:800;
+    }
+
+    .input-field{
+      width:100%;
+      background:transparent;
+      border:2px solid var(--border);
+      border-radius:var(--radius-sm);
+      padding:16px;
+      color:var(--text-primary);
+      font-size:18px;
+      font-weight:800;
+      text-align:center;
+      transition:all 0.25s;
+    }
+
+    .input-field:focus{
+      outline:none;
+      border-color:var(--primary);
+      box-shadow:0 0 20px rgba(16,185,129,0.18);
+    }
+
+    .input-field::placeholder{
+      color:var(--text-muted);
+    }
+
+    .helper{
+      font-size:12px;
+      color:var(--text-muted);
+      margin-top:10px;
+      line-height:1.8;
+    }
+
+    .options{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .option{
+      padding:14px 8px;
+      background:var(--bg-elevated);
+      border:2px solid var(--border);
+      border-radius:var(--radius-sm);
+      text-align:center;
+      cursor:pointer;
+      transition:all 0.2s;
+      font-size:13px;
+      font-weight:800;
+      color:var(--text-secondary);
+      user-select:none;
+    }
+
+    .option:hover{
+      border-color:var(--primary);
+      color:var(--primary-light);
+      transform:translateY(-2px);
+    }
+
+    .option.selected{
+      background:linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-color:transparent;
+      color:#fff;
+      box-shadow:0 10px 25px rgba(16,185,129,0.28);
+    }
+
+    .calc-btn{
+      width:100%;
+      padding:20px;
+      border-radius:var(--radius);
+      background:linear-gradient(135deg,var(--primary),var(--primary-light));
+      border:none;
+      color:#fff;
+      font-size:18px;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      margin:24px 0;
+      box-shadow:0 12px 30px rgba(16,185,129,0.3);
+      transition:0.25s;
+    }
+
+    .calc-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 16px 34px rgba(16,185,129,0.35);
+    }
+
+    .calc-btn:disabled{
+      opacity:0.6;
+      cursor:not-allowed;
+      transform:none;
+      box-shadow:none;
+    }
+
+    .result-card{
+      background:var(--surface);
+      border:2px solid var(--primary);
+      border-radius:var(--radius);
+      padding:28px;
+      display:none;
+      animation:flashIn 0.4s ease;
+      margin-bottom:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .result-card.show{
+      display:block;
+    }
+
+    @keyframes flashIn{
+      from{opacity:0;transform:scale(0.96) translateY(6px)}
+      to{opacity:1;transform:scale(1) translateY(0)}
+    }
+
+    .result-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:8px 16px;
+      background:rgba(16,185,129,0.15);
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      color:var(--primary);
+      margin-bottom:20px;
+    }
+
+    .icr-hero{
+      text-align:center;
+      padding:28px;
+      background:linear-gradient(145deg, rgba(16,185,129,0.15), rgba(16,185,129,0.03));
+      border-radius:var(--radius);
+      margin-bottom:20px;
+      border:1px solid rgba(16,185,129,0.15);
+    }
+
+    .icr-number{
+      font-size:72px;
+      font-weight:900;
+      color:var(--primary);
+      line-height:1;
+      letter-spacing:-1px;
+    }
+
+    .icr-label{
+      font-size:14px;
+      color:var(--text-secondary);
+      margin-top:10px;
+      line-height:1.8;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+      margin-bottom:20px;
+    }
+
+    .stat{
+      padding:16px;
+      background:rgba(255,255,255,0.03);
+      border-radius:var(--radius-sm);
+      text-align:center;
+      border:1px solid rgba(255,255,255,0.06);
+    }
+
+    .stat-value{
+      font-size:24px;
+      font-weight:900;
+      color:var(--text-primary);
+    }
+
+    .stat-label{
+      font-size:11px;
+      color:var(--text-secondary);
+      margin-top:5px;
+      line-height:1.6;
+    }
+
+    .ai-box{
+      background:rgba(139,92,246,0.1);
+      border:1px solid rgba(139,92,246,0.3);
+      border-radius:var(--radius-sm);
+      padding:20px;
+      margin-bottom:20px;
+    }
+
+    .ai-title{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:14px;
+      font-weight:900;
+      color:var(--purple);
+      margin-bottom:12px;
+    }
+
+    .ai-text{
+      font-size:14px;
+      color:#D8D4FE;
+      line-height:2;
+      white-space:pre-line;
+    }
+
+    .ai-loading{
+      display:none;
+      align-items:center;
+      gap:12px;
+      color:#D8D4FE;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .ai-loading.show{
+      display:flex;
+    }
+
+    .ai-dots{
+      display:flex;
+      gap:4px;
+    }
+
+    .ai-dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--purple);
+      animation:dotBounce 0.6s infinite;
+    }
+
     .ai-dot:nth-child(2){animation-delay:0.2s}
     .ai-dot:nth-child(3){animation-delay:0.4s}
-    @keyframes dotBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
-    /* Action Buttons */
-    .actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .btn{padding:16px;border-radius:14px;border:none;font-size:14px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
-    .btn-primary{background:var(--primary);color:#fff}
-    .btn-secondary{background:var(--surface);color:var(--text-primary);border:1px solid var(--border)}
+    @keyframes dotBounce{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-6px)}
+    }
 
-    /* Bottom Nav */
-    .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:12px 20px;z-index:90}
-    .nav-inner{max-width:480px;margin:0 auto;display:flex;justify-content:space-around}
-    .nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 16px;color:var(--text-secondary);text-decoration:none;font-size:11px;font-weight:700}
-    .nav-item.active{color:var(--primary);background:rgba(16,185,129,0.1);border-radius:12px}
+    .confidence-box{
+      background:rgba(59,130,246,0.1);
+      border:1px solid rgba(59,130,246,0.25);
+      border-radius:var(--radius-sm);
+      padding:18px;
+      margin-bottom:20px;
+    }
+
+    .confidence-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+    }
+
+    .confidence-title{
+      font-size:14px;
+      font-weight:900;
+      color:var(--blue);
+    }
+
+    .confidence-badge{
+      padding:7px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      background:rgba(255,255,255,0.08);
+      color:#BFDBFE;
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .confidence-bar{
+      width:100%;
+      height:10px;
+      background:rgba(255,255,255,0.08);
+      border-radius:999px;
+      overflow:hidden;
+      margin-bottom:10px;
+    }
+
+    .confidence-fill{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, var(--blue), #60A5FA);
+      border-radius:999px;
+      transition:width 0.5s ease;
+    }
+
+    .confidence-text{
+      font-size:12px;
+      color:#BFDBFE;
+      line-height:1.8;
+    }
+
+    .reading-preview{
+      background:rgba(16,185,129,0.08);
+      border:1px solid rgba(16,185,129,0.18);
+      border-radius:var(--radius-sm);
+      padding:18px;
+      margin-bottom:20px;
+    }
+
+    .reading-preview-title{
+      font-size:14px;
+      font-weight:900;
+      color:var(--primary-light);
+      margin-bottom:12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .reading-preview-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+
+    .reading-preview-item{
+      background:rgba(255,255,255,0.04);
+      border-radius:14px;
+      padding:14px;
+      text-align:center;
+    }
+
+    .reading-preview-value{
+      font-size:20px;
+      font-weight:900;
+      color:var(--text-primary);
+    }
+
+    .reading-preview-label{
+      font-size:11px;
+      color:var(--text-secondary);
+      margin-top:5px;
+      line-height:1.6;
+    }
+
+    .disclaimer{
+      text-align:center;
+      padding:16px;
+      background:rgba(251,191,36,0.05);
+      border:1px solid rgba(251,191,36,0.2);
+      border-radius:var(--radius-sm);
+      margin-top:20px;
+    }
+
+    .disclaimer-text{
+      font-size:12px;
+      color:var(--gold);
+      line-height:1.9;
+    }
+
+    .actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .btn{
+      padding:16px;
+      border-radius:14px;
+      border:none;
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      transition:0.25s;
+    }
+
+    .btn-primary{
+      background:var(--primary);
+      color:#fff;
+    }
+
+    .btn-secondary{
+      background:var(--surface);
+      color:var(--text-primary);
+      border:1px solid var(--border);
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .tracking-card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:20px;
+      margin-top:20px;
+      display:none;
+      box-shadow:var(--shadow);
+    }
+
+    .tracking-card.show{
+      display:block;
+    }
+
+    .tracking-title{
+      font-size:16px;
+      font-weight:900;
+      margin-bottom:16px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .tracking-item{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px;
+      background:rgba(255,255,255,0.03);
+      border-radius:12px;
+      margin-bottom:8px;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+
+    .tracking-day{
+      font-size:13px;
+      font-weight:900;
+      color:var(--text-primary);
+      min-width:74px;
+    }
+
+    .tracking-text{
+      font-size:13px;
+      color:var(--text-secondary);
+      line-height:1.8;
+      flex:1;
+    }
+
+    .tracking-badge{
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(16,185,129,0.12);
+      color:var(--primary);
+      font-size:11px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .toast{
+      position:fixed;
+      bottom:24px;
+      left:50%;
+      transform:translateX(-50%);
+      background:rgba(255,255,255,0.96);
+      color:#0F172A;
+      padding:14px 20px;
+      border-radius:14px;
+      box-shadow:0 18px 40px rgba(0,0,0,0.25);
+      font-size:14px;
+      font-weight:900;
+      z-index:9999;
+      opacity:0;
+      pointer-events:none;
+      transition:0.25s;
+      white-space:nowrap;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(-6px);
+    }
+
+    .hidden{display:none}
+
+    @media (max-width:420px){
+      .options{grid-template-columns:repeat(2,1fr)}
+      .stats{grid-template-columns:1fr}
+      .actions{grid-template-columns:1fr}
+      .reading-preview-grid{grid-template-columns:1fr}
+      .icr-number{font-size:58px}
+      .tracking-item{align-items:flex-start;flex-direction:column}
+      .tracking-day{min-width:auto}
+    }
   </style>
 </head>
 <body>
   <div class="app">
-    <!-- Header -->
-    <header class="header">
-      <a href="index.html" class="back-btn">←</a>
-      <h1 class="header-title">احسب معاملك 🧮</h1>
-    </header>
-
-    <!-- Progress -->
-    <div class="steps" id="steps">
-      <div class="step active"></div>
-      <div class="step"></div>
-      <div class="step"></div>
-      <div class="step"></div>
-    </div>
-
-    <!-- Step 1: Weight -->
-    <div class="input-card" id="step1">
-      <div class="input-label">⚖️ وزنك (كجم)</div>
-      <input type="number" class="input-field" id="weight" placeholder="75" onchange="updateProgress()">
-    </div>
-
-    <!-- Step 2: Age -->
-    <div class="input-card" id="step2">
-      <div class="input-label">🎂 عمرك (سنة)</div>
-      <input type="number" class="input-field" id="age" placeholder="35" onchange="updateProgress()">
-    </div>
-
-    <!-- Step 3: Activity -->
-    <div class="input-card" id="step3">
-      <div class="input-label">🏃 مستوى النشاط</div>
-      <div class="options" id="activityOptions">
-        <div class="option" onclick="selectOption('activity', 'low', this)">خفيف</div>
-        <div class="option" onclick="selectOption('activity', 'moderate', this)">متوسط</div>
-        <div class="option" onclick="selectOption('activity', 'high', this)">نشط</div>
+    <div class="header">
+      <a href="index.html" class="back-btn">→</a>
+      <div class="header-wrap">
+        <h1 class="header-title">احسب معاملك</h1>
+        <p class="header-sub">ابدأ بتقدير أولي ذكي، ثم خلّ سكر مايند يساعدك تقترب أكثر من معاملك الواقعي مع الوقت.</p>
       </div>
     </div>
 
-    <!-- Step 4: Diabetes Type -->
-    <div class="input-card" id="step4">
-      <div class="input-label">💉 نوع السكري</div>
-      <div class="options" id="typeOptions">
-        <div class="option" onclick="selectOption('type', 'type1', this)">نوع 1</div>
-        <div class="option" onclick="selectOption('type', 'type2', this)">نوع 2</div>
-        <div class="option" onclick="selectOption('type', 'prediabetes', this)">ما قبل</div>
+    <div class="hero">
+      <div class="hero-badge">🧠 أداة إنسانية ذكية</div>
+      <div class="hero-title">مو مجرد رقم سريع…<br>هذا بداية فهم معاملك الحقيقي</div>
+      <div class="hero-text">
+        أدخل بياناتك الأساسية، وسنحسب لك معامل كارب أولي، مع قراءة ذكية تساعدك تفهم هل الاتجاه مناسب، ضعيف، أو يحتاج متابعة أكثر.
       </div>
     </div>
 
-    <!-- Calculate -->
-    <button class="calc-btn" id="calcBtn" onclick="calculate()" disabled>
+    <div class="steps">
+      <div class="step active" id="step1"></div>
+      <div class="step" id="step2"></div>
+      <div class="step" id="step3"></div>
+    </div>
+
+    <div class="input-card">
+      <div class="input-label">🍽️ كمية الكارب في الوجبة</div>
+      <input type="number" id="carbsInput" class="input-field" placeholder="مثال: 45" min="1" max="300" />
+      <div class="helper">اكتب كمية الكارب التقريبية للوجبة التي بنيت عليها جرعتك.</div>
+    </div>
+
+    <div class="input-card">
+      <div class="input-label">💉 عدد وحدات الأنسولين للوجبة</div>
+      <input type="number" id="insulinInput" class="input-field" placeholder="مثال: 3" min="0.5" max="50" step="0.5" />
+      <div class="helper">أدخل جرعة الأكل فقط قدر الإمكان، وليس جرعة تصحيح مختلطة إذا كان ممكن.</div>
+    </div>
+
+    <div class="input-card">
+      <div class="input-label">📉 القراءة قبل الأكل</div>
+      <input type="number" id="beforeInput" class="input-field" placeholder="مثال: 115" min="40" max="500" />
+      <div class="helper">هذه القراءة تساعدنا نفهم نقطة البداية قبل الوجبة.</div>
+    </div>
+
+    <div class="input-card">
+      <div class="input-label">📈 القراءة بعد الأكل بساعتين تقريبًا</div>
+      <input type="number" id="afterInput" class="input-field" placeholder="مثال: 168" min="40" max="500" />
+      <div class="helper">يفضل تكون القراءة بعد الوجبة بساعتين حتى تكون النتيجة أقرب للواقع.</div>
+    </div>
+
+    <div class="input-card">
+      <div class="input-label">⏱️ كيف كانت النتيجة غالبًا بعد الوجبة؟</div>
+      <div class="options" id="timingOptions">
+        <div class="option" data-value="stable">مستقرة</div>
+        <div class="option" data-value="high">مرتفعة</div>
+        <div class="option" data-value="low">منخفضة</div>
+      </div>
+      <div class="helper">هذا التقييم يساعد في إعطاء قراءة أكثر إنسانية، حتى لو كانت الأرقام وحدها لا تكفي.</div>
+    </div>
+
+    <button class="calc-btn" id="calcBtn" onclick="calculateICR()">
       <span>⚡</span>
-      <span>احسب معاملي</span>
+      <span>احسب معاملي الآن</span>
     </button>
 
-    <!-- Result -->
     <div class="result-card" id="resultCard">
-      <div class="result-badge">✅ حساب مكتمل</div>
-      
+      <div class="result-badge">✅ تقدير أولي ذكي</div>
+
       <div class="icr-hero">
-        <div class="icr-number" id="icrValue">1:12</div>
-        <div class="icr-label">جرام كارب = 1 وحدة أنسولين</div>
+        <div class="icr-number" id="icrNumber">1:--</div>
+        <div class="icr-label">كل 1 وحدة أنسولين تغطي تقريبًا هذا العدد من جرامات الكارب في وضعك الحالي</div>
       </div>
 
       <div class="stats">
         <div class="stat">
-          <div class="stat-value" id="isfValue">45</div>
-          <div class="stat-label">نسبة التصحيح (mg/dL)</div>
+          <div class="stat-value" id="coverageValue">--</div>
+          <div class="stat-label">جرام كارب لكل وحدة</div>
         </div>
         <div class="stat">
-          <div class="stat-value" id="tddValue">40</div>
-          <div class="stat-label">إجمالي الأنسولين/يوم</div>
+          <div class="stat-value" id="doseExample">--</div>
+          <div class="stat-label">وحدات متوقعة لوجبة 60g</div>
         </div>
       </div>
 
-      <div class="ai-box" id="aiBox">
-        <div class="ai-title">
-          <span>🧠</span>
-          <span>تحليل الذكاء الاصطناعي</span>
+      <div class="confidence-box">
+        <div class="confidence-head">
+          <div class="confidence-title">📊 مستوى الثقة الأولي</div>
+          <div class="confidence-badge" id="confidenceBadge">--</div>
         </div>
-        <div class="ai-text" id="aiText">
-          <div class="ai-loading">
-            <span>جاري التحليل</span>
-            <div class="ai-dots">
-              <div class="ai-dot"></div>
-              <div class="ai-dot"></div>
-              <div class="ai-dot"></div>
-            </div>
+        <div class="confidence-bar">
+          <div class="confidence-fill" id="confidenceFill"></div>
+        </div>
+        <div class="confidence-text" id="confidenceText">بانتظار الحساب...</div>
+      </div>
+
+      <div class="reading-preview">
+        <div class="reading-preview-title">🪪 كيف ستنعكس على البطاقة</div>
+        <div class="reading-preview-grid">
+          <div class="reading-preview-item">
+            <div class="reading-preview-value" id="cardReadingPreview">--</div>
+            <div class="reading-preview-label">آخر قياس سكر</div>
+          </div>
+          <div class="reading-preview-item">
+            <div class="reading-preview-value" id="cardIcrPreview">--</div>
+            <div class="reading-preview-label">معامل الكارب الحالي</div>
           </div>
         </div>
       </div>
 
+      <div class="ai-box">
+        <div class="ai-title">
+          <span>✨</span>
+          <span>قراءة SugarMind الذكية</span>
+        </div>
+
+        <div class="ai-loading" id="aiLoading">
+          <div class="ai-dots">
+            <div class="ai-dot"></div>
+            <div class="ai-dot"></div>
+            <div class="ai-dot"></div>
+          </div>
+          <span>جاري صياغة التحليل الذكي...</span>
+        </div>
+
+        <div class="ai-text" id="aiText">بانتظار النتيجة...</div>
+      </div>
+
       <div class="actions">
         <button class="btn btn-primary" onclick="saveResult()">
-          <span>💾</span> حفظ
+          <span>💾</span>
+          <span>حفظ النتيجة</span>
         </button>
-        <button class="btn btn-secondary" onclick="goToAnalyzer()">
-          <span>🍽️</span> جربه
+        <button class="btn btn-secondary" onclick="resetCalculator()">
+          <span>↺</span>
+          <span>إعادة الحساب</span>
         </button>
+      </div>
+
+      <div class="disclaimer">
+        <div class="disclaimer-text">
+          هذه النتيجة تقديرية تعليمية لمساعدتك على فهم الاتجاه، وليست بديلًا عن الخطة الطبية أو قرار الطبيب المعالج.
+        </div>
+      </div>
+    </div>
+
+    <div class="tracking-card" id="trackingCard">
+      <div class="tracking-title">
+        <span>📌</span>
+        <span>خطة المتابعة المقترحة</span>
+      </div>
+
+      <div class="tracking-item">
+        <div class="tracking-day">اليوم 1</div>
+        <div class="tracking-text">جرّب المعامل على وجبة واضحة الكارب قدر الإمكان، وسجل القراءة قبل وبعد الأكل.</div>
+        <div class="tracking-badge">بداية</div>
+      </div>
+
+      <div class="tracking-item">
+        <div class="tracking-day">اليوم 2</div>
+        <div class="tracking-text">إذا لاحظت ارتفاعًا متكررًا بعد وجبات متشابهة، فالمعامل قد يكون أضعف من احتياجك.</div>
+        <div class="tracking-badge">مراجعة</div>
+      </div>
+
+      <div class="tracking-item">
+        <div class="tracking-day">اليوم 3</div>
+        <div class="tracking-text">إذا حصل انخفاض متكرر، فالمعامل قد يكون أقوى من اللازم أو أن الجرعة أعلى من المناسب.</div>
+        <div class="tracking-badge">تنبيه</div>
+      </div>
+
+      <div class="tracking-item">
+        <div class="tracking-day">اليوم 4+</div>
+        <div class="tracking-text">كرر على أكثر من وجبة متقاربة قبل اعتماد أي تعديل دائم، حتى ترتفع دقة النتيجة وثقتك بها.</div>
+        <div class="tracking-badge">تثبيت</div>
       </div>
     </div>
   </div>
 
-  <!-- Bottom Nav -->
-  <nav class="bottom-nav">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-item">🏠 رئيسية</a>
-      <a href="meal-analyzer.html" class="nav-item">🍽️ محلل</a>
-      <a href="carb-calculator.html" class="nav-item active">🧮 حساب المعامل</a>
-    </div>
-  </nav>
+  <div class="toast" id="toast"></div>
 
   <script>
-    // State
-    let state = {
-      weight: null,
-      age: null,
-      activity: null,
-      type: null
-    };
+    // =========================
+    // SETTINGS
+    // =========================
+    const STORAGE_KEY = 'sugarmind_icr_result_v2';
 
-    const GEMINI_KEY = 'AIzaSyDkm5-pZ8T2sv514EH5qqp8p31Jk-KsAec';
+    // ضع مفتاح Gemini هنا إذا رغبت
+    // اتركه فارغًا إذا كنت تريد الاعتماد على التحليل الداخلي فقط
+    const GEMINI_API_KEY = '';
+    const GEMINI_MODEL = 'gemini-2.0-flash';
 
-    function selectOption(category, value, element) {
-      state[category] = value;
-      
-      // UI update
-      const container = element.parentElement;
-      container.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-      element.classList.add('selected');
-      
-      updateProgress();
-    }
+    let selectedTiming = null;
+    let lastResult = null;
 
-    function updateProgress() {
-      state.weight = document.getElementById('weight').value;
-      state.age = document.getElementById('age').value;
-      
-      const steps = document.querySelectorAll('.step');
-      let completed = 0;
-      
-      if (state.weight) completed++;
-      if (state.age) completed++;
-      if (state.activity) completed++;
-      if (state.type) completed++;
-      
-      steps.forEach((step, i) => {
-        step.classList.remove('active', 'completed');
-        if (i < completed) step.classList.add('completed');
-        if (i === completed) step.classList.add('active');
+    // =========================
+    // UI HELPERS
+    // =========================
+    const timingOptions = document.querySelectorAll('.option');
+
+    timingOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        timingOptions.forEach(o => o.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedTiming = option.dataset.value;
+        updateSteps(2);
       });
-      
-      document.getElementById('calcBtn').disabled = completed < 4;
+    });
+
+    function updateSteps(step){
+      const steps = [
+        document.getElementById('step1'),
+        document.getElementById('step2'),
+        document.getElementById('step3')
+      ];
+
+      steps.forEach((el, index) => {
+        el.classList.remove('active', 'completed');
+        if(index < step - 1) el.classList.add('completed');
+        if(index === step - 1) el.classList.add('active');
+      });
     }
 
-    function calculate() {
-      // Math calculations (instant)
-      const weight = parseFloat(state.weight);
-      const age = parseInt(state.age);
-      
-      // TDD estimation based on weight and activity
-      let tddBase = weight * 0.5; // 0.5 unit per kg
-      if (state.activity === 'low') tddBase *= 0.9;
-      if (state.activity === 'high') tddBase *= 1.2;
-      if (state.type === 'type2') tddBase *= 0.8;
-      if (age > 60) tddBase *= 0.9;
-      
-      const tdd = Math.round(tddBase);
-      const icr = Math.round(500 / tdd);
-      const isf = Math.round(1800 / tdd);
-      
-      // Display result (instant)
-      document.getElementById('icrValue').textContent = `1:${icr}`;
-      document.getElementById('isfValue').textContent = isf;
-      document.getElementById('tddValue').textContent = tdd;
+    function showToast(msg){
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2600);
+    }
+
+    function safeNumber(value){
+      const num = parseFloat(value);
+      return Number.isFinite(num) ? num : null;
+    }
+
+    // =========================
+    // CORE LOGIC
+    // =========================
+    function calculateICR(){
+      const carbs = safeNumber(document.getElementById('carbsInput').value);
+      const insulin = safeNumber(document.getElementById('insulinInput').value);
+      const before = safeNumber(document.getElementById('beforeInput').value);
+      const after = safeNumber(document.getElementById('afterInput').value);
+
+      if(!carbs || !insulin || !before || !after || insulin <= 0){
+        showToast('أكمل البيانات الأساسية أولاً');
+        return;
+      }
+
+      if(carbs < 3 || insulin < 0.5){
+        showToast('المدخلات تبدو غير كافية للحساب');
+        return;
+      }
+
+      updateSteps(3);
+
+      let rawICR = carbs / insulin;
+      const delta = after - before;
+
+      // ضبط بسيط ذكي حسب النتيجة الفعلية
+      let adjustedICR = rawICR;
+
+      if(delta > 70) adjustedICR -= 1.5;
+      else if(delta > 40) adjustedICR -= 1;
+      else if(delta < -40) adjustedICR += 1.5;
+      else if(delta < -20) adjustedICR += 1;
+
+      if(selectedTiming === 'high') adjustedICR -= 0.8;
+      if(selectedTiming === 'low') adjustedICR += 0.8;
+
+      adjustedICR = clamp(adjustedICR, 3, 30);
+
+      const roundedICR = Math.round(adjustedICR);
+      const exampleDose = (60 / roundedICR).toFixed(1);
+
+      const confidence = calculateConfidence({ carbs, insulin, before, after, delta, timing: selectedTiming });
+      const confidenceLabel = confidenceToLabel(confidence);
+      const confidenceText = confidenceDescription(confidence, delta);
+
+      document.getElementById('icrNumber').textContent = `1:${roundedICR}`;
+      document.getElementById('coverageValue').textContent = roundedICR;
+      document.getElementById('doseExample').textContent = exampleDose;
+
+      document.getElementById('confidenceBadge').textContent = confidenceLabel;
+      document.getElementById('confidenceFill').style.width = `${confidence}%`;
+      document.getElementById('confidenceText').textContent = confidenceText;
+
+      document.getElementById('cardReadingPreview').textContent = `${after} mg/dL`;
+      document.getElementById('cardIcrPreview').textContent = `1:${roundedICR}`;
+
       document.getElementById('resultCard').classList.add('show');
-      
-      // Save to localStorage
-      localStorage.setItem('sugarmind_icr', icr);
-      localStorage.setItem('sugarmind_isf', isf);
-      localStorage.setItem('sugarmind_tdd', tdd);
-      
-      // AI insight (async, non-blocking)
-      getAIInsight(weight, age, state.activity, state.type, icr, tdd);
+      document.getElementById('trackingCard').classList.add('show');
+
+      lastResult = {
+        carbs,
+        insulin,
+        before,
+        after,
+        delta,
+        timing: selectedTiming || 'unknown',
+        icr: roundedICR,
+        exampleDose,
+        confidence,
+        confidenceLabel,
+        calculatedAt: new Date().toISOString()
+      };
+
+      renderLocalInsight(lastResult);
+      enhanceWithGemini(lastResult);
+
+      document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    async function getAIInsight(weight, age, activity, type, icr, tdd) {
-      const prompt = `
-أنت خبير سكري. المعاملات:
-- ICR: 1:${icr} (12g كارب = 1 وحدة)
-- الوزن: ${weight}كجم
-- العمر: ${age}سنة
-- النشاط: ${activity}
-- النوع: ${type}
+    function clamp(value, min, max){
+      return Math.min(max, Math.max(min, value));
+    }
 
-أعطِ نصيحة قصيرة (جملتين) بالعربي عن:
-1. هل هذا المعامل مناسب؟
-2. نصيحة للبدء باستخدامه.
+    function calculateConfidence(data){
+      let score = 55;
 
-أرجع JSON فقط: {"advice": "نصيحتك هنا"}`;
+      if(data.carbs >= 15 && data.carbs <= 120) score += 10;
+      if(data.insulin >= 1 && data.insulin <= 15) score += 10;
+      if(Math.abs(data.delta) <= 40) score += 12;
+      else if(Math.abs(data.delta) <= 70) score += 6;
 
-      try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            contents: [{parts: [{text: prompt}]}],
-            generationConfig: {temperature: 0.3, maxOutputTokens: 150}
+      if(data.before >= 80 && data.before <= 160) score += 8;
+      if(data.timing === 'stable') score += 8;
+      if(data.timing === 'high' || data.timing === 'low') score += 4;
+
+      return clamp(Math.round(score), 45, 92);
+    }
+
+    function confidenceToLabel(score){
+      if(score >= 85) return 'مرتفعة';
+      if(score >= 72) return 'جيدة';
+      if(score >= 60) return 'متوسطة';
+      return 'أولية';
+    }
+
+    function confidenceDescription(score, delta){
+      if(score >= 85){
+        return 'البيانات الحالية متماسكة نسبيًا، وهذا يعطي التقدير الأولي قوة جيدة كبداية متابعة.';
+      }
+      if(score >= 72){
+        return 'النتيجة تبدو جيدة كبداية، لكنها تحتاج تكرار على وجبات متشابهة حتى تثبت أكثر.';
+      }
+      if(score >= 60){
+        return 'هذه قراءة أولية مفيدة، لكن لا يعتمد عليها وحدها، ويفضل تكرار المتابعة أكثر من مرة.';
+      }
+      return 'المعطيات الحالية تعطي اتجاهًا مبدئيًا فقط، وما زلنا بحاجة بيانات أكثر حتى ترتفع الثقة.';
+    }
+
+    function renderLocalInsight(result){
+      const aiText = document.getElementById('aiText');
+
+      let directionText = '';
+      if(result.delta > 60){
+        directionText = 'القراءة بعد الأكل ارتفعت بشكل واضح، وهذا يوحي أن تغطية الكارب قد تكون أخف من احتياجك أو أن توقيت الجرعة يحتاج ضبط.';
+      } else if(result.delta > 20){
+        directionText = 'فيه ارتفاع ملحوظ بعد الوجبة، لكنه ليس حادًا جدًا، لذلك المعامل قد يكون قريبًا لكنه يحتاج متابعة أهدأ.';
+      } else if(result.delta >= -20 && result.delta <= 20){
+        directionText = 'الفرق بين القراءة قبل وبعد الوجبة يبدو متزنًا نسبيًا، وهذا يعطي انطباعًا جيدًا أن الاتجاه قريب من المناسب.';
+      } else {
+        directionText = 'القراءة بعد الأكل نزلت بشكل لافت، وهذا قد يعني أن التغطية كانت قوية أكثر من اللازم أو أن هناك عاملًا آخر أثّر على النتيجة.';
+      }
+
+      let timingText = '';
+      if(result.timing === 'stable') timingText = 'اختيارك لحالة "مستقرة" يدعم هذا الاتجاه ويعطي التقدير ثباتًا أفضل.';
+      if(result.timing === 'high') timingText = 'اختيارك لحالة "مرتفعة" يؤكد أن الاتجاه يميل لاحتياج تغطية أقوى أو مراجعة أدق.';
+      if(result.timing === 'low') timingText = 'اختيارك لحالة "منخفضة" يشير أن الجرعة قد تكون أعلى من المناسب في هذا السيناريو.';
+
+      aiText.textContent =
+        `المعامل الأولي المقترح لك الآن هو 1:${result.icr}.\n\n` +
+        `${directionText}\n\n` +
+        `${timingText}\n\n` +
+        `الأهم هنا: لا تعتبر هذه النتيجة نهائية من أول مرة، بل خذها كنقطة بداية ذكية، وكررها على وجبات متشابهة حتى يبدأ سكر مايند يبني لك صورة أقرب لواقعك.`;
+    }
+
+    // =========================
+    // GEMINI ENHANCEMENT
+    // =========================
+    async function enhanceWithGemini(result){
+      const aiLoading = document.getElementById('aiLoading');
+      const aiText = document.getElementById('aiText');
+
+      if(!GEMINI_API_KEY){
+        return;
+      }
+
+      aiLoading.classList.add('show');
+
+      try{
+        const prompt = `
+أنت مساعد ذكي داخل تطبيق صحي عربي اسمه SugarMind.
+مهمتك: كتابة تحليل قصير وواضح جدًا باللهجة العربية البيضاء، وليس طبيًا حاسمًا، بناءً على البيانات التالية:
+
+- كمية الكارب: ${result.carbs} غرام
+- وحدات الأنسولين: ${result.insulin}
+- القراءة قبل الأكل: ${result.before}
+- القراءة بعد الأكل: ${result.after}
+- الفرق: ${result.delta}
+- معامل الكارب التقديري الحالي: 1:${result.icr}
+- مستوى الثقة: ${result.confidenceLabel}
+
+المطلوب:
+1) اكتب فقرة قصيرة جدًا من 4 إلى 6 أسطر.
+2) اشرح للمستخدم ماذا نفهم من النتيجة.
+3) لا تعطِ أوامر طبية حاسمة.
+4) لا تقل "استشر الطبيب" في كل مرة.
+5) اجعل النص إنساني، مطمئن، ذكي، ومباشر.
+6) اختم بجملة قصيرة توضح أن النتيجة تتحسن مع تكرار الإدخالات.
+`;
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`, {
+          method:'POST',
+          headers:{ 'Content-Type':'application/json' },
+          body:JSON.stringify({
+            contents:[
+              {
+                parts:[
+                  { text: prompt }
+                ]
+              }
+            ]
           })
         });
-        
-        const data = await res.json();
-        const text = data.candidates[0].content.parts[0].text;
-        const match = text.match(/\{[\s\S]*\}/);
-        
-        if (match) {
-          const result = JSON.parse(match[0]);
-          document.getElementById('aiText').textContent = '💡 ' + result.advice;
+
+        const data = await response.json();
+
+        const generatedText =
+          data?.candidates?.[0]?.content?.parts?.map(part => part.text).join('\n').trim();
+
+        if(generatedText){
+          aiText.textContent = generatedText;
         }
-      } catch(e) {
-        // Fallback if AI fails
-        const fallbacks = [
-          'معاملك مناسب للبدء. ابدأ بوجبات صغيرة وراقب سكرك.',
-          'جرب المعامل لمدة 3 أيام وعدل حسب النتائج.',
-          'معاملك محافظ. ممتاز للبدء بأمان.'
-        ];
-        document.getElementById('aiText').textContent = '💡 ' + fallbacks[Math.floor(Math.random() * fallbacks.length)];
+      } catch(error){
+        // نخلي التحليل المحلي كما هو بدون إزعاج المستخدم
+      } finally{
+        aiLoading.classList.remove('show');
       }
     }
 
-    function saveResult() {
-      const result = {
-        icr: document.getElementById('icrValue').textContent,
-        isf: document.getElementById('isfValue').textContent,
-        tdd: document.getElementById('tddValue').textContent,
-        date: new Date().toISOString()
+    // =========================
+    // SAVE / RESET
+    // =========================
+    function saveResult(){
+      if(!lastResult){
+        showToast('احسب النتيجة أولاً');
+        return;
+      }
+
+      const cardPayload = {
+        lastReading: `${lastResult.after} mg/dL`,
+        carbRatio: `1:${lastResult.icr}`,
+        confidence: lastResult.confidenceLabel,
+        savedAt: new Date().toISOString()
       };
-      
-      const history = JSON.parse(localStorage.getItem('sugarmind_calculations') || '[]');
-      history.push(result);
-      localStorage.setItem('sugarmind_calculations', JSON.stringify(history));
-      
-      alert('✅ تم حفظ المعامل!');
+
+      const payload = {
+        ...lastResult,
+        card: cardPayload
+      };
+
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        showToast('تم حفظ النتيجة بنجاح');
+      }catch(e){
+        showToast('تعذر حفظ النتيجة على هذا الجهاز');
+      }
     }
 
-    function goToAnalyzer() {
-      window.location.href = 'meal-analyzer.html';
+    function resetCalculator(){
+      document.getElementById('carbsInput').value = '';
+      document.getElementById('insulinInput').value = '';
+      document.getElementById('beforeInput').value = '';
+      document.getElementById('afterInput').value = '';
+      timingOptions.forEach(o => o.classList.remove('selected'));
+      selectedTiming = null;
+      lastResult = null;
+
+      document.getElementById('resultCard').classList.remove('show');
+      document.getElementById('trackingCard').classList.remove('show');
+
+      document.getElementById('aiText').textContent = 'بانتظار النتيجة...';
+      document.getElementById('confidenceBadge').textContent = '--';
+      document.getElementById('confidenceFill').style.width = '0%';
+      document.getElementById('confidenceText').textContent = 'بانتظار الحساب...';
+      document.getElementById('cardReadingPreview').textContent = '--';
+      document.getElementById('cardIcrPreview').textContent = '--';
+
+      updateSteps(1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // =========================
+    // INIT
+    // =========================
+    window.addEventListener('DOMContentLoaded', () => {
+      updateSteps(1);
+
+      try{
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if(saved){
+          const data = JSON.parse(saved);
+          if(data?.icr){
+            document.getElementById('cardReadingPreview').textContent = data.card?.lastReading || '--';
+            document.getElementById('cardIcrPreview').textContent = data.card?.carbRatio || `1:${data.icr}`;
+          }
+        }
+      }catch(e){}
+    });
   </script>
 </body>
 </html>
-
