@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>محلل الوجبة - SugarMind</title>
+  <title>محلل الوجبة الأسطوري - SugarMind</title>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -21,6 +21,8 @@
       --danger:#EF4444;
       --warning:#F59E0B;
       --gold:#FBBF24;
+      --purple:#8B5CF6;
+      --blue:#3B82F6;
       --radius:24px;
       --radius-sm:16px;
       --shadow:0 25px 50px -12px rgba(0,0,0,0.5);
@@ -37,7 +39,6 @@
       line-height:1.6;
     }
 
-    /* Background */
     .bg-layer{
       position:fixed;
       inset:0;
@@ -47,7 +48,7 @@
 
     .bg-gradient{
       background:radial-gradient(ellipse at 100% 0%,rgba(16,185,129,0.15) 0%,transparent 50%),
-                 radial-gradient(ellipse at 0% 100%,rgba(59,130,246,0.08) 0%,transparent 40%),
+                 radial-gradient(ellipse at 0% 100%,rgba(139,92,246,0.1) 0%,transparent 40%),
                  var(--bg);
     }
 
@@ -82,95 +83,168 @@
 
     .header-title{font-size:24px;font-weight:900}
 
-    /* Main Input */
-    .input-container{
-      background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:24px;
-      margin-bottom:20px;
+    /* Smart Search */
+    .search-container{
       position:relative;
-      overflow:hidden;
+      margin-bottom:20px;
     }
 
-    .input-container::before{
-      content:'';
-      position:absolute;
-      top:0;
-      left:0;
-      right:0;
-      height:3px;
-      background:linear-gradient(90deg,var(--primary),var(--primary-light));
-      box-shadow:0 0 20px var(--primary);
-    }
-
-    .input-label{
-      font-size:14px;
-      color:var(--text-secondary);
-      margin-bottom:12px;
-      font-weight:700;
+    .search-box{
+      background:var(--surface);
+      border:2px solid var(--border);
+      border-radius:var(--radius);
+      padding:20px;
       display:flex;
       align-items:center;
-      gap:8px;
+      gap:12px;
+      transition:all 0.3s ease;
     }
 
-    .meal-input{
-      width:100%;
+    .search-box:focus-within{
+      border-color:var(--primary);
+      box-shadow:0 0 30px rgba(16,185,129,0.2);
+    }
+
+    .search-icon{
+      font-size:24px;
+      color:var(--text-secondary);
+    }
+
+    .search-input{
+      flex:1;
       background:transparent;
       border:none;
       color:var(--text-primary);
       font-size:18px;
-      line-height:1.8;
-      resize:none;
-      min-height:100px;
-      font-family:var(--font-family);
       font-weight:500;
+      font-family:var(--font-family);
     }
 
-    .meal-input:focus{outline:none}
+    .search-input:focus{outline:none}
 
-    .meal-input::placeholder{color:var(--text-muted)}
+    .search-input::placeholder{color:var(--text-muted)}
 
-    /* Camera Button */
-    .camera-btn{
-      width:100%;
-      padding:18px;
-      border-radius:var(--radius-sm);
-      background:var(--surface);
-      border:2px dashed var(--border);
-      color:var(--text-secondary);
-      font-size:16px;
-      font-weight:700;
-      cursor:pointer;
+    /* Source Badges */
+    .source-badges{
+      display:flex;
+      gap:8px;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+    }
+
+    .source-badge{
+      padding:6px 12px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
       display:flex;
       align-items:center;
-      justify-content:center;
-      gap:12px;
-      margin-bottom:20px;
-      transition:all 0.3s ease;
+      gap:6px;
+      border:1px solid var(--border);
     }
 
-    .camera-btn:hover{
-      border-color:var(--primary);
+    .source-badge.cache{
+      background:rgba(16,185,129,0.15);
       color:var(--primary);
+      border-color:rgba(16,185,129,0.3);
+    }
+
+    .source-badge.library{
+      background:rgba(139,92,246,0.15);
+      color:var(--purple);
+      border-color:rgba(139,92,246,0.3);
+    }
+
+    .source-badge.ai{
+      background:rgba(59,130,246,0.15);
+      color:var(--blue);
+      border-color:rgba(59,130,246,0.3);
+    }
+
+    /* Camera Section */
+    .camera-section{
+      background:var(--surface);
+      border:2px dashed var(--border);
+      border-radius:var(--radius);
+      padding:24px;
+      text-align:center;
+      margin-bottom:20px;
+      transition:all 0.3s ease;
+      cursor:pointer;
+    }
+
+    .camera-section:hover{
+      border-color:var(--primary);
       background:rgba(16,185,129,0.05);
     }
 
-    .camera-btn.has-image{
+    .camera-section.has-image{
       border-style:solid;
       border-color:var(--primary);
       background:rgba(16,185,129,0.1);
     }
 
-    /* Hidden File Input */
+    .camera-icon{
+      font-size:48px;
+      margin-bottom:12px;
+    }
+
+    .camera-text{
+      font-size:16px;
+      font-weight:700;
+      color:var(--text-secondary);
+    }
+
+    .image-preview{
+      width:100%;
+      max-height:200px;
+      object-fit:cover;
+      border-radius:var(--radius-sm);
+      margin-top:16px;
+      display:none;
+    }
+
+    .image-preview.show{display:block}
+
     #fileInput{display:none}
+
+    /* Quick Tags */
+    .quick-tags{
+      display:flex;
+      gap:8px;
+      overflow-x:auto;
+      margin-bottom:20px;
+      padding-bottom:8px;
+      scrollbar-width:none;
+    }
+
+    .quick-tags::-webkit-scrollbar{display:none}
+
+    .quick-tag{
+      flex-shrink:0;
+      padding:10px 16px;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:999px;
+      font-size:13px;
+      font-weight:700;
+      color:var(--text-secondary);
+      cursor:pointer;
+      transition:all 0.3s ease;
+    }
+
+    .quick-tag:hover{
+      background:var(--surface-hover);
+      border-color:var(--primary);
+      color:var(--primary);
+    }
 
     /* Analyze Button */
     .analyze-btn{
       width:100%;
       padding:20px;
       border-radius:var(--radius);
-      background:linear-gradient(135deg,var(--primary),#059669);
+      background:linear-gradient(135deg,var(--primary),var(--primary-light));
       border:none;
       color:#fff;
       font-size:18px;
@@ -200,8 +274,8 @@
       content:'';
       position:absolute;
       inset:0;
-      background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
-      animation:shimmer 1.5s infinite;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);
+      animation:shimmer 1s infinite;
     }
 
     @keyframes shimmer{
@@ -209,20 +283,59 @@
       100%{transform:translateX(100%)}
     }
 
-    /* Disclaimer */
-    .disclaimer{
+    /* Loading State */
+    .loading-state{
       text-align:center;
-      margin-top:20px;
-      padding:16px;
-      background:rgba(251,191,36,0.1);
-      border:1px solid rgba(251,191,36,0.3);
-      border-radius:var(--radius-sm);
-      font-size:13px;
-      color:var(--gold);
-      line-height:1.7;
+      padding:40px;
+      display:none;
     }
 
-    .disclaimer strong{display:block;margin-bottom:4px}
+    .loading-state.show{display:block}
+
+    .loading-orb{
+      width:80px;
+      height:80px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--primary),var(--purple));
+      margin:0 auto 20px;
+      animation:pulse-orb 2s ease-in-out infinite;
+      filter:blur(20px);
+      opacity:0.6;
+    }
+
+    @keyframes pulse-orb{
+      0%,100%{transform:scale(1);opacity:0.6}
+      50%{transform:scale(1.2);opacity:0.8}
+    }
+
+    .loading-text{
+      font-size:16px;
+      color:var(--text-secondary);
+      font-weight:600;
+    }
+
+    .loading-sources{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      margin-top:20px;
+    }
+
+    .loading-source{
+      padding:8px 16px;
+      background:var(--surface);
+      border-radius:999px;
+      font-size:12px;
+      color:var(--text-muted);
+      opacity:0.5;
+      transition:all 0.3s ease;
+    }
+
+    .loading-source.active{
+      opacity:1;
+      background:var(--primary);
+      color:#fff;
+    }
 
     /* Results */
     .results{
@@ -243,58 +356,36 @@
       to{opacity:1;transform:translateY(0) scale(1)}
     }
 
-    .result-header{
+    .result-source{
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      margin-bottom:24px;
-      padding-bottom:20px;
-      border-bottom:1px solid var(--border);
-    }
-
-    .result-title{
-      font-size:20px;
-      font-weight:900;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .confidence-badge{
-      padding:6px 14px;
+      justify-content:center;
+      gap:8px;
+      margin-bottom:20px;
+      padding:10px;
+      background:rgba(16,185,129,0.1);
       border-radius:999px;
-      font-size:12px;
-      font-weight:800;
-      background:rgba(16,185,129,0.15);
+      font-size:13px;
+      font-weight:700;
       color:var(--primary);
-      border:1px solid rgba(16,185,129,0.3);
     }
 
-    .confidence-badge.medium{
-      background:rgba(245,158,11,0.15);
-      color:var(--warning);
-      border-color:rgba(245,158,11,0.3);
-    }
+    .result-source.library{color:var(--purple);background:rgba(139,92,246,0.1)}
+    .result-source.ai{color:var(--blue);background:rgba(59,130,246,0.1)}
 
-    .confidence-badge.low{
-      background:rgba(239,68,68,0.15);
-      color:var(--danger);
-      border-color:rgba(239,68,68,0.3);
-    }
-
-    /* Carbs Display */
-    .carbs-display{
+    /* Carbs Hero */
+    .carbs-hero{
       text-align:center;
       padding:32px;
-      background:linear-gradient(145deg,rgba(16,185,129,0.1),rgba(16,185,129,0.02));
-      border:2px solid rgba(16,185,129,0.3);
+      background:linear-gradient(145deg,rgba(16,185,129,0.15),rgba(16,185,129,0.02));
+      border:2px solid rgba(16,185,129,0.4);
       border-radius:var(--radius);
       margin-bottom:24px;
       position:relative;
       overflow:hidden;
     }
 
-    .carbs-display::before{
+    .carbs-hero::before{
       content:'';
       position:absolute;
       top:0;
@@ -305,11 +396,11 @@
     }
 
     .carbs-number{
-      font-size:72px;
+      font-size:80px;
       font-weight:900;
       color:var(--primary);
       line-height:1;
-      text-shadow:0 0 40px rgba(16,185,129,0.5);
+      text-shadow:0 0 50px rgba(16,185,129,0.6);
     }
 
     .carbs-label{
@@ -319,36 +410,71 @@
       font-weight:600;
     }
 
-    /* Details Grid */
-    .details-grid{
+    /* Macros Grid */
+    .macros-grid{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:repeat(2,1fr);
       gap:12px;
       margin-bottom:24px;
     }
 
-    .detail-item{
-      padding:16px;
+    .macro-card{
+      padding:20px;
       background:rgba(255,255,255,0.03);
       border-radius:var(--radius-sm);
       border:1px solid var(--border);
       text-align:center;
+      transition:all 0.3s ease;
     }
 
-    .detail-value{
-      font-size:24px;
+    .macro-card:hover{
+      transform:translateY(-4px);
+      border-color:var(--primary);
+    }
+
+    .macro-value{
+      font-size:28px;
       font-weight:900;
       color:var(--text-primary);
     }
 
-    .detail-label{
+    .macro-label{
       font-size:12px;
       color:var(--text-secondary);
       margin-top:4px;
+      font-weight:600;
     }
 
-    /* AI Notes */
-    .ai-notes{
+    /* Insulin Box */
+    .insulin-box{
+      background:linear-gradient(135deg,rgba(16,185,129,0.2),rgba(16,185,129,0.05));
+      border:2px solid var(--primary);
+      border-radius:var(--radius);
+      padding:24px;
+      text-align:center;
+      margin-bottom:24px;
+    }
+
+    .insulin-label{
+      font-size:14px;
+      color:var(--text-secondary);
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .insulin-value{
+      font-size:48px;
+      font-weight:900;
+      color:var(--primary);
+    }
+
+    .insulin-unit{
+      font-size:14px;
+      color:var(--text-secondary);
+    }
+
+    /* AI Insights */
+    .ai-insights{
       background:rgba(59,130,246,0.1);
       border:1px solid rgba(59,130,246,0.3);
       border-radius:var(--radius-sm);
@@ -356,17 +482,17 @@
       margin-bottom:24px;
     }
 
-    .ai-notes-title{
+    .ai-insights-title{
       font-size:14px;
       font-weight:800;
-      color:#60A5FA;
-      margin-bottom:10px;
+      color:var(--blue);
+      margin-bottom:12px;
       display:flex;
       align-items:center;
       gap:8px;
     }
 
-    .ai-notes-text{
+    .ai-insights-text{
       font-size:14px;
       color:var(--text-secondary);
       line-height:1.8;
@@ -416,37 +542,6 @@
       border-color:rgba(255,255,255,0.2);
     }
 
-    /* Loading State */
-    .loading-state{
-      text-align:center;
-      padding:40px;
-      display:none;
-    }
-
-    .loading-state.show{display:block}
-
-    .loading-orb{
-      width:80px;
-      height:80px;
-      border-radius:50%;
-      background:linear-gradient(135deg,var(--primary),var(--primary-light));
-      margin:0 auto 20px;
-      animation:pulse-orb 2s ease-in-out infinite;
-      filter:blur(20px);
-      opacity:0.6;
-    }
-
-    @keyframes pulse-orb{
-      0%,100%{transform:scale(1);opacity:0.6}
-      50%{transform:scale(1.2);opacity:0.8}
-    }
-
-    .loading-text{
-      font-size:16px;
-      color:var(--text-secondary);
-      font-weight:600;
-    }
-
     /* Error State */
     .error-state{
       background:rgba(239,68,68,0.1);
@@ -461,6 +556,19 @@
     .error-state.show{display:block}
 
     .error-text{color:var(--danger);font-weight:700}
+
+    /* Disclaimer */
+    .disclaimer{
+      text-align:center;
+      margin-top:20px;
+      padding:16px;
+      background:rgba(251,191,36,0.1);
+      border:1px solid rgba(251,191,36,0.3);
+      border-radius:var(--radius-sm);
+      font-size:12px;
+      color:var(--gold);
+      line-height:1.7;
+    }
 
     /* Bottom Nav */
     .bottom-nav{
@@ -505,22 +613,10 @@
 
     .nav-item span:first-child{font-size:22px}
 
-    /* Preview Image */
-    .image-preview{
-      width:100%;
-      height:200px;
-      object-fit:cover;
-      border-radius:var(--radius-sm);
-      margin-top:16px;
-      display:none;
-    }
-
-    .image-preview.show{display:block}
-
     /* Responsive */
     @media(min-width:768px){
       .app{max-width:520px}
-      .carbs-number{font-size:80px}
+      .carbs-number{font-size:90px}
     }
   </style>
 </head>
@@ -531,94 +627,127 @@
     <!-- Header -->
     <header class="header">
       <a href="index.html" class="back-btn">←</a>
-      <h1 class="header-title">محلل الوجبة الذكي 🍽️</h1>
+      <h1 class="header-title">محلل الوجبة الأسطوري 🚀</h1>
     </header>
 
-    <!-- Input Section -->
-    <div class="input-container">
-      <div class="input-label">
-        <span>📝</span>
-        <span>اكتب وجبتك بالعربي أو الإنجليزي</span>
+    <!-- Source Badges -->
+    <div class="source-badges">
+      <div class="source-badge cache">
+        <span>⚡</span>
+        <span>ذاكرة ذكية</span>
       </div>
-      <textarea 
-        class="meal-input" 
-        id="mealInput" 
-        placeholder="مثال: كبسة دجاج مع سلطة وعصير برتقال..."
-      ></textarea>
-      
-      <img class="image-preview" id="imagePreview" alt="معاينة الصورة">
+      <div class="source-badge library">
+        <span>📚</span>
+        <span>مكتبة عالمية</span>
+      </div>
+      <div class="source-badge ai">
+        <span>🧠</span>
+        <span>ذكاء اصطناعي</span>
+      </div>
     </div>
 
-    <!-- Camera Button -->
+    <!-- Smart Search -->
+    <div class="search-container">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          class="search-input" 
+          id="mealInput" 
+          placeholder="اكتب وجبتك... (مثال: كبسة دجاج)"
+          onkeyup="handleInput(event)"
+        >
+      </div>
+    </div>
+
+    <!-- Quick Tags -->
+    <div class="quick-tags" id="quickTags">
+      <div class="quick-tag" onclick="setMeal('كبسة دجاج')">🍗 كبسة</div>
+      <div class="quick-tag" onclick="setMeal('شاورما')">🥙 شاورما</div>
+      <div class="quick-tag" onclick="setMeal('فول وفلافل')">🧆 فول</div>
+      <div class="quick-tag" onclick="setMeal('منسف')">🍚 منسف</div>
+      <div class="quick-tag" onclick="setMeal('مندي')">🍖 مندي</div>
+      <div class="quick-tag" onclick="setMeal('برجر')">🍔 برجر</div>
+    </div>
+
+    <!-- Camera Section -->
     <input type="file" id="fileInput" accept="image/*" onchange="handleImageSelect(event)">
-    <button class="camera-btn" id="cameraBtn" onclick="document.getElementById('fileInput').click()">
-      <span>📷</span>
-      <span id="cameraText">صور وجبتك</span>
-    </button>
+    <div class="camera-section" id="cameraSection" onclick="document.getElementById('fileInput').click()">
+      <div class="camera-icon">📷</div>
+      <div class="camera-text" id="cameraText">صور وجبتك بالذكاء الاصطناعي</div>
+      <img class="image-preview" id="imagePreview" alt="معاينة">
+    </div>
 
     <!-- Analyze Button -->
     <button class="analyze-btn" id="analyzeBtn" onclick="analyzeMeal()">
       <span>⚡</span>
-      <span>حلل بالذكاء الاصطناعي</span>
+      <span>حلل الأسطوري</span>
     </button>
 
     <!-- Disclaimer -->
     <div class="disclaimer">
-      <strong>⚠️ تنبيه مهم</strong>
-      الحساب تقريبي ويتم تحسينه بالذكاء الاصطناعي. دائماً قسّ سكرك واستشر طبيبك للجرعات الدقيقة.
+      <strong>⚠️ تنبيه:</strong> الحساب تقريبي. دائماً قسّ سكرك واستشر طبيبك.
     </div>
 
     <!-- Loading State -->
     <div class="loading-state" id="loadingState">
       <div class="loading-orb"></div>
-      <div class="loading-text">جاري تحليل الوجبة بالذكاء الاصطناعي...</div>
+      <div class="loading-text" id="loadingText">يبحث في الذاكرة الذكية...</div>
+      <div class="loading-sources">
+        <div class="loading-source" id="sourceCache">⚡ ذاكرة</div>
+        <div class="loading-source" id="sourceLibrary">📚 مكتبة</div>
+        <div class="loading-source" id="sourceAI">🧠 ذكاء</div>
+      </div>
     </div>
 
     <!-- Error State -->
     <div class="error-state" id="errorState">
-      <div class="error-text" id="errorText">حدث خطأ، حاول مرة أخرى</div>
+      <div class="error-text" id="errorText">حدث خطأ</div>
     </div>
 
     <!-- Results -->
     <div class="results" id="results">
-      <div class="result-header">
-        <div class="result-title">
-          <span>🎯</span>
-          <span>نتائج التحليل</span>
-        </div>
-        <div class="confidence-badge" id="confidenceBadge">ثقة عالية</div>
+      <div class="result-source" id="resultSource">
+        <span>⚡</span>
+        <span>من الذاكرة الذكية</span>
       </div>
 
-      <div class="carbs-display">
+      <div class="carbs-hero">
         <div class="carbs-number" id="carbsNumber">--</div>
         <div class="carbs-label">جرام كاربوهيدرات</div>
       </div>
 
-      <div class="details-grid">
-        <div class="detail-item">
-          <div class="detail-value" id="proteinValue">--</div>
-          <div class="detail-label">بروتين (غ)</div>
+      <div class="macros-grid">
+        <div class="macro-card">
+          <div class="macro-value" id="proteinValue">--</div>
+          <div class="macro-label">بروتين (غ)</div>
         </div>
-        <div class="detail-item">
-          <div class="detail-value" id="fatValue">--</div>
-          <div class="detail-label">دهون (غ)</div>
+        <div class="macro-card">
+          <div class="macro-value" id="fatValue">--</div>
+          <div class="macro-label">دهون (غ)</div>
         </div>
-        <div class="detail-item">
-          <div class="detail-value" id="caloriesValue">--</div>
-          <div class="detail-label">سعرة حرارية</div>
+        <div class="macro-card">
+          <div class="macro-value" id="caloriesValue">--</div>
+          <div class="macro-label">سعرة حرارية</div>
         </div>
-        <div class="detail-item">
-          <div class="detail-value" id="insulinValue">--</div>
-          <div class="detail-label">وحدة أنسولين</div>
+        <div class="macro-card">
+          <div class="macro-value" id="fiberValue">--</div>
+          <div class="macro-label">ألياف (غ)</div>
         </div>
       </div>
 
-      <div class="ai-notes">
-        <div class="ai-notes-title">
-          <span>🤖</span>
-          <span>ملاحظات الذكاء الاصطناعي</span>
+      <div class="insulin-box">
+        <div class="insulin-label">الأنسولين المقترح</div>
+        <div class="insulin-value" id="insulinValue">--</div>
+        <div class="insulin-unit">وحدة</div>
+      </div>
+
+      <div class="ai-insights">
+        <div class="ai-insights-title">
+          <span>💡</span>
+          <span>تحليل ذكي</span>
         </div>
-        <div class="ai-notes-text" id="aiNotes">--</div>
+        <div class="ai-insights-text" id="aiInsights">--</div>
       </div>
 
       <div class="action-btns">
@@ -654,203 +783,387 @@
 
   <script>
     // ============================================
-    // Gemini API Configuration
+    // SMART CACHE SYSTEM - الذهاب الذكي
+    // ============================================
+    const CACHE_KEY = 'sugarmind_smart_cache';
+    
+    // Initialize cache with common Arabic meals
+    function initSmartCache() {
+      let cache = getCache();
+      
+      if (Object.keys(cache).length === 0) {
+        // Default Arabic meals database
+        const defaultMeals = {
+          'كبسة دجاج': {
+            carbs: 65, protein: 28, fat: 18, calories: 520, fiber: 3,
+            source: 'cache', insights: 'أرز + دجاج + بهارات. الكارب عالي بسبب الأرز.'
+          },
+          'كبسة': {
+            carbs: 65, protein: 28, fat: 18, calories: 520, fiber: 3,
+            source: 'cache', insights: 'أرز + دجاج + بهارات. الكارب عالي بسبب الأرز.'
+          },
+          'شاورما': {
+            carbs: 35, protein: 25, fat: 22, calories: 450, fiber: 2,
+            source: 'cache', insights: 'خبز + لحم + ثومية. انتبه للدهون العالية.'
+          },
+          'فول': {
+            carbs: 40, protein: 15, fat: 8, calories: 320, fiber: 12,
+            source: 'cache', insights: 'كارب معقد + ألياف عالية. بطيء الامتصاص.'
+          },
+          'فلافل': {
+            carbs: 45, protein: 13, fat: 18, calories: 380, fiber: 8,
+            source: 'cache', insights: 'حمص مقلي. دهون عالية بسبب القلي.'
+          },
+          'فول وفلافل': {
+            carbs: 42, protein: 14, fat: 13, calories: 350, fiber: 10,
+            source: 'cache', insights: 'وجبة متوازنة. الألياف تبطئ ارتفاع السكر.'
+          },
+          'منسف': {
+            carbs: 70, protein: 30, fat: 20, calories: 580, fiber: 2,
+            source: 'cache', insights: 'أرز + لحم + لبن. كارب عالي جداً.'
+          },
+          'مندي': {
+            carbs: 55, protein: 32, fat: 25, calories: 550, fiber: 1,
+            source: 'cache', insights: 'أرز مدخن + لحم. دهون عالية.'
+          },
+          'برجر': {
+            carbs: 40, protein: 28, fat: 35, calories: 580, fiber: 2,
+            source: 'cache', insights: 'خبز + لحم + جبن. دهون مشبعة عالية.'
+          },
+          'بيتزا': {
+            carbs: 60, protein: 20, fat: 25, calories: 550, fiber: 3,
+            source: 'cache', insights: 'عجينة + جبن + صلصة. كارب سريع الامتصاص.'
+          },
+          'كشري': {
+            carbs: 85, protein: 18, fat: 12, calories: 520, fiber: 6,
+            source: 'cache', insights: 'أرز + مكرونة + عدس. كارب عالي جداً!'
+          },
+          'محشي': {
+            carbs: 45, protein: 12, fat: 15, calories: 380, fiber: 5,
+            source: 'cache', insights: 'خضار + أرز + زيت. ألياف جيدة.'
+          },
+          'ورق عنب': {
+            carbs: 25, protein: 6, fat: 18, calories: 280, fiber: 4,
+            source: 'cache', insights: 'زيتون + زيت + أرز. دهون صحية.'
+          },
+          'مسقعة': {
+            carbs: 20, protein: 8, fat: 22, calories: 300, fiber: 6,
+            source: 'cache', insights: 'باذنجان + طماطم + زيت. كارب منخفض.'
+          },
+          'تبولة': {
+            carbs: 15, protein: 4, fat: 12, calories: 180, fiber: 4,
+            source: 'cache', insights: 'برغل + خضار + زيت. وجبة خفيفة.'
+          },
+          'حمص': {
+            carbs: 20, protein: 8, fat: 15, calories: 250, fiber: 6,
+            source: 'cache', insights: 'حمص + طحينة + زيت. بروتين نباتي.'
+          },
+          'متبل': {
+            carbs: 12, protein: 3, fat: 18, calories: 220, fiber: 3,
+            source: 'cache', insights: 'باذنجان + طحينة. دهون صحية.'
+          },
+          'فتة': {
+            carbs: 50, protein: 20, fat: 25, calories: 480, fiber: 2,
+            source: 'cache', insights: 'خبز + أرز + لحم + زبادي. كارب عالي.'
+          },
+          'برياني': {
+            carbs: 68, protein: 26, fat: 22, calories: 560, fiber: 2,
+            source: 'cache', insights: 'أرز هندي + بهارات + لحم. كارب عالي.'
+          },
+          'تمر': {
+            carbs: 75, protein: 2, fat: 0.4, calories: 280, fiber: 8,
+            source: 'cache', insights: 'سكر طبيعي سريع الامتصاص. ممتاز للهبوط!'
+          },
+          'موز': {
+            carbs: 23, protein: 1.1, fat: 0.3, calories: 89, fiber: 2.6,
+            source: 'cache', insights: 'فاكهة سريعة. جيدة قبل التمرين.'
+          },
+          'تفاح': {
+            carbs: 14, protein: 0.3, fat: 0.2, calories: 52, fiber: 2.4,
+            source: 'cache', insights: 'ألياف تبطئ امتصاص السكر.'
+          },
+          'برتقال': {
+            carbs: 12, protein: 0.9, fat: 0.1, calories: 47, fiber: 2.4,
+            source: 'cache', insights: 'فيتامين C + ألياف. وجبة خفيفة ممتازة.'
+          },
+          'عصير برتقال': {
+            carbs: 26, protein: 0.7, fat: 0.2, calories: 112, fiber: 0.5,
+            source: 'cache', insights: 'سكر سريع بدون ألياف. أسرع من البرتقال كامل!'
+          },
+          'حليب': {
+            carbs: 5, protein: 3.4, fat: 3.3, calories: 64, fiber: 0,
+            source: 'cache', insights: 'لاكتوز (سكر حليب). بطيء الامتصاص.'
+          },
+          'جبن': {
+            carbs: 1, protein: 25, fat: 33, calories: 402, fiber: 0,
+            source: 'cache', insights: 'كارب منخفض جداً. بروتين عالي.'
+          },
+          'بيض': {
+            carbs: 1, protein: 13, fat: 11, calories: 155, fiber: 0,
+            source: 'cache', insights: 'بروتين كامل. كارب شبه معدوم.'
+          },
+          'زبادي': {
+            carbs: 5, protein: 10, fat: 0, calories: 59, fiber: 0,
+            source: 'cache', insights: 'بروبيوتيك + بروتين. ممتاز للهضم.'
+          },
+          'شوفان': {
+            carbs: 66, protein: 17, fat: 7, calories: 389, fiber: 11,
+            source: 'cache', insights: 'كارب معقد + ألياف عالية. بطيء الامتصاص.'
+          },
+          'رز أبيض': {
+            carbs: 28, protein: 2.7, fat: 0.3, calories: 130, fiber: 0.4,
+            source: 'cache', insights: 'كارب سريع الامتصاص. يرفع السكر بسرعة.'
+          },
+          'رز بني': {
+            carbs: 23, protein: 2.6, fat: 0.9, calories: 112, fiber: 1.8,
+            source: 'cache', insights: 'ألياف أكثر من الأبيض. أفضل للسكري.'
+          },
+          'معكرونة': {
+            carbs: 25, protein: 5, fat: 1, calories: 131, fiber: 1.8,
+            source: 'cache', insights: 'كارب معقد. يعتمد على نوع الصلصة.'
+          },
+          'خبز أبيض': {
+            carbs: 49, protein: 9, fat: 3, calories: 265, fiber: 2.7,
+            source: 'cache', insights: 'كارب سريع. يفضل الخبز الأسمر.'
+          },
+          'خبز أسمر': {
+            carbs: 41, protein: 13, fat: 3.5, calories: 247, fiber: 7,
+            source: 'cache', insights: 'ألياف عالية. أفضل بكثير للسكري.'
+          }
+        };
+        
+        cache = defaultMeals;
+        saveCache(cache);
+      }
+      
+      return cache;
+    }
+
+    function getCache() {
+      try {
+        return JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
+      } catch {
+        return {};
+      }
+    }
+
+    function saveCache(cache) {
+      localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+    }
+
+    function addToCache(mealName, data) {
+      const cache = getCache();
+      cache[mealName.toLowerCase().trim()] = {
+        ...data,
+        cachedAt: new Date().toISOString()
+      };
+      saveCache(cache);
+    }
+
+    // ============================================
+    // OPEN FOOD FACTS API - المكتبة العالمية
+    // ============================================
+    async function searchOpenFoodFacts(query) {
+      try {
+        // Try Arabic first
+        let response = await fetch(`https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=5`);
+        
+        if (!response.ok) throw new Error('API failed');
+        
+        let data = await response.json();
+        
+        if (data.products && data.products.length > 0) {
+          const product = data.products[0];
+          const nutriments = product.nutriments || {};
+          
+          return {
+            carbs: Math.round(nutriments.carbohydrates_100g || 0),
+            protein: Math.round(nutriments.proteins_100g || 0),
+            fat: Math.round(nutriments.fat_100g || 0),
+            calories: Math.round(nutriments.energy-kcal_100g || 0),
+            fiber: Math.round(nutriments.fiber_100g || 0),
+            source: 'library',
+            insights: `من قاعدة بيانات ${product.product_name || query}. القيم لكل 100غ.`,
+            productName: product.product_name
+          };
+        }
+        
+        return null;
+      } catch (error) {
+        console.log('Open Food Facts error:', error);
+        return null;
+      }
+    }
+
+    // ============================================
+    // GEMINI AI - الذكاء الاصطناعي
     // ============================================
     const GEMINI_API_KEY = 'AIzaSyDkm5-pZ8T2sv514EH5qqp8p31Jk-KsAec';
     const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
+    async function analyzeWithGemini(text, imageBase64 = null) {
+      let prompt = `
+أنت خبير تغذية متخصص في السكري. حلل الوجبة وأرجع JSON فقط:
+{
+  "carbs": رقم,
+  "protein": رقم,
+  "fat": رقم,
+  "calories": رقم,
+  "fiber": رقم,
+  "insights": "نصيحة ذكية بالعربي"
+}
+
+الوجبة: "${text}"
+
+قواعد:
+- افترض حجم وجبة طبيعية (250-300غ)
+- ركز على الكربوهيدرات Net (الكلي ناقص الألياف)
+- أضف ملاحظة مفيدة للسكري`;
+
+      const parts = [{ text: prompt }];
+      
+      if (imageBase64) {
+        parts.push({
+          inline_data: {
+            mime_type: 'image/jpeg',
+            data: imageBase64.split(',')[1]
+          }
+        });
+      }
+
+      const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts }],
+          generationConfig: { temperature: 0.3, maxOutputTokens: 500 }
+        })
+      });
+
+      if (!response.ok) throw new Error('Gemini API failed');
+
+      const data = await response.json();
+      const textResponse = data.candidates[0].content.parts[0].text;
+      const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
+      
+      if (!jsonMatch) throw new Error('Invalid JSON');
+      
+      const result = JSON.parse(jsonMatch[0]);
+      result.source = 'ai';
+      
+      return result;
+    }
+
+    // ============================================
+    // HYBRID ANALYSIS ENGINE - المحرك الأسطوري
+    // ============================================
+    async function analyzeMeal() {
+      const input = document.getElementById('mealInput').value.trim();
+      const hasImage = selectedImage !== null;
+      
+      if (!input && !hasImage) {
+        showError('اكتب الوجبة أو صورها أولاً');
+        return;
+      }
+
+      setLoading(true);
+      hideError();
+      
+      const mealKey = input.toLowerCase().trim();
+      let result = null;
+      let source = '';
+
+      // STEP 1: Smart Cache (أ fastest)
+      updateLoading('يبحث في الذاكرة الذكية...', 'cache');
+      await delay(300);
+      
+      const cache = getCache();
+      if (cache[mealKey]) {
+        result = cache[mealKey];
+        source = 'cache';
+        console.log('✅ Found in cache:', mealKey);
+      }
+
+      // STEP 2: Open Food Facts (if not in cache)
+      if (!result && input) {
+        updateLoading('يبحث في المكتبة العالمية...', 'library');
+        const libraryResult = await searchOpenFoodFacts(input);
+        
+        if (libraryResult) {
+          result = libraryResult;
+          source = 'library';
+          // Save to cache for future
+          addToCache(mealKey, result);
+          console.log('✅ Found in library:', mealKey);
+        }
+      }
+
+      // STEP 3: Gemini AI (final fallback)
+      if (!result) {
+        updateLoading('يحلل بالذكاء الاصطناعي...', 'ai');
+        
+        try {
+          let imageBase64 = null;
+          if (hasImage) {
+            imageBase64 = await fileToBase64(selectedImage);
+          }
+          
+          result = await analyzeWithGemini(input || 'وجبة مصورة', imageBase64);
+          source = 'ai';
+          
+          // Save AI result to cache
+          if (input) {
+            addToCache(mealKey, result);
+          }
+          console.log('✅ Analyzed by AI');
+        } catch (error) {
+          console.error('AI error:', error);
+          showError('الذكاء الاصطناعي غير متاح حالياً. جرب وجبة أخرى.');
+          setLoading(false);
+          return;
+        }
+      }
+
+      displayResults(result, source);
+      lastAnalysis = { ...result, name: input || 'وجبة مصورة' };
+      setLoading(false);
+    }
+
+    // ============================================
+    // UI HELPERS
+    // ============================================
     let selectedImage = null;
     let lastAnalysis = null;
 
-    // ============================================
-    // Image Handling
-    // ============================================
+    function setMeal(name) {
+      document.getElementById('mealInput').value = name;
+      analyzeMeal();
+    }
+
+    function handleInput(event) {
+      if (event.key === 'Enter') {
+        analyzeMeal();
+      }
+    }
+
     function handleImageSelect(event) {
       const file = event.target.files[0];
       if (!file) return;
 
       selectedImage = file;
       
-      // Show preview
       const reader = new FileReader();
       reader.onload = function(e) {
         const preview = document.getElementById('imagePreview');
         preview.src = e.target.result;
         preview.classList.add('show');
         
-        const cameraBtn = document.getElementById('cameraBtn');
-        cameraBtn.classList.add('has-image');
+        document.getElementById('cameraSection').classList.add('has-image');
         document.getElementById('cameraText').textContent = 'تغيير الصورة';
       };
       reader.readAsDataURL(file);
     }
 
-    // ============================================
-    // Main Analysis Function
-    // ============================================
-    async function analyzeMeal() {
-      const mealText = document.getElementById('mealInput').value.trim();
-      
-      if (!mealText && !selectedImage) {
-        showError('اكتب الوجبة أو صورها أولاً');
-        return;
-      }
-
-      // Show loading
-      setLoading(true);
-      hideError();
-
-      try {
-        let result;
-        
-        if (selectedImage) {
-          // Analyze image with Gemini Vision
-          result = await analyzeImageWithGemini(selectedImage);
-        } else {
-          // Analyze text with Gemini
-          result = await analyzeTextWithGemini(mealText);
-        }
-
-        displayResults(result);
-        lastAnalysis = result;
-        
-      } catch (error) {
-        console.error('Analysis error:', error);
-        showError('حدث خطأ في التحليل، حاول مرة أخرى');
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    // ============================================
-    // Gemini Text Analysis
-    // ============================================
-    async function analyzeTextWithGemini(text) {
-      const prompt = `
-أنت خبير تغذية متخصص في حساب الكربوهيدرات لمرضى السكري.
-حلل الوجبة التالية وأرجع النتيجة بدقة عالية.
-
-الوجبة: "${text}"
-
-أرجع النتيجة بهذا الشكل JSON فقط (لا تضيف أي نص خارج JSON):
-{
-  "carbs": رقم تقريبي للكربوهيدرات بالجرام,
-  "protein": رقم تقريبي للبروتين بالجرام,
-  "fat": رقم تقريبي للدهون بالجرام,
-  "calories": إجمالي السعرات الحرارية,
-  "confidence": "high" أو "medium" أو "low",
-  "notes": "ملاحظة قصيرة بالعربي عن الوجبة ومكوناتها الرئيسية"
-}
-
-قواعد:
-- الكربوهيدرات: ركز على الأرز، الخبز، المكرونة، الفواكه، العصائر، السكريات
-- البروتين: اللحوم، الدجاج، السمك، البيض، الحليب
-- الدهون: الزيوت، المكسرات، الأفوكادو
-- الثقة: high لو الوجبة واضحة، medium لو فيها تخمين، low لو غير واضحة
-`;
-
-      const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: prompt
-            }]
-          }],
-          generationConfig: {
-            temperature: 0.3,
-            maxOutputTokens: 500,
-          }
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const textResponse = data.candidates[0].content.parts[0].text;
-      
-      // Extract JSON from response
-      const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        throw new Error('Invalid response format');
-      }
-
-      return JSON.parse(jsonMatch[0]);
-    }
-
-    // ============================================
-    // Gemini Image Analysis
-    // ============================================
-    async function analyzeImageWithGemini(imageFile) {
-      // Convert image to base64
-      const base64Image = await fileToBase64(imageFile);
-      
-      const prompt = `
-أنت خبير تغذية متخصص في حساب الكربوهيدرات لمرضى السكري.
-شوف هذه الصورة وحدد:
-1. وش الوجبة؟
-2. كم تقريباً الكربوهيدرات بالجرام؟
-3. البروتين والدهون والسعرات؟
-4. مستوى ثقتك في التحليل؟
-
-أرجع النتيجة بهذا الشكل JSON فقط:
-{
-  "carbs": رقم,
-  "protein": رقم,
-  "fat": رقم,
-  "calories": رقم,
-  "confidence": "high" أو "medium" أو "low",
-  "notes": "وصف قصير للوجبة اللي شفتها"
-}
-`;
-
-      const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [{
-            parts: [
-              { text: prompt },
-              {
-                inline_data: {
-                  mime_type: imageFile.type,
-                  data: base64Image.split(',')[1]
-                }
-              }
-            ]
-          }],
-          generationConfig: {
-            temperature: 0.3,
-            maxOutputTokens: 500,
-          }
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const textResponse = data.candidates[0].content.parts[0].text;
-      
-      const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        throw new Error('Invalid response format');
-      }
-
-      return JSON.parse(jsonMatch[0]);
-    }
-
-    // ============================================
-    // Helper Functions
-    // ============================================
     function fileToBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -860,6 +1173,10 @@
       });
     }
 
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     function setLoading(loading) {
       const btn = document.getElementById('analyzeBtn');
       const loadingState = document.getElementById('loadingState');
@@ -867,21 +1184,27 @@
       if (loading) {
         btn.disabled = true;
         btn.innerHTML = '<span>⏳</span><span>جاري التحليل...</span>';
-        btn.classList.add('loading');
         loadingState.classList.add('show');
         document.getElementById('results').classList.remove('show');
       } else {
         btn.disabled = false;
-        btn.innerHTML = '<span>⚡</span><span>حلل بالذكاء الاصطناعي</span>';
-        btn.classList.remove('loading');
+        btn.innerHTML = '<span>⚡</span><span>حلل الأسطوري</span>';
         loadingState.classList.remove('show');
       }
     }
 
+    function updateLoading(text, activeSource) {
+      document.getElementById('loadingText').textContent = text;
+      
+      ['cache', 'library', 'ai'].forEach(source => {
+        const el = document.getElementById('source' + source.charAt(0).toUpperCase() + source.slice(1));
+        el.classList.toggle('active', source === activeSource);
+      });
+    }
+
     function showError(message) {
-      const errorState = document.getElementById('errorState');
       document.getElementById('errorText').textContent = message;
-      errorState.classList.add('show');
+      document.getElementById('errorState').classList.add('show');
     }
 
     function hideError() {
@@ -889,39 +1212,42 @@
     }
 
     // ============================================
-    // Display Results
+    // DISPLAY RESULTS
     // ============================================
-    function displayResults(data) {
-      // Animate carbs number
-      animateNumber('carbsNumber', data.carbs);
-      
-      document.getElementById('proteinValue').textContent = data.protein + 'g';
-      document.getElementById('fatValue').textContent = data.fat + 'g';
-      document.getElementById('caloriesValue').textContent = data.calories;
-      document.getElementById('aiNotes').textContent = data.notes;
-
-      // Calculate insulin (1 unit per 15g carbs default)
-      const icr = parseFloat(localStorage.getItem('sugarmind_icr')) || 15;
-      const insulin = Math.round(data.carbs / icr);
-      document.getElementById('insulinValue').textContent = insulin;
-
-      // Confidence badge
-      const badge = document.getElementById('confidenceBadge');
-      const confidenceMap = {
-        'high': { text: 'ثقة عالية', class: '' },
-        'medium': { text: 'ثقة متوسطة', class: 'medium' },
-        'low': { text: 'ثقة منخفضة', class: 'low' }
+    function displayResults(data, source) {
+      // Source badge
+      const sourceEl = document.getElementById('resultSource');
+      const sourceMap = {
+        'cache': { icon: '⚡', text: 'من الذاكرة الذكية', class: '' },
+        'library': { icon: '📚', text: 'من المكتبة العالمية', class: 'library' },
+        'ai': { icon: '🧠', text: 'من الذكاء الاصطناعي', class: 'ai' }
       };
-      const conf = confidenceMap[data.confidence] || confidenceMap['medium'];
-      badge.textContent = conf.text;
-      badge.className = 'confidence-badge ' + conf.class;
+      const s = sourceMap[source] || sourceMap['ai'];
+      sourceEl.innerHTML = `<span>${s.icon}</span><span>${s.text}</span>`;
+      sourceEl.className = 'result-source ' + s.class;
+
+      // Animate numbers
+      animateNumber('carbsNumber', data.carbs || 0);
+      animateNumber('proteinValue', data.protein || 0, '', 'g');
+      animateNumber('fatValue', data.fat || 0, '', 'g');
+      animateNumber('caloriesValue', data.calories || 0);
+      animateNumber('fiberValue', data.fiber || 0, '', 'g');
+
+      // Insulin
+      const icr = parseFloat(localStorage.getItem('sugarmind_icr')) || 15;
+      const netCarbs = Math.max(0, (data.carbs || 0) - (data.fiber || 0));
+      const insulin = Math.round(netCarbs / icr);
+      animateNumber('insulinValue', insulin);
+
+      // Insights
+      document.getElementById('aiInsights').textContent = data.insights || 'وجبة متوازنة';
 
       document.getElementById('results').classList.add('show');
     }
 
-    function animateNumber(id, target) {
+    function animateNumber(id, target, prefix = '', suffix = '') {
       const el = document.getElementById(id);
-      const duration = 1000;
+      const duration = 800;
       const start = 0;
       const increment = target / (duration / 16);
       let current = start;
@@ -929,17 +1255,17 @@
       function update() {
         current += increment;
         if (current < target) {
-          el.textContent = Math.floor(current);
+          el.textContent = prefix + Math.floor(current) + suffix;
           requestAnimationFrame(update);
         } else {
-          el.textContent = target;
+          el.textContent = prefix + target + suffix;
         }
       }
       update();
     }
 
     // ============================================
-    // Navigation Functions
+    // NAVIGATION
     // ============================================
     function goToCalculator() {
       window.location.href = 'carb-calculator.html';
@@ -948,25 +1274,19 @@
     function saveToDaily() {
       if (!lastAnalysis) return;
       
-      const mealName = document.getElementById('mealInput').value || 'وجبة مصورة';
-      const meal = {
-        name: mealName,
-        carbs: lastAnalysis.carbs,
-        protein: lastAnalysis.protein,
-        fat: lastAnalysis.fat,
-        calories: lastAnalysis.calories,
-        insulin: document.getElementById('insulinValue').textContent,
+      const meals = JSON.parse(localStorage.getItem('sugarmind_meals') || '[]');
+      meals.push({
+        ...lastAnalysis,
         time: new Date().toLocaleTimeString('ar-SA', {hour:'2-digit', minute:'2-digit'}),
         date: new Date().toISOString()
-      };
+      });
       
-      let meals = JSON.parse(localStorage.getItem('sugarmind_meals') || '[]');
-      meals.push(meal);
       localStorage.setItem('sugarmind_meals', JSON.stringify(meals));
-      
       alert('✅ تم الحفظ في دليلك اليومي!');
     }
+
+    // Initialize
+    initSmartCache();
   </script>
 </body>
 </html>
-
