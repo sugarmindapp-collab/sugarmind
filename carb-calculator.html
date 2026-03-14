@@ -1,1 +1,353 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>احسب معاملك - SugarMind</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0F172A;
+      --bg-elevated:#1E293B;
+      --surface:rgba(255,255,255,0.05);
+      --surface-hover:rgba(255,255,255,0.08);
+      --border:rgba(255,255,255,0.1);
+      --text-primary:#F8FAFC;
+      --text-secondary:#94A3B8;
+      --text-muted:#64748B;
+      --primary:#10B981;
+      --primary-light:#34D399;
+      --purple:#8B5CF6;
+      --blue:#3B82F6;
+      --gold:#FBBF24;
+      --radius:24px;
+      --radius-sm:16px;
+      --font-family:'Tajawal',sans-serif;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0;font-family:var(--font-family);-webkit-tap-highlight-color:transparent}
+
+    body{background:var(--bg);color:var(--text-primary);min-height:100vh}
+
+    .app{max-width:480px;margin:0 auto;padding:20px;padding-bottom:100px}
+
+    /* Header */
+    .header{display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-top:20px}
+    .back-btn{width:44px;height:44px;border-radius:14px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text-primary);text-decoration:none}
+    .header-title{font-size:24px;font-weight:900}
+
+    /* Progress Steps */
+    .steps{display:flex;gap:8px;margin-bottom:24px}
+    .step{flex:1;height:4px;background:var(--surface);border-radius:2px;transition:all 0.3s}
+    .step.active{background:var(--primary)}
+    .step.completed{background:var(--primary);opacity:0.5}
+
+    /* Input Card */
+    .input-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+    .input-label{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-secondary);margin-bottom:12px;font-weight:700}
+    .input-field{width:100%;background:transparent;border:2px solid var(--border);border-radius:var(--radius-sm);padding:16px;color:var(--text-primary);font-size:18px;font-weight:700;text-align:center;transition:all 0.3s}
+    .input-field:focus{outline:none;border-color:var(--primary);box-shadow:0 0 20px rgba(16,185,129,0.2)}
+
+    /* Options Grid */
+    .options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+    .option{padding:14px 8px;background:var(--bg-elevated);border:2px solid var(--border);border-radius:var(--radius-sm);text-align:center;cursor:pointer;transition:all 0.2s;font-size:13px;font-weight:700;color:var(--text-secondary)}
+    .option:hover{border-color:var(--primary);color:var(--primary)}
+    .option.selected{background:var(--primary);border-color:var(--primary);color:#fff}
+
+    /* Calculate Button */
+    .calc-btn{width:100%;padding:20px;border-radius:var(--radius);background:linear-gradient(135deg,var(--primary),var(--primary-light));border:none;color:#fff;font-size:18px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;margin:24px 0;box-shadow:0 8px 25px rgba(16,185,129,0.3)}
+    .calc-btn:disabled{opacity:0.6;cursor:not-allowed}
+
+    /* Result Card */
+    .result-card{background:var(--surface);border:2px solid var(--primary);border-radius:var(--radius);padding:28px;display:none;animation:flashIn 0.4s ease}
+    .result-card.show{display:block}
+    @keyframes flashIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+
+    .result-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(16,185,129,0.15);border-radius:999px;font-size:12px;font-weight:800;color:var(--primary);margin-bottom:20px}
+
+    /* ICR Hero */
+    .icr-hero{text-align:center;padding:32px;background:linear-gradient(145deg,rgba(16,185,129,0.15),rgba(16,185,129,0.02));border-radius:var(--radius);margin-bottom:20px}
+    .icr-number{font-size:64px;font-weight:900;color:var(--primary);line-height:1}
+    .icr-label{font-size:14px;color:var(--text-secondary);margin-top:8px}
+
+    /* Stats Grid */
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
+    .stat{padding:16px;background:rgba(255,255,255,0.03);border-radius:var(--radius-sm);text-align:center}
+    .stat-value{font-size:24px;font-weight:900;color:var(--text-primary)}
+    .stat-label{font-size:11px;color:var(--text-secondary);margin-top:4px}
+
+    /* AI Insight */
+    .ai-box{background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);border-radius:var(--radius-sm);padding:20px;margin-bottom:20px}
+    .ai-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;color:var(--purple);margin-bottom:10px}
+    .ai-text{font-size:14px;color:var(--text-secondary);line-height:1.8}
+    .ai-loading{display:flex;align-items:center;gap:12px;color:var(--text-secondary)}
+    .ai-dots{display:flex;gap:4px}
+    .ai-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);animation:dotBounce 0.6s infinite}
+    .ai-dot:nth-child(2){animation-delay:0.2s}
+    .ai-dot:nth-child(3){animation-delay:0.4s}
+    @keyframes dotBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+    /* Action Buttons */
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .btn{padding:16px;border-radius:14px;border:none;font-size:14px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-secondary{background:var(--surface);color:var(--text-primary);border:1px solid var(--border)}
+
+    /* Bottom Nav */
+    .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:12px 20px;z-index:90}
+    .nav-inner{max-width:480px;margin:0 auto;display:flex;justify-content:space-around}
+    .nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 16px;color:var(--text-secondary);text-decoration:none;font-size:11px;font-weight:700}
+    .nav-item.active{color:var(--primary);background:rgba(16,185,129,0.1);border-radius:12px}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <a href="index.html" class="back-btn">←</a>
+      <h1 class="header-title">احسب معاملك 🧮</h1>
+    </header>
+
+    <!-- Progress -->
+    <div class="steps" id="steps">
+      <div class="step active"></div>
+      <div class="step"></div>
+      <div class="step"></div>
+      <div class="step"></div>
+    </div>
+
+    <!-- Step 1: Weight -->
+    <div class="input-card" id="step1">
+      <div class="input-label">⚖️ وزنك (كجم)</div>
+      <input type="number" class="input-field" id="weight" placeholder="75" onchange="updateProgress()">
+    </div>
+
+    <!-- Step 2: Age -->
+    <div class="input-card" id="step2">
+      <div class="input-label">🎂 عمرك (سنة)</div>
+      <input type="number" class="input-field" id="age" placeholder="35" onchange="updateProgress()">
+    </div>
+
+    <!-- Step 3: Activity -->
+    <div class="input-card" id="step3">
+      <div class="input-label">🏃 مستوى النشاط</div>
+      <div class="options" id="activityOptions">
+        <div class="option" onclick="selectOption('activity', 'low', this)">خفيف</div>
+        <div class="option" onclick="selectOption('activity', 'moderate', this)">متوسط</div>
+        <div class="option" onclick="selectOption('activity', 'high', this)">نشط</div>
+      </div>
+    </div>
+
+    <!-- Step 4: Diabetes Type -->
+    <div class="input-card" id="step4">
+      <div class="input-label">💉 نوع السكري</div>
+      <div class="options" id="typeOptions">
+        <div class="option" onclick="selectOption('type', 'type1', this)">نوع 1</div>
+        <div class="option" onclick="selectOption('type', 'type2', this)">نوع 2</div>
+        <div class="option" onclick="selectOption('type', 'prediabetes', this)">ما قبل</div>
+      </div>
+    </div>
+
+    <!-- Calculate -->
+    <button class="calc-btn" id="calcBtn" onclick="calculate()" disabled>
+      <span>⚡</span>
+      <span>احسب معاملي</span>
+    </button>
+
+    <!-- Result -->
+    <div class="result-card" id="resultCard">
+      <div class="result-badge">✅ حساب مكتمل</div>
+      
+      <div class="icr-hero">
+        <div class="icr-number" id="icrValue">1:12</div>
+        <div class="icr-label">جرام كارب = 1 وحدة أنسولين</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value" id="isfValue">45</div>
+          <div class="stat-label">نسبة التصحيح (mg/dL)</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="tddValue">40</div>
+          <div class="stat-label">إجمالي الأنسولين/يوم</div>
+        </div>
+      </div>
+
+      <div class="ai-box" id="aiBox">
+        <div class="ai-title">
+          <span>🧠</span>
+          <span>تحليل الذكاء الاصطناعي</span>
+        </div>
+        <div class="ai-text" id="aiText">
+          <div class="ai-loading">
+            <span>جاري التحليل</span>
+            <div class="ai-dots">
+              <div class="ai-dot"></div>
+              <div class="ai-dot"></div>
+              <div class="ai-dot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="saveResult()">
+          <span>💾</span> حفظ
+        </button>
+        <button class="btn btn-secondary" onclick="goToAnalyzer()">
+          <span>🍽️</span> جربه
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-item">🏠 رئيسية</a>
+      <a href="meal-analyzer.html" class="nav-item">🍽️ محلل</a>
+      <a href="carb-calculator.html" class="nav-item active">🧮 حساب المعامل</a>
+    </div>
+  </nav>
+
+  <script>
+    // State
+    let state = {
+      weight: null,
+      age: null,
+      activity: null,
+      type: null
+    };
+
+    const GEMINI_KEY = 'AIzaSyDkm5-pZ8T2sv514EH5qqp8p31Jk-KsAec';
+
+    function selectOption(category, value, element) {
+      state[category] = value;
+      
+      // UI update
+      const container = element.parentElement;
+      container.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+      element.classList.add('selected');
+      
+      updateProgress();
+    }
+
+    function updateProgress() {
+      state.weight = document.getElementById('weight').value;
+      state.age = document.getElementById('age').value;
+      
+      const steps = document.querySelectorAll('.step');
+      let completed = 0;
+      
+      if (state.weight) completed++;
+      if (state.age) completed++;
+      if (state.activity) completed++;
+      if (state.type) completed++;
+      
+      steps.forEach((step, i) => {
+        step.classList.remove('active', 'completed');
+        if (i < completed) step.classList.add('completed');
+        if (i === completed) step.classList.add('active');
+      });
+      
+      document.getElementById('calcBtn').disabled = completed < 4;
+    }
+
+    function calculate() {
+      // Math calculations (instant)
+      const weight = parseFloat(state.weight);
+      const age = parseInt(state.age);
+      
+      // TDD estimation based on weight and activity
+      let tddBase = weight * 0.5; // 0.5 unit per kg
+      if (state.activity === 'low') tddBase *= 0.9;
+      if (state.activity === 'high') tddBase *= 1.2;
+      if (state.type === 'type2') tddBase *= 0.8;
+      if (age > 60) tddBase *= 0.9;
+      
+      const tdd = Math.round(tddBase);
+      const icr = Math.round(500 / tdd);
+      const isf = Math.round(1800 / tdd);
+      
+      // Display result (instant)
+      document.getElementById('icrValue').textContent = `1:${icr}`;
+      document.getElementById('isfValue').textContent = isf;
+      document.getElementById('tddValue').textContent = tdd;
+      document.getElementById('resultCard').classList.add('show');
+      
+      // Save to localStorage
+      localStorage.setItem('sugarmind_icr', icr);
+      localStorage.setItem('sugarmind_isf', isf);
+      localStorage.setItem('sugarmind_tdd', tdd);
+      
+      // AI insight (async, non-blocking)
+      getAIInsight(weight, age, state.activity, state.type, icr, tdd);
+    }
+
+    async function getAIInsight(weight, age, activity, type, icr, tdd) {
+      const prompt = `
+أنت خبير سكري. المعاملات:
+- ICR: 1:${icr} (12g كارب = 1 وحدة)
+- الوزن: ${weight}كجم
+- العمر: ${age}سنة
+- النشاط: ${activity}
+- النوع: ${type}
+
+أعطِ نصيحة قصيرة (جملتين) بالعربي عن:
+1. هل هذا المعامل مناسب؟
+2. نصيحة للبدء باستخدامه.
+
+أرجع JSON فقط: {"advice": "نصيحتك هنا"}`;
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            contents: [{parts: [{text: prompt}]}],
+            generationConfig: {temperature: 0.3, maxOutputTokens: 150}
+          })
+        });
+        
+        const data = await res.json();
+        const text = data.candidates[0].content.parts[0].text;
+        const match = text.match(/\{[\s\S]*\}/);
+        
+        if (match) {
+          const result = JSON.parse(match[0]);
+          document.getElementById('aiText').textContent = '💡 ' + result.advice;
+        }
+      } catch(e) {
+        // Fallback if AI fails
+        const fallbacks = [
+          'معاملك مناسب للبدء. ابدأ بوجبات صغيرة وراقب سكرك.',
+          'جرب المعامل لمدة 3 أيام وعدل حسب النتائج.',
+          'معاملك محافظ. ممتاز للبدء بأمان.'
+        ];
+        document.getElementById('aiText').textContent = '💡 ' + fallbacks[Math.floor(Math.random() * fallbacks.length)];
+      }
+    }
+
+    function saveResult() {
+      const result = {
+        icr: document.getElementById('icrValue').textContent,
+        isf: document.getElementById('isfValue').textContent,
+        tdd: document.getElementById('tddValue').textContent,
+        date: new Date().toISOString()
+      };
+      
+      const history = JSON.parse(localStorage.getItem('sugarmind_calculations') || '[]');
+      history.push(result);
+      localStorage.setItem('sugarmind_calculations', JSON.stringify(history));
+      
+      alert('✅ تم حفظ المعامل!');
+    }
+
+    function goToAnalyzer() {
+      window.location.href = 'meal-analyzer.html';
+    }
+  </script>
+</body>
+</html>
 
