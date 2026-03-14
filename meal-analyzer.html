@@ -1,1 +1,972 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>محلل الوجبة - SugarMind</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0F172A;
+      --bg-elevated:#1E293B;
+      --surface:rgba(255,255,255,0.05);
+      --surface-hover:rgba(255,255,255,0.08);
+      --border:rgba(255,255,255,0.1);
+      --text-primary:#F8FAFC;
+      --text-secondary:#94A3B8;
+      --text-muted:#64748B;
+      --primary:#10B981;
+      --primary-light:#34D399;
+      --primary-glow:0 0 40px rgba(16,185,129,0.3);
+      --danger:#EF4444;
+      --warning:#F59E0B;
+      --gold:#FBBF24;
+      --radius:24px;
+      --radius-sm:16px;
+      --shadow:0 25px 50px -12px rgba(0,0,0,0.5);
+      --font-family:'Tajawal',-apple-system,BlinkMacSystemFont,sans-serif;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0;font-family:var(--font-family);-webkit-tap-highlight-color:transparent}
+
+    body{
+      background:var(--bg);
+      color:var(--text-primary);
+      min-height:100vh;
+      overflow-x:hidden;
+      line-height:1.6;
+    }
+
+    /* Background */
+    .bg-layer{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .bg-gradient{
+      background:radial-gradient(ellipse at 100% 0%,rgba(16,185,129,0.15) 0%,transparent 50%),
+                 radial-gradient(ellipse at 0% 100%,rgba(59,130,246,0.08) 0%,transparent 40%),
+                 var(--bg);
+    }
+
+    .app{max-width:480px;margin:0 auto;padding:20px;min-height:100vh;position:relative;padding-bottom:120px}
+
+    /* Header */
+    .header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-bottom:32px;
+      padding-top:20px;
+    }
+
+    .back-btn{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:var(--surface);
+      border:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      color:var(--text-primary);
+      text-decoration:none;
+      transition:all 0.3s ease;
+      cursor:pointer;
+    }
+
+    .back-btn:hover{background:var(--surface-hover);transform:translateX(-4px)}
+
+    .header-title{font-size:24px;font-weight:900}
+
+    /* Main Input */
+    .input-container{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:24px;
+      margin-bottom:20px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .input-container::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:3px;
+      background:linear-gradient(90deg,var(--primary),var(--primary-light));
+      box-shadow:0 0 20px var(--primary);
+    }
+
+    .input-label{
+      font-size:14px;
+      color:var(--text-secondary);
+      margin-bottom:12px;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .meal-input{
+      width:100%;
+      background:transparent;
+      border:none;
+      color:var(--text-primary);
+      font-size:18px;
+      line-height:1.8;
+      resize:none;
+      min-height:100px;
+      font-family:var(--font-family);
+      font-weight:500;
+    }
+
+    .meal-input:focus{outline:none}
+
+    .meal-input::placeholder{color:var(--text-muted)}
+
+    /* Camera Button */
+    .camera-btn{
+      width:100%;
+      padding:18px;
+      border-radius:var(--radius-sm);
+      background:var(--surface);
+      border:2px dashed var(--border);
+      color:var(--text-secondary);
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      margin-bottom:20px;
+      transition:all 0.3s ease;
+    }
+
+    .camera-btn:hover{
+      border-color:var(--primary);
+      color:var(--primary);
+      background:rgba(16,185,129,0.05);
+    }
+
+    .camera-btn.has-image{
+      border-style:solid;
+      border-color:var(--primary);
+      background:rgba(16,185,129,0.1);
+    }
+
+    /* Hidden File Input */
+    #fileInput{display:none}
+
+    /* Analyze Button */
+    .analyze-btn{
+      width:100%;
+      padding:20px;
+      border-radius:var(--radius);
+      background:linear-gradient(135deg,var(--primary),#059669);
+      border:none;
+      color:#fff;
+      font-size:18px;
+      font-weight:800;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      transition:all 0.3s ease;
+      box-shadow:0 8px 25px rgba(16,185,129,0.3);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .analyze-btn:hover:not(:disabled){
+      transform:translateY(-2px);
+      box-shadow:0 12px 35px rgba(16,185,129,0.4);
+    }
+
+    .analyze-btn:disabled{
+      opacity:0.6;
+      cursor:not-allowed;
+    }
+
+    .analyze-btn.loading::after{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
+      animation:shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer{
+      0%{transform:translateX(-100%)}
+      100%{transform:translateX(100%)}
+    }
+
+    /* Disclaimer */
+    .disclaimer{
+      text-align:center;
+      margin-top:20px;
+      padding:16px;
+      background:rgba(251,191,36,0.1);
+      border:1px solid rgba(251,191,36,0.3);
+      border-radius:var(--radius-sm);
+      font-size:13px;
+      color:var(--gold);
+      line-height:1.7;
+    }
+
+    .disclaimer strong{display:block;margin-bottom:4px}
+
+    /* Results */
+    .results{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:28px;
+      margin-top:28px;
+      display:none;
+      animation:slideUp 0.5s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow:var(--shadow);
+    }
+
+    .results.show{display:block}
+
+    @keyframes slideUp{
+      from{opacity:0;transform:translateY(30px) scale(0.95)}
+      to{opacity:1;transform:translateY(0) scale(1)}
+    }
+
+    .result-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:24px;
+      padding-bottom:20px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .result-title{
+      font-size:20px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .confidence-badge{
+      padding:6px 14px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      background:rgba(16,185,129,0.15);
+      color:var(--primary);
+      border:1px solid rgba(16,185,129,0.3);
+    }
+
+    .confidence-badge.medium{
+      background:rgba(245,158,11,0.15);
+      color:var(--warning);
+      border-color:rgba(245,158,11,0.3);
+    }
+
+    .confidence-badge.low{
+      background:rgba(239,68,68,0.15);
+      color:var(--danger);
+      border-color:rgba(239,68,68,0.3);
+    }
+
+    /* Carbs Display */
+    .carbs-display{
+      text-align:center;
+      padding:32px;
+      background:linear-gradient(145deg,rgba(16,185,129,0.1),rgba(16,185,129,0.02));
+      border:2px solid rgba(16,185,129,0.3);
+      border-radius:var(--radius);
+      margin-bottom:24px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .carbs-display::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:4px;
+      background:linear-gradient(90deg,var(--primary),var(--primary-light));
+    }
+
+    .carbs-number{
+      font-size:72px;
+      font-weight:900;
+      color:var(--primary);
+      line-height:1;
+      text-shadow:0 0 40px rgba(16,185,129,0.5);
+    }
+
+    .carbs-label{
+      font-size:16px;
+      color:var(--text-secondary);
+      margin-top:8px;
+      font-weight:600;
+    }
+
+    /* Details Grid */
+    .details-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-bottom:24px;
+    }
+
+    .detail-item{
+      padding:16px;
+      background:rgba(255,255,255,0.03);
+      border-radius:var(--radius-sm);
+      border:1px solid var(--border);
+      text-align:center;
+    }
+
+    .detail-value{
+      font-size:24px;
+      font-weight:900;
+      color:var(--text-primary);
+    }
+
+    .detail-label{
+      font-size:12px;
+      color:var(--text-secondary);
+      margin-top:4px;
+    }
+
+    /* AI Notes */
+    .ai-notes{
+      background:rgba(59,130,246,0.1);
+      border:1px solid rgba(59,130,246,0.3);
+      border-radius:var(--radius-sm);
+      padding:20px;
+      margin-bottom:24px;
+    }
+
+    .ai-notes-title{
+      font-size:14px;
+      font-weight:800;
+      color:#60A5FA;
+      margin-bottom:10px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .ai-notes-text{
+      font-size:14px;
+      color:var(--text-secondary);
+      line-height:1.8;
+    }
+
+    /* Action Buttons */
+    .action-btns{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .btn{
+      padding:16px;
+      border-radius:14px;
+      border:none;
+      font-size:14px;
+      font-weight:800;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      font-family:var(--font-family);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--primary),var(--primary-light));
+      color:#fff;
+      box-shadow:0 8px 25px rgba(16,185,129,0.3);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 35px rgba(16,185,129,0.4);
+    }
+
+    .btn-secondary{
+      background:var(--surface);
+      color:var(--text-primary);
+      border:1px solid var(--border);
+    }
+
+    .btn-secondary:hover{
+      background:var(--surface-hover);
+      border-color:rgba(255,255,255,0.2);
+    }
+
+    /* Loading State */
+    .loading-state{
+      text-align:center;
+      padding:40px;
+      display:none;
+    }
+
+    .loading-state.show{display:block}
+
+    .loading-orb{
+      width:80px;
+      height:80px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--primary),var(--primary-light));
+      margin:0 auto 20px;
+      animation:pulse-orb 2s ease-in-out infinite;
+      filter:blur(20px);
+      opacity:0.6;
+    }
+
+    @keyframes pulse-orb{
+      0%,100%{transform:scale(1);opacity:0.6}
+      50%{transform:scale(1.2);opacity:0.8}
+    }
+
+    .loading-text{
+      font-size:16px;
+      color:var(--text-secondary);
+      font-weight:600;
+    }
+
+    /* Error State */
+    .error-state{
+      background:rgba(239,68,68,0.1);
+      border:1px solid rgba(239,68,68,0.3);
+      border-radius:var(--radius-sm);
+      padding:20px;
+      margin-top:20px;
+      display:none;
+      text-align:center;
+    }
+
+    .error-state.show{display:block}
+
+    .error-text{color:var(--danger);font-weight:700}
+
+    /* Bottom Nav */
+    .bottom-nav{
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      background:rgba(15,23,42,0.95);
+      backdrop-filter:blur(20px);
+      border-top:1px solid var(--border);
+      padding:12px 20px calc(12px + env(safe-area-inset-bottom));
+      z-index:90;
+    }
+
+    .nav-inner{
+      max-width:480px;
+      margin:0 auto;
+      display:flex;
+      justify-content:space-around;
+      align-items:center;
+    }
+
+    .nav-item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:4px;
+      padding:8px 16px;
+      color:var(--text-secondary);
+      text-decoration:none;
+      font-size:11px;
+      font-weight:700;
+      transition:all 0.3s ease;
+      border-radius:12px;
+    }
+
+    .nav-item.active,
+    .nav-item:hover{
+      color:var(--primary);
+      background:rgba(16,185,129,0.1);
+    }
+
+    .nav-item span:first-child{font-size:22px}
+
+    /* Preview Image */
+    .image-preview{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+      border-radius:var(--radius-sm);
+      margin-top:16px;
+      display:none;
+    }
+
+    .image-preview.show{display:block}
+
+    /* Responsive */
+    @media(min-width:768px){
+      .app{max-width:520px}
+      .carbs-number{font-size:80px}
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-layer bg-gradient"></div>
+  
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <a href="index.html" class="back-btn">←</a>
+      <h1 class="header-title">محلل الوجبة الذكي 🍽️</h1>
+    </header>
+
+    <!-- Input Section -->
+    <div class="input-container">
+      <div class="input-label">
+        <span>📝</span>
+        <span>اكتب وجبتك بالعربي أو الإنجليزي</span>
+      </div>
+      <textarea 
+        class="meal-input" 
+        id="mealInput" 
+        placeholder="مثال: كبسة دجاج مع سلطة وعصير برتقال..."
+      ></textarea>
+      
+      <img class="image-preview" id="imagePreview" alt="معاينة الصورة">
+    </div>
+
+    <!-- Camera Button -->
+    <input type="file" id="fileInput" accept="image/*" onchange="handleImageSelect(event)">
+    <button class="camera-btn" id="cameraBtn" onclick="document.getElementById('fileInput').click()">
+      <span>📷</span>
+      <span id="cameraText">صور وجبتك</span>
+    </button>
+
+    <!-- Analyze Button -->
+    <button class="analyze-btn" id="analyzeBtn" onclick="analyzeMeal()">
+      <span>⚡</span>
+      <span>حلل بالذكاء الاصطناعي</span>
+    </button>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      <strong>⚠️ تنبيه مهم</strong>
+      الحساب تقريبي ويتم تحسينه بالذكاء الاصطناعي. دائماً قسّ سكرك واستشر طبيبك للجرعات الدقيقة.
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-state" id="loadingState">
+      <div class="loading-orb"></div>
+      <div class="loading-text">جاري تحليل الوجبة بالذكاء الاصطناعي...</div>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-state" id="errorState">
+      <div class="error-text" id="errorText">حدث خطأ، حاول مرة أخرى</div>
+    </div>
+
+    <!-- Results -->
+    <div class="results" id="results">
+      <div class="result-header">
+        <div class="result-title">
+          <span>🎯</span>
+          <span>نتائج التحليل</span>
+        </div>
+        <div class="confidence-badge" id="confidenceBadge">ثقة عالية</div>
+      </div>
+
+      <div class="carbs-display">
+        <div class="carbs-number" id="carbsNumber">--</div>
+        <div class="carbs-label">جرام كاربوهيدرات</div>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <div class="detail-value" id="proteinValue">--</div>
+          <div class="detail-label">بروتين (غ)</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-value" id="fatValue">--</div>
+          <div class="detail-label">دهون (غ)</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-value" id="caloriesValue">--</div>
+          <div class="detail-label">سعرة حرارية</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-value" id="insulinValue">--</div>
+          <div class="detail-label">وحدة أنسولين</div>
+        </div>
+      </div>
+
+      <div class="ai-notes">
+        <div class="ai-notes-title">
+          <span>🤖</span>
+          <span>ملاحظات الذكاء الاصطناعي</span>
+        </div>
+        <div class="ai-notes-text" id="aiNotes">--</div>
+      </div>
+
+      <div class="action-btns">
+        <button class="btn btn-primary" onclick="goToCalculator()">
+          <span>🧮</span>
+          عدل المعامل
+        </button>
+        <button class="btn btn-secondary" onclick="saveToDaily()">
+          <span>💾</span>
+          سجل في يومي
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-item">
+        <span>🏠</span>
+        <span>الرئيسية</span>
+      </a>
+      <a href="meal-analyzer.html" class="nav-item active">
+        <span>🍽️</span>
+        <span>الوجبات</span>
+      </a>
+      <a href="daily-guide.html" class="nav-item">
+        <span>📋</span>
+        <span>يومي</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    // ============================================
+    // Gemini API Configuration
+    // ============================================
+    const GEMINI_API_KEY = 'AIzaSyDkm5-pZ8T2sv514EH5qqp8p31Jk-KsAec';
+    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+
+    let selectedImage = null;
+    let lastAnalysis = null;
+
+    // ============================================
+    // Image Handling
+    // ============================================
+    function handleImageSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      selectedImage = file;
+      
+      // Show preview
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const preview = document.getElementById('imagePreview');
+        preview.src = e.target.result;
+        preview.classList.add('show');
+        
+        const cameraBtn = document.getElementById('cameraBtn');
+        cameraBtn.classList.add('has-image');
+        document.getElementById('cameraText').textContent = 'تغيير الصورة';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // ============================================
+    // Main Analysis Function
+    // ============================================
+    async function analyzeMeal() {
+      const mealText = document.getElementById('mealInput').value.trim();
+      
+      if (!mealText && !selectedImage) {
+        showError('اكتب الوجبة أو صورها أولاً');
+        return;
+      }
+
+      // Show loading
+      setLoading(true);
+      hideError();
+
+      try {
+        let result;
+        
+        if (selectedImage) {
+          // Analyze image with Gemini Vision
+          result = await analyzeImageWithGemini(selectedImage);
+        } else {
+          // Analyze text with Gemini
+          result = await analyzeTextWithGemini(mealText);
+        }
+
+        displayResults(result);
+        lastAnalysis = result;
+        
+      } catch (error) {
+        console.error('Analysis error:', error);
+        showError('حدث خطأ في التحليل، حاول مرة أخرى');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    // ============================================
+    // Gemini Text Analysis
+    // ============================================
+    async function analyzeTextWithGemini(text) {
+      const prompt = `
+أنت خبير تغذية متخصص في حساب الكربوهيدرات لمرضى السكري.
+حلل الوجبة التالية وأرجع النتيجة بدقة عالية.
+
+الوجبة: "${text}"
+
+أرجع النتيجة بهذا الشكل JSON فقط (لا تضيف أي نص خارج JSON):
+{
+  "carbs": رقم تقريبي للكربوهيدرات بالجرام,
+  "protein": رقم تقريبي للبروتين بالجرام,
+  "fat": رقم تقريبي للدهون بالجرام,
+  "calories": إجمالي السعرات الحرارية,
+  "confidence": "high" أو "medium" أو "low",
+  "notes": "ملاحظة قصيرة بالعربي عن الوجبة ومكوناتها الرئيسية"
+}
+
+قواعد:
+- الكربوهيدرات: ركز على الأرز، الخبز، المكرونة، الفواكه، العصائر، السكريات
+- البروتين: اللحوم، الدجاج، السمك، البيض، الحليب
+- الدهون: الزيوت، المكسرات، الأفوكادو
+- الثقة: high لو الوجبة واضحة، medium لو فيها تخمين، low لو غير واضحة
+`;
+
+      const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: prompt
+            }]
+          }],
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 500,
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const textResponse = data.candidates[0].content.parts[0].text;
+      
+      // Extract JSON from response
+      const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        throw new Error('Invalid response format');
+      }
+
+      return JSON.parse(jsonMatch[0]);
+    }
+
+    // ============================================
+    // Gemini Image Analysis
+    // ============================================
+    async function analyzeImageWithGemini(imageFile) {
+      // Convert image to base64
+      const base64Image = await fileToBase64(imageFile);
+      
+      const prompt = `
+أنت خبير تغذية متخصص في حساب الكربوهيدرات لمرضى السكري.
+شوف هذه الصورة وحدد:
+1. وش الوجبة؟
+2. كم تقريباً الكربوهيدرات بالجرام؟
+3. البروتين والدهون والسعرات؟
+4. مستوى ثقتك في التحليل؟
+
+أرجع النتيجة بهذا الشكل JSON فقط:
+{
+  "carbs": رقم,
+  "protein": رقم,
+  "fat": رقم,
+  "calories": رقم,
+  "confidence": "high" أو "medium" أو "low",
+  "notes": "وصف قصير للوجبة اللي شفتها"
+}
+`;
+
+      const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [
+              { text: prompt },
+              {
+                inline_data: {
+                  mime_type: imageFile.type,
+                  data: base64Image.split(',')[1]
+                }
+              }
+            ]
+          }],
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 500,
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const textResponse = data.candidates[0].content.parts[0].text;
+      
+      const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        throw new Error('Invalid response format');
+      }
+
+      return JSON.parse(jsonMatch[0]);
+    }
+
+    // ============================================
+    // Helper Functions
+    // ============================================
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function setLoading(loading) {
+      const btn = document.getElementById('analyzeBtn');
+      const loadingState = document.getElementById('loadingState');
+      
+      if (loading) {
+        btn.disabled = true;
+        btn.innerHTML = '<span>⏳</span><span>جاري التحليل...</span>';
+        btn.classList.add('loading');
+        loadingState.classList.add('show');
+        document.getElementById('results').classList.remove('show');
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = '<span>⚡</span><span>حلل بالذكاء الاصطناعي</span>';
+        btn.classList.remove('loading');
+        loadingState.classList.remove('show');
+      }
+    }
+
+    function showError(message) {
+      const errorState = document.getElementById('errorState');
+      document.getElementById('errorText').textContent = message;
+      errorState.classList.add('show');
+    }
+
+    function hideError() {
+      document.getElementById('errorState').classList.remove('show');
+    }
+
+    // ============================================
+    // Display Results
+    // ============================================
+    function displayResults(data) {
+      // Animate carbs number
+      animateNumber('carbsNumber', data.carbs);
+      
+      document.getElementById('proteinValue').textContent = data.protein + 'g';
+      document.getElementById('fatValue').textContent = data.fat + 'g';
+      document.getElementById('caloriesValue').textContent = data.calories;
+      document.getElementById('aiNotes').textContent = data.notes;
+
+      // Calculate insulin (1 unit per 15g carbs default)
+      const icr = parseFloat(localStorage.getItem('sugarmind_icr')) || 15;
+      const insulin = Math.round(data.carbs / icr);
+      document.getElementById('insulinValue').textContent = insulin;
+
+      // Confidence badge
+      const badge = document.getElementById('confidenceBadge');
+      const confidenceMap = {
+        'high': { text: 'ثقة عالية', class: '' },
+        'medium': { text: 'ثقة متوسطة', class: 'medium' },
+        'low': { text: 'ثقة منخفضة', class: 'low' }
+      };
+      const conf = confidenceMap[data.confidence] || confidenceMap['medium'];
+      badge.textContent = conf.text;
+      badge.className = 'confidence-badge ' + conf.class;
+
+      document.getElementById('results').classList.add('show');
+    }
+
+    function animateNumber(id, target) {
+      const el = document.getElementById(id);
+      const duration = 1000;
+      const start = 0;
+      const increment = target / (duration / 16);
+      let current = start;
+      
+      function update() {
+        current += increment;
+        if (current < target) {
+          el.textContent = Math.floor(current);
+          requestAnimationFrame(update);
+        } else {
+          el.textContent = target;
+        }
+      }
+      update();
+    }
+
+    // ============================================
+    // Navigation Functions
+    // ============================================
+    function goToCalculator() {
+      window.location.href = 'carb-calculator.html';
+    }
+
+    function saveToDaily() {
+      if (!lastAnalysis) return;
+      
+      const mealName = document.getElementById('mealInput').value || 'وجبة مصورة';
+      const meal = {
+        name: mealName,
+        carbs: lastAnalysis.carbs,
+        protein: lastAnalysis.protein,
+        fat: lastAnalysis.fat,
+        calories: lastAnalysis.calories,
+        insulin: document.getElementById('insulinValue').textContent,
+        time: new Date().toLocaleTimeString('ar-SA', {hour:'2-digit', minute:'2-digit'}),
+        date: new Date().toISOString()
+      };
+      
+      let meals = JSON.parse(localStorage.getItem('sugarmind_meals') || '[]');
+      meals.push(meal);
+      localStorage.setItem('sugarmind_meals', JSON.stringify(meals));
+      
+      alert('✅ تم الحفظ في دليلك اليومي!');
+    }
+  </script>
+</body>
+</html>
 
