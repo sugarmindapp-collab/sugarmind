@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SugarMind</title>
+  <meta name="theme-color" content="#0F172A" />
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    :root{
+      --bg:#0F172A;
+      --bg-soft:#152238;
+      --card:rgba(255,255,255,0.06);
+      --card-strong:rgba(255,255,255,0.08);
+      --border:rgba(255,255,255,0.08);
+      --text:#ffffff;
+      --muted:rgba(255,255,255,0.74);
+      --green:#22C55E;
+      --green-soft:rgba(34,197,94,0.14);
+      --shadow:0 10px 30px rgba(0,0,0,0.25);
+      --radius:24px;
+    }
+
+    html,body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Tahoma,Arial,sans-serif;
+      min-height:100%;
+      overflow-x:hidden;
+    }
+
+    body{
+      background:
+        radial-gradient(circle at top right, rgba(34,197,94,0.18), transparent 28%),
+        radial-gradient(circle at top left, rgba(34,197,94,0.10), transparent 22%),
+        linear-gradient(180deg, #0F172A 0%, #101A2C 100%);
+    }
+
+    .app{
+      width:100%;
+      max-width:430px;
+      margin:0 auto;
+      min-height:100vh;
+      position:relative;
+    }
+
+    .screen{
+      display:none;
+      min-height:100vh;
+      padding:28px 18px 36px;
+    }
+
+    .screen.active{
+      display:block;
+    }
+
+    .splash{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:
+        radial-gradient(circle at center, rgba(34,197,94,0.16), transparent 34%),
+        radial-gradient(circle at top right, rgba(34,197,94,0.12), transparent 26%),
+        linear-gradient(180deg, #0F172A 0%, #101A2C 100%);
+      transition:opacity .6s ease, visibility .6s ease;
+    }
+
+    .splash.hide{
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+    }
+
+    .splash-inner{
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:14px;
+      animation:splashWrap 1.9s ease-in-out forwards;
+    }
+
+    .brain-mark{
+      width:124px;
+      height:124px;
+      border-radius:34px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.06);
+      box-shadow:0 0 0 1px rgba(255,255,255,0.03) inset, 0 0 50px rgba(34,197,94,0.14);
+      animation:brainPulse 1.9s ease-in-out forwards;
+    }
+
+    .brain{
+      font-size:72px;
+      line-height:1;
+      filter:drop-shadow(0 6px 16px rgba(34,197,94,0.18));
+    }
+
+    .brand{
+      color:var(--green);
+      font-size:33px;
+      font-weight:800;
+      letter-spacing:-0.02em;
+    }
+
+    @keyframes brainPulse{
+      0%{transform:scale(.88);opacity:0;}
+      22%{transform:scale(1.05);opacity:1;}
+      55%{transform:scale(1);}
+      72%{transform:scale(1.04);}
+      100%{transform:scale(.96);opacity:1;}
+    }
+
+    @keyframes splashWrap{
+      0%{transform:translateY(12px);opacity:0;}
+      20%{transform:translateY(0);opacity:1;}
+      75%{transform:translateY(0);opacity:1;}
+      100%{transform:translateY(-6px);opacity:1;}
+    }
+
+    .home-header{
+      padding-top:8px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      gap:14px;
+    }
+
+    .mini-logo-wrap{
+      width:92px;
+      height:92px;
+      border-radius:28px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.06);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:var(--shadow);
+    }
+
+    .mini-brain{
+      font-size:52px;
+      line-height:1;
+    }
+
+    .hook{
+      margin-top:4px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .hook-title{
+      font-size:25px;
+      font-weight:800;
+      line-height:1.6;
+      color:#fff;
+    }
+
+    .hook-sub{
+      font-size:15px;
+      color:var(--muted);
+      line-height:1.9;
+    }
+
+    .main-btn{
+      width:100%;
+      margin-top:18px;
+      border:none;
+      background:var(--green);
+      color:#0F172A;
+      padding:16px 18px;
+      border-radius:18px;
+      font-size:16px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 8px 24px rgba(34,197,94,0.22);
+    }
+
+    .main-btn:active{
+      transform:scale(.99);
+    }
+
+    .section-space{
+      margin-top:24px;
+    }
+
+    .cards-grid{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .feature-card, .profile-card, .form-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:18px 16px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(8px);
+    }
+
+    .feature-card{
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+    }
+
+    .feature-icon{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      background:var(--green-soft);
+      color:var(--green);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      flex-shrink:0;
+    }
+
+    .feature-content{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .feature-title{
+      font-size:17px;
+      font-weight:800;
+      color:#fff;
+    }
+
+    .feature-text{
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+
+    .welcome-line{
+      font-size:19px;
+      font-weight:800;
+      margin-bottom:12px;
+      color:#fff;
+    }
+
+    .profile-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .profile-name{
+      font-size:20px;
+      font-weight:800;
+    }
+
+    .level-badge{
+      background:var(--green-soft);
+      color:var(--green);
+      border:1px solid rgba(34,197,94,0.22);
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:6px;
+    }
+
+    .stat-box{
+      background:var(--card-strong);
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:18px;
+      padding:14px 12px;
+    }
+
+    .stat-label{
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+
+    .stat-value{
+      font-size:16px;
+      font-weight:800;
+      color:#fff;
+    }
+
+    .profile-actions{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .share-btn, .ghost-btn, .save-btn{
+      width:100%;
+      border:none;
+      border-radius:16px;
+      padding:14px 16px;
+      font-size:15px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .share-btn{
+      background:var(--green);
+      color:#0F172A;
+    }
+
+    .ghost-btn{
+      background:transparent;
+      color:#fff;
+      border:1px solid rgba(255,255,255,0.12);
+    }
+
+    .save-btn{
+      background:var(--green);
+      color:#0F172A;
+      margin-top:6px;
+    }
+
+    .section-title{
+      font-size:18px;
+      font-weight:800;
+      margin-bottom:12px;
+    }
+
+    .form-card{
+      margin-top:18px;
+    }
+
+    .form-note{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.8;
+      margin-bottom:14px;
+    }
+
+    .field{
+      margin-bottom:12px;
+    }
+
+    .field label{
+      display:block;
+      margin-bottom:8px;
+      font-size:14px;
+      font-weight:700;
+      color:#fff;
+    }
+
+    .field input, .field select{
+      width:100%;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      color:#fff;
+      border-radius:16px;
+      padding:14px 14px;
+      font-size:15px;
+      outline:none;
+    }
+
+    .field input::placeholder{
+      color:rgba(255,255,255,0.36);
+    }
+
+    .field select option{
+      color:#111827;
+    }
+
+    .form-actions{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:6px;
+    }
+
+    .tiny-note{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.8;
+      text-align:center;
+    }
+
+    .hide{
+      display:none !important;
+    }
+
+    @media (min-width:431px){
+      .screen{
+        padding-right:22px;
+        padding-left:22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash">
+    <div class="splash-inner">
+      <div class="brain-mark">
+        <div class="brain">🧠</div>
+      </div>
+      <div class="brand">SugarMind</div>
+    </div>
+  </div>
+
+  <div class="app">
+    <section class="screen active" id="homeScreen">
+      <div class="home-header">
+        <div class="mini-logo-wrap">
+          <div class="mini-brain">🧠</div>
+        </div>
+        <div class="brand">SugarMind</div>
+
+        <div class="hook" id="defaultHero">
+          <div class="hook-title">هلا والله فيك في سكر مايند</div>
+          <div class="hook-sub">معنا نتابعك ونبسط لك المهمة</div>
+        </div>
+
+        <button class="main-btn" id="goFormBtn">هيا نبسطها مع بعض</button>
+      </div>
+
+      <div class="section-space hide" id="profileSection">
+        <div class="welcome-line" id="welcomeLine">هلا والله</div>
+
+        <div class="profile-card">
+          <div class="profile-head">
+            <div>
+              <div class="profile-name" id="profileName">اسم العميل</div>
+            </div>
+            <div class="level-badge" id="profileLevel">مسيطر</div>
+          </div>
+
+          <div class="stats">
+            <div class="stat-box">
+              <div class="stat-label">الهدف</div>
+              <div class="stat-value" id="profileGoal">متابعة</div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-label">معامل الكارب</div>
+              <div class="stat-value" id="profileCarbRatio">1:12</div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-label">آخر قراءة</div>
+              <div class="stat-value" id="profileReading">148</div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-label">آخر وقت للقراءة</div>
+              <div class="stat-value" id="profileReadingTime">8:30 م</div>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button class="share-btn" id="shareBtn">شارك بطاقتك</button>
+            <button class="ghost-btn" id="editBtn">حدّث بياناتي</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-space">
+        <div class="cards-grid">
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <div class="feature-content">
+              <div class="feature-title">أفهم أرقام السكر</div>
+              <div class="feature-text">افهم الأرقام اللي تقراها وش تعني لك فعلًا</div>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🍽️</div>
+            <div class="feature-content">
+              <div class="feature-title">أحسب كارب الوجبة</div>
+              <div class="feature-text">ترانا نساعدك تعرف كارب الوجبات بالبحث أو بالتصوير</div>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🧮</div>
+            <div class="feature-content">
+              <div class="feature-title">معامل الكارب</div>
+              <div class="feature-text">نقدر نحدد لك معامل الكارب المناسب لك بطريقة أوضح وأسهل</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="formScreen">
+      <div class="brand" style="text-align:center; margin-top:8px;">SugarMind</div>
+
+      <div class="form-card">
+        <div class="section-title">بطاقتك معنا</div>
+        <div class="form-note">عبّ بياناتك الأساسية وبنجهز لك بطاقة مرتبة ترجع لها كل مرة.</div>
+
+        <div class="field">
+          <label for="name">الاسم</label>
+          <input id="name" type="text" placeholder="اكتب اسمك" />
+        </div>
+
+        <div class="field">
+          <label for="age">العمر</label>
+          <input id="age" type="number" placeholder="مثال: 8" />
+        </div>
+
+        <div class="field">
+          <label for="insulin">كم جرعة الإنسولين مع المنظم؟</label>
+          <input id="insulin" type="text" placeholder="مثال: 12 وحدة" />
+        </div>
+
+        <div class="field">
+          <label for="goal">وش هدفك معنا؟</label>
+          <select id="goal">
+            <option value="متابعة">متابعة</option>
+            <option value="فهم أكثر">فهم أكثر</option>
+            <option value="ترتيب">ترتيب</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="carbRatio">معامل الكارب</label>
+          <input id="carbRatio" type="text" placeholder="مثال: 1:12" />
+        </div>
+
+        <div class="field">
+          <label for="reading">آخر قراءة سكر</label>
+          <input id="reading" type="number" placeholder="مثال: 148" />
+        </div>
+
+        <div class="field">
+          <label for="level">المستوى</label>
+          <select id="level">
+            <option value="مسيطر">مسيطر</option>
+            <option value="منجز">منجز</option>
+            <option value="عظيم">عظيم</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button class="save-btn" id="saveBtn">احفظ بياناتي</button>
+          <button class="ghost-btn" id="backBtn">رجوع</button>
+        </div>
+
+        <div class="tiny-note">نحفظ بياناتك على نفس الجهاز بشكل محلي في هذه النسخة الأولى.</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const splash = document.getElementById('splash');
+    const homeScreen = document.getElementById('homeScreen');
+    const formScreen = document.getElementById('formScreen');
+
+    const goFormBtn = document.getElementById('goFormBtn');
+    const backBtn = document.getElementById('backBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const editBtn = document.getElementById('editBtn');
+    const shareBtn = document.getElementById('shareBtn');
+
+    const profileSection = document.getElementById('profileSection');
+    const welcomeLine = document.getElementById('welcomeLine');
+    const profileName = document.getElementById('profileName');
+    const profileGoal = document.getElementById('profileGoal');
+    const profileCarbRatio = document.getElementById('profileCarbRatio');
+    const profileReading = document.getElementById('profileReading');
+    const profileReadingTime = document.getElementById('profileReadingTime');
+    const profileLevel = document.getElementById('profileLevel');
+
+    const nameInput = document.getElementById('name');
+    const ageInput = document.getElementById('age');
+    const insulinInput = document.getElementById('insulin');
+    const goalInput = document.getElementById('goal');
+    const carbRatioInput = document.getElementById('carbRatio');
+    const readingInput = document.getElementById('reading');
+    const levelInput = document.getElementById('level');
+
+    const STORAGE_KEY = 'sugarmind_user_card_v1';
+
+    function showScreen(screen){
+      homeScreen.classList.remove('active');
+      formScreen.classList.remove('active');
+      screen.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function getGreetingByTime(name){
+      const hour = new Date().getHours();
+      let greeting = 'ياهلا';
+      if(hour >= 5 && hour < 12) greeting = 'صباح الخير';
+      else if(hour >= 12 && hour < 17) greeting = 'مساء الخير';
+      else if(hour >= 17 && hour < 24) greeting = 'مساء الخير';
+      else greeting = 'ياهلا';
+      return `${greeting} يا ${name}`;
+    }
+
+    function formatTimeNow(){
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2,'0');
+      const period = hours >= 12 ? 'م' : 'ص';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      return `${hours}:${minutes} ${period}`;
+    }
+
+    function loadUserData(){
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return null;
+      try{
+        return JSON.parse(raw);
+      }catch(e){
+        return null;
+      }
+    }
+
+    function saveUserData(data){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function fillForm(data){
+      nameInput.value = data.name || '';
+      ageInput.value = data.age || '';
+      insulinInput.value = data.insulin || '';
+      goalInput.value = data.goal || 'متابعة';
+      carbRatioInput.value = data.carbRatio || '';
+      readingInput.value = data.reading || '';
+      levelInput.value = data.level || 'مسيطر';
+    }
+
+    function renderProfile(data){
+      profileSection.classList.remove('hide');
+      welcomeLine.textContent = getGreetingByTime(data.name || 'صاحبنا');
+      profileName.textContent = data.name || 'مستخدم سكر مايند';
+      profileGoal.textContent = data.goal || 'متابعة';
+      profileCarbRatio.textContent = data.carbRatio || '--';
+      profileReading.textContent = data.reading || '--';
+      profileReadingTime.textContent = data.readingTime || '--';
+      profileLevel.textContent = data.level || 'مسيطر';
+    }
+
+    function initialize(){
+      const saved = loadUserData();
+      if(saved){
+        renderProfile(saved);
+      }
+    }
+
+    goFormBtn.addEventListener('click', () => {
+      const saved = loadUserData();
+      if(saved) fillForm(saved);
+      showScreen(formScreen);
+    });
+
+    backBtn.addEventListener('click', () => {
+      showScreen(homeScreen);
+    });
+
+    editBtn.addEventListener('click', () => {
+      const saved = loadUserData();
+      if(saved) fillForm(saved);
+      showScreen(formScreen);
+    });
+
+    saveBtn.addEventListener('click', () => {
+      const name = nameInput.value.trim();
+      const age = ageInput.value.trim();
+      const insulin = insulinInput.value.trim();
+      const goal = goalInput.value;
+      const carbRatio = carbRatioInput.value.trim();
+      const reading = readingInput.value.trim();
+      const level = levelInput.value;
+
+      if(!name){
+        alert('اكتب الاسم أول');
+        return;
+      }
+
+      const data = {
+        name,
+        age,
+        insulin,
+        goal,
+        carbRatio: carbRatio || '--',
+        reading: reading || '--',
+        readingTime: formatTimeNow(),
+        level
+      };
+
+      saveUserData(data);
+      renderProfile(data);
+      showScreen(homeScreen);
+    });
+
+    shareBtn.addEventListener('click', async () => {
+      const data = loadUserData();
+      if(!data){
+        alert('احفظ بطاقتك أول');
+        return;
+      }
+
+      const shareText =
+`بطاقتي في SugarMind
+
+الاسم: ${data.name}
+آخر قراءة: ${data.reading || '--'}
+الهدف: ${data.goal || '--'}
+المستوى: ${data.level || '--'}
+معامل الكارب: ${data.carbRatio || '--'}
+
+ابدأ من هنا:
+https://your-sugarmind-link.com`;
+
+      if(navigator.share){
+        try{
+          await navigator.share({
+            title: 'SugarMind',
+            text: shareText
+          });
+        }catch(e){}
+      }else{
+        try{
+          await navigator.clipboard.writeText(shareText);
+          alert('تم نسخ البطاقة للمشاركة');
+        }catch(e){
+          alert(shareText);
+        }
+      }
+    });
+
+    window.addEventListener('load', () => {
+      initialize();
+      setTimeout(() => {
+        splash.classList.add('hide');
+      }, 2100);
+    });
+  </script>
+</body>
+</html>
