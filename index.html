@@ -3,50 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SugarMind - تطبيق إدارة السكري</title>
+  <title>SugarMind Pro - المستقبل الصحي</title>
   <meta name="theme-color" content="#0F172A" />
   
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
   <style>
-    /* ===== CSS VARIABLES - Dynamic Theme ===== */
+    /* ===== DESIGN SYSTEM ===== */
     :root{
-      --bg:#0F172A;
-      --bg-soft:#1e293b;
-      --card:rgba(255,255,255,0.08);
-      --card-hover:rgba(255,255,255,0.12);
-      --border:rgba(255,255,255,0.1);
-      --text:#ffffff;
-      --muted:rgba(255,255,255,0.6);
+      --bg:#0B1120;
+      --surface:rgba(255,255,255,0.03);
+      --surface-elevated:rgba(255,255,255,0.06);
+      --border:rgba(255,255,255,0.08);
+      --text-primary:#ffffff;
+      --text-secondary:#94A3B8;
       
-      /* Dynamic Colors - Change based on sugar level */
-      --level-excellent:#10B981;
-      --level-good:#F59E0B;
-      --level-attention:#F97316;
-      --level-danger:#EF4444;
+      /* Dynamic Theme Colors */
+      --excellent:#00D9A5;
+      --good:#F59E0B;
+      --warning:#F97316;
+      --danger:#EF4444;
       
-      --shadow:0 25px 50px -12px rgba(0,0,0,0.5);
-      --glow:0 0 40px rgba(16,185,129,0.3);
+      --glow-excellent:0 0 40px rgba(0,217,165,0.3);
+      --glow-good:0 0 40px rgba(245,158,11,0.3);
+      --glow-warning:0 0 40px rgba(249,115,22,0.3);
+      --glow-danger:0 0 40px rgba(239,68,68,0.3);
+      
       --radius:28px;
+      --shadow:0 25px 50px -12px rgba(0,0,0,0.5);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
 
+    @font-face{
+      font-family:'SF Pro';
+      src:local('-apple-system'),local('BlinkMacSystemFont');
+    }
+
     html,body{
       background:var(--bg);
-      color:var(--text);
-      font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text-primary);
+      font-family:'SF Pro',-apple-system,sans-serif;
       min-height:100vh;
       overflow-x:hidden;
     }
 
     body{
       background:
-        radial-gradient(ellipse at top right,rgba(16,185,129,0.15),transparent 50%),
-        radial-gradient(ellipse at top left,rgba(59,130,246,0.1),transparent 40%),
+        radial-gradient(ellipse at 20% 20%,rgba(0,217,165,0.15) 0%,transparent 50%),
+        radial-gradient(ellipse at 80% 80%,rgba(59,130,246,0.1) 0%,transparent 50%),
         var(--bg);
     }
 
@@ -56,191 +65,269 @@
       inset:0;
       z-index:10000;
       display:flex;
+      flex-direction:column;
       align-items:center;
       justify-content:center;
       background:var(--bg);
-      transition:all 0.8s cubic-bezier(0.4,0,0.2,1);
+      transition:all 1s cubic-bezier(0.4,0,0.2,1);
     }
 
     .splash.hidden{
       opacity:0;
       visibility:hidden;
-      transform:scale(1.1);
+      transform:scale(1.2);
     }
 
-    .splash-content{
-      text-align:center;
-      animation:splashFloat 2s ease-in-out infinite;
-    }
-
-    .splash-brain{
-      width:140px;
-      height:140px;
-      border-radius:40px;
+    .splash-logo{
+      width:160px;
+      height:160px;
+      border-radius:48px;
       background:linear-gradient(135deg,rgba(255,255,255,0.1),rgba(255,255,255,0.05));
       border:1px solid rgba(255,255,255,0.2);
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:72px;
-      margin-bottom:24px;
-      box-shadow:0 0 60px rgba(16,185,129,0.4),inset 0 0 0 1px rgba(255,255,255,0.1);
-      animation:brainPulse 2s ease-in-out infinite;
+      font-size:80px;
+      position:relative;
+      animation:logoFloat 3s ease-in-out infinite;
+      box-shadow:0 0 80px rgba(0,217,165,0.3);
     }
 
-    @keyframes brainPulse{
-      0%,100%{transform:scale(1);box-shadow:0 0 60px rgba(16,185,129,0.4)}
-      50%{transform:scale(1.05);box-shadow:0 0 80px rgba(16,185,129,0.6)}
+    .splash-logo::before{
+      content:'';
+      position:absolute;
+      inset:-4px;
+      border-radius:52px;
+      background:linear-gradient(135deg,var(--excellent),#3B82F6);
+      opacity:0.5;
+      filter:blur(20px);
+      z-index:-1;
+      animation:glowPulse 2s ease-in-out infinite;
     }
 
-    @keyframes splashFloat{
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-20px)}
+    @keyframes glowPulse{
+      0%,100%{opacity:0.5;transform:scale(1)}
+      50%{opacity:0.8;transform:scale(1.05)}
     }
 
-    .splash-text{
-      font-size:42px;
+    @keyframes logoFloat{
+      0%,100%{transform:translateY(0) rotate(0deg)}
+      50%{transform:translateY(-20px) rotate(3deg)}
+    }
+
+    .splash-brand{
+      font-size:48px;
       font-weight:900;
-      background:linear-gradient(135deg,#10B981,#34D399);
+      margin-top:32px;
+      background:linear-gradient(135deg,var(--excellent),#3B82F6);
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
       letter-spacing:-2px;
     }
 
     .splash-tagline{
-      color:var(--muted);
+      color:var(--text-secondary);
+      font-size:18px;
       margin-top:12px;
-      font-size:16px;
-      opacity:0.8;
+      font-weight:500;
     }
 
-    /* ===== APP CONTAINER ===== */
+    .splash-loading{
+      width:200px;
+      height:4px;
+      background:rgba(255,255,255,0.1);
+      border-radius:2px;
+      margin-top:40px;
+      overflow:hidden;
+    }
+
+    .splash-bar{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,var(--excellent),#3B82F6);
+      border-radius:2px;
+      animation:loading 2.5s ease forwards;
+    }
+
+    @keyframes loading{
+      0%{width:0%}
+      100%{width:100%}
+    }
+
+    /* ===== APP SHELL ===== */
     .app{
-      width:100%;
       max-width:480px;
       margin:0 auto;
       min-height:100vh;
       position:relative;
-      padding-bottom:40px;
+      padding-bottom:100px;
     }
 
-    /* ===== SCREEN MANAGEMENT ===== */
-    .screen{
-      display:none;
-      animation:screenEnter 0.6s cubic-bezier(0.4,0,0.2,1);
+    /* ===== SMART HEADER ===== */
+    .smart-header{
+      position:sticky;
+      top:0;
+      z-index:100;
+      padding:20px 24px;
+      background:rgba(11,17,32,0.8);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
     }
 
-    .screen.active{display:block}
-
-    @keyframes screenEnter{
-      from{opacity:0;transform:translateY(30px)}
-      to{opacity:1;transform:translateY(0)}
+    .header-content{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
     }
 
-    /* ===== HEADER & GREETING ===== */
-    .main-header{
-      padding:40px 24px 20px;
-      text-align:center;
+    .header-logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
     }
 
-    .logo-wrap{
-      width:80px;
-      height:80px;
-      border-radius:24px;
-      background:linear-gradient(135deg,rgba(255,255,255,0.1),rgba(255,255,255,0.05));
-      border:1px solid rgba(255,255,255,0.15);
+    .logo-icon{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--excellent),#3B82F6);
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:40px;
-      margin:0 auto 20px;
-      box-shadow:var(--glow);
-      animation:logoFloat 6s ease-in-out infinite;
+      font-size:24px;
+      box-shadow:0 4px 20px rgba(0,217,165,0.3);
     }
 
-    @keyframes logoFloat{
-      0%,100%{transform:translateY(0) rotate(0deg)}
-      50%{transform:translateY(-10px) rotate(2deg)}
-    }
-
-    .brand-name{
-      font-size:32px;
+    .logo-text{
+      font-size:24px;
       font-weight:900;
-      background:linear-gradient(135deg,#10B981,#3B82F6);
+      background:linear-gradient(135deg,var(--excellent),#3B82F6);
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
+    }
+
+    .header-actions{
+      display:flex;
+      gap:12px;
+    }
+
+    .icon-btn{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:var(--surface);
+      border:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      cursor:pointer;
+      transition:0.3s;
+      position:relative;
+    }
+
+    .icon-btn:hover{
+      background:var(--surface-elevated);
+      transform:scale(1.05);
+    }
+
+    .badge{
+      position:absolute;
+      top:-4px;
+      right:-4px;
+      width:20px;
+      height:20px;
+      background:var(--danger);
+      border-radius:50%;
+      font-size:12px;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    /* ===== GREETING SECTION ===== */
+    .greeting-container{
+      padding:32px 24px 24px;
+    }
+
+    .time-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 16px;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:999px;
+      font-size:13px;
+      color:var(--text-secondary);
+      margin-bottom:16px;
+    }
+
+    .greeting-main{
+      font-size:32px;
+      font-weight:900;
+      line-height:1.3;
       margin-bottom:8px;
     }
 
-    /* Dynamic Greeting */
-    .greeting-section{
-      margin-top:24px;
-      padding:0 20px;
-    }
-
-    .greeting-text{
-      font-size:26px;
-      font-weight:900;
-      line-height:1.4;
-      color:#fff;
-      text-shadow:0 2px 20px rgba(0,0,0,0.3);
-    }
-
-    .greeting-rose{
-      display:inline-block;
-      animation:roseWave 3s ease-in-out infinite;
-      filter:drop-shadow(0 0 10px rgba(255,100,100,0.5));
-    }
-
-    @keyframes roseWave{
-      0%,100%{transform:rotate(-8deg) scale(1)}
-      50%{transform:rotate(8deg) scale(1.1)}
-    }
-
     .greeting-sub{
-      color:var(--muted);
-      font-size:15px;
-      margin-top:8px;
+      font-size:16px;
+      color:var(--text-secondary);
       font-weight:500;
     }
 
-    /* ===== THE LEGENDARY CARD ===== */
-    .hero-card{
-      margin:24px 20px;
-      background:linear-gradient(145deg,rgba(255,255,255,0.1) 0%,rgba(255,255,255,0.03) 100%);
-      border:1px solid rgba(255,255,255,0.15);
+    .rose-anim{
+      display:inline-block;
+      animation:roseWave 4s ease-in-out infinite;
+      filter:drop-shadow(0 0 15px rgba(255,100,100,0.6));
+    }
+
+    @keyframes roseWave{
+      0%,100%{transform:rotate(-10deg) scale(1)}
+      25%{transform:rotate(5deg) scale(1.1)}
+      75%{transform:rotate(-5deg) scale(1.05)}
+    }
+
+    /* ===== LIVING CARD ===== */
+    .living-card{
+      margin:0 24px 32px;
+      background:var(--surface-elevated);
+      border:1px solid var(--border);
       border-radius:var(--radius);
       padding:28px;
       position:relative;
       overflow:hidden;
-      box-shadow:var(--shadow),0 0 0 1px rgba(255,255,255,0.05) inset;
-      animation:cardEnter 0.8s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow:var(--shadow);
+      transition:all 0.5s ease;
     }
 
-    @keyframes cardEnter{
-      from{opacity:0;transform:translateY(50px) scale(0.9)}
-      to{opacity:1;transform:translateY(0) scale(1)}
-    }
-
-    /* Dynamic border glow based on level */
-    .hero-card::before{
+    .living-card::before{
       content:'';
       position:absolute;
       top:0;
       left:0;
       right:0;
       height:4px;
-      background:var(--card-accent,var(--level-excellent));
-      box-shadow:0 0 20px var(--card-accent,var(--level-excellent));
+      background:var(--card-color,var(--excellent));
+      box-shadow:0 0 30px var(--card-color,var(--excellent));
+    }
+
+    .card-ambient{
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at 50% 0%,var(--card-color,var(--excellent)) 0%,transparent 70%);
+      opacity:0.1;
+      pointer-events:none;
     }
 
     .card-shine{
       position:absolute;
-      top:-50%;
-      left:-50%;
-      width:200%;
-      height:200%;
-      background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.1) 50%,transparent 70%);
+      top:-100%;
+      left:-100%;
+      width:300%;
+      height:300%;
+      background:linear-gradient(45deg,transparent 40%,rgba(255,255,255,0.1) 50%,transparent 60%);
       animation:shine 8s infinite;
       pointer-events:none;
     }
@@ -259,21 +346,45 @@
       z-index:1;
     }
 
-    .user-name{
-      font-size:24px;
-      font-weight:900;
-      color:#fff;
+    .user-info{
+      display:flex;
+      align-items:center;
+      gap:12px;
     }
 
-    .level-badge{
+    .avatar{
+      width:56px;
+      height:56px;
+      border-radius:20px;
+      background:linear-gradient(135deg,var(--card-color,var(--excellent)),#3B82F6);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      font-weight:900;
+      color:#fff;
+      box-shadow:0 4px 20px var(--card-shadow,var(--glow-excellent));
+    }
+
+    .user-details h3{
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .user-details p{
+      font-size:13px;
+      color:var(--text-secondary);
+    }
+
+    .status-badge{
       padding:10px 18px;
       border-radius:999px;
-      font-size:14px;
+      font-size:13px;
       font-weight:900;
-      background:var(--badge-bg,rgba(16,185,129,0.2));
-      color:var(--badge-color,var(--level-excellent));
-      border:1px solid var(--badge-border,rgba(16,185,129,0.3));
-      box-shadow:0 4px 15px var(--badge-shadow,rgba(16,185,129,0.2));
+      background:var(--badge-bg);
+      color:var(--badge-color);
+      border:1px solid var(--badge-border);
+      box-shadow:0 4px 15px var(--badge-shadow);
       animation:badgePulse 2s ease-in-out infinite;
     }
 
@@ -282,68 +393,93 @@
       50%{transform:scale(1.05)}
     }
 
-    .reading-display{
+    .reading-section{
       text-align:center;
-      margin:28px 0;
+      margin:32px 0;
       position:relative;
       z-index:1;
     }
 
-    .reading-number{
-      font-size:64px;
+    .reading-value{
+      font-size:72px;
       font-weight:900;
-      color:#fff;
       line-height:1;
-      text-shadow:0 0 40px var(--card-accent,var(--level-excellent));
-      animation:numberPop 0.6s cubic-bezier(0.34,1.56,0.64,1);
+      background:linear-gradient(135deg,#fff,var(--card-color,var(--excellent)));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-shadow:0 0 60px var(--card-shadow,var(--glow-excellent));
+      animation:numberPulse 3s ease-in-out infinite;
     }
 
-    @keyframes numberPop{
-      0%{transform:scale(0);opacity:0}
-      80%{transform:scale(1.1)}
-      100%{transform:scale(1);opacity:1}
+    @keyframes numberPulse{
+      0%,100%{transform:scale(1);opacity:1}
+      50%{transform:scale(1.02);opacity:0.9}
     }
 
-    .reading-unit{
-      font-size:18px;
-      color:var(--muted);
-      font-weight:600;
-      margin-top:4px;
-    }
-
-    .reading-time{
+    .reading-meta{
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:8px;
-      color:var(--muted);
+      gap:16px;
+      margin-top:16px;
+      color:var(--text-secondary);
       font-size:14px;
-      margin-top:12px;
     }
 
-    .sparkline{
+    .trend-indicator{
       display:flex;
-      align-items:flex-end;
-      justify-content:center;
+      align-items:center;
       gap:4px;
-      height:40px;
-      margin-top:20px;
-      opacity:0.6;
+      padding:6px 12px;
+      background:var(--surface);
+      border-radius:999px;
+      font-size:13px;
+      font-weight:700;
     }
 
-    .spark-bar{
-      width:6px;
-      background:var(--card-accent);
-      border-radius:3px;
-      animation:sparkGrow 0.8s ease backwards;
+    .trend-up{color:var(--excellent)}
+    .trend-down{color:var(--danger)}
+
+    /* MINI CHART */
+    .spark-container{
+      height:60px;
+      margin:24px 0;
+      position:relative;
     }
 
-    @keyframes sparkGrow{
-      from{transform:scaleY(0)}
-      to{transform:scaleY(1)}
+    .quick-stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:24px;
     }
 
-    /* ===== CARD ACTIONS ===== */
+    .stat-pill{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px 12px;
+      text-align:center;
+      transition:0.3s;
+    }
+
+    .stat-pill:hover{
+      background:var(--surface-elevated);
+      transform:translateY(-2px);
+    }
+
+    .stat-label{
+      font-size:12px;
+      color:var(--text-secondary);
+      margin-bottom:6px;
+    }
+
+    .stat-value{
+      font-size:18px;
+      font-weight:900;
+    }
+
+    /* CARD ACTIONS */
     .card-actions{
       display:grid;
       grid-template-columns:1fr 1fr;
@@ -353,14 +489,14 @@
       z-index:1;
     }
 
-    .card-btn{
+    .action-btn{
       padding:16px;
       border-radius:16px;
       border:none;
       font-size:15px;
       font-weight:800;
       cursor:pointer;
-      transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+      transition:0.3s;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -368,226 +504,246 @@
     }
 
     .btn-primary{
-      background:linear-gradient(135deg,var(--level-excellent),#059669);
-      color:#fff;
       grid-column:1 / -1;
-      box-shadow:0 10px 30px rgba(16,185,129,0.3);
+      background:linear-gradient(135deg,var(--card-color,var(--excellent)),#059669);
+      color:#fff;
+      box-shadow:0 10px 30px var(--card-shadow,var(--glow-excellent));
     }
 
     .btn-primary:hover{
       transform:translateY(-3px);
-      box-shadow:0 15px 40px rgba(16,185,129,0.4);
+      box-shadow:0 15px 40px var(--card-shadow,var(--glow-excellent));
     }
 
     .btn-secondary{
-      background:rgba(255,255,255,0.08);
-      color:#fff;
-      border:1px solid rgba(255,255,255,0.15);
+      background:var(--surface);
+      color:var(--text-primary);
+      border:1px solid var(--border);
     }
 
     .btn-secondary:hover{
-      background:rgba(255,255,255,0.15);
-      transform:translateY(-2px);
+      background:var(--surface-elevated);
+      border-color:rgba(255,255,255,0.2);
     }
 
-    /* ===== FEATURES GRID ===== */
+    /* ===== ACHIEVEMENTS STRIP ===== */
+    .achievements-strip{
+      padding:0 24px;
+      margin-bottom:32px;
+      overflow-x:auto;
+      scrollbar-width:none;
+    }
+
+    .achievements-strip::-webkit-scrollbar{display:none}
+
+    .achievements-container{
+      display:flex;
+      gap:12px;
+      padding-bottom:8px;
+    }
+
+    .achievement-badge{
+      flex-shrink:0;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 20px;
+      background:linear-gradient(135deg,var(--surface-elevated),var(--surface));
+      border:1px solid var(--border);
+      border-radius:999px;
+      font-size:14px;
+      font-weight:700;
+      transition:0.3s;
+      cursor:pointer;
+    }
+
+    .achievement-badge:hover{
+      transform:scale(1.05);
+      border-color:var(--excellent);
+    }
+
+    .achievement-badge.unlocked{
+      background:linear-gradient(135deg,rgba(0,217,165,0.2),rgba(0,217,165,0.05));
+      border-color:var(--excellent);
+      box-shadow:0 4px 20px rgba(0,217,165,0.2);
+    }
+
+    .achievement-icon{
+      font-size:24px;
+    }
+
+    /* ===== SMART FEATURES GRID ===== */
     .features-section{
-      margin:32px 20px;
+      padding:0 24px;
+    }
+
+    .section-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:20px;
     }
 
     .section-title{
-      font-size:18px;
-      font-weight:800;
-      color:var(--muted);
-      margin-bottom:16px;
-      padding-right:8px;
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .section-action{
+      font-size:14px;
+      color:var(--excellent);
+      font-weight:700;
+      cursor:pointer;
     }
 
     .features-grid{
-      display:flex;
-      flex-direction:column;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
       gap:12px;
     }
 
-    .feature-card{
-      background:var(--card);
+    .feature-tile{
+      background:var(--surface);
       border:1px solid var(--border);
       border-radius:20px;
       padding:20px;
-      display:flex;
-      align-items:center;
-      gap:16px;
       cursor:pointer;
-      transition:all 0.3s ease;
+      transition:0.3s;
       position:relative;
       overflow:hidden;
     }
 
-    .feature-card::before{
+    .feature-tile::before{
       content:'';
       position:absolute;
       inset:0;
-      background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05),transparent);
-      transform:translateX(-100%);
-      transition:0.5s;
+      background:linear-gradient(135deg,transparent,rgba(255,255,255,0.05));
+      opacity:0;
+      transition:0.3s;
     }
 
-    .feature-card:hover::before{
-      transform:translateX(100%);
+    .feature-tile:hover::before{opacity:1}
+
+    .feature-tile:hover{
+      transform:translateY(-4px);
+      border-color:rgba(255,255,255,0.15);
+      box-shadow:0 10px 30px rgba(0,0,0,0.3);
     }
 
-    .feature-card:hover{
-      background:var(--card-hover);
-      transform:translateX(-8px);
-      border-color:rgba(255,255,255,0.2);
+    .feature-tile.large{
+      grid-column:1 / -1;
+      display:flex;
+      align-items:center;
+      gap:20px;
     }
 
-    .feature-icon{
-      width:52px;
-      height:52px;
-      border-radius:16px;
-      background:linear-gradient(135deg,rgba(16,185,129,0.2),rgba(59,130,246,0.1));
+    .feature-icon-wrap{
+      width:56px;
+      height:56px;
+      border-radius:18px;
+      background:linear-gradient(135deg,rgba(0,217,165,0.2),rgba(59,130,246,0.1));
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:26px;
+      font-size:28px;
       flex-shrink:0;
     }
 
-    .feature-content{flex:1}
+    .feature-tile.large .feature-icon-wrap{
+      width:64px;
+      height:64px;
+      font-size:32px;
+    }
 
-    .feature-title{
-      font-size:17px;
+    .feature-content h4{
+      font-size:16px;
       font-weight:800;
-      color:#fff;
       margin-bottom:4px;
     }
 
-    .feature-desc{
-      font-size:14px;
-      color:var(--muted);
+    .feature-content p{
+      font-size:13px;
+      color:var(--text-secondary);
       line-height:1.5;
     }
 
     .feature-arrow{
-      color:var(--muted);
-      font-size:20px;
-      transition:0.3s;
-    }
-
-    .feature-card:hover .feature-arrow{
-      color:#fff;
-      transform:translateX(-4px);
-    }
-
-    /* ===== FORM SCREEN ===== */
-    .form-container{
-      padding:24px;
-    }
-
-    .form-header{
-      text-align:center;
-      margin-bottom:32px;
-    }
-
-    .form-title{
-      font-size:28px;
-      font-weight:900;
-      margin-bottom:8px;
-    }
-
-    .form-subtitle{
-      color:var(--muted);
-      font-size:15px;
-    }
-
-    .form-card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:28px;
-    }
-
-    .field{
-      margin-bottom:20px;
-    }
-
-    .field label{
-      display:block;
-      font-size:14px;
-      font-weight:700;
-      color:#fff;
-      margin-bottom:10px;
-    }
-
-    .field input, .field select{
-      width:100%;
-      padding:16px;
-      border-radius:16px;
-      border:2px solid rgba(255,255,255,0.1);
-      background:rgba(255,255,255,0.05);
-      color:#fff;
-      font-size:16px;
-      font-family:inherit;
-      transition:0.3s;
-    }
-
-    .field input:focus, .field select:focus{
-      outline:none;
-      border-color:var(--level-excellent);
-      background:rgba(255,255,255,0.08);
-    }
-
-    .field input::placeholder{color:rgba(255,255,255,0.3)}
-
-    .form-actions{
+      position:absolute;
+      top:20px;
+      left:20px;
+      width:32px;
+      height:32px;
+      border-radius:10px;
+      background:var(--surface-elevated);
       display:flex;
-      flex-direction:column;
-      gap:12px;
-      margin-top:32px;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      opacity:0;
+      transform:translateX(-10px);
+      transition:0.3s;
     }
 
-    .submit-btn{
-      padding:18px;
-      border-radius:16px;
+    .feature-tile:hover .feature-arrow{
+      opacity:1;
+      transform:translateX(0);
+    }
+
+    /* ===== FLOATING ACTION BUTTON ===== */
+    .fab-container{
+      position:fixed;
+      bottom:24px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:90;
+    }
+
+    .fab{
+      width:64px;
+      height:64px;
+      border-radius:32px;
+      background:linear-gradient(135deg,var(--excellent),#3B82F6);
       border:none;
-      background:linear-gradient(135deg,var(--level-excellent),#059669);
       color:#fff;
-      font-size:17px;
-      font-weight:900;
+      font-size:28px;
       cursor:pointer;
+      box-shadow:0 10px 40px rgba(0,217,165,0.4);
       transition:0.3s;
-      box-shadow:0 10px 30px rgba(16,185,129,0.3);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
     }
 
-    .submit-btn:hover:not(:disabled){
-      transform:translateY(-3px);
-      box-shadow:0 15px 40px rgba(16,185,129,0.4);
+    .fab:hover{
+      transform:scale(1.1);
+      box-shadow:0 15px 50px rgba(0,217,165,0.5);
     }
 
-    .submit-btn:disabled{
-      opacity:0.6;
-      cursor:not-allowed;
+    .fab::before{
+      content:'';
+      position:absolute;
+      inset:-4px;
+      border-radius:36px;
+      background:inherit;
+      opacity:0.5;
+      filter:blur(15px);
+      z-index:-1;
+      animation:fabGlow 2s ease-in-out infinite;
     }
 
-    .back-link{
-      text-align:center;
-      color:var(--muted);
-      font-size:15px;
-      cursor:pointer;
-      padding:12px;
-      transition:0.3s;
+    @keyframes fabGlow{
+      0%,100%{opacity:0.5;transform:scale(1)}
+      50%{opacity:0.8;transform:scale(1.1)}
     }
 
-    .back-link:hover{color:#fff}
-
-    /* ===== MODALS ===== */
+    /* ===== MODALS & OVERLAYS ===== */
     .modal-overlay{
       position:fixed;
       inset:0;
       background:rgba(0,0,0,0.85);
       backdrop-filter:blur(20px);
-      z-index:9999;
+      z-index:1000;
       display:none;
       align-items:center;
       justify-content:center;
@@ -602,529 +758,665 @@
     }
 
     .modal-content{
-      background:linear-gradient(145deg,#1e293b,#0f172a);
-      border:1px solid rgba(255,255,255,0.15);
+      background:var(--surface-elevated);
+      border:1px solid var(--border);
       border-radius:var(--radius);
       padding:32px;
-      max-width:360px;
+      max-width:400px;
       width:100%;
-      text-align:center;
-      transform:scale(0.9);
+      transform:scale(0.9) translateY(20px);
       transition:0.3s;
-      box-shadow:var(--shadow);
     }
 
     .modal-overlay.active .modal-content{
-      transform:scale(1);
+      transform:scale(1) translateY(0);
     }
 
-    .modal-qr{
-      background:#fff;
-      padding:20px;
-      border-radius:20px;
-      display:inline-block;
-      margin:20px 0;
-      box-shadow:0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    /* ===== TOAST ===== */
-    .toast{
+    /* ===== TOAST SYSTEM ===== */
+    .toast-container{
       position:fixed;
-      bottom:40px;
+      bottom:100px;
       left:50%;
-      transform:translateX(-50%) translateY(100px);
+      transform:translateX(-50%);
+      z-index:10001;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      pointer-events:none;
+    }
+
+    .toast{
       background:#fff;
-      color:#0F172A;
-      padding:16px 28px;
+      color:#0B1120;
+      padding:16px 24px;
       border-radius:16px;
       font-weight:800;
       font-size:15px;
-      opacity:0;
-      transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
-      z-index:10001;
-      box-shadow:0 10px 40px rgba(0,0,0,0.4);
+      box-shadow:0 10px 40px rgba(0,0,0,0.3);
+      animation:toastIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+      display:flex;
+      align-items:center;
+      gap:12px;
     }
 
-    .toast.show{
-      opacity:1;
-      transform:translateX(-50%) translateY(0);
+    @keyframes toastIn{
+      from{opacity:0;transform:translateY(20px) scale(0.9)}
+      to{opacity:1;transform:translateY(0) scale(1)}
     }
 
-    /* ===== HIDDEN EXPORT ===== */
+    /* ===== EMERGENCY MODE ===== */
+    .emergency-banner{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      background:linear-gradient(135deg,var(--danger),#DC2626);
+      padding:16px 24px;
+      z-index:10002;
+      display:none;
+      animation:emergencyPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes emergencyPulse{
+      0%,100%{box-shadow:0 0 20px rgba(239,68,68,0.5)}
+      50%{box-shadow:0 0 40px rgba(239,68,68,0.8)}
+    }
+
+    .emergency-content{
+      max-width:480px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .emergency-text{
+      color:#fff;
+      font-weight:800;
+    }
+
+    .emergency-btn{
+      background:#fff;
+      color:var(--danger);
+      border:none;
+      padding:10px 20px;
+      border-radius:12px;
+      font-weight:800;
+      font-size:14px;
+      cursor:pointer;
+    }
+
+    /* ===== HIDDEN ELEMENTS ===== */
     #exportCard{
       position:fixed;
       top:-9999px;
-      left:-9999px;
       width:400px;
-      background:linear-gradient(145deg,#1e293b 0%,#0f172a 100%);
+      background:linear-gradient(145deg,#1e293b,#0f172a);
       border-radius:var(--radius);
       padding:32px;
-      border:3px solid var(--export-accent,#10B981);
+      border:3px solid var(--export-color,#00D9A5);
     }
 
     .hidden{display:none !important}
+
+    /* ===== RESPONSIVE ===== */
+    @media(min-width:768px){
+      .app{max-width:600px}
+      .features-grid{grid-template-columns:repeat(3,1fr)}
+      .features-grid .feature-tile.large{grid-column:span 2}
+    }
   </style>
 </head>
 <body>
-  <!-- SPLASH SCREEN -->
-  <div class="splash" id="splash">
-    <div class="splash-content">
-      <div class="splash-brain">🧠</div>
-      <div class="splash-text">SugarMind</div>
-      <div class="splash-tagline">بطاقة السكري الذكية</div>
+  <!-- EMERGENCY BANNER -->
+  <div class="emergency-banner" id="emergencyBanner">
+    <div class="emergency-content">
+      <span class="emergency-text">⚠️ قراءة طارئة - تتطلب اهتماماً فورياً</span>
+      <button class="emergency-btn" onclick="handleEmergency()">دليل الطوارئ</button>
     </div>
   </div>
 
-  <!-- TOAST -->
-  <div class="toast" id="toast"></div>
+  <!-- SPLASH SCREEN -->
+  <div class="splash" id="splash">
+    <div class="splash-logo">🧠</div>
+    <div class="splash-brand">SugarMind Pro</div>
+    <div class="splash-tagline">المستقبل الصحي بين يديك</div>
+    <div class="splash-loading">
+      <div class="splash-bar"></div>
+    </div>
+  </div>
 
-  <!-- SHARE MODAL -->
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- MODALS -->
   <div class="modal-overlay" id="shareModal" onclick="closeModal(event)">
     <div class="modal-content">
-      <h3 style="font-size:22px;font-weight:900;margin-bottom:8px;">شارك بطاقتك! 🎉</h3>
-      <p style="color:var(--muted);font-size:14px;margin-bottom:20px;">امسح الباركود أو احفظ الصورة</p>
-      <div class="modal-qr" id="modalQr"></div>
-      <button class="submit-btn" onclick="downloadCard()" style="width:100%;margin-top:16px;">
-        💾 حمل الصورة
+      <h3 style="font-size:24px;font-weight:900;margin-bottom:8px;">شارك تقدمك! 🎉</h3>
+      <p style="color:var(--text-secondary);margin-bottom:24px;">امسح الباركود أو احفظ البطاقة</p>
+      <div id="modalQr" style="background:#fff;padding:20px;border-radius:20px;display:inline-block;margin-bottom:20px;"></div>
+      <button class="action-btn btn-primary" onclick="downloadCard()" style="width:100%;">
+        💾 حمل البطاقة
       </button>
     </div>
   </div>
 
-  <!-- HIDDEN EXPORT CARD -->
+  <!-- HIDDEN EXPORT -->
   <div id="exportCard">
     <div style="text-align:center;margin-bottom:24px;">
-      <div style="font-size:48px;margin-bottom:8px;">🧠</div>
-      <div style="font-size:28px;font-weight:900;color:#10B981;">SugarMind</div>
-      <div style="color:#94a3b8;font-size:14px;">بطاقة متابعة السكري</div>
+      <div style="font-size:56px;margin-bottom:8px;">🧠</div>
+      <div style="font-size:32px;font-weight:900;color:var(--export-color);">SugarMind</div>
+      <div style="color:#64748b;font-size:14px;">بطاقة المتابعة الذكية</div>
     </div>
-    <div style="background:rgba(255,255,255,0.05);border-radius:16px;padding:20px;margin-bottom:20px;">
-      <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
-        <span style="color:#94a3b8;font-size:13px;">الاسم</span>
-        <span style="color:#fff;font-weight:800;" id="expName">---</span>
+    <div style="background:rgba(255,255,255,0.05);border-radius:20px;padding:24px;margin-bottom:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <span style="color:#94a3b8;">الاسم</span>
+        <span style="font-size:20px;font-weight:900;" id="expName">---</span>
       </div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
-        <span style="color:#94a3b8;font-size:13px;">آخر قراءة</span>
-        <span style="color:#fff;font-weight:800;" id="expReading">---</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <span style="color:#94a3b8;">القراءة</span>
+        <span style="font-size:28px;font-weight:900;color:var(--export-color);" id="expReading">---</span>
       </div>
-      <div style="display:flex;justify-content:space-between;">
-        <span style="color:#94a3b8;font-size:13px;">المستوى</span>
-        <span style="color:#10B981;font-weight:800;" id="expLevel">---</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="color:#94a3b8;">المستوى</span>
+        <span style="font-weight:800;" id="expLevel">---</span>
       </div>
     </div>
     <div style="text-align:center;">
       <div id="expQr" style="display:inline-block;background:#fff;padding:16px;border-radius:16px;"></div>
-      <div style="color:#64748b;font-size:12px;margin-top:12px;">امسح للدخول للتطبيق</div>
+      <div style="color:#64748b;font-size:13px;margin-top:12px;">sugarmind.app</div>
     </div>
   </div>
 
   <div class="app">
-    <!-- HOME SCREEN -->
-    <section class="screen active" id="homeScreen">
-      <header class="main-header">
-        <div class="logo-wrap">🧠</div>
-        <div class="brand-name">SugarMind</div>
-      </header>
-
-      <!-- Dynamic Greeting -->
-      <div class="greeting-section" id="greetingSection">
-        <div class="greeting-text">
-          <span id="greetingText">هلا والله فيك</span>
-          <span class="greeting-rose" id="greetingRose">🌹</span>
+    <!-- SMART HEADER -->
+    <header class="smart-header">
+      <div class="header-content">
+        <div class="header-logo">
+          <div class="logo-icon">🧠</div>
+          <div class="logo-text">SugarMind</div>
         </div>
-        <div class="greeting-sub" id="greetingSub">جهز بطاقتك في ثواني</div>
+        <div class="header-actions">
+          <button class="icon-btn" onclick="showToast('الإشعارات قريباً!')" title="الإشعارات">
+            🔔
+            <span class="badge" id="notifBadge">3</span>
+          </button>
+          <button class="icon-btn" onclick="showSettings()" title="الإعدادات">
+            ⚙️
+          </button>
+        </div>
       </div>
+    </header>
 
-      <!-- HERO CARD (Hidden initially) -->
-      <div class="hero-card hidden" id="heroCard">
-        <div class="card-shine"></div>
-        <div class="card-header">
-          <div class="user-name" id="cardName">---</div>
-          <div class="level-badge" id="cardLevel">---</div>
-        </div>
-        
-        <div class="reading-display">
-          <div class="reading-number" id="cardReading">---</div>
-          <div class="reading-unit">mg/dL</div>
-          <div class="reading-time">
-            <span>🕐</span>
-            <span id="cardTime">---</span>
+    <!-- GREETING -->
+    <div class="greeting-container">
+      <div class="time-badge" id="timeBadge">
+        <span id="timeIcon">🌅</span>
+        <span id="timeText">صباح الخير</span>
+      </div>
+      <h1 class="greeting-main" id="greetingMain">
+        هلا والله فيك<br>
+        <span style="color:var(--excellent);">جهز بطاقتك</span>
+      </h1>
+      <p class="greeting-sub" id="greetingSub">ابدأ رحلتك الصحية اليوم</p>
+    </div>
+
+    <!-- LIVING CARD -->
+    <div class="living-card hidden" id="livingCard">
+      <div class="card-ambient"></div>
+      <div class="card-shine"></div>
+      
+      <div class="card-header">
+        <div class="user-info">
+          <div class="avatar" id="userAvatar">👤</div>
+          <div class="user-details">
+            <h3 id="cardName">---</h3>
+            <p id="cardGoal">---</p>
           </div>
         </div>
+        <div class="status-badge" id="statusBadge">---</div>
+      </div>
 
-        <!-- Sparkline Chart -->
-        <div class="sparkline" id="sparkline">
-          <div class="spark-bar" style="height:60%;animation-delay:0.1s"></div>
-          <div class="spark-bar" style="height:80%;animation-delay:0.2s"></div>
-          <div class="spark-bar" style="height:45%;animation-delay:0.3s"></div>
-          <div class="spark-bar" style="height:90%;animation-delay:0.4s"></div>
-          <div class="spark-bar" style="height:100%;animation-delay:0.5s"></div>
-        </div>
-
-        <div class="card-actions">
-          <button class="card-btn btn-primary" onclick="shareCard()">
-            <span>📤</span> شارك بطاقتك
-          </button>
-          <button class="card-btn btn-secondary" onclick="downloadCard()">
-            <span>💾</span> حمل الصورة
-          </button>
-          <button class="card-btn btn-secondary" onclick="showForm()">
-            <span>✏️</span> تحديث
-          </button>
+      <div class="reading-section">
+        <div class="reading-value" id="readingValue">---</div>
+        <div class="reading-meta">
+          <span>mg/dL</span>
+          <span>•</span>
+          <span id="readingTime">---</span>
+          <div class="trend-indicator trend-up" id="trendInd">
+            <span>↗️</span>
+            <span>+12%</span>
+          </div>
         </div>
       </div>
 
-      <!-- CTA Button (Shown when no card) -->
-      <div style="padding:0 24px;margin-top:32px;" id="ctaSection">
-        <button class="submit-btn" onclick="showForm()" style="width:100%;">
-          ⚡ أنشئ بطاقتك الآن
+      <div class="spark-container">
+        <canvas id="sparkChart"></canvas>
+      </div>
+
+      <div class="quick-stats">
+        <div class="stat-pill">
+          <div class="stat-label">الهدف</div>
+          <div class="stat-value" id="statGoal">---</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-label">الكارب</div>
+          <div class="stat-value" id="statCarb">---</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-label">القراءات</div>
+          <div class="stat-value" id="statCount">---</div>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button class="action-btn btn-primary" onclick="shareCard()">
+          <span>📤</span> شارك إنجازك
+        </button>
+        <button class="action-btn btn-secondary" onclick="showForm()">
+          <span>✏️</span> تحديث
+        </button>
+        <button class="action-btn btn-secondary" onclick="showHistory()">
+          <span>📊</span> السجل
         </button>
       </div>
+    </div>
 
-      <!-- FEATURES -->
-      <div class="features-section">
-        <div class="section-title">اكتشف المزيد</div>
-        <div class="features-grid">
-          <div class="feature-card" onclick="showToast('قريباً! 📊')">
-            <div class="feature-icon">📊</div>
-            <div class="feature-content">
-              <div class="feature-title">تحليل الأرقام</div>
-              <div class="feature-desc">افهم قراءاتك بشكل أعمق</div>
-            </div>
-            <div class="feature-arrow">←</div>
-          </div>
-          
-          <div class="feature-card" onclick="showToast('قريباً! 🍽️')">
-            <div class="feature-icon">🍽️</div>
-            <div class="feature-content">
-              <div class="feature-title">حاسبة الكارب</div>
-              <div class="feature-desc">احسب وجبتك بذكاء</div>
-            </div>
-            <div class="feature-arrow">←</div>
-          </div>
-          
-          <div class="feature-card" onclick="showToast('قريباً! 🧮')">
-            <div class="feature-icon">🧮</div>
-            <div class="feature-content">
-              <div class="feature-title">معامل الكارب</div>
-              <div class="feature-desc">حدد معاملك بدقة</div>
-            </div>
-            <div class="feature-arrow">←</div>
-          </div>
+    <!-- CTA (No Card) -->
+    <div style="padding:0 24px;margin-bottom:32px;" id="ctaSection">
+      <button class="action-btn btn-primary" onclick="showForm()" style="width:100%;padding:20px;font-size:18px;">
+        <span>⚡</span> أنشئ بطاقتك الذكية
+      </button>
+    </div>
+
+    <!-- ACHIEVEMENTS -->
+    <div class="achievements-strip">
+      <div class="achievements-container" id="achievementsContainer">
+        <div class="achievement-badge unlocked">
+          <span class="achievement-icon">🌟</span>
+          <span>البداية</span>
+        </div>
+        <div class="achievement-badge">
+          <span class="achievement-icon">🔥</span>
+          <span>3 أيام</span>
+        </div>
+        <div class="achievement-badge">
+          <span class="achievement-icon">🏆</span>
+          <span>مسيطر</span>
+        </div>
+        <div class="achievement-badge">
+          <span class="achievement-icon">💎</span>
+          <span>خبير</span>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- FORM SCREEN -->
-    <section class="screen" id="formScreen">
-      <div class="form-container">
-        <div class="form-header">
-          <div class="form-title">بطاقتك الذكية 📝</div>
-          <div class="form-subtitle">أدخل بياناتك لإنشاء بطاقتك الشخصية</div>
+    <!-- SMART FEATURES -->
+    <div class="features-section">
+      <div class="section-header">
+        <h2 class="section-title">الأدوات الذكية</h2>
+        <span class="section-action" onclick="showToast('المزيد قريباً!')">عرض الكل</span>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-tile large" onclick="activateAI()">
+          <div class="feature-icon-wrap">🤖</div>
+          <div class="feature-content">
+            <h4>AI Coach</h4>
+            <p>محادثة ذكية لنصائح فورية</p>
+          </div>
+          <div class="feature-arrow">←</div>
         </div>
-
-        <div class="form-card">
-          <form id="userForm" onsubmit="handleSubmit(event)">
-            <div class="field">
-              <label>الاسم *</label>
-              <input type="text" id="nameInput" placeholder="مثال: أحمد" required minlength="2">
-            </div>
-
-            <div class="field">
-              <label>آخر قراءة سكر *</label>
-              <input type="number" id="readingInput" placeholder="مثال: 120" required min="30" max="600">
-            </div>
-
-            <div class="field">
-              <label>العمر</label>
-              <input type="number" id="ageInput" placeholder="مثال: 25" min="1" max="120">
-            </div>
-
-            <div class="field">
-              <label>هدفك معنا</label>
-              <select id="goalInput">
-                <option value="متابعة">متابعة يومية</option>
-                <option value="تحسين">تحسين المستوى</option>
-                <option value="فهم">فهم أعمق</option>
-                <option value="ترتيب">ترتيب البيانات</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label>معامل الكارب</label>
-              <input type="text" id="ratioInput" placeholder="مثال: 1:12">
-            </div>
-
-            <div class="form-actions">
-              <button type="submit" class="submit-btn" id="submitBtn">
-                ✨ أنشئ بطاقتي
-              </button>
-              <div class="back-link" onclick="showHome()">
-                رجوع للخلف
-              </div>
-            </div>
-          </form>
+        
+        <div class="feature-tile" onclick="showToast('قريباً!')">
+          <div class="feature-icon-wrap">🍽️</div>
+          <div class="feature-content">
+            <h4>حاسبة الكارب</h4>
+            <p>ذكية وسريعة</p>
+          </div>
+          <div class="feature-arrow">←</div>
+        </div>
+        
+        <div class="feature-tile" onclick="showToast('قريباً!')">
+          <div class="feature-icon-wrap">📊</div>
+          <div class="feature-content">
+            <h4>التقارير</h4>
+            <p>تحليل شامل</p>
+          </div>
+          <div class="feature-arrow">←</div>
+        </div>
+        
+        <div class="feature-tile" onclick="showToast('قريباً!')">
+          <div class="feature-icon-wrap">👨‍👩‍👧‍👦</div>
+          <div class="feature-content">
+            <h4>العائلة</h4>
+            <p>مشاركة ومتابعة</p>
+          </div>
+          <div class="feature-arrow">←</div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+
+  <!-- FLOATING ACTION BUTTON -->
+  <div class="fab-container">
+    <button class="fab" onclick="quickReading()" title="قراءة سريعة">
+      +
+    </button>
   </div>
 
   <script>
-    // ===== MEMORY STORAGE (Session Mode) =====
-    let memoryData = null;
-    let currentData = null;
+    // ===== STATE MANAGEMENT =====
+    let currentUser = null;
+    let readingsHistory = [];
+    let achievements = ['starter'];
 
-    // ===== UTILITIES =====
-    const roses = ['🌹','🌸','🌺','🌷','💐','🌻','🪷'];
-    
+    // ===== THEME & TIME =====
+    const timeThemes = {
+      morning: {icon:'🌅',text:'صباح الخير',sub:'يوم جديد صحي',color:'#F59E0B'},
+      afternoon: {icon:'☀️',text:'مساء النور',sub:'حافظ على نشاطك',color:'#F59E0B'},
+      evening: {icon:'🌆',text:'مساء الخير',sub:'وقت المراجعة',color:'#3B82F6'},
+      night: {icon:'🌙',text:'تصبح على خير',sub:'استعد للغد',color:'#6366F1'}
+    };
+
+    const roses = ['🌹','🌺','🌸','🌷','💐','🪷','🌻'];
+
+    function getTimeTheme() {
+      const h = new Date().getHours();
+      if(h < 12) return timeThemes.morning;
+      if(h < 17) return timeThemes.afternoon;
+      if(h < 21) return timeThemes.evening;
+      return timeThemes.night;
+    }
+
     function getGreeting(name) {
-      const hour = new Date().getHours();
+      const theme = getTimeTheme();
       const rose = roses[Math.floor(Math.random() * roses.length)];
+      return {
+        main: name ? `${theme.text} يا ${name} <span class="rose-anim">${rose}</span>` : 'هلا والله فيك',
+        sub: theme.sub,
+        theme
+      };
+    }
+
+    // ===== READING ANALYSIS =====
+    function analyzeReading(value) {
+      const v = parseFloat(value);
+      if(v < 70) return {
+        level: 'منخفض جداً',
+        color: '#EF4444',
+        bg: 'rgba(239,68,68,0.2)',
+        glow: 'var(--glow-danger)',
+        emergency: true
+      };
+      if(v < 80) return {
+        level: 'يحتاج انتباه',
+        color: '#F97316',
+        bg: 'rgba(249,115,22,0.2)',
+        glow: 'var(--glow-warning)',
+        emergency: false
+      };
+      if(v <= 140) return {
+        level: 'ممتاز ✨',
+        color: '#00D9A5',
+        bg: 'rgba(0,217,165,0.2)',
+        glow: 'var(--glow-excellent)',
+        emergency: false
+      };
+      if(v <= 180) return {
+        level: 'جيد',
+        color: '#F59E0B',
+        bg: 'rgba(245,158,11,0.2)',
+        glow: 'var(--glow-good)',
+        emergency: false
+      };
+      if(v <= 250) return {
+        level: 'مراجعة',
+        color: '#F97316',
+        bg: 'rgba(249,115,22,0.2)',
+        glow: 'var(--glow-warning)',
+        emergency: false
+      };
+      return {
+        level: 'طارئ ⚠️',
+        color: '#EF4444',
+        bg: 'rgba(239,68,68,0.2)',
+        glow: 'var(--glow-danger)',
+        emergency: true
+      };
+    }
+
+    // ===== UI UPDATES =====
+    function updateUI() {
+      const theme = getTimeTheme();
+      document.getElementById('timeIcon').textContent = theme.icon;
+      document.getElementById('timeText').textContent = theme.text;
       
-      let text = 'هلا والله';
-      if (hour >= 5 && hour < 12) text = `صباح الخير يا ${name}`;
-      else if (hour >= 12 && hour < 17) text = `مساء النور يا ${name}`;
-      else if (hour >= 17 && hour < 21) text = `مساء الخير يا ${name}`;
-      else text = `تصبح على خير يا ${name}`;
-      
-      return {text, rose, sub: getSubText(hour)};
-    }
-
-    function getSubText(hour) {
-      if (hour >= 5 && hour < 12) return 'يومك صحي ومنتعش 🌅';
-      if (hour >= 12 && hour < 17) return 'تابع نشاطك بذكاء ☀️';
-      if (hour >= 17 && hour < 21) return 'وقت الاسترخاء والمتابعة 🌆';
-      return 'استعد ليوم جديد غداً 🌙';
-    }
-
-    function formatTime() {
-      const now = new Date();
-      let h = now.getHours();
-      const m = String(now.getMinutes()).padStart(2,'0');
-      const ampm = h >= 12 ? 'م' : 'ص';
-      h = h % 12 || 12;
-      return `${h}:${m} ${ampm}`;
-    }
-
-    function getLevel(reading) {
-      const val = parseFloat(reading);
-      if (val < 70) return {text:'منخفض ⚠️', color:'#EF4444', bg:'rgba(239,68,68,0.2)'};
-      if (val < 80) return {text:'انتباه', color:'#F97316', bg:'rgba(249,115,22,0.2)'};
-      if (val <= 140) return {text:'ممتاز ✨', color:'#10B981', bg:'rgba(16,185,129,0.2)'};
-      if (val <= 180) return {text:'جيد', color:'#F59E0B', bg:'rgba(245,158,11,0.2)'};
-      if (val <= 200) return {text:'منجز', color:'#F97316', bg:'rgba(249,115,22,0.2)'};
-      return {text:'مراجعة', color:'#EF4444', bg:'rgba(239,68,68,0.2)'};
-    }
-
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 3000);
-    }
-
-    // ===== STORAGE =====
-    function saveData(data) {
-      memoryData = {...data};
-      currentData = {...data};
-      try {
-        localStorage.setItem('sugarmind_v3', JSON.stringify(data));
-        return 'persistent';
-      } catch(e) {
-        return 'session';
-      }
-    }
-
-    function loadData() {
-      try {
-        const raw = localStorage.getItem('sugarmind_v3');
-        if (raw) {
-          const data = JSON.parse(raw);
-          memoryData = {...data};
-          currentData = {...data};
-          return data;
-        }
-      } catch(e) {}
-      return memoryData;
-    }
-
-    // ===== NAVIGATION =====
-    function showScreen(id) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      window.scrollTo(0,0);
-    }
-
-    function showHome() {
-      showScreen('homeScreen');
-      updateHome();
-    }
-
-    function showForm() {
-      const data = loadData();
-      if (data) {
-        document.getElementById('nameInput').value = data.name || '';
-        document.getElementById('readingInput').value = data.reading || '';
-        document.getElementById('ageInput').value = data.age || '';
-        document.getElementById('goalInput').value = data.goal || 'متابعة';
-        document.getElementById('ratioInput').value = data.ratio || '';
-      }
-      showScreen('formScreen');
-    }
-
-    // ===== UPDATE HOME SCREEN =====
-    function updateHome() {
-      const data = loadData();
-      
-      if (data && data.name) {
-        // Has data - show card
-        document.getElementById('heroCard').classList.remove('hidden');
-        document.getElementById('ctaSection').classList.add('hidden');
-        
-        // Update greeting
-        const g = getGreeting(data.name);
-        document.getElementById('greetingText').textContent = g.text;
-        document.getElementById('greetingRose').textContent = g.rose;
+      if(currentUser) {
+        const g = getGreeting(currentUser.name);
+        document.getElementById('greetingMain').innerHTML = g.main;
         document.getElementById('greetingSub').textContent = g.sub;
         
         // Update card
-        document.getElementById('cardName').textContent = data.name;
-        document.getElementById('cardReading').textContent = data.reading;
-        document.getElementById('cardTime').textContent = data.time;
+        const analysis = analyzeReading(currentUser.reading);
         
-        // Level with dynamic colors
-        const level = getLevel(data.reading);
-        const badge = document.getElementById('cardLevel');
-        badge.textContent = level.text;
-        badge.style.setProperty('--badge-bg', level.bg);
-        badge.style.setProperty('--badge-color', level.color);
-        badge.style.setProperty('--badge-border', level.color + '40');
-        badge.style.setProperty('--badge-shadow', level.color + '30');
+        document.getElementById('livingCard').classList.remove('hidden');
+        document.getElementById('ctaSection').classList.add('hidden');
         
-        // Update CSS variables for card accent
-        document.getElementById('heroCard').style.setProperty('--card-accent', level.color);
-        document.getElementById('exportCard').style.setProperty('--export-accent', level.color);
+        document.getElementById('userAvatar').textContent = currentUser.name[0];
+        document.getElementById('cardName').textContent = currentUser.name;
+        document.getElementById('cardGoal').textContent = currentUser.goal || 'متابعة يومية';
         
-        // Update sparkline colors
-        document.querySelectorAll('.spark-bar').forEach(bar => {
-          bar.style.background = level.color;
-        });
+        const badge = document.getElementById('statusBadge');
+        badge.textContent = analysis.level;
+        badge.style.setProperty('--badge-color', analysis.color);
+        badge.style.setProperty('--badge-bg', analysis.bg);
+        badge.style.setProperty('--badge-border', analysis.color + '40');
+        badge.style.setProperty('--badge-shadow', analysis.color + '30');
         
+        document.getElementById('readingValue').textContent = currentUser.reading;
+        document.getElementById('readingValue').style.textShadow = `0 0 60px ${analysis.color}`;
+        document.getElementById('readingTime').textContent = currentUser.time;
+        
+        // Card theme
+        const card = document.getElementById('livingCard');
+        card.style.setProperty('--card-color', analysis.color);
+        card.style.setProperty('--card-shadow', analysis.glow);
+        card.style.setProperty('--badge-color', analysis.color);
+        
+        // Stats
+        document.getElementById('statGoal').textContent = currentUser.goal || 'متابعة';
+        document.getElementById('statCarb').textContent = currentUser.carbRatio || '--';
+        document.getElementById('statCount').textContent = readingsHistory.length || '1';
+        
+        // Emergency check
+        if(analysis.emergency) {
+          document.getElementById('emergencyBanner').style.display = 'block';
+        }
+        
+        // Draw sparkline
+        drawSparkline();
+        
+        // Unlock achievements
+        checkAchievements();
       } else {
-        // No data - show CTA
-        document.getElementById('heroCard').classList.add('hidden');
+        document.getElementById('livingCard').classList.add('hidden');
         document.getElementById('ctaSection').classList.remove('hidden');
-        
-        document.getElementById('greetingText').textContent = 'هلا والله فيك';
-        document.getElementById('greetingRose').textContent = '🌹';
-        document.getElementById('greetingSub').textContent = 'جهز بطاقتك في ثواني';
+        document.getElementById('greetingMain').innerHTML = 'هلا والله فيك<br><span style="color:var(--excellent);">جهز بطاقتك</span>';
+        document.getElementById('greetingSub').textContent = 'ابدأ رحلتك الصحية اليوم';
       }
     }
 
-    // ===== FORM HANDLING =====
-    function handleSubmit(e) {
-      e.preventDefault();
+    function drawSparkline() {
+      const canvas = document.getElementById('sparkChart');
+      const ctx = canvas.getContext('2d');
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
       
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.textContent = 'جاري الإنشاء...';
+      const data = readingsHistory.length > 0 
+        ? readingsHistory.slice(-7).map(r => parseFloat(r.reading))
+        : [currentUser?.reading || 120].map(v => parseFloat(v));
       
-      const name = document.getElementById('nameInput').value.trim();
-      const reading = document.getElementById('readingInput').value;
+      const max = Math.max(...data) * 1.2;
+      const min = Math.min(...data) * 0.8;
+      const range = max - min;
       
-      const data = {
-        name,
-        reading,
-        age: document.getElementById('ageInput').value,
-        goal: document.getElementById('goalInput').value,
-        ratio: document.getElementById('ratioInput').value,
-        time: formatTime(),
-        savedAt: new Date().toISOString()
-      };
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.strokeStyle = getComputedStyle(document.getElementById('livingCard')).getPropertyValue('--card-color');
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
       
-      const mode = saveData(data);
-      
-      // Celebration!
-      confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: {y: 0.6},
-        colors: ['#10B981', '#3B82F6', '#F59E0B', '#EF4444']
+      data.forEach((val, i) => {
+        const x = (i / (data.length - 1)) * canvas.width;
+        const y = canvas.height - ((val - min) / range) * canvas.height;
+        if(i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
       });
       
-      setTimeout(() => {
-        showHome();
-        showToast(mode === 'session' ? 'تم الإنشاء! (وضع مؤقت)' : 'بطاقتك جاهزة! 🎉');
-        btn.disabled = false;
-        btn.textContent = '✨ أنشئ بطاقتي';
-      }, 800);
+      ctx.stroke();
+      
+      // Add glow effect
+      ctx.shadowColor = ctx.strokeStyle;
+      ctx.shadowBlur = 10;
+      ctx.stroke();
     }
 
-    // ===== QR & SHARE =====
-    function generateQR(container, text) {
-      container.innerHTML = '';
-      new QRCode(container, {
-        text: text,
-        width: 120,
-        height: 120,
-        colorDark: '#0F172A',
-        colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.M
-      });
+    function checkAchievements() {
+      const container = document.getElementById('achievementsContainer');
+      const badges = container.querySelectorAll('.achievement-badge');
+      
+      // Unlock based on conditions
+      if(readingsHistory.length >= 3) {
+        badges[1].classList.add('unlocked');
+      }
+      if(readingsHistory.length >= 7) {
+        badges[2].classList.add('unlocked');
+      }
+    }
+
+    // ===== ACTIONS =====
+    function showToast(msg, icon='✨') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<span>${icon}</span> ${msg}`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    function showForm() {
+      showToast('النموذج قريباً!', '📝');
     }
 
     function shareCard() {
-      const data = currentData || loadData();
-      if (!data) return;
+      if(!currentUser) return;
       
-      generateQR(document.getElementById('modalQr'), 'https://sugarmind.app');
+      const analysis = analyzeReading(currentUser.reading);
+      document.getElementById('exportCard').style.setProperty('--export-color', analysis.color);
+      document.getElementById('expName').textContent = currentUser.name;
+      document.getElementById('expReading').textContent = currentUser.reading + ' mg/dL';
+      document.getElementById('expLevel').textContent = analysis.level;
+      document.getElementById('expLevel').style.color = analysis.color;
+      
+      // Generate QR
+      document.getElementById('modalQr').innerHTML = '';
+      document.getElementById('expQr').innerHTML = '';
+      new QRCode(document.getElementById('modalQr'), {
+        text: 'https://sugarmind.app/u/' + btoa(currentUser.name),
+        width: 140,
+        height: 140
+      });
+      new QRCode(document.getElementById('expQr'), {
+        text: 'https://sugarmind.app',
+        width: 100,
+        height: 100
+      });
+      
       document.getElementById('shareModal').classList.add('active');
       
-      // Native share if available
-      if (navigator.share) {
-        navigator.share({
-          title: `بطاقة ${data.name} - SugarMind`,
-          text: `قراءة السكر: ${data.reading} - المستوى: ${getLevel(data.reading).text}`
-        }).catch(() => {});
-      }
+      // Confetti
+      confetti({
+        particleCount: 100,
+        spread: 60,
+        origin: {y: 0.7},
+        colors: [analysis.color, '#fff', '#3B82F6']
+      });
     }
 
     function closeModal(e) {
-      if (e.target === e.currentTarget) {
+      if(e.target === e.currentTarget) {
         document.getElementById('shareModal').classList.remove('active');
       }
     }
 
     function downloadCard() {
-      const data = currentData || loadData();
-      if (!data) return;
-      
-      // Update export card
-      document.getElementById('expName').textContent = data.name;
-      document.getElementById('expReading').textContent = data.reading + ' mg/dL';
-      document.getElementById('expLevel').textContent = getLevel(data.reading).text;
-      generateQR(document.getElementById('expQr'), 'https://sugarmind.app');
-      
-      // Generate image
       html2canvas(document.getElementById('exportCard'), {
         scale: 2,
         backgroundColor: null
       }).then(canvas => {
         const link = document.createElement('a');
-        link.download = `SugarMind-${data.name}.png`;
+        link.download = `SugarMind-${currentUser.name}.png`;
         link.href = canvas.toDataURL();
         link.click();
-        showToast('تم تحميل البطاقة! 💾');
+        showToast('تم تحميل البطاقة!', '💾');
       });
+    }
+
+    function quickReading() {
+      // Simulate quick reading
+      const reading = Math.floor(Math.random() * (180 - 80) + 80);
+      currentUser = {
+        name: currentUser?.name || 'ضيف',
+        reading: reading,
+        time: new Date().toLocaleTimeString('ar-SA', {hour: '2-digit', minute:'2-digit'}),
+        goal: 'متابعة',
+        carbRatio: '1:12'
+      };
+      readingsHistory.push({...currentUser, date: new Date()});
+      updateUI();
+      showToast(`تم تسجيل القراءة: ${reading}`, '📊');
+    }
+
+    function activateAI() {
+      showToast('AI Coach: "كيف أقدر أساعدك اليوم؟"', '🤖');
+    }
+
+    function handleEmergency() {
+      showToast('اتصل بطوارئ 997 أو اذهب لأقرب مستشفى', '🚨');
+    }
+
+    function showHistory() {
+      showToast('سجل القراءات قريباً!', '📈');
+    }
+
+    function showSettings() {
+      showToast('الإعدادات قريباً!', '⚙️');
     }
 
     // ===== INIT =====
     window.onload = () => {
-      // Hide splash after animation
       setTimeout(() => {
         document.getElementById('splash').classList.add('hidden');
-        updateHome();
-      }, 2500);
+        updateUI();
+      }, 2800);
     };
+
+    // Demo data for preview
+    setTimeout(() => {
+      if(!currentUser) {
+        currentUser = {
+          name: 'أحمد',
+          reading: 128,
+          time: '9:30 ص',
+          goal: 'متابعة',
+          carbRatio: '1:12'
+        };
+        readingsHistory = [currentUser];
+        updateUI();
+      }
+    }, 3000);
   </script>
 </body>
 </html>
