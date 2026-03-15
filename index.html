@@ -918,4 +918,92 @@
     function normalizeTimeValue(value){
       if(!value) return currentTimeValue();
       if(/^\d{2}:\d{2}$/.test(value)) return value;
-      const d = new Date(va
+      const d = new Date(value);
+      if(Number.isNaN(d.getTime())) return currentTimeValue();
+      return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    }
+
+    function formatTime(value){
+      if(!value) return 'الآن';
+      if(/^\d{2}:\d{2}$/.test(value)){
+        const [h,m] = value.split(':').map(Number);
+        const d = new Date();
+        d.setHours(h,m,0,0);
+        return d.toLocaleTimeString('ar-SA', { hour:'numeric', minute:'2-digit' });
+      }
+      const d = new Date(value);
+      if(Number.isNaN(d.getTime())) return 'الآن';
+      return d.toLocaleTimeString('ar-SA', { hour:'numeric', minute:'2-digit' });
+    }
+
+    function formatDateLabel(value){
+      const d = new Date(value);
+      if(Number.isNaN(d.getTime())) return 'اليوم';
+      return d.toLocaleDateString('ar-SA', { day:'numeric', month:'short' });
+    }
+
+    function getPeriod(){
+      const hour = new Date().getHours();
+      if(hour < 12) return {label:'صباح الخير', hint:'بداية يوم هادئ', icon:'🌤️'};
+      if(hour < 18) return {label:'مساء الخير', hint:'نكمل يومك بهدوء', icon:'☀️'};
+      return {label:'مساء الخير', hint:'خلنا نختم يومك بوضوح', icon:'🌙'};
+    }
+
+    function getReadingState(reading){
+      const value = Number(reading);
+
+      if(!Number.isFinite(value)){
+        return {
+          key:'empty',
+          label:'بدون بيانات',
+          tag:'بطاقة جديدة',
+          chip:'بانتظار القراءة',
+          message:'خلنا نبدأ باسمك وآخر قراءة واضحة، وبعدها تصير بطاقتك مرتبة وجاهزة للحفظ والمشاركة.',
+          footerTitle:'جاهزة للمشاركة',
+          footerCopy:'احفظ بطاقتك كصورة أو شاركها مع من يهمك بطريقة أنيقة وواضحة.',
+          tone:'rgba(255,255,255,.08)',
+          color:'#F7F4EF',
+          soft:'#FFFFFF',
+          scanMessage:'سجل القراءة حتى تشوف النتيجة هنا.'
+        };
+      }
+
+      if(value < 70){
+        return {
+          key:'low',
+          label:'منخفض',
+          tag:'يحتاج انتباه',
+          chip:'منخفض',
+          message:'الأولوية الآن للانتباه للحالة الحالية قبل أي خطوة ثانية.',
+          footerTitle:'بطاقة متابعة مهمة',
+          footerCopy:'إذا احتجت، حدّث القراءة بعد فترة قصيرة حتى تكون الصورة أوضح.',
+          tone:'rgba(218,114,109,.18)',
+          color:'#FFB6AE',
+          soft:'var(--danger-soft)',
+          scanMessage:'قراءتك منخفضة وتحتاج انتباه الآن.'
+        };
+      }
+
+      if(value <= 140){
+        return {
+          key:'range',
+          label:'في النطاق',
+          tag:'مطمّنة',
+          chip:'في النطاق',
+          message:'أمورك اليوم مطمّنة، وقراءتك الحالية داخل النطاق المناسب تقريبًا.',
+          footerTitle:'بطاقة يومية مطمّنة',
+          footerCopy:'وقت ممتاز تحفظ بطاقتك أو تشاركها مع من يهمك.',
+          tone:'rgba(97,176,127,.18)',
+          color:'#C8F0D6',
+          soft:'var(--success-soft)',
+          scanMessage:'أمورك مطمّنة، وقراءتك داخل النطاق.'
+        };
+      }
+
+      if(value <= 180){
+        return {
+          key:'slightly-high',
+          label:'أعلى من النطاق قليلًا',
+          tag:'انتباه بسيط',
+          chip:'أعلى قليلًا',
+          message:'القراءة أعلى من المثالي شوي، لكنها ما زالت قابلة للفهم والض
