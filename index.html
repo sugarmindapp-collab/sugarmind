@@ -1006,4 +1006,633 @@
           label:'أعلى من النطاق قليلًا',
           tag:'انتباه بسيط',
           chip:'أعلى قليلًا',
-          message:'القراءة أعلى من المثالي شوي، لكنها ما زالت قابلة للفهم والض
+          message:'القراءة أعلى من المثالي شوي، لكنها ما زالت قابلة للفهم والضبط بهدوء.',
+          footerTitle:'بطاقة مراجعة ذكية',
+          footerCopy:'الأنسب الآن أنك تراجع آخر وجبة أو حساب المعامل قبل الخطوة الجاية.',
+          tone:'rgba(230,184,92,.18)',
+          color:'#FFE1A3',
+          soft:'var(--warning-soft)',
+          scanMessage:'قراءتك أعلى من المثالي شوي، تابع بهدوء.'
+        };
+      }
+
+      if(value <= 250){
+        return {
+          key:'high',
+          label:'مرتفع',
+          tag:'تحتاج مراجعة',
+          chip:'مرتفع',
+          message:'فيه ارتفاع واضح، وغالبًا أفضل خطوة الآن أنك ترجع لآخر وجبة أو تحسب المعامل.',
+          footerTitle:'بطاقة متابعة واضحة',
+          footerCopy:'راجع آخر وجبة أو حدّث القراءة حتى تكون الصورة أدق.',
+          tone:'rgba(230,184,92,.18)',
+          color:'#FFE1A3',
+          soft:'var(--warning-soft)',
+          scanMessage:'قراءتك مرتفعة وتحتاج مراجعة أقرب.'
+        };
+      }
+
+      return {
+        key:'very-high',
+        label:'مرتفع جدًا',
+        tag:'انتبه أكثر',
+        chip:'مرتفع جدًا',
+        message:'القراءة مرتفعة بشكل واضح، ويفضل متابعة الحالة بدقة أكبر الآن.',
+        footerTitle:'بطاقة تحتاج متابعة',
+        footerCopy:'حدّث القراءة أو انتقل مباشرة للأداة الأنسب حتى تكون خطوتك القادمة أوضح.',
+        tone:'rgba(218,114,109,.18)',
+        color:'#FFB6AE',
+        soft:'var(--danger-soft)',
+        scanMessage:'القراءة مرتفعة بشكل واضح، انتبه وتابعها بدقة.'
+      };
+    }
+
+    function getLatestMeal(){
+      const direct = readJSON(KEYS.MEAL);
+      if(direct) return direct;
+
+      const list = readJSON(KEYS.MEALS_LIST);
+      if(Array.isArray(list) && list.length){
+        const last = list[list.length - 1];
+        return {
+          mealName: last.name || 'آخر وجبة محفوظة',
+          carbs: last.c ?? last.carbs ?? null,
+          dose: last.insulin ?? last.dose ?? null,
+          savedAt: last.time || null,
+          summary: last.ins ? last.ins : null
+        };
+      }
+
+      return null;
+    }
+
+    function migrateLegacy(){
+      const legacy = readJSON(KEYS.USER_LEGACY) || readJSON(KEYS.GUIDE_LEGACY);
+      const profile = readJSON(KEYS.PROFILE);
+      const home = readJSON(KEYS.HOME);
+
+      if(!profile && legacy?.name){
+        writeJSON(KEYS.PROFILE, { name: String(legacy.name).trim() });
+      }
+
+      if(!home && (legacy?.reading || legacy?.time)){
+        writeJSON(KEYS.HOME, {
+          reading: legacy.reading ?? '',
+          time: legacy.time || '',
+          savedAt: legacy.savedAt || new Date().toISOString()
+        });
+      }
+    }
+
+    function syncLegacyStores(){
+      const payload = {
+        name: state.profile?.name || '',
+        reading: state.home?.reading ?? '',
+        time: state.home?.time || '',
+        savedAt: state.home?.savedAt || new Date().toISOString()
+      };
+
+      writeJSON(KEYS.USER_LEGACY, payload);
+      writeJSON(KEYS.GUIDE_LEGACY, payload);
+    }
+
+    function hydrateState(){
+      migrateLegacy();
+      state.profile = readJSON(KEYS.PROFILE) || {};
+      state.home = readJSON(KEYS.HOME) || {};
+      state.icr = readJSON(KEYS.ICR) || null;
+      state.meal = getLatestMeal();
+    }
+
+    function setGreeting(){
+      const period = getPeriod();
+      const name = state.profile?.name?.trim();
+
+      els.timeChip.innerHTML = `${period.icon} <span>${period.hint}</span>`;
+
+      if(name){
+        els.greetingTitle.textContent = `${period.label} يا ${name}`;
+        els.greetingSub.textContent = Number.isFinite(Number(state.home?.reading))
+          ? 'بطاقتك جاهزة الآن بشكل أوضح، ومعها أقرب خطوة مناسبة لك داخل التطبيق.'
+          : 'خلنا نكمل من حيث وقفنا ونضيف القراءة حتى تكتمل بطاقتك.';
+      }else{
+        els.greetingTitle.textContent = 'حياك الله في SugarMind';
+        els.greetingSub.textContent = 'ابدأ من بطاقتك، وبعدها خذ أقرب خطوة مناسبة لك داخل التطبيق.';
+      }
+    }
+
+    function setWalletCard(){
+      const name = state.profile?.name?.trim() || 'ضيفنا الجديد';
+      const reading = Number(state.home?.reading);
+      const readingState = getReadingState(reading);
+      const ratio = state.icr?.icr ? `1:${state.icr.icr}` : '1:--';
+
+      els.walletName.textContent = name;
+      els.walletMessage.textContent = readingState.message;
+      els.walletStateChip.textContent = readingState.tag;
+      els.walletStateChip.style.background = readingState.tone;
+      els.walletStateChip.style.color = readingState.color;
+      els.walletStateChip.style.borderColor = 'transparent';
+
+      els.walletReading.textContent = Number.isFinite(reading) ? reading : '--';
+      els.walletRatio.textContent = ratio;
+      els.walletRatioCopy.textContent = state.icr?.icr
+        ? `آخر معامل محفوظ عندك ${ratio}${state.icr?.confidenceLabel ? ` · والثقة ${state.icr.confidenceLabel}` : ''}.`
+        : 'إذا حسبت معاملك من الحاسبة، يظهر هنا مباشرة داخل البطاقة.';
+
+      els.walletStatusChip.textContent = readingState.chip;
+      els.walletStatusChip.style.background = readingState.tone;
+      els.walletStatusChip.style.color = readingState.color;
+      els.walletStatusChip.style.borderColor = 'transparent';
+
+      els.walletTimeChip.textContent = state.home?.time ? `آخر تحديث: ${formatTime(state.home.time)}` : 'آخر تحديث: الآن';
+      els.walletBrandSub.textContent = state.icr?.icr ? `معاملك الحالي ${ratio}` : 'بطاقتك اليومية';
+      els.walletTag.textContent = state.profile?.name ? 'بطاقة متابعة' : 'بطاقة يومية';
+      els.walletFooterTitle.textContent = readingState.footerTitle;
+      els.walletFooterCopy.textContent = readingState.footerCopy;
+    }
+
+    function setSummary(){
+      if(state.meal){
+        els.mealSummaryValue.textContent = state.meal.mealName || 'وجبة محفوظة';
+        if(state.meal.carbs || state.meal.dose){
+          const carbsText = state.meal.carbs ? `${state.meal.carbs}g كارب` : 'بدون كارب واضح';
+          const doseText = state.meal.dose ? ` · ${state.meal.dose}u` : '';
+          els.mealSummaryMeta.textContent = `${carbsText}${doseText}`;
+        }else{
+          els.mealSummaryMeta.textContent = state.meal.summary || 'عندك وجبة محفوظة من قبل.';
+        }
+      }else{
+        els.mealSummaryValue.textContent = 'ما فيه وجبة محفوظة';
+        els.mealSummaryMeta.textContent = 'ابدأ من محلل الوجبة إذا تبي ملخص أقرب.';
+      }
+
+      if(state.icr?.icr){
+        els.icrSummaryValue.textContent = `1:${state.icr.icr}`;
+        els.icrSummaryMeta.textContent = `الثقة: ${state.icr.confidenceLabel || 'أولية'}`;
+      }else{
+        els.icrSummaryValue.textContent = '--';
+        els.icrSummaryMeta.textContent = 'بانتظار أول حساب واضح.';
+      }
+
+      if(state.home?.savedAt){
+        els.updateSummaryValue.textContent = formatDateLabel(state.home.savedAt);
+        els.updateSummaryMeta.textContent = `آخر حفظ ${formatTime(state.home.savedAt)}`;
+      }else{
+        els.updateSummaryValue.textContent = 'اليوم';
+        els.updateSummaryMeta.textContent = 'إذا سجلت قراءة، يرجع لك التحديث هنا فورًا.';
+      }
+    }
+
+    function setDecisionBox(){
+      const name = state.profile?.name?.trim();
+      const reading = Number(state.home?.reading);
+      const hasReading = Number.isFinite(reading);
+      const hasRatio = !!state.icr?.icr;
+
+      let payload = {
+        title:'ابدأ من بطاقتك',
+        copy:'إذا سجلت اسمك وآخر قراءة، يصير التطبيق أوضح لك من أول شاشة.',
+        actionTitle:'أول خطوة',
+        actionCopy:'ابدأ بإعداد بطاقتك حتى تكتمل التجربة من البداية.',
+        actionText:'ابدأ الآن',
+        target:'setup'
+      };
+
+      if(name && !hasReading){
+        payload = {
+          title:'كمّل بطاقتك',
+          copy:'اسمك محفوظ، والجزء المهم الآن هو إضافة القراءة حتى تصير البطاقة أوضح.',
+          actionTitle:'الخطوة الأنسب',
+          actionCopy:'حدّث بطاقتك بآخر قراءة عندك.',
+          actionText:'حدّث البطاقة',
+          target:'setup'
+        };
+      } else if(hasReading && !hasRatio){
+        payload = {
+          title:'أهم عنصر باقي عندك',
+          copy:'القراءة موجودة، وباقي معامل الكارب حتى تكتمل بطاقتك بشكل أقوى.',
+          actionTitle:'الخطوة الأنسب',
+          actionCopy:'احسب المعامل وخله يظهر داخل البطاقة.',
+          actionText:'احسب المعامل',
+          target:'icr'
+        };
+      } else if(hasReading){
+        const stateInfo = getReadingState(reading);
+
+        if(stateInfo.key === 'low'){
+          payload = {
+            title:'انتبه للحالة الحالية',
+            copy:'الأولوية الآن أنك تتابع القراءة وتعيد القياس بعد فترة قصيرة.',
+            actionTitle:'الخطوة الأنسب',
+            actionCopy:'بعد ما تهدأ الحالة، حدّث القراءة داخل البطاقة.',
+            actionText:'حدّث القراءة',
+            target:'setup'
+          };
+        } else if(stateInfo.key === 'range'){
+          payload = {
+            title:'وضعك مطمّن',
+            copy:'القراءة داخل النطاق، والأنسب الآن أنك تحفظ بطاقتك أو تشاركها.',
+            actionTitle:'الخطوة الأنسب',
+            actionCopy:'شارك بطاقتك أو احتفظ بها كصورة واضحة.',
+            actionText:'شارك بطاقتك',
+            target:'share'
+          };
+        } else if(stateInfo.key === 'slightly-high' || stateInfo.key === 'high' || stateInfo.key === 'very-high'){
+          payload = {
+            title:'راجع الخطوة الجاية بهدوء',
+            copy:'الأنسب الآن أنك ترجع لآخر وجبة أو تحسب المعامل قبل القرار التالي.',
+            actionTitle:'الخطوة الأنسب',
+            actionCopy:'اذهب مباشرة لحاسبة المعامل أو راجع وجبتك الأخيرة.',
+            actionText:'احسب المعامل',
+            target:'icr'
+          };
+        }
+      }
+
+      els.decisionTitle.textContent = payload.title;
+      els.decisionCopy.textContent = payload.copy;
+      els.decisionActionTitle.textContent = payload.actionTitle;
+      els.decisionActionCopy.textContent = payload.actionCopy;
+      els.decisionActionBtn.textContent = payload.actionText;
+      els.decisionActionBtn.dataset.target = payload.target;
+    }
+
+    function setQuickReadingResult(reading){
+      const readingState = getReadingState(reading);
+      const statusColor = readingState.key === 'range'
+        ? 'var(--success)'
+        : (readingState.key === 'low' || readingState.key === 'very-high' ? 'var(--danger)' : 'var(--warning)');
+
+      els.quickReadingValue.textContent = reading;
+      els.quickReadingStatus.textContent = readingState.label;
+      els.quickReadingStatus.style.background = readingState.soft;
+      els.quickReadingStatus.style.color = statusColor;
+      els.quickReadingMessage.textContent = readingState.scanMessage;
+      els.quickReadingResult.classList.add('show');
+    }
+
+    function renderQrCode(){
+      const targetUrl = `${window.location.origin}${window.location.pathname}`;
+      els.qrCode.innerHTML = '';
+      state.qrInstance = new QRCode(els.qrCode, {
+        text: targetUrl,
+        width: 70,
+        height: 70,
+        colorDark: '#1D2433',
+        colorLight: '#FFFFFF',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    }
+
+    function fillFormFromState(){
+      els.nameInput.value = state.profile?.name || '';
+      els.readingInput.value = state.home?.reading ?? '';
+      els.timeInput.value = normalizeTimeValue(state.home?.time);
+    }
+
+    function render(){
+      hydrateState();
+      setGreeting();
+      setWalletCard();
+      setSummary();
+      setDecisionBox();
+      fillFormFromState();
+      renderQrCode();
+      refreshInstallButton();
+    }
+
+    function showToast(message){
+      els.toast.textContent = message;
+      els.toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        els.toast.classList.remove('show');
+      }, 2600);
+    }
+
+    function openRecorder(){
+      fillFormFromState();
+      els.recorderOverlay.classList.add('show');
+      els.recorderOverlay.setAttribute('aria-hidden', 'false');
+      setTimeout(() => els.nameInput.focus(), 60);
+    }
+
+    function closeRecorder(){
+      els.recorderOverlay.classList.remove('show');
+      els.recorderOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    function saveReading(){
+      const name = els.nameInput.value.trim();
+      const readingValue = Number(els.readingInput.value.trim());
+      const time = els.timeInput.value || currentTimeValue();
+
+      if(!name){
+        showToast('اكتب اسمك أولًا');
+        els.nameInput.focus();
+        return;
+      }
+
+      if(!Number.isFinite(readingValue) || readingValue < 20 || readingValue > 600){
+        showToast('أدخل قراءة واضحة بين 20 و 600');
+        els.readingInput.focus();
+        return;
+      }
+
+      state.profile = { name };
+      state.home = {
+        reading: readingValue,
+        time,
+        savedAt: new Date().toISOString()
+      };
+
+      writeJSON(KEYS.PROFILE, state.profile);
+      writeJSON(KEYS.HOME, state.home);
+      syncLegacyStores();
+
+      localStorage.setItem(KEYS.VALUE_MOMENT, 'true');
+
+      closeRecorder();
+      render();
+      showToast('تم تحديث بطاقتك');
+      maybePromptInstallAfterValue();
+    }
+
+    async function createCardBlob(){
+      const canvas = await html2canvas(els.cardCaptureSurface, {
+        scale: Math.min(window.devicePixelRatio || 2, 3),
+        backgroundColor: null,
+        useCORS: true,
+        allowTaint: true
+      });
+
+      return new Promise((resolve) => {
+        canvas.toBlob((blob) => resolve(blob), 'image/png', 1);
+      });
+    }
+
+    function buildCardFileName(){
+      const safeName = (state.profile?.name || 'SugarMind').replace(/[^\w\u0600-\u06FF-]+/g, '_');
+      return `SugarMind-${safeName}.png`;
+    }
+
+    async function saveCardImage(){
+      try{
+        showToast('جاري تجهيز البطاقة...');
+        const blob = await createCardBlob();
+        if(!blob){
+          showToast('تعذر تجهيز الصورة');
+          return;
+        }
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = buildCardFileName();
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(link.href), 1500);
+
+        showToast('تم حفظ البطاقة كصورة');
+      }catch(_){
+        showToast('تعذر حفظ البطاقة الآن');
+      }
+    }
+
+    async function shareCardImage(){
+      try{
+        showToast('جاري تجهيز البطاقة للمشاركة...');
+        const blob = await createCardBlob();
+        if(!blob){
+          showToast('تعذر تجهيز البطاقة');
+          return;
+        }
+
+        const file = new File([blob], buildCardFileName(), { type:'image/png' });
+
+        if(navigator.share && navigator.canShare && navigator.canShare({ files:[file] })){
+          await navigator.share({
+            files:[file],
+            title:'SugarMind Card',
+            text:'هذه بطاقتي من SugarMind'
+          });
+          showToast('تم فتح المشاركة');
+          return;
+        }
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = buildCardFileName();
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(link.href), 1500);
+        showToast('المشاركة المباشرة غير مدعومة هنا، فتم حفظ البطاقة كصورة');
+      }catch(error){
+        if(error && error.name === 'AbortError'){
+          showToast('تم إلغاء المشاركة');
+          return;
+        }
+        showToast('تعذر مشاركة البطاقة الآن');
+      }
+    }
+
+    function shouldOfferInstall(){
+      if(state.isStandalone) return false;
+      if(localStorage.getItem(KEYS.INSTALL_COMPLETED) === 'true') return false;
+      if(localStorage.getItem(KEYS.INSTALL_DISMISSED) === 'true') return false;
+      return state.isIOS || !!state.deferredInstallPrompt;
+    }
+
+    function refreshInstallButton(){
+      els.installTrigger.style.display = shouldOfferInstall() ? 'inline-flex' : 'none';
+    }
+
+    function openInstallSheet(){
+      if(!shouldOfferInstall()) return;
+
+      if(state.isIOS){
+        els.installSub.textContent = 'على الآيفون يكون التثبيت من زر المشاركة داخل Safari.';
+        els.installCopy.textContent = 'بعد أول استخدام فعلي، هذا أفضل وقت تضيف فيه التطبيق للشاشة الرئيسية.';
+        els.iosInstallSteps.classList.remove('hidden');
+        els.installNowBtn.textContent = 'فهمت الطريقة';
+      }else{
+        els.installSub.textContent = 'إذا ثبته الآن، بيفتح بشكل أقرب للتطبيق من الشاشة الرئيسية.';
+        els.installCopy.textContent = 'بمجرد ضغطك على تثبيت والموافقة، يحاول المتصفح إضافته لشاشتك الرئيسية مباشرة.';
+        els.iosInstallSteps.classList.add('hidden');
+        els.installNowBtn.textContent = 'تثبيت الآن';
+      }
+
+      els.installOverlay.classList.add('show');
+      els.installOverlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeInstallSheet(){
+      els.installOverlay.classList.remove('show');
+      els.installOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    async function handleInstallNow(){
+      if(state.isIOS){
+        localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
+        closeInstallSheet();
+        refreshInstallButton();
+        showToast('نفّذ الخطوات من Safari ثم أضفه للشاشة');
+        return;
+      }
+
+      if(!state.deferredInstallPrompt){
+        closeInstallSheet();
+        showToast('التثبيت غير متاح الآن من هذا المتصفح');
+        return;
+      }
+
+      try{
+        state.deferredInstallPrompt.prompt();
+        const choice = await state.deferredInstallPrompt.userChoice;
+
+        if(choice && choice.outcome === 'accepted'){
+          localStorage.setItem(KEYS.INSTALL_COMPLETED, 'true');
+          localStorage.removeItem(KEYS.INSTALL_DISMISSED);
+          showToast('تم إرسال طلب التثبيت');
+        }else{
+          localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
+          showToast('تمام، نخليه لوقت لاحق');
+        }
+      }catch(_){
+        showToast('تعذر فتح نافذة التثبيت الآن');
+      }finally{
+        state.deferredInstallPrompt = null;
+        closeInstallSheet();
+        refreshInstallButton();
+      }
+    }
+
+    function maybePromptInstallAfterValue(){
+      if(!shouldOfferInstall()) return;
+      clearTimeout(state.installTimer);
+      state.installTimer = setTimeout(openInstallSheet, 1400);
+    }
+
+    function scheduleInstallForReturningUser(){
+      if(!localStorage.getItem(KEYS.VALUE_MOMENT)) return;
+      if(!shouldOfferInstall()) return;
+      clearTimeout(state.installTimer);
+      state.installTimer = setTimeout(openInstallSheet, 6500);
+    }
+
+    function handleQuickReading(){
+      const value = Number(els.quickReadingInput.value.trim());
+      if(!Number.isFinite(value) || value < 20 || value > 600){
+        showToast('أدخل قراءة واضحة بين 20 و 600');
+        els.quickReadingInput.focus();
+        return;
+      }
+      setQuickReadingResult(value);
+    }
+
+    function handleDecisionAction(){
+      const target = els.decisionActionBtn.dataset.target;
+
+      if(target === 'setup'){
+        openRecorder();
+        return;
+      }
+
+      if(target === 'share'){
+        shareCardImage();
+        return;
+      }
+
+      if(target === 'icr'){
+        window.location.href = 'carb-calculator.html';
+        return;
+      }
+
+      if(target === 'meals'){
+        window.location.href = 'meal-analyzer.html';
+      }
+    }
+
+    function bindEvents(){
+      els.openRecorderBtn.addEventListener('click', openRecorder);
+      els.editCardBtn.addEventListener('click', openRecorder);
+      els.closeRecorderBtn.addEventListener('click', closeRecorder);
+      els.cancelRecorderBtn.addEventListener('click', closeRecorder);
+      els.saveReadingBtn.addEventListener('click', saveReading);
+
+      els.shareCardBtn.addEventListener('click', shareCardImage);
+      els.saveCardBtn.addEventListener('click', saveCardImage);
+
+      els.quickReadingBtn.addEventListener('click', handleQuickReading);
+      els.decisionActionBtn.addEventListener('click', handleDecisionAction);
+
+      els.installTrigger.addEventListener('click', openInstallSheet);
+      els.closeInstallBtn.addEventListener('click', closeInstallSheet);
+      els.dismissInstallBtn.addEventListener('click', () => {
+        localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
+        closeInstallSheet();
+        refreshInstallButton();
+      });
+      els.installNowBtn.addEventListener('click', handleInstallNow);
+
+      els.recorderOverlay.addEventListener('click', (event) => {
+        if(event.target === els.recorderOverlay) closeRecorder();
+      });
+
+      els.installOverlay.addEventListener('click', (event) => {
+        if(event.target === els.installOverlay) closeInstallSheet();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if(event.key === 'Escape'){
+          closeRecorder();
+          closeInstallSheet();
+        }
+
+        if(event.key === 'Enter'){
+          if(els.recorderOverlay.classList.contains('show') && event.target.tagName !== 'BUTTON'){
+            saveReading();
+          }
+
+          if(document.activeElement === els.quickReadingInput){
+            handleQuickReading();
+          }
+        }
+      });
+    }
+
+    function setupInstallEvents(){
+      window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        state.deferredInstallPrompt = event;
+        refreshInstallButton();
+        scheduleInstallForReturningUser();
+      });
+
+      window.addEventListener('appinstalled', () => {
+        localStorage.setItem(KEYS.INSTALL_COMPLETED, 'true');
+        localStorage.removeItem(KEYS.INSTALL_DISMISSED);
+        closeInstallSheet();
+        refreshInstallButton();
+        showToast('تم تثبيت SugarMind على جهازك');
+      });
+    }
+
+    function hideSplash(){
+      setTimeout(() => {
+        els.splash.classList.add('hide');
+      }, 1000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      bindEvents();
+      setupInstallEvents();
+      render();
+      hideSplash();
+      scheduleInstallForReturningUser();
+    });
+  </script>
+</body>
+</html>
