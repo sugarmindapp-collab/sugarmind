@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>تحليلات AI - SugarMind</title>
+  <meta name="theme-color" content="#F6F3EE" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    /* نفس المتغيرات والأنماط السابقة (يمكن نسخها للاختصار) */
+    :root{
+      --bg:#F6F3EE;
+      --bg-2:#EFEAE3;
+      --surface:#FFFFFF;
+      --surface-2:#F8F6F2;
+      --hero:#2A2F45;
+      --hero-2:#45496A;
+      --hero-3:#7D8BAE;
+      --primary:#7BAA92;
+      --ink:#1D2433;
+      --ink-2:#667085;
+      --line:#E6E1D8;
+      --danger:#DA726D;
+      --shadow-lg:0 24px 60px rgba(30,36,51,.10);
+      --shadow-md:0 16px 32px rgba(30,36,51,.08);
+      --radius-xxl:32px;
+      --radius-xl:26px;
+      --radius-lg:22px;
+      --radius-md:18px;
+      --radius-sm:14px;
+      --safe-top:env(safe-area-inset-top);
+      --safe-bottom:env(safe-area-inset-bottom);
+      --max-width:500px;
+      --ease:cubic-bezier(.2,.8,.2,1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent;}
+    body{background:var(--bg);color:var(--ink);min-height:100vh;}
+    .app{max-width:var(--max-width);margin:0 auto;padding:20px;padding-bottom:100px;}
+
+    .topbar{
+      display:flex; align-items:center; gap:16px; margin-bottom:24px;
+    }
+    .back-btn{
+      width:44px; height:44px; border-radius:14px; background:var(--surface); border:1px solid var(--line);
+      display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--ink);
+      text-decoration:none; transition:0.25s;
+    }
+    .back-btn:hover{transform:translateX(-4px);}
+    .page-title{font-size:24px; font-weight:900;}
+
+    .countdown-badge{
+      background:linear-gradient(135deg, var(--danger), #F04438);
+      color:#fff;
+      padding:12px 20px;
+      border-radius:999px;
+      font-size:18px;
+      font-weight:900;
+      text-align:center;
+      margin-bottom:24px;
+      box-shadow:0 12px 24px rgba(218,114,109,.3);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+    .countdown-number{
+      background:rgba(255,255,255,0.2);
+      padding:8px 12px;
+      border-radius:12px;
+      font-family:monospace;
+      font-size:22px;
+    }
+
+    .insight-card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      padding:22px;
+      margin-bottom:20px;
+      box-shadow:var(--shadow-md);
+    }
+    .card-title{
+      font-size:18px;
+      font-weight:900;
+      margin-bottom:16px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      margin-bottom:24px;
+    }
+    .stat-item{
+      background:var(--surface-2);
+      border:1px solid var(--line);
+      border-radius:var(--radius-lg);
+      padding:18px;
+      text-align:center;
+    }
+    .stat-icon{font-size:30px; margin-bottom:8px;}
+    .stat-value{font-size:28px; font-weight:900; color:var(--hero);}
+    .stat-label{font-size:12px; color:var(--ink-2);}
+
+    .chart-container{
+      height:200px;
+      margin-bottom:20px;
+    }
+
+    .insight-text{
+      font-size:15px;
+      line-height:2;
+      color:var(--ink-2);
+      background:rgba(123,170,146,0.08);
+      border-radius:var(--radius-lg);
+      padding:20px;
+      margin-bottom:20px;
+      border:1px solid rgba(123,170,146,0.2);
+    }
+
+    .whatsapp-btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      width:100%;
+      padding:20px;
+      border-radius:var(--radius-lg);
+      background:linear-gradient(135deg, #25D366, #128C7E);
+      color:#fff;
+      font-size:18px;
+      font-weight:900;
+      border:none;
+      cursor:pointer;
+      transition:transform 0.2s var(--ease);
+      box-shadow:0 16px 30px rgba(37,211,102,0.2);
+    }
+    .whatsapp-btn:hover{transform:translateY(-3px);}
+    .whatsapp-btn.hidden{display:none;}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <a href="daily-guide.html" class="back-btn">→</a>
+      <h1 class="page-title">تحليلات AI</h1>
+    </div>
+
+    <!-- عداد تنازلي 14 يوم -->
+    <div class="countdown-badge" id="countdown">
+      <span>⏳</span>
+      <span id="countdownTimer">14 : 23 : 59</span>
+      <span>يوم : ساعة : دقيقة</span>
+    </div>
+
+    <!-- بطاقات إحصائية -->
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-icon">📊</div>
+        <div class="stat-value" id="avgReading">--</div>
+        <div class="stat-label">متوسط القراءة</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-value" id="inRange">--%</div>
+        <div class="stat-label">في النطاق</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">🍽️</div>
+        <div class="stat-value" id="totalMeals">--</div>
+        <div class="stat-label">وجبات محفوظة</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">🧮</div>
+        <div class="stat-value" id="bestIcr">--</div>
+        <div class="stat-label">أفضل معامل</div>
+      </div>
+    </div>
+
+    <!-- رسم بياني شامل -->
+    <div class="insight-card">
+      <div class="card-title">📈 تطور القراءات</div>
+      <div class="chart-container">
+        <canvas id="fullChart"></canvas>
+      </div>
+    </div>
+
+    <!-- تحليل نصي ذكي -->
+    <div class="insight-card">
+      <div class="card-title">🧠 ملخص ذكي</div>
+      <div class="insight-text" id="aiSummary">
+        جارٍ تحليل بياناتك...
+      </div>
+    </div>
+
+    <!-- زر واتساب (يظهر بعد انتهاء العداد) -->
+    <button class="whatsapp-btn hidden" id="whatsappBtn">
+      <span>📱</span>
+      <span>تواصل معنا على واتساب</span>
+    </button>
+  </div>
+
+  <script>
+    (function() {
+      // إعداد العداد التنازلي (14 يوم)
+      function startCountdown() {
+        const targetDate = localStorage.getItem('ai_countdown_target');
+        let target;
+        if (!targetDate) {
+          // أول مرة: نضع هدف بعد 14 يوم من الآن
+          target = new Date().getTime() + 14 * 24 * 60 * 60 * 1000;
+          localStorage.setItem('ai_countdown_target', target.toString());
+        } else {
+          target = parseInt(targetDate, 10);
+        }
+
+        function updateCountdown() {
+          const now = new Date().getTime();
+          const diff = target - now;
+
+          if (diff <= 0) {
+            document.getElementById('countdown').style.display = 'none';
+            document.getElementById('whatsappBtn').classList.remove('hidden');
+            clearInterval(interval);
+            return;
+          }
+
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+          document.getElementById('countdownTimer').innerHTML = `${days} : ${hours} : ${minutes}`;
+        }
+
+        updateCountdown();
+        const interval = setInterval(updateCountdown, 60000); // كل دقيقة
+      }
+
+      // محاكاة تحميل البيانات
+      function loadInsights() {
+        // بيانات تجريبية
+        document.getElementById('avgReading').textContent = '132';
+        document.getElementById('inRange').textContent = '68%';
+        document.getElementById('totalMeals').textContent = '12';
+        document.getElementById('bestIcr').textContent = '1:10';
+
+        // رسم بياني
+        const ctx = document.getElementById('fullChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['14 يوم', '12', '10', '8', '6', '4', 'قبل يومين', 'أمس', 'اليوم'],
+            datasets: [
+              {
+                label: 'قراءة السكر',
+                data: [145, 138, 160, 152, 140, 130, 125, 118, 128],
+                borderColor: '#7BAA92',
+                backgroundColor: 'rgba(123,170,146,0.1)',
+                tension: 0.3,
+                fill: true,
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+          }
+        });
+
+        // نص تحليلي
+        document.getElementById('aiSummary').innerHTML = `بناءً على تحليل آخر 14 يوم:
+- أنت في النطاق المثالي 68% من الوقت.
+- أفضل أيامك هي الخميس (معدل 115).
+- وجبة "كبسة" ترفع السكر بمعدل 45 نقطة.
+- ننصح بتقليل الكارب في العشاء لتحسين قراءات الصباح.`;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        startCountdown();
+        loadInsights();
+
+        document.getElementById('whatsappBtn').addEventListener('click', () => {
+          window.open('https://wa.me/966500000000?text=أرغب%20في%20الاستفسار%20عن%20تحليلات%20SugarMind', '_blank');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
