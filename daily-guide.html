@@ -2,140 +2,183 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>الدليل اليومي - SugarMind</title>
+  <meta name="description" content="ملخص ذكي يختصر لك وضع اليوم: القراءة، المعامل، الوجبة، والخطوة التالية." />
+  <meta name="theme-color" content="#F6F3EE" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#0F172A;
-      --bg-elevated:#1E293B;
-      --surface:rgba(255,255,255,0.05);
-      --surface-hover:rgba(255,255,255,0.08);
-      --border:rgba(255,255,255,0.1);
-      --text-primary:#F8FAFC;
-      --text-secondary:#94A3B8;
-      --text-muted:#64748B;
-      --primary:#10B981;
-      --primary-light:#34D399;
-      --blue:#3B82F6;
-      --purple:#8B5CF6;
-      --gold:#FBBF24;
-      --warning:#F59E0B;
-      --danger:#EF4444;
-      --radius:24px;
-      --radius-sm:16px;
-      --font-family:'Tajawal',sans-serif;
-      --shadow:0 20px 40px rgba(0,0,0,0.25);
+      --bg:#F6F3EE;
+      --bg-2:#EFEAE3;
+      --surface:#FFFFFF;
+      --surface-2:#F8F6F2;
+      --surface-3:#F0ECE7;
+      --hero:#2A2F45;
+      --hero-2:#45496A;
+      --hero-3:#7D8BAE;
+      --primary:#7BAA92;
+      --primary-2:#A9C9B9;
+      --ink:#1D2433;
+      --ink-2:#667085;
+      --ink-3:#8C94A4;
+      --line:#E6E1D8;
+      --line-soft:rgba(69,73,106,.10);
+      --success:#61B07F;
+      --warning:#E6B85C;
+      --danger:#DA726D;
+      --success-soft:rgba(97,176,127,.12);
+      --warning-soft:rgba(230,184,92,.14);
+      --danger-soft:rgba(218,114,109,.14);
+      --shadow-lg:0 24px 60px rgba(30,36,51,.10);
+      --shadow-md:0 16px 32px rgba(30,36,51,.08);
+      --shadow-sm:0 10px 18px rgba(30,36,51,.05);
+      --shadow-hover:0 20px 30px rgba(30,36,51,.12);
+      --radius-xxl:32px;
+      --radius-xl:26px;
+      --radius-lg:22px;
+      --radius-md:18px;
+      --radius-sm:14px;
+      --safe-top:env(safe-area-inset-top);
+      --safe-bottom:env(safe-area-inset-bottom);
+      --max-width:500px;
+      --ease:cubic-bezier(.2,.8,.2,1);
     }
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:var(--font-family);
-      -webkit-tap-highlight-color:transparent;
-    }
-
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Tajawal',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+    html{background:var(--bg);overflow-x:hidden;scroll-behavior:smooth}
     body{
       min-height:100vh;
-      color:var(--text-primary);
+      color:var(--ink);
       background:
-        radial-gradient(circle at top right, rgba(16,185,129,0.12), transparent 25%),
-        radial-gradient(circle at bottom left, rgba(59,130,246,0.08), transparent 25%),
-        var(--bg);
+        radial-gradient(circle at top left, rgba(123,170,146,.10), transparent 24%),
+        radial-gradient(circle at top right, rgba(125,139,174,.10), transparent 22%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
+    a{text-decoration:none;color:inherit}
+    button,input{font:inherit}
+    button{border:0;background:none;color:inherit;cursor:pointer}
+    img{max-width:100%;display:block}
+
+    .bg-noise{
+      position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.03;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    }
+
+    .splash{
+      position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(180deg, #F6F3EE 0%, #EFEAE3 100%);
+      transition:opacity .45s ease, visibility .45s ease, transform .45s ease;
+    }
+    .splash.hide{opacity:0; visibility:hidden; transform:scale(1.02)}
+    .splash-inner{text-align:center; padding:24px}
+    .splash-mark{
+      width:108px; height:108px; border-radius:30px; margin:0 auto 20px;
+      display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 58%, var(--primary) 100%);
+      box-shadow:0 20px 50px rgba(69,73,106,.20), inset 0 1px 0 rgba(255,255,255,.18);
+    }
+    .splash-mark svg{width:56px; height:34px}
+    .splash-mark path{stroke:#fff; stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
+    .splash-title{font-size:36px; font-weight:900; letter-spacing:-1px; color:var(--ink); margin-bottom:8px}
+    .splash-sub{font-size:15px; color:var(--ink-2); margin-bottom:24px}
+    .splash-bar{width:160px; height:4px; background:rgba(69,73,106,.08); border-radius:999px; overflow:hidden; margin:0 auto}
+    .splash-bar span{
+      display:block; width:100%; height:100%;
+      background:linear-gradient(90deg, var(--primary), var(--hero-3));
+      transform-origin:right; animation:loader 1.1s ease forwards;
+    }
+    @keyframes loader{from{transform:scaleX(.1)}to{transform:scaleX(1)}}
 
     .app{
-      max-width:480px;
+      max-width:var(--max-width);
       margin:0 auto;
-      padding:20px;
-      padding-bottom:120px;
+      min-height:100vh;
+      padding:calc(18px + var(--safe-top)) 18px calc(120px + var(--safe-bottom));
+      position:relative;
     }
 
-    .header{
-      display:flex;
-      align-items:center;
-      gap:16px;
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
       margin-bottom:22px;
-      padding-top:20px;
     }
-
-    .back-btn{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      background:var(--surface);
-      border:1px solid var(--border);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:20px;
-      color:var(--text-primary);
-      text-decoration:none;
-      transition:0.25s;
-      flex-shrink:0;
+    .brand{display:flex; align-items:center; gap:12px; min-width:0}
+    .brand-mark{
+      width:52px; height:52px; border-radius:17px; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 58%, var(--primary) 100%);
+      box-shadow:0 14px 28px rgba(69,73,106,.14);
     }
-
-    .back-btn:hover{
-      background:var(--surface-hover);
-      transform:translateY(-2px);
+    .brand-mark svg{width:28px; height:16px}
+    .brand-mark path{stroke:#fff; stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
+    .brand-name{font-size:19px; font-weight:900; color:var(--ink); line-height:1}
+    .brand-sub{font-size:12px; color:var(--ink-2); margin-top:5px}
+    .top-actions{display:flex; align-items:center; gap:10px; flex-shrink:0}
+    .icon-btn{
+      min-height:46px; border-radius:16px; border:1px solid var(--line);
+      background:rgba(255,255,255,.65); color:var(--ink);
+      box-shadow:var(--shadow-sm);
+      transition:transform .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease);
+      width:46px; display:flex; align-items:center; justify-content:center; font-size:22px;
     }
+    .icon-btn:hover{transform:translateY(-2px); border-color:rgba(69,73,106,.20)}
 
-    .header-wrap{flex:1}
-
-    .header-title{
-      font-size:24px;
-      font-weight:900;
-      margin-bottom:4px;
+    .greeting{margin-bottom:18px}
+    .time-chip{
+      display:inline-flex; align-items:center; gap:8px; min-height:34px; padding:0 12px;
+      border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.72);
+      color:var(--ink-2); font-size:12px; font-weight:900; margin-bottom:16px;
+      box-shadow:var(--shadow-sm);
     }
-
-    .header-sub{
-      font-size:13px;
-      color:var(--text-secondary);
-      line-height:1.8;
-    }
+    .greeting-title{font-size:28px; font-weight:900; line-height:1.24; letter-spacing:-1px; color:var(--ink); margin-bottom:8px}
+    .greeting-sub{font-size:14px; color:var(--ink-2); line-height:1.8}
 
     .hero{
-      background:linear-gradient(145deg, rgba(16,185,129,0.12), rgba(255,255,255,0.02));
-      border:1px solid rgba(16,185,129,0.18);
-      border-radius:var(--radius);
-      padding:24px;
-      margin-bottom:20px;
+      background:linear-gradient(145deg, rgba(123,170,146,.12), rgba(255,255,255,.02));
+      border:1px solid rgba(123,170,146,.18);
+      border-radius:var(--radius-xxl);
+      padding:22px;
+      margin-bottom:22px;
       position:relative;
       overflow:hidden;
-      box-shadow:var(--shadow);
+      box-shadow:var(--shadow-md);
     }
-
     .hero::before{
       content:'';
       position:absolute;
       inset:0;
-      background:linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.03) 50%, transparent 65%);
+      background:linear-gradient(120deg, transparent 35%, rgba(255,255,255,.03) 50%, transparent 65%);
       transform:translateX(-100%);
       animation:shine 6s linear infinite;
     }
-
     @keyframes shine{
       0%{transform:translateX(-100%)}
       30%,100%{transform:translateX(100%)}
     }
-
     .hero-badge{
       display:inline-flex;
       align-items:center;
       gap:8px;
       padding:8px 14px;
       border-radius:999px;
-      background:rgba(16,185,129,0.12);
-      color:var(--primary-light);
+      background:rgba(123,170,146,.12);
+      color:var(--primary);
       font-size:12px;
       font-weight:800;
       margin-bottom:14px;
-      border:1px solid rgba(16,185,129,0.2);
+      border:1px solid rgba(123,170,146,.2);
       position:relative;
       z-index:1;
     }
-
     .hero-title{
       font-size:26px;
       font-weight:900;
@@ -144,10 +187,9 @@
       position:relative;
       z-index:1;
     }
-
     .hero-text{
       font-size:14px;
-      color:var(--text-secondary);
+      color:var(--ink-2);
       line-height:1.9;
       position:relative;
       z-index:1;
@@ -155,25 +197,23 @@
 
     .live-card{
       background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:24px;
-      margin-bottom:18px;
-      box-shadow:var(--shadow);
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      padding:22px;
+      margin-bottom:22px;
+      box-shadow:var(--shadow-md);
       position:relative;
       overflow:hidden;
     }
-
     .live-glow{
       position:absolute;
       top:0;
       left:0;
       right:0;
       height:3px;
-      background:linear-gradient(90deg, var(--primary), var(--primary-light));
-      box-shadow:0 0 25px rgba(16,185,129,0.45);
+      background:linear-gradient(90deg, var(--primary), var(--primary-2));
+      box-shadow:0 0 25px rgba(123,170,146,.3);
     }
-
     .live-head{
       display:flex;
       justify-content:space-between;
@@ -181,53 +221,48 @@
       gap:14px;
       margin-bottom:18px;
     }
-
     .live-title{
       font-size:18px;
       font-weight:900;
       margin-bottom:4px;
+      color:var(--ink);
     }
-
     .live-sub{
       font-size:13px;
-      color:var(--text-secondary);
+      color:var(--ink-2);
     }
-
     .status-badge{
       padding:8px 14px;
       border-radius:999px;
       font-size:12px;
       font-weight:900;
-      background:rgba(16,185,129,0.14);
+      background:rgba(123,170,146,.14);
       color:var(--primary);
-      border:1px solid rgba(16,185,129,0.24);
+      border:1px solid rgba(123,170,146,.24);
       white-space:nowrap;
     }
 
     .reading-box{
       text-align:center;
       padding:20px;
-      border-radius:20px;
-      background:linear-gradient(145deg, rgba(16,185,129,0.15), rgba(16,185,129,0.03));
-      border:1px solid rgba(16,185,129,0.14);
+      border-radius:var(--radius-lg);
+      background:linear-gradient(145deg, rgba(123,170,146,.12), rgba(123,170,146,.02));
+      border:1px solid rgba(123,170,146,.14);
       margin-bottom:18px;
     }
-
     .reading-value{
       font-size:58px;
       font-weight:900;
       line-height:1;
-      color:var(--text-primary);
+      color:var(--ink);
       margin-bottom:8px;
     }
-
     .reading-unit{
       font-size:14px;
-      color:var(--text-secondary);
+      color:var(--ink-2);
       font-weight:700;
       margin-bottom:10px;
     }
-
     .reading-meta{
       display:flex;
       align-items:center;
@@ -235,15 +270,14 @@
       gap:8px;
       flex-wrap:wrap;
     }
-
     .chip{
       padding:7px 12px;
       border-radius:999px;
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.08);
+      background:var(--surface-2);
+      border:1px solid var(--line);
       font-size:12px;
       font-weight:800;
-      color:var(--text-secondary);
+      color:var(--ink-2);
     }
 
     .mini-grid{
@@ -251,43 +285,38 @@
       grid-template-columns:repeat(2,1fr);
       gap:12px;
     }
-
     .mini-card{
-      background:rgba(255,255,255,0.03);
-      border:1px solid rgba(255,255,255,0.06);
+      background:var(--surface-2);
+      border:1px solid var(--line);
       border-radius:18px;
       padding:18px;
       text-align:center;
     }
-
     .mini-icon{
       font-size:24px;
       margin-bottom:8px;
     }
-
     .mini-value{
       font-size:24px;
       font-weight:900;
-      color:var(--text-primary);
+      color:var(--ink);
       line-height:1.2;
     }
-
     .mini-label{
       font-size:11px;
-      color:var(--text-secondary);
+      color:var(--ink-2);
       margin-top:6px;
       line-height:1.6;
     }
 
     .section{
       background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
       padding:22px;
-      margin-bottom:18px;
-      box-shadow:var(--shadow);
+      margin-bottom:22px;
+      box-shadow:var(--shadow-md);
     }
-
     .section-head{
       display:flex;
       align-items:center;
@@ -295,135 +324,193 @@
       gap:12px;
       margin-bottom:16px;
     }
-
     .section-title{
       font-size:17px;
       font-weight:900;
       display:flex;
       align-items:center;
       gap:8px;
+      color:var(--ink);
     }
-
     .section-note{
       font-size:12px;
-      color:var(--text-muted);
+      color:var(--ink-3);
       font-weight:700;
+    }
+
+    /* الرسم البياني */
+    .chart-container{
+      background:var(--surface-2);
+      border:1px solid var(--line);
+      border-radius:var(--radius-lg);
+      padding:16px;
+      margin-bottom:20px;
+      height:180px;
     }
 
     .meal-summary{
       display:grid;
       gap:12px;
     }
-
     .meal-card{
-      background:rgba(255,255,255,0.03);
-      border:1px solid rgba(255,255,255,0.06);
+      background:var(--surface-2);
+      border:1px solid var(--line);
       border-radius:18px;
       padding:18px;
     }
-
     .meal-name{
       font-size:16px;
       font-weight:900;
       margin-bottom:8px;
+      color:var(--ink);
     }
-
     .meal-desc{
       font-size:13px;
-      color:var(--text-secondary);
+      color:var(--ink-2);
       line-height:1.8;
       margin-bottom:14px;
     }
-
     .meal-stats{
       display:grid;
       grid-template-columns:repeat(3,1fr);
       gap:10px;
     }
-
     .meal-stat{
-      background:rgba(255,255,255,0.04);
+      background:rgba(0,0,0,0.02);
       border-radius:14px;
       padding:12px;
       text-align:center;
     }
-
     .meal-stat-value{
       font-size:18px;
       font-weight:900;
-      color:var(--text-primary);
+      color:var(--ink);
     }
-
     .meal-stat-label{
       font-size:10px;
-      color:var(--text-secondary);
+      color:var(--ink-2);
       margin-top:5px;
       line-height:1.5;
     }
 
     .mind-box{
-      background:rgba(139,92,246,0.1);
-      border:1px solid rgba(139,92,246,0.25);
+      background:rgba(123,170,146,.08);
+      border:1px solid rgba(123,170,146,.2);
       border-radius:20px;
       padding:20px;
     }
-
     .mind-title{
       font-size:15px;
       font-weight:900;
-      color:#D8B4FE;
+      color:var(--primary);
       margin-bottom:10px;
       display:flex;
       align-items:center;
       gap:8px;
     }
-
     .mind-text{
       font-size:14px;
       line-height:2;
-      color:#E9D5FF;
+      color:var(--ink-2);
       white-space:pre-line;
     }
 
-    .plan-list{
+    /* بطاقة الخطوات الجديدة */
+    .steps-grid{
       display:grid;
-      gap:10px;
+      gap:12px;
+      margin-bottom:20px;
     }
-
-    .plan-item{
+    .step-item{
       display:flex;
       align-items:flex-start;
-      gap:12px;
-      padding:14px;
-      border-radius:16px;
-      background:rgba(255,255,255,0.03);
-      border:1px solid rgba(255,255,255,0.05);
+      gap:14px;
+      padding:16px;
+      border-radius:var(--radius-lg);
+      background:var(--surface-2);
+      border:1px solid var(--line);
+      transition:transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
     }
-
-    .plan-icon{
-      width:34px;
-      height:34px;
-      border-radius:12px;
-      background:rgba(16,185,129,0.14);
-      color:var(--primary-light);
+    .step-item:hover{
+      transform:translateY(-2px);
+      box-shadow:var(--shadow-hover);
+    }
+    .step-icon{
+      width:44px;
+      height:44px;
+      border-radius:16px;
+      background:linear-gradient(135deg, rgba(123,170,146,.2), rgba(123,170,146,.1));
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:17px;
+      font-size:22px;
       font-weight:900;
+      color:var(--primary);
       flex-shrink:0;
     }
-
-    .plan-content h4{
-      font-size:14px;
+    .step-content h4{
+      font-size:15px;
       font-weight:900;
-      margin-bottom:4px;
+      margin-bottom:6px;
+      color:var(--ink);
+    }
+    .step-content p{
+      font-size:13px;
+      color:var(--ink-2);
+      line-height:1.7;
     }
 
-    .plan-content p{
-      font-size:13px;
-      color:var(--text-secondary);
-      line-height:1.8;
+    /* زر AI */
+    .ai-button{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      width:100%;
+      padding:18px;
+      border-radius:var(--radius-lg);
+      background:linear-gradient(135deg, var(--hero-2), var(--hero-3));
+      color:#fff;
+      font-size:18px;
+      font-weight:900;
+      border:none;
+      cursor:pointer;
+      transition:transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+      box-shadow:0 16px 30px rgba(69,73,106,.18);
+      margin-bottom:12px;
+    }
+    .ai-button:hover{
+      transform:translateY(-3px);
+      box-shadow:0 20px 35px rgba(69,73,106,.25);
+    }
+    .ai-button span:first-child{font-size:24px;}
+
+    .health-permission{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px;
+      border-radius:var(--radius-md);
+      background:var(--surface-2);
+      border:1px solid var(--line);
+      margin-bottom:20px;
+    }
+    .health-text{
+      font-size:12px;
+      color:var(--ink-2);
+      line-height:1.7;
+    }
+    .health-btn{
+      padding:10px 16px;
+      border-radius:999px;
+      background:var(--primary);
+      color:#fff;
+      font-size:12px;
+      font-weight:900;
+      border:none;
+      cursor:pointer;
+      white-space:nowrap;
     }
 
     .footer-actions{
@@ -432,10 +519,9 @@
       gap:12px;
       margin-top:8px;
     }
-
     .btn{
       padding:16px;
-      border-radius:16px;
+      border-radius:var(--radius-md);
       border:none;
       font-size:14px;
       font-weight:900;
@@ -444,84 +530,82 @@
       align-items:center;
       justify-content:center;
       gap:8px;
-      transition:0.25s;
+      transition:all 0.2s var(--ease);
     }
-
-    .btn:hover{
-      transform:translateY(-2px);
-    }
-
+    .btn:hover{transform:translateY(-2px);}
     .btn-primary{
-      background:linear-gradient(135deg,var(--primary),var(--primary-light));
+      background:linear-gradient(135deg, var(--primary), #6E9A81);
       color:#fff;
-      box-shadow:0 12px 28px rgba(16,185,129,0.28);
+      box-shadow:0 12px 24px rgba(123,170,146,.2);
     }
-
     .btn-secondary{
-      background:var(--surface);
-      color:var(--text-primary);
-      border:1px solid var(--border);
+      background:var(--surface-2);
+      color:var(--ink);
+      border:1px solid var(--line);
     }
 
     .toast{
       position:fixed;
-      bottom:24px;
-      left:50%;
-      transform:translateX(-50%);
-      background:rgba(255,255,255,0.96);
-      color:#0F172A;
-      padding:14px 20px;
-      border-radius:14px;
-      box-shadow:0 18px 40px rgba(0,0,0,0.25);
-      font-size:14px;
-      font-weight:900;
-      z-index:9999;
-      opacity:0;
-      pointer-events:none;
-      transition:0.25s;
-      white-space:nowrap;
+      right:50%; bottom:calc(100px + var(--safe-bottom)); z-index:60;
+      transform:translateX(50%) translateY(18px);
+      min-width:200px; max-width:calc(100vw - 32px);
+      padding:12px 14px; border-radius:14px;
+      border:1px solid var(--line); background:rgba(255,255,255,.96);
+      box-shadow:var(--shadow-md); color:var(--ink); text-align:center; font-size:12px; font-weight:900;
+      opacity:0; visibility:hidden; transition:all .22s ease;
     }
+    .toast.show{opacity:1; visibility:visible; transform:translateX(50%) translateY(0)}
 
-    .toast.show{
-      opacity:1;
-      transform:translateX(-50%) translateY(-6px);
-    }
-
-    .danger{color:var(--danger)!important}
-    .warning{color:var(--warning)!important}
-    .success{color:var(--primary)!important}
-    .gold{color:var(--gold)!important}
-
-    @media (max-width:420px){
+    @media (max-width:430px){
+      .reading-value{font-size:48px;}
       .mini-grid,
-      .footer-actions{
-        grid-template-columns:1fr;
-      }
-
-      .meal-stats{
-        grid-template-columns:1fr;
-      }
-
-      .reading-value{
-        font-size:48px;
-      }
-
-      .live-head{
-        flex-direction:column;
-        align-items:flex-start;
-      }
+      .footer-actions{grid-template-columns:1fr;}
+      .meal-stats{grid-template-columns:1fr;}
+      .live-head{flex-direction:column; align-items:flex-start;}
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
-  <div class="app">
-    <div class="header">
-      <a href="index.html" class="back-btn">→</a>
-      <div class="header-wrap">
-        <h1 class="header-title">الدليل اليومي</h1>
-        <p class="header-sub">ملخص ذكي يختصر لك وضع اليوم: القراءة، المعامل، الوجبة، والخطوة التالية.</p>
+  <div class="bg-noise"></div>
+
+  <div class="splash" id="splashScreen">
+    <div class="splash-inner">
+      <div class="splash-mark">
+        <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
+        </svg>
       </div>
+      <div class="splash-title">SugarMind</div>
+      <div class="splash-sub">الدليل اليومي</div>
+      <div class="splash-bar"><span></span></div>
     </div>
+  </div>
+
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 100 40" preserveAspectRatio="none">
+            <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">SugarMind</div>
+          <div class="brand-sub">الدليل اليومي</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="icon-btn" id="refreshBtn" type="button" aria-label="تحديث">↻</button>
+      </div>
+    </header>
+
+    <section class="greeting">
+      <div class="time-chip" id="timeChip">🌤️ <span id="timeText">بداية يوم هادئ</span></div>
+      <h1 class="greeting-title" id="greetingTitle">دليلك اليومي</h1>
+      <p class="greeting-sub" id="greetingSub">ملخص ذكي يختصر لك وضع اليوم: القراءة، المعامل، الوجبة، والخطوة التالية.</p>
+    </section>
 
     <div class="hero">
       <div class="hero-badge">📋 لوحة اليوم الذكية</div>
@@ -562,6 +646,17 @@
           <div class="mini-value" id="confidenceValue">جيدة</div>
           <div class="mini-label">مستوى الثقة</div>
         </div>
+      </div>
+    </div>
+
+    <!-- الرسم البياني لآخر 7 قراءات -->
+    <div class="section">
+      <div class="section-head">
+        <div class="section-title">📈 آخر 7 قراءات</div>
+        <div class="section-note">اتجاهات يومك</div>
+      </div>
+      <div class="chart-container">
+        <canvas id="readingsChart"></canvas>
       </div>
     </div>
 
@@ -610,291 +705,355 @@
 
     <div class="section">
       <div class="section-head">
-        <div class="section-title">📌 خطوتك التالية</div>
-        <div class="section-note">واضحة ومباشرة</div>
+        <div class="section-title">📌 خطواتك التالية</div>
+        <div class="section-note">مصممة خصيصاً لك</div>
       </div>
 
-      <div class="plan-list" id="planList">
-        <div class="plan-item">
-          <div class="plan-icon">1</div>
-          <div class="plan-content">
-            <h4>ثبت الوجبات المتشابهة</h4>
-            <p>كلما كررت وجبات متقاربة في الكارب، أصبحت نتيجة معامل الكارب أوضح وأكثر ثقة.</p>
-          </div>
-        </div>
-
-        <div class="plan-item">
-          <div class="plan-icon">2</div>
-          <div class="plan-content">
-            <h4>راقب القراءة التالية</h4>
-            <p>القراءة القادمة مهمة لتأكيد هل الاتجاه مستقر فعلًا أو يحتاج انتباه أكثر.</p>
-          </div>
-        </div>
-
-        <div class="plan-item">
-          <div class="plan-icon">3</div>
-          <div class="plan-content">
-            <h4>لا تعتمد قراءة واحدة فقط</h4>
-            <p>الحكم الأفضل يأتي من التكرار، وليس من وجبة أو قراءة واحدة فقط.</p>
-          </div>
-        </div>
+      <div class="steps-grid" id="stepsGrid">
+        <!-- سيتم ملؤها بالجافاسكريبت -->
       </div>
+
+      <!-- زر الصلاحية للصحة -->
+      <div class="health-permission" id="healthPermission">
+        <div class="health-text">
+          <strong>🔗 تواصل مع تطبيق الصحة</strong><br>
+          اسمح لـ SugarMind بقراءة بيانات النشاط والنوم من تطبيق الصحة لتحليلات أذكى.
+        </div>
+        <button class="health-btn" id="requestHealthKit">السماح</button>
+      </div>
+
+      <!-- زر التحليلات بالذكاء الاصطناعي -->
+      <button class="ai-button" id="aiInsightsBtn">
+        <span>🤖</span>
+        <span>تحليلاتك بالذكاء الاصطناعي AI</span>
+        <span>✨</span>
+      </button>
 
       <div class="footer-actions">
-        <button class="btn btn-primary" onclick="refreshGuide()">
+        <button class="btn btn-primary" id="refreshGuideBtn">
           <span>↻</span>
           <span>تحديث الدليل</span>
         </button>
-        <button class="btn btn-secondary" onclick="goToCalculator()">
+        <button class="btn btn-secondary" id="goToCalculatorBtn">
           <span>🧮</span>
           <span>عدّل معاملك</span>
         </button>
       </div>
     </div>
-  </div>
+  </main>
 
   <div class="toast" id="toast"></div>
 
   <script>
-    // =========================
-    // STORAGE KEYS
-    // =========================
-    const HOME_KEY = 'sugarmind_v5';
-    const ICR_KEY = 'sugarmind_icr_result_v2';
-    const MEAL_KEY = 'sugarmind_meal_result_v1';
+    (function() {
+      // ========================
+      // STORAGE KEYS
+      // ========================
+      const HOME_KEY = 'sugarmind_home_v1';
+      const ICR_KEY = 'sugarmind_icr_result_v2';
+      const MEAL_KEY = 'sugarmind_meal_result_v1';
+      const READINGS_KEY = 'sugarmind_readings'; // لتخزين آخر 7 قراءات
 
-    // =========================
-    // HELPERS
-    // =========================
-    function showToast(msg){
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2400);
-    }
-
-    function readJSON(key){
-      try{
-        const raw = localStorage.getItem(key);
-        return raw ? JSON.parse(raw) : null;
-      }catch(e){
-        return null;
-      }
-    }
-
-    function formatTime(iso){
-      try{
-        if(!iso) return 'الآن';
-        const d = new Date(iso);
-        if(isNaN(d.getTime())) return 'الآن';
-        return d.toLocaleTimeString('ar-SA', { hour:'2-digit', minute:'2-digit' });
-      }catch(e){
-        return 'الآن';
-      }
-    }
-
-    function getReadingState(reading){
-      const value = parseFloat(reading);
-
-      if(!Number.isFinite(value)) return {
-        label:'غير واضح',
-        short:'بانتظار قراءة',
-        badgeClass:'warning',
-        badgeBg:'rgba(245,158,11,0.14)',
-        badgeColor:'#F59E0B',
-        boxBorder:'rgba(245,158,11,0.18)'
-      };
-
-      if(value < 70) return {
-        label:'منخفض',
-        short:'يحتاج انتباه',
-        badgeClass:'danger',
-        badgeBg:'rgba(239,68,68,0.14)',
-        badgeColor:'#EF4444',
-        boxBorder:'rgba(239,68,68,0.18)'
-      };
-
-      if(value <= 140) return {
-        label:'في النطاق',
-        short:'مستقر',
-        badgeClass:'success',
-        badgeBg:'rgba(16,185,129,0.14)',
-        badgeColor:'#10B981',
-        boxBorder:'rgba(16,185,129,0.18)'
-      };
-
-      if(value <= 180) return {
-        label:'مرتفع قليلًا',
-        short:'جيد',
-        badgeClass:'gold',
-        badgeBg:'rgba(251,191,36,0.14)',
-        badgeColor:'#FBBF24',
-        boxBorder:'rgba(251,191,36,0.18)'
-      };
-
-      return {
-        label:'مرتفع',
-        short:'مراجعة',
-        badgeClass:'warning',
-        badgeBg:'rgba(245,158,11,0.14)',
-        badgeColor:'#F59E0B',
-        boxBorder:'rgba(245,158,11,0.18)'
-      };
-    }
-
-    function buildMindText(readingData, icrData, mealData){
-      const reading = parseFloat(readingData?.reading);
-      const state = getReadingState(reading);
-      const icr = icrData?.icr ? `1:${icrData.icr}` : 'غير محدد بعد';
-      const confidence = icrData?.confidenceLabel || 'أولية';
-
-      let line1 = '';
-      if(!Number.isFinite(reading)){
-        line1 = 'ما زلنا نحتاج قراءة سكر أوضح حتى يصبح هذا الدليل أكثر فائدة لك خلال اليوم.';
-      } else if(reading < 70){
-        line1 = 'آخر قراءة منخفضة، لذلك الأولوية الآن تكون للانتباه للحالة الحالية قبل أي تحليل إضافي لليوم.';
-      } else if(reading <= 140){
-        line1 = 'يومك يبدو متزنًا إلى الآن، وآخر قراءة تعطي انطباعًا جيدًا أن الوضع الحالي قريب من النطاق المناسب.';
-      } else if(reading <= 180){
-        line1 = 'آخر قراءة أعلى قليلًا من المثالي، لكنها ما زالت مفهومة داخل يوم المتابعة وتحتاج فقط انتباهًا بسيطًا.';
-      } else {
-        line1 = 'آخر قراءة مرتفعة نسبيًا، وهذا يعني أن اليوم يحتاج قراءة أهدأ ومراجعة لما حدث في آخر وجبة أو توقيتها.';
+      // ========================
+      // HELPERS
+      // ========================
+      function showToast(msg){
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2400);
       }
 
-      let line2 = `معامل الكارب الحالي عندك ${icr} بمستوى ثقة ${confidence}.`;
-      let line3 = mealData?.carbs
-        ? `آخر وجبة المسجلة كانت تقريبًا ${mealData.carbs} جرام كارب، وهذا يعطينا سياقًا أفضل لفهم يومك بدل النظر للرقم وحده.`
-        : 'لا يوجد حتى الآن تحليل وجبة محفوظ، وإضافته لاحقًا سيجعل الدليل اليومي أذكى وأوضح.';
-
-      let line4 = 'القيمة الحقيقية هنا ليست في رقم واحد، بل في الربط بين القراءة، الوجبة، ومعاملك الحالي حتى يبدأ النمط يتضح مع الوقت.';
-
-      return `${line1}\n\n${line2}\n\n${line3}\n\n${line4}`;
-    }
-
-    function buildPlan(readingData, icrData, mealData){
-      const reading = parseFloat(readingData?.reading);
-      const planList = document.getElementById('planList');
-      const items = [];
-
-      if(Number.isFinite(reading) && reading < 70){
-        items.push({
-          icon:'1',
-          title:'انتبه للوضع الحالي',
-          text:'بما أن القراءة منخفضة، فالأولوية الآن للحالة الحالية قبل أي استنتاج طويل على بقية اليوم.'
-        });
-      } else if(Number.isFinite(reading) && reading > 180){
-        items.push({
-          icon:'1',
-          title:'راجع آخر وجبة بهدوء',
-          text:'الارتفاع الحالي يوحي أن آخر وجبة أو توقيتها أو تغطيتها تستحق نظرة أقرب.'
-        });
-      } else {
-        items.push({
-          icon:'1',
-          title:'ثبت الوجبات المتشابهة',
-          text:'كلما كررت وجبات متقاربة في الكارب، أصبحت نتيجة معامل الكارب أوضح وأكثر ثقة.'
-        });
+      function readJSON(key){
+        try{
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : null;
+        }catch(e){
+          return null;
+        }
       }
 
-      items.push({
-        icon:'2',
-        title:'راقب القراءة التالية',
-        text:'القراءة القادمة مهمة لتأكيد هل الاتجاه الحالي مستقر فعلًا أو يحتاج تعديل في الفهم.'
-      });
-
-      if(icrData?.icr){
-        items.push({
-          icon:'3',
-          title:'ابنِ على المعامل الحالي',
-          text:`معاملك الحالي ${'1:' + icrData.icr} ممتاز كنقطة بداية، لكن لا تعتمده نهائيًا من إدخال واحد فقط.`
-        });
-      } else {
-        items.push({
-          icon:'3',
-          title:'احسب معاملك',
-          text:'وجود معامل كارب محفوظ سيجعل هذا الدليل اليومي أذكى بكثير ويختصر عليك فهم يومك.'
-        });
+      function writeJSON(key, value){
+        localStorage.setItem(key, JSON.stringify(value));
       }
 
-      if(mealData?.carbs){
-        items.push({
-          icon:'4',
-          title:'استمر على تسجيل الوجبات',
-          text:'وجود الكارب والجرعة معًا يعطي سكر مايند قدرة أفضل على قراءة اليوم بشكل إنساني وواضح.'
-        });
+      function formatTime(iso){
+        try{
+          if(!iso) return 'الآن';
+          const d = new Date(iso);
+          if(isNaN(d.getTime())) return 'الآن';
+          return d.toLocaleTimeString('ar-SA', { hour:'2-digit', minute:'2-digit' });
+        }catch(e){
+          return 'الآن';
+        }
       }
 
-      planList.innerHTML = items.map(item => `
-        <div class="plan-item">
-          <div class="plan-icon">${item.icon}</div>
-          <div class="plan-content">
-            <h4>${item.title}</h4>
-            <p>${item.text}</p>
+      function getPeriod(){
+        const hour = new Date().getHours();
+        if(hour < 12) return {label:'صباح الخير', hint:'بداية يوم هادئ', icon:'🌤️'};
+        if(hour < 18) return {label:'مساء الخير', hint:'نكمل يومك بهدوء', icon:'☀️'};
+        return {label:'مساء الخير', hint:'خلنا نختم يومك بوضوح', icon:'🌙'};
+      }
+
+      function getReadingState(reading){
+        const value = parseFloat(reading);
+        if(!Number.isFinite(value)) return {
+          label:'غير واضح',
+          short:'بانتظار قراءة',
+          badgeBg:'rgba(230,184,92,0.14)',
+          badgeColor:'#E6B85C',
+          boxBorder:'rgba(230,184,92,0.18)',
+          chipText: 'غير واضح'
+        };
+        if(value < 70) return {
+          label:'منخفض',
+          short:'يحتاج انتباه',
+          badgeBg:'rgba(218,114,109,0.14)',
+          badgeColor:'#DA726D',
+          boxBorder:'rgba(218,114,109,0.18)',
+          chipText: 'منخفض'
+        };
+        if(value <= 140) return {
+          label:'في النطاق',
+          short:'مستقر',
+          badgeBg:'rgba(123,170,146,0.14)',
+          badgeColor:'#7BAA92',
+          boxBorder:'rgba(123,170,146,0.18)',
+          chipText: 'في النطاق'
+        };
+        if(value <= 180) return {
+          label:'مرتفع قليلًا',
+          short:'جيد',
+          badgeBg:'rgba(230,184,92,0.14)',
+          badgeColor:'#E6B85C',
+          boxBorder:'rgba(230,184,92,0.18)',
+          chipText: 'مرتفع قليلاً'
+        };
+        return {
+          label:'مرتفع',
+          short:'مراجعة',
+          badgeBg:'rgba(218,114,109,0.14)',
+          badgeColor:'#DA726D',
+          boxBorder:'rgba(218,114,109,0.18)',
+          chipText: 'مرتفع'
+        };
+      }
+
+      // بناء النص التحليلي
+      function buildMindText(homeData, icrData, mealData){
+        const reading = parseFloat(homeData?.reading);
+        const icr = icrData?.icr ? `1:${icrData.icr}` : 'غير محدد';
+        const confidence = icrData?.confidenceLabel || 'أولية';
+
+        let line1 = '';
+        if(!Number.isFinite(reading)){
+          line1 = 'ما زلنا نحتاج قراءة سكر أوضح حتى يصبح هذا الدليل أكثر فائدة لك خلال اليوم.';
+        } else if(reading < 70){
+          line1 = 'آخر قراءة منخفضة، لذلك الأولوية الآن تكون للانتباه للحالة الحالية قبل أي تحليل إضافي لليوم.';
+        } else if(reading <= 140){
+          line1 = 'يومك يبدو متزنًا إلى الآن، وآخر قراءة تعطي انطباعًا جيدًا أن الوضع الحالي قريب من النطاق المناسب.';
+        } else if(reading <= 180){
+          line1 = 'آخر قراءة أعلى قليلًا من المثالي، لكنها ما زالت مفهومة داخل يوم المتابعة وتحتاج فقط انتباهًا بسيطًا.';
+        } else {
+          line1 = 'آخر قراءة مرتفعة نسبيًا، وهذا يعني أن اليوم يحتاج قراءة أهدأ ومراجعة لما حدث في آخر وجبة أو توقيتها.';
+        }
+
+        let line2 = `معامل الكارب الحالي عندك ${icr} بمستوى ثقة ${confidence}.`;
+        let line3 = mealData?.carbs
+          ? `آخر وجبة مسجلة كانت تقريبًا ${mealData.carbs} جرام كارب، وهذا يعطينا سياقًا أفضل لفهم يومك.`
+          : 'لا يوجد حتى الآن تحليل وجبة محفوظ، وإضافته لاحقًا سيجعل الدليل أذكى.';
+
+        return `${line1}\n\n${line2}\n\n${line3}`;
+      }
+
+      // بناء الخطوات المخصصة
+      function buildSteps(homeData, icrData, mealData){
+        const reading = parseFloat(homeData?.reading);
+        const steps = [];
+
+        if(Number.isFinite(reading) && reading < 70){
+          steps.push({
+            icon:'⚠️',
+            title:'انتبه للوضع الحالي',
+            desc:'القراءة منخفضة، ركز على علاج الهبوط أولاً ثم عاود القياس.'
+          });
+        } else if(Number.isFinite(reading) && reading > 180){
+          steps.push({
+            icon:'📈',
+            title:'راجع آخر وجبة',
+            desc:'الارتفاع قد يكون بسبب الوجبة، راجع الكارب أو جرعة الأنسولين.'
+          });
+        } else {
+          steps.push({
+            icon:'🍽️',
+            title:'ثبّت وجبات متشابهة',
+            desc:'كلما كررت وجبات متقاربة الكارب، زادت دقة معامل الكارب.'
+          });
+        }
+
+        steps.push({
+          icon:'👁️',
+          title:'راقب القراءة القادمة',
+          desc:'القراءة التالية ستؤكد اتجاه اليوم وتساعد في تحسين القرارات.'
+        });
+
+        if(icrData?.icr){
+          steps.push({
+            icon:'📊',
+            title:'ابحث في تحليلات AI',
+            desc:'اضغط على الزر أعلاه لتحصل على تحليل شامل ومتقدم.'
+          });
+        } else {
+          steps.push({
+            icon:'🧮',
+            title:'احسب معامل الكارب',
+            desc:'توجه لصفحة الحاسبة وأضف معاملك لتظهر تحليلات أعمق.'
+          });
+        }
+
+        return steps;
+      }
+
+      // تحديث الخطوات في DOM
+      function renderSteps(){
+        const homeData = readJSON(HOME_KEY);
+        const icrData = readJSON(ICR_KEY);
+        const mealData = readJSON(MEAL_KEY);
+        const steps = buildSteps(homeData, icrData, mealData);
+        const grid = document.getElementById('stepsGrid');
+        grid.innerHTML = steps.map((step, index) => `
+          <div class="step-item">
+            <div class="step-icon">${step.icon}</div>
+            <div class="step-content">
+              <h4>${step.title}</h4>
+              <p>${step.desc}</p>
+            </div>
           </div>
-        </div>
-      `).join('');
-    }
+        `).join('');
+      }
 
-    function applyGuide(){
-      const homeData = readJSON(HOME_KEY);
-      const icrData = readJSON(ICR_KEY);
-      const mealData = readJSON(MEAL_KEY);
+      // تحديث الرسم البياني
+      let chart = null;
+      function renderChart(){
+        const ctx = document.getElementById('readingsChart').getContext('2d');
+        // محاكاة قراءات آخر 7 أيام (يمكن جلبها من localStorage)
+        const readings = [120, 135, 142, 118, 160, 145, 128]; // مثال
+        const labels = ['اليوم 7', 'اليوم 6', 'اليوم 5', 'اليوم 4', 'اليوم 3', 'أمس', 'اليوم'];
 
-      const reading = homeData?.reading ?? 128;
-      const readingTime = homeData?.time || 'الآن';
-      const state = getReadingState(reading);
+        if(chart) chart.destroy();
+        chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'قراءة السكر',
+              data: readings,
+              borderColor: '#7BAA92',
+              backgroundColor: 'rgba(123,170,146,0.1)',
+              tension: 0.2,
+              pointBackgroundColor: '#7BAA92',
+              fill: true,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              y: {
+                min: 50,
+                max: 250,
+                grid: { color: 'rgba(0,0,0,0.05)' },
+                ticks: { color: '#667085' }
+              },
+              x: {
+                grid: { display: false },
+                ticks: { color: '#667085' }
+              }
+            }
+          }
+        });
+      }
 
-      document.getElementById('readingValue').textContent = Number.isFinite(parseFloat(reading)) ? reading : '--';
-      document.getElementById('readingTime').textContent = readingTime;
-      document.getElementById('readingStateChip').textContent = state.label;
-      document.getElementById('statusBadge').textContent = state.short;
-      document.getElementById('statusBadge').style.background = state.badgeBg;
-      document.getElementById('statusBadge').style.color = state.badgeColor;
-      document.getElementById('statusBadge').style.borderColor = state.badgeColor + '33';
-      document.getElementById('readingBox').style.borderColor = state.boxBorder;
+      // تحديث جميع العناصر
+      function refreshGuide(){
+        const period = getPeriod();
+        document.getElementById('timeChip').innerHTML = `${period.icon} <span>${period.hint}</span>`;
+        document.getElementById('greetingTitle').textContent = 'دليلك اليومي';
+        document.getElementById('greetingSub').textContent = 'ملخص ذكي يختصر لك وضع اليوم.';
 
-      document.getElementById('liveSubtitle').textContent =
-        homeData?.savedAt ? `آخر تحديث ${formatTime(homeData.savedAt)}` : 'آخر تحديث قبل لحظات';
+        const homeData = readJSON(HOME_KEY);
+        const icrData = readJSON(ICR_KEY);
+        const mealData = readJSON(MEAL_KEY);
 
-      document.getElementById('icrValue').textContent = icrData?.icr ? `1:${icrData.icr}` : '--';
-      document.getElementById('confidenceValue').textContent = icrData?.confidenceLabel || 'أولية';
+        const reading = homeData?.reading ?? 128;
+        const readingTime = homeData?.time ? formatTime(homeData.time) : 'الآن';
+        const state = getReadingState(reading);
 
-      document.getElementById('mealName').textContent =
-        mealData?.mealName || mealData?.title || 'وجبة اليوم الأخيرة';
+        document.getElementById('readingValue').textContent = Number.isFinite(parseFloat(reading)) ? reading : '--';
+        document.getElementById('readingTime').textContent = readingTime;
+        document.getElementById('readingStateChip').textContent = state.chipText;
+        document.getElementById('statusBadge').textContent = state.short;
+        document.getElementById('statusBadge').style.background = state.badgeBg;
+        document.getElementById('statusBadge').style.color = state.badgeColor;
+        document.getElementById('statusBadge').style.borderColor = state.badgeColor + '33';
+        document.getElementById('readingBox').style.borderColor = state.boxBorder;
 
-      document.getElementById('mealDesc').textContent =
-        mealData?.description ||
-        mealData?.summary ||
-        'تم حفظ ملخص الوجبة هنا حتى يكون يومك أمامك بشكل أوضح وأسهل.';
+        document.getElementById('liveSubtitle').textContent = homeData?.savedAt ? `آخر تحديث ${formatTime(homeData.savedAt)}` : 'آخر تحديث قبل لحظات';
 
-      document.getElementById('mealCarbs').textContent =
-        mealData?.carbs ? `${mealData.carbs}g` : '--';
+        document.getElementById('icrValue').textContent = icrData?.icr ? `1:${icrData.icr}` : '--';
+        document.getElementById('confidenceValue').textContent = icrData?.confidenceLabel || 'أولية';
 
-      document.getElementById('mealDose').textContent =
-        mealData?.dose ? `${mealData.dose}u` : '--';
+        document.getElementById('mealName').textContent = mealData?.mealName || mealData?.title || 'وجبة اليوم الأخيرة';
+        document.getElementById('mealDesc').textContent = mealData?.description || mealData?.summary || 'تم حفظ ملخص الوجبة هنا حتى يكون يومك أمامك بشكل أوضح.';
+        document.getElementById('mealCarbs').textContent = mealData?.carbs ? `${mealData.carbs}g` : '--';
+        document.getElementById('mealDose').textContent = mealData?.dose ? `${mealData.dose}u` : '--';
+        document.getElementById('mealType').textContent = mealData?.type || mealData?.category || '—';
+        document.getElementById('mealUpdatedAt').textContent = mealData?.savedAt ? `محدثة ${formatTime(mealData.savedAt)}` : 'لا يوجد تحديث حديث';
 
-      document.getElementById('mealType').textContent =
-        mealData?.type || mealData?.category || '—';
+        document.getElementById('mindText').textContent = buildMindText(homeData, icrData, mealData);
 
-      document.getElementById('mealUpdatedAt').textContent =
-        mealData?.savedAt ? `محدثة ${formatTime(mealData.savedAt)}` : 'لا يوجد تحديث حديث';
+        renderSteps();
+        renderChart();
+        showToast('تم تحديث الدليل');
+      }
 
-      document.getElementById('mindText').textContent =
-        buildMindText(homeData, icrData, mealData);
+      // ========================
+      // HEALTH KIT (تجريبي)
+      // ========================
+      function requestHealthPermission(){
+        // محاكاة طلب الإذن
+        showToast('محاكاة طلب الإذن (تجريبي)');
+        // هنا يمكن إضافة كود حقيقي لـ HealthKit إذا كان التطبيق في iOS
+      }
 
-      buildPlan(homeData, icrData, mealData);
-    }
+      // ========================
+      // الأحداث
+      // ========================
+      document.addEventListener('DOMContentLoaded', () => {
+        // إخفاء splash
+        setTimeout(() => {
+          document.getElementById('splashScreen').classList.add('hide');
+        }, 1000);
 
-    function refreshGuide(){
-      applyGuide();
-      showToast('تم تحديث الدليل');
-    }
+        refreshGuide();
 
-    function goToCalculator(){
-      window.location.href = 'carb-calculator.html';
-    }
-
-    window.addEventListener('DOMContentLoaded', applyGuide);
+        document.getElementById('refreshBtn').addEventListener('click', refreshGuide);
+        document.getElementById('refreshGuideBtn').addEventListener('click', refreshGuide);
+        document.getElementById('goToCalculatorBtn').addEventListener('click', () => {
+          window.location.href = 'carb-calculator.html';
+        });
+        document.getElementById('aiInsightsBtn').addEventListener('click', () => {
+          window.location.href = 'ai-insights.html';
+        });
+        document.getElementById('requestHealthKit').addEventListener('click', requestHealthPermission);
+      });
+    })();
   </script>
 </body>
 </html>
