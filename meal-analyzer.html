@@ -2,208 +2,223 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>محلل الوجبة البرقي - SugarMind</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>محلل الوجبة - SugarMind</title>
+  <meta name="description" content="ابحث عن أي وجبة واحصل على تقدير دقيق للكارب والمغذيات." />
+  <meta name="theme-color" content="#F6F3EE" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#0F172A;
-      --bg-elevated:#1E293B;
-      --surface:rgba(255,255,255,0.05);
-      --surface-hover:rgba(255,255,255,0.08);
-      --border:rgba(255,255,255,0.1);
-      --text-primary:#F8FAFC;
-      --text-secondary:#94A3B8;
-      --text-muted:#64748B;
-      --primary:#10B981;
-      --primary-light:#34D399;
-      --primary-glow:0 0 40px rgba(16,185,129,0.3);
-      --danger:#EF4444;
-      --warning:#F59E0B;
-      --gold:#FBBF24;
-      --purple:#8B5CF6;
-      --blue:#3B82F6;
-      --radius:24px;
-      --radius-sm:16px;
-      --shadow:0 25px 50px -12px rgba(0,0,0,0.5);
-      --font-family:'Tajawal',-apple-system,BlinkMacSystemFont,sans-serif;
+      --bg:#F6F3EE;
+      --bg-2:#EFEAE3;
+      --surface:#FFFFFF;
+      --surface-2:#F8F6F2;
+      --surface-3:#F0ECE7;
+      --hero:#2A2F45;
+      --hero-2:#45496A;
+      --hero-3:#7D8BAE;
+      --primary:#7BAA92;
+      --primary-2:#A9C9B9;
+      --ink:#1D2433;
+      --ink-2:#667085;
+      --ink-3:#8C94A4;
+      --line:#E6E1D8;
+      --line-soft:rgba(69,73,106,.10);
+      --success:#61B07F;
+      --warning:#E6B85C;
+      --danger:#DA726D;
+      --success-soft:rgba(97,176,127,.12);
+      --warning-soft:rgba(230,184,92,.14);
+      --danger-soft:rgba(218,114,109,.14);
+      --shadow-lg:0 24px 60px rgba(30,36,51,.10);
+      --shadow-md:0 16px 32px rgba(30,36,51,.08);
+      --shadow-sm:0 10px 18px rgba(30,36,51,.05);
+      --shadow-hover:0 20px 30px rgba(30,36,51,.12);
+      --radius-xxl:32px;
+      --radius-xl:26px;
+      --radius-lg:22px;
+      --radius-md:18px;
+      --radius-sm:14px;
+      --safe-top:env(safe-area-inset-top);
+      --safe-bottom:env(safe-area-inset-bottom);
+      --max-width:500px;
+      --ease:cubic-bezier(.2,.8,.2,1);
     }
 
-    *{box-sizing:border-box;margin:0;padding:0;font-family:var(--font-family);-webkit-tap-highlight-color:transparent}
-
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Tajawal',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+    html{background:var(--bg);overflow-x:hidden;scroll-behavior:smooth}
     body{
-      background:var(--bg);
-      color:var(--text-primary);
       min-height:100vh;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(123,170,146,.10), transparent 24%),
+        radial-gradient(circle at top right, rgba(125,139,174,.10), transparent 22%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
       overflow-x:hidden;
-      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    a{text-decoration:none;color:inherit}
+    button,input{font:inherit}
+    button{border:0;background:none;color:inherit;cursor:pointer}
+    img{max-width:100%;display:block}
+
+    .bg-noise{
+      position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.03;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
     }
 
-    .bg-layer{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:-1;
+    .splash{
+      position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(180deg, #F6F3EE 0%, #EFEAE3 100%);
+      transition:opacity .45s ease, visibility .45s ease, transform .45s ease;
+    }
+    .splash.hide{opacity:0; visibility:hidden; transform:scale(1.02)}
+    .splash-inner{text-align:center; padding:24px}
+    .splash-mark{
+      width:108px; height:108px; border-radius:30px; margin:0 auto 20px;
+      display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 58%, var(--primary) 100%);
+      box-shadow:0 20px 50px rgba(69,73,106,.20), inset 0 1px 0 rgba(255,255,255,.18);
+    }
+    .splash-mark svg{width:56px; height:34px}
+    .splash-mark path{stroke:#fff; stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
+    .splash-title{font-size:36px; font-weight:900; letter-spacing:-1px; color:var(--ink); margin-bottom:8px}
+    .splash-sub{font-size:15px; color:var(--ink-2); margin-bottom:24px}
+    .splash-bar{width:160px; height:4px; background:rgba(69,73,106,.08); border-radius:999px; overflow:hidden; margin:0 auto}
+    .splash-bar span{
+      display:block; width:100%; height:100%;
+      background:linear-gradient(90deg, var(--primary), var(--hero-3));
+      transform-origin:right; animation:loader 1.1s ease forwards;
+    }
+    @keyframes loader{from{transform:scaleX(.1)}to{transform:scaleX(1)}}
+
+    .app{
+      max-width:var(--max-width);
+      margin:0 auto;
+      min-height:100vh;
+      padding:calc(18px + var(--safe-top)) 18px calc(120px + var(--safe-bottom));
+      position:relative;
     }
 
-    .bg-gradient{
-      background:radial-gradient(ellipse at 100% 0%,rgba(16,185,129,0.15) 0%,transparent 50%),
-                 radial-gradient(ellipse at 0% 100%,rgba(139,92,246,0.1) 0%,transparent 40%),
-                 var(--bg);
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      margin-bottom:22px;
     }
+    .brand{display:flex; align-items:center; gap:12px; min-width:0}
+    .brand-mark{
+      width:52px; height:52px; border-radius:17px; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 58%, var(--primary) 100%);
+      box-shadow:0 14px 28px rgba(69,73,106,.14);
+    }
+    .brand-mark svg{width:28px; height:16px}
+    .brand-mark path{stroke:#fff; stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
+    .brand-name{font-size:19px; font-weight:900; color:var(--ink); line-height:1}
+    .brand-sub{font-size:12px; color:var(--ink-2); margin-top:5px}
+    .top-actions{display:flex; align-items:center; gap:10px; flex-shrink:0}
+    .icon-btn{
+      min-height:46px; border-radius:16px; border:1px solid var(--line);
+      background:rgba(255,255,255,.65); color:var(--ink);
+      box-shadow:var(--shadow-sm);
+      transition:transform .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease);
+      width:46px; display:flex; align-items:center; justify-content:center; font-size:22px;
+    }
+    .icon-btn:hover{transform:translateY(-2px); border-color:rgba(69,73,106,.20)}
 
-    .app{max-width:480px;margin:0 auto;padding:20px;min-height:100vh;position:relative;padding-bottom:120px}
+    .greeting{margin-bottom:18px}
+    .time-chip{
+      display:inline-flex; align-items:center; gap:8px; min-height:34px; padding:0 12px;
+      border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.72);
+      color:var(--ink-2); font-size:12px; font-weight:900; margin-bottom:16px;
+      box-shadow:var(--shadow-sm);
+    }
+    .greeting-title{font-size:28px; font-weight:900; line-height:1.24; letter-spacing:-1px; color:var(--ink); margin-bottom:8px}
+    .greeting-sub{font-size:14px; color:var(--ink-2); line-height:1.8}
 
-    /* Lightning Badge */
+    /* lightning badge */
     .lightning-badge{
       display:inline-flex;
       align-items:center;
       gap:6px;
       padding:6px 14px;
-      background:linear-gradient(135deg,var(--gold),#F59E0B);
+      background:linear-gradient(135deg, var(--warning), #E6B85C);
       border-radius:999px;
       font-size:11px;
       font-weight:900;
-      color:#000;
+      color:var(--ink);
       margin-bottom:16px;
       animation:pulse-gold 2s infinite;
     }
-
     @keyframes pulse-gold{
-      0%,100%{box-shadow:0 0 0 0 rgba(251,191,36,0.4)}
-      50%{box-shadow:0 0 20px rgba(251,191,36,0.6)}
+      0%,100%{box-shadow:0 0 0 0 rgba(230,184,92,0.4)}
+      50%{box-shadow:0 0 20px rgba(230,184,92,0.6)}
     }
 
-    /* Header */
-    .header{
-      display:flex;
-      align-items:center;
-      gap:16px;
-      margin-bottom:24px;
-      padding-top:20px;
-    }
-
-    .back-btn{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      background:var(--surface);
-      border:1px solid var(--border);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:20px;
-      color:var(--text-primary);
-      text-decoration:none;
-      transition:all 0.3s ease;
-      cursor:pointer;
-    }
-
-    .back-btn:hover{background:var(--surface-hover);transform:translateX(-4px)}
-
-    .header-title{font-size:24px;font-weight:900}
-
-    /* Speed Toggle */
-    .speed-toggle{
-      display:flex;
-      gap:8px;
-      margin-bottom:20px;
-      padding:4px;
-      background:var(--surface);
-      border-radius:999px;
-      border:1px solid var(--border);
-    }
-
-    .speed-option{
-      flex:1;
-      padding:10px;
-      border-radius:999px;
-      font-size:13px;
-      font-weight:800;
-      text-align:center;
-      cursor:pointer;
-      transition:all 0.3s ease;
-      color:var(--text-secondary);
-    }
-
-    .speed-option.active{
-      background:var(--primary);
-      color:#fff;
-      box-shadow:0 4px 15px rgba(16,185,129,0.3);
-    }
-
-    /* Smart Search with Instant Results */
     .search-container{
       position:relative;
       margin-bottom:16px;
     }
-
     .search-box{
       background:var(--surface);
-      border:2px solid var(--border);
-      border-radius:var(--radius);
-      padding:20px;
+      border:1.5px solid var(--line);
+      border-radius:var(--radius-lg);
+      padding:16px 18px;
       display:flex;
       align-items:center;
       gap:12px;
       transition:all 0.3s ease;
+      box-shadow:var(--shadow-sm);
     }
-
     .search-box:focus-within{
       border-color:var(--primary);
-      box-shadow:0 0 30px rgba(16,185,129,0.2);
+      box-shadow:0 0 0 4px rgba(123,170,146,.15);
     }
-
-    .search-icon{
-      font-size:24px;
-      color:var(--text-secondary);
-    }
-
+    .search-icon{font-size:22px; color:var(--ink-3);}
     .search-input{
       flex:1;
       background:transparent;
       border:none;
-      color:var(--text-primary);
-      font-size:18px;
+      color:var(--ink);
+      font-size:16px;
       font-weight:500;
-      font-family:var(--font-family);
     }
-
     .search-input:focus{outline:none}
+    .search-input::placeholder{color:var(--ink-3)}
 
-    .search-input::placeholder{color:var(--text-muted)}
-
-    /* Instant Result Preview */
+    /* instant preview */
     .instant-preview{
       position:absolute;
       top:100%;
       left:0;
       right:0;
       margin-top:8px;
-      background:var(--bg-elevated);
+      background:var(--surface);
       border:1px solid var(--primary);
-      border-radius:var(--radius-sm);
+      border-radius:var(--radius-md);
       padding:16px;
       display:none;
       z-index:100;
-      box-shadow:0 20px 40px rgba(0,0,0,0.4);
+      box-shadow:var(--shadow-lg);
       animation:slideDown 0.2s ease;
     }
-
     .instant-preview.show{display:block}
-
     @keyframes slideDown{
       from{opacity:0;transform:translateY(-10px)}
       to{opacity:1;transform:translateY(0)}
     }
-
     .instant-header{
       display:flex;
       align-items:center;
       justify-content:space-between;
       margin-bottom:12px;
     }
-
     .instant-label{
       font-size:12px;
       color:var(--primary);
@@ -212,57 +227,51 @@
       align-items:center;
       gap:6px;
     }
-
     .instant-carbs{
       font-size:32px;
       font-weight:900;
       color:var(--primary);
     }
 
-    /* Search Suggestions */
+    /* suggestions */
     .suggestions{
       position:absolute;
       top:100%;
       left:0;
       right:0;
       margin-top:8px;
-      background:var(--bg-elevated);
-      border:1px solid var(--border);
-      border-radius:var(--radius-sm);
-      max-height:200px;
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:var(--radius-md);
+      max-height:250px;
       overflow-y:auto;
       display:none;
       z-index:99;
+      box-shadow:var(--shadow-md);
     }
-
     .suggestions.show{display:block}
-
     .suggestion-item{
-      padding:14px 20px;
+      padding:14px 18px;
       cursor:pointer;
       transition:all 0.2s ease;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      border-bottom:1px solid var(--border);
+      border-bottom:1px solid var(--line-soft);
     }
-
     .suggestion-item:last-child{border:none}
-
     .suggestion-item:hover{
-      background:var(--surface);
-      padding-right:24px;
+      background:var(--surface-2);
+      padding-right:22px;
     }
-
-    .suggestion-name{font-weight:700}
-
+    .suggestion-name{font-weight:700; color:var(--ink);}
     .suggestion-carbs{
       font-size:13px;
       color:var(--primary);
       font-weight:800;
     }
 
-    /* Quick Chips */
+    /* quick chips */
     .quick-chips{
       display:flex;
       gap:8px;
@@ -271,25 +280,20 @@
       padding-bottom:8px;
       scrollbar-width:none;
     }
-
     .quick-chips::-webkit-scrollbar{display:none}
-
     .chip{
       flex-shrink:0;
       padding:10px 18px;
       background:var(--surface);
-      border:1px solid var(--border);
+      border:1px solid var(--line);
       border-radius:999px;
       font-size:13px;
       font-weight:700;
-      color:var(--text-secondary);
+      color:var(--ink-2);
       cursor:pointer;
       transition:all 0.2s ease;
-      display:flex;
-      align-items:center;
-      gap:6px;
+      box-shadow:var(--shadow-sm);
     }
-
     .chip:hover{
       background:var(--primary);
       color:#fff;
@@ -297,58 +301,46 @@
       transform:scale(1.05);
     }
 
-    /* Camera */
-    .camera-btn{
-      width:100%;
-      padding:18px;
-      border-radius:var(--radius-sm);
-      background:var(--surface);
-      border:2px dashed var(--border);
-      color:var(--text-secondary);
-      font-size:16px;
-      font-weight:700;
-      cursor:pointer;
+    /* weight input */
+    .weight-row{
       display:flex;
       align-items:center;
-      justify-content:center;
       gap:12px;
-      margin-bottom:16px;
-      transition:all 0.3s ease;
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:var(--radius-md);
+      padding:8px 16px;
+      margin-bottom:20px;
     }
-
-    .camera-btn:hover{
-      border-color:var(--primary);
-      color:var(--primary);
+    .weight-label{
+      font-size:14px;
+      font-weight:700;
+      color:var(--ink-2);
+      display:flex;
+      align-items:center;
+      gap:4px;
     }
-
-    .camera-btn.has-image{
-      border-style:solid;
-      border-color:var(--primary);
-      background:rgba(16,185,129,0.1);
+    .weight-input{
+      width:100px;
+      padding:10px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:var(--surface-2);
+      color:var(--ink);
+      font-weight:700;
+      text-align:center;
     }
+    .weight-unit{font-size:13px; color:var(--ink-3);}
 
-    #fileInput{display:none}
-
-    .image-preview{
-      width:100%;
-      max-height:150px;
-      object-fit:cover;
-      border-radius:var(--radius-sm);
-      margin-top:12px;
-      display:none;
-    }
-
-    .image-preview.show{display:block}
-
-    /* Analyze Button */
+    /* analyze button */
     .analyze-btn{
       width:100%;
-      padding:20px;
-      border-radius:var(--radius);
-      background:linear-gradient(135deg,var(--primary),var(--primary-light));
+      padding:18px;
+      border-radius:var(--radius-lg);
+      background:linear-gradient(135deg, var(--primary), #6E9A81);
       border:none;
       color:#fff;
-      font-size:18px;
+      font-size:16px;
       font-weight:800;
       cursor:pointer;
       display:flex;
@@ -356,61 +348,28 @@
       justify-content:center;
       gap:12px;
       transition:all 0.3s ease;
-      box-shadow:0 8px 25px rgba(16,185,129,0.3);
-      position:relative;
-      overflow:hidden;
+      box-shadow:0 12px 24px rgba(123,170,146,.2);
+      margin-bottom:24px;
     }
+    .analyze-btn:hover{transform:translateY(-2px); box-shadow:0 16px 30px rgba(123,170,146,.3);}
 
-    .analyze-btn:hover:not(:disabled){
-      transform:translateY(-2px);
-      box-shadow:0 12px 35px rgba(16,185,129,0.4);
-    }
-
-    .analyze-btn:disabled{opacity:0.6;cursor:not-allowed}
-
-    .analyze-btn.instant{
-      background:linear-gradient(135deg,var(--gold),#F59E0B);
-      box-shadow:0 8px 25px rgba(251,191,36,0.3);
-    }
-
-    /* Progress Bar */
-    .progress-bar{
-      height:3px;
-      background:var(--surface);
-      border-radius:2px;
-      margin:20px 0;
-      overflow:hidden;
-      display:none;
-    }
-
-    .progress-bar.show{display:block}
-
-    .progress-fill{
-      height:100%;
-      width:0%;
-      background:linear-gradient(90deg,var(--primary),var(--primary-light));
-      transition:width 0.3s ease;
-    }
-
-    /* Results - Lightning Fast */
+    /* results */
     .results{
       background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:24px;
-      margin-top:24px;
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      padding:22px;
+      margin-top:10px;
       display:none;
       animation:flashIn 0.3s ease;
+      box-shadow:var(--shadow-md);
     }
-
     .results.show{display:block}
-
     @keyframes flashIn{
       0%{opacity:0;transform:scale(0.95)}
       50%{opacity:1;transform:scale(1.02)}
       100%{opacity:1;transform:scale(1)}
     }
-
     .result-source{
       display:inline-flex;
       align-items:center;
@@ -420,203 +379,201 @@
       font-size:12px;
       font-weight:800;
       margin-bottom:16px;
-    }
-
-    .result-source.cache{
-      background:rgba(16,185,129,0.15);
+      background:rgba(123,170,146,.15);
       color:var(--primary);
     }
 
-    .result-source.library{
-      background:rgba(139,92,246,0.15);
-      color:var(--purple);
-    }
-
-    .result-source.ai{
-      background:rgba(59,130,246,0.15);
-      color:var(--blue);
-    }
-
-    /* Hero Number */
     .hero-number{
       text-align:center;
-      padding:24px;
-      background:linear-gradient(145deg,rgba(16,185,129,0.15),rgba(16,185,129,0.02));
-      border-radius:var(--radius);
+      padding:22px;
+      background:linear-gradient(145deg, rgba(123,170,146,.12), rgba(123,170,146,.02));
+      border-radius:var(--radius-lg);
       margin-bottom:20px;
-      border:2px solid rgba(16,185,129,0.3);
+      border:1px solid rgba(123,170,146,.2);
     }
-
     .hero-value{
       font-size:64px;
       font-weight:900;
       color:var(--primary);
       line-height:1;
-      text-shadow:0 0 30px rgba(16,185,129,0.5);
+      text-shadow:0 0 20px rgba(123,170,146,.5);
     }
-
     .hero-label{
       font-size:14px;
-      color:var(--text-secondary);
-      margin-top:8px;
-      font-weight:600;
+      color:var(--ink-2);
+      margin-top:6px;
     }
 
-    /* Macros */
     .macros{
       display:grid;
       grid-template-columns:repeat(4,1fr);
       gap:10px;
       margin-bottom:20px;
     }
-
     .macro{
       text-align:center;
-      padding:14px 8px;
-      background:rgba(255,255,255,0.03);
+      padding:12px 6px;
+      background:var(--surface-2);
       border-radius:var(--radius-sm);
-      border:1px solid var(--border);
+      border:1px solid var(--line);
     }
-
     .macro-num{
       font-size:20px;
       font-weight:900;
-      color:var(--text-primary);
+      color:var(--ink);
     }
-
     .macro-label{
       font-size:10px;
-      color:var(--text-secondary);
+      color:var(--ink-2);
       margin-top:4px;
     }
 
-    /* Insight Card */
-    .insight-card{
-      background:rgba(59,130,246,0.1);
-      border:1px solid rgba(59,130,246,0.3);
-      border-radius:var(--radius-sm);
-      padding:16px;
-      margin-bottom:20px;
-    }
-
-    .insight-title{
-      font-size:13px;
-      font-weight:800;
-      color:var(--blue);
-      margin-bottom:8px;
-      display:flex;
-      align-items:center;
-      gap:6px;
-    }
-
-    .insight-text{
-      font-size:13px;
-      color:var(--text-secondary);
-      line-height:1.7;
-    }
-
-    /* Actions */
     .actions{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:10px;
     }
-
     .btn{
       padding:14px;
-      border-radius:12px;
-      border:none;
+      border-radius:14px;
       font-size:13px;
       font-weight:800;
       cursor:pointer;
-      transition:all 0.3s ease;
+      transition:all 0.2s ease;
       display:flex;
       align-items:center;
       justify-content:center;
       gap:6px;
     }
-
     .btn-primary{
       background:var(--primary);
       color:#fff;
+      border:none;
     }
-
     .btn-secondary{
-      background:var(--surface);
-      color:var(--text-primary);
-      border:1px solid var(--border);
+      background:var(--surface-2);
+      color:var(--ink);
+      border:1px solid var(--line);
     }
+    .btn:hover{transform:translateY(-2px);}
 
-    /* Bottom Nav */
+    .bottom-nav-wrap{
+      position:fixed; right:0; left:0; bottom:0; z-index:30; pointer-events:none;
+      padding:0 18px calc(14px + var(--safe-bottom));
+    }
     .bottom-nav{
-      position:fixed;
-      bottom:0;
-      left:0;
-      right:0;
-      background:rgba(15,23,42,0.95);
-      backdrop-filter:blur(20px);
-      border-top:1px solid var(--border);
-      padding:12px 20px calc(12px + env(safe-area-inset-bottom));
-      z-index:90;
+      max-width:var(--max-width); margin:0 auto;
+      display:grid; grid-template-columns:repeat(4,1fr); gap:6px;
+      padding:8px;
+      border-radius:24px;
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      backdrop-filter:blur(16px);
+      box-shadow:0 12px 30px rgba(24,30,45,.12);
+      pointer-events:auto;
     }
-
-    .nav-inner{
-      max-width:480px;
-      margin:0 auto;
-      display:flex;
-      justify-content:space-around;
-      align-items:center;
-    }
-
     .nav-item{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:4px;
-      padding:8px 16px;
-      color:var(--text-secondary);
-      text-decoration:none;
-      font-size:11px;
-      font-weight:700;
-      transition:all 0.3s ease;
-      border-radius:12px;
+      min-height:56px; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+      font-size:11px; font-weight:900; color:var(--ink-3);
+      transition:all .2s var(--ease);
     }
-
-    .nav-item.active,
+    .nav-item span:first-child{font-size:18px; line-height:1;}
+    .nav-item.active{
+      background:linear-gradient(135deg, rgba(125,139,174,.2), rgba(123,170,146,.15));
       color:var(--primary);
-      background:rgba(16,185,129,0.1);
+      transform:translateY(-2px);
     }
 
-    .nav-item span:first-child{font-size:22px}
+    /* add meal sheet */
+    .sheet-overlay{
+      position:fixed; inset:0; z-index:50;
+      background:rgba(29,36,51,.28); backdrop-filter:blur(8px);
+      padding:14px; display:flex; align-items:flex-end; justify-content:center;
+      opacity:0; visibility:hidden; transition:opacity .24s ease, visibility .24s ease;
+    }
+    .sheet-overlay.show{opacity:1; visibility:visible}
+    .sheet{
+      width:min(100%, var(--max-width));
+      background:linear-gradient(180deg, #FFFFFF 0%, #F8F6F2 100%);
+      border:1px solid var(--line); border-radius:28px; box-shadow:var(--shadow-lg);
+      padding:14px 14px 16px; transform:translateY(24px); transition:transform .28s var(--ease);
+    }
+    .sheet-overlay.show .sheet{transform:translateY(0)}
+    .sheet-handle{width:48px; height:5px; border-radius:999px; background:#D7D0C7; margin:0 auto 14px}
+    .sheet-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:14px}
+    .sheet-title{font-size:20px; font-weight:900; line-height:1.3; color:var(--ink); letter-spacing:-.5px}
+    .sheet-sub{font-size:12px; color:var(--ink-2); line-height:1.7; margin-top:4px}
+    .close-btn{
+      width:38px; height:38px; border-radius:12px; flex-shrink:0;
+      border:1px solid var(--line); background:#fff; font-size:22px; color:var(--ink);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .field{margin-bottom:12px}
+    .field label{display:block; font-size:12px; color:var(--ink-2); font-weight:900; margin-bottom:6px}
+    .inline-fields{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .helper{font-size:11px; color:var(--ink-3); line-height:1.7; margin:4px 2px 12px}
+    .sheet-actions{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+
+    .toast{
+      position:fixed; right:50%; bottom:calc(100px + var(--safe-bottom)); z-index:60;
+      transform:translateX(50%) translateY(18px);
+      min-width:200px; max-width:calc(100vw - 32px);
+      padding:12px 14px; border-radius:14px;
+      border:1px solid var(--line); background:rgba(255,255,255,.96);
+      box-shadow:var(--shadow-md); color:var(--ink); text-align:center; font-size:12px; font-weight:900;
+      opacity:0; visibility:hidden; transition:all .22s ease;
+    }
+    .toast.show{opacity:1; visibility:visible; transform:translateX(50%) translateY(0)}
   </style>
 </head>
 <body>
-  <div class="bg-layer bg-gradient"></div>
-  
-  <div class="app">
+  <div class="bg-noise"></div>
+
+  <div class="splash" id="splashScreen">
+    <div class="splash-inner">
+      <div class="splash-mark">
+        <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
+        </svg>
+      </div>
+      <div class="splash-title">SugarMind</div>
+      <div class="splash-sub">محلل الوجبة الذكي</div>
+      <div class="splash-bar"><span></span></div>
+    </div>
+  </div>
+
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 100 40" preserveAspectRatio="none">
+            <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">SugarMind</div>
+          <div class="brand-sub">محلل الوجبة</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="icon-btn" id="openAddMealBtn" type="button" aria-label="إضافة وجبة">➕</button>
+      </div>
+    </header>
+
+    <section class="greeting">
+      <div class="time-chip" id="timeChip">🌤️ <span id="timeText">بداية يوم هادئ</span></div>
+      <h1 class="greeting-title" id="greetingTitle">محلل الوجبة</h1>
+      <p class="greeting-sub" id="greetingSub">ابحث عن أي وجبة، حدد وزنها، واحصل على تقدير دقيق للكارب.</p>
+    </section>
+
     <!-- Lightning Badge -->
     <div class="lightning-badge">
       <span>⚡</span>
-      <span>وضع البرق</span>
+      <span>أكثر من 200 وجبة في الذاكرة</span>
     </div>
 
-    <!-- Header -->
-    <header class="header">
-      <a href="index.html" class="back-btn">←</a>
-      <h1 class="header-title">محلل الوجبة البرقي</h1>
-    </header>
-
-    <!-- Speed Toggle -->
-    <div class="speed-toggle">
-      <div class="speed-option active" onclick="setMode('instant')" id="modeInstant">
-        ⚡ فوري
-      </div>
-      <div class="speed-option" onclick="setMode('accurate')" id="modeAccurate">
-        🎯 دقيق
-      </div>
-    </div>
-
-    <!-- Smart Search -->
+    <!-- Search -->
     <div class="search-container">
       <div class="search-box">
         <span class="search-icon">🔍</span>
@@ -624,7 +581,7 @@
           type="text" 
           class="search-input" 
           id="mealInput" 
-          placeholder="اكتب وجبتك..."
+          placeholder="اكتب اسم الوجبة..."
           autocomplete="off"
         >
       </div>
@@ -635,8 +592,8 @@
           <span class="instant-label">⚡ نتيجة فورية</span>
           <span class="instant-carbs" id="instantCarbs">--g</span>
         </div>
-        <div style="font-size:13px;color:var(--text-secondary)">
-          اضغط Enter للتحليل الكامل
+        <div style="font-size:13px;color:var(--ink-2)">
+          لكل 100 جرام. اضبط الوزن أسفل.
         </div>
       </div>
 
@@ -650,31 +607,28 @@
       <div class="chip" onclick="quickSearch('شاورما')">🥙 شاورما</div>
       <div class="chip" onclick="quickSearch('فول')">🧆 فول</div>
       <div class="chip" onclick="quickSearch('منسف')">🍚 منسف</div>
-      <div class="chip" onclick="quickSearch('مندي')">🍖 مندي</div>
       <div class="chip" onclick="quickSearch('برجر')">🍔 برجر</div>
+      <div class="chip" onclick="quickSearch('بيتزا')">🍕 بيتزا</div>
+      <div class="chip" onclick="quickSearch('شوفان')">🥣 شوفان</div>
+      <div class="chip" onclick="quickSearch('موز')">🍌 موز</div>
     </div>
 
-    <!-- Camera -->
-    <input type="file" id="fileInput" accept="image/*" onchange="handleImage(event)">
-    <button class="camera-btn" id="cameraBtn" onclick="document.getElementById('fileInput').click()">
-      <span>📷</span>
-      <span>صور الوجبة</span>
-    </button>
-
-    <!-- Progress -->
-    <div class="progress-bar" id="progressBar">
-      <div class="progress-fill" id="progressFill"></div>
+    <!-- Weight Input -->
+    <div class="weight-row">
+      <span class="weight-label">⚖️ الوزن</span>
+      <input type="number" id="weightInput" class="weight-input" value="100" min="10" max="2000" step="10">
+      <span class="weight-unit">جرام</span>
     </div>
 
-    <!-- Analyze -->
-    <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">
-      <span>⚡</span>
-      <span id="btnText">حلل فوراً</span>
+    <!-- Analyze Button -->
+    <button class="analyze-btn" id="analyzeBtn">
+      <span>🔍</span>
+      <span>تحليل الوجبة</span>
     </button>
 
     <!-- Results -->
     <div class="results" id="results">
-      <div class="result-source cache" id="resultSource">
+      <div class="result-source" id="resultSource">
         <span>⚡</span>
         <span>من الذاكرة الذكية</span>
       </div>
@@ -687,444 +641,792 @@
       <div class="macros">
         <div class="macro">
           <div class="macro-num" id="mProtein">--</div>
-          <div class="macro-label">بروتين</div>
+          <div class="macro-label">بروتين (g)</div>
         </div>
         <div class="macro">
           <div class="macro-num" id="mFat">--</div>
-          <div class="macro-label">دهون</div>
+          <div class="macro-label">دهون (g)</div>
         </div>
         <div class="macro">
           <div class="macro-num" id="mCal">--</div>
-          <div class="macro-label">سعرة</div>
+          <div class="macro-label">سعرات</div>
         </div>
         <div class="macro">
           <div class="macro-num" id="mInsulin">--</div>
-          <div class="macro-label">أنسولين</div>
+          <div class="macro-label">وحدات أنسولين*</div>
         </div>
-      </div>
-
-      <div class="insight-card">
-        <div class="insight-title">
-          <span>💡</span>
-          <span>تحليل ذكي</span>
-        </div>
-        <div class="insight-text" id="insightText">--</div>
       </div>
 
       <div class="actions">
-        <button class="btn btn-primary" onclick="saveMeal()">
-          <span>💾</span> حفظ
+        <button class="btn btn-primary" id="saveBtn">
+          <span>💾</span> حفظ الوجبة
         </button>
-        <button class="btn btn-secondary" onclick="share()">
+        <button class="btn btn-secondary" id="shareBtn">
           <span>📤</span> مشاركة
         </button>
       </div>
     </div>
+  </main>
+
+  <div class="bottom-nav-wrap">
+    <nav class="bottom-nav" aria-label="التنقل السفلي">
+      <a href="index.html" class="nav-item"><span>🏠</span><span>الرئيسية</span></a>
+      <a href="meal-analyzer.html" class="nav-item active"><span>⚡</span><span>محلل</span></a>
+      <a href="carb-calculator.html" class="nav-item"><span>🧮</span><span>المعامل</span></a>
+      <a href="daily-guide.html" class="nav-item"><span>📋</span><span>اليوم</span></a>
+    </nav>
   </div>
 
-  <!-- Bottom Nav -->
-  <nav class="bottom-nav">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-item">
-        <span>🏠</span>
-        <span>الرئيسية</span>
-      </a>
-      <a href="meal-analyzer.html" class="nav-item active">
-        <span>⚡</span>
-        <span>البرقي</span>
-      </a>
-      <a href="daily-guide.html" class="nav-item">
-        <span>📋</span>
-        <span>يومي</span>
-      </a>
+  <!-- Add Meal Sheet -->
+  <div class="sheet-overlay" id="addMealOverlay" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="addMealTitle">
+      <div class="sheet-handle"></div>
+
+      <div class="sheet-head">
+        <div>
+          <h3 class="sheet-title" id="addMealTitle">إضافة وجبة جديدة</h3>
+          <p class="sheet-sub">أضف وجبة مخصصة إلى مكتبتك الشخصية.</p>
+        </div>
+        <button class="close-btn" id="closeAddMealBtn" type="button" aria-label="إغلاق">×</button>
+      </div>
+
+      <div class="field">
+        <label for="newMealName">اسم الوجبة</label>
+        <input class="input" id="newMealName" type="text" placeholder="مثال: مكرونة بالبشاميل" />
+      </div>
+
+      <div class="inline-fields">
+        <div class="field">
+          <label for="newMealCarbs">الكارب (g/100g)</label>
+          <input class="input" id="newMealCarbs" type="number" step="0.1" min="0" placeholder="45" />
+        </div>
+        <div class="field">
+          <label for="newMealProtein">البروتين (g/100g)</label>
+          <input class="input" id="newMealProtein" type="number" step="0.1" min="0" placeholder="15" />
+        </div>
+      </div>
+
+      <div class="inline-fields">
+        <div class="field">
+          <label for="newMealFat">الدهون (g/100g)</label>
+          <input class="input" id="newMealFat" type="number" step="0.1" min="0" placeholder="10" />
+        </div>
+        <div class="field">
+          <label for="newMealCal">السعرات (kcal/100g)</label>
+          <input class="input" id="newMealCal" type="number" step="1" min="0" placeholder="350" />
+        </div>
+      </div>
+
+      <p class="helper">سيتم حفظ الوجبة في جهازك وإضافتها إلى قاعدة البيانات الشخصية.</p>
+
+      <div class="sheet-actions">
+        <button class="btn btn-primary" id="saveNewMealBtn" type="button">💾 حفظ</button>
+        <button class="btn btn-ghost" id="cancelAddMealBtn" type="button">إلغاء</button>
+      </div>
     </div>
-  </nav>
+  </div>
+
+  <div class="toast" id="toast"></div>
 
   <script>
-    // ==========================================
-    // LIGHTNING ENGINE - محرك البرق
-    // ==========================================
-    
-    // Config
-    const CONFIG = {
-      DEBOUNCE_MS: 150,
-      CACHE_KEY: 'sugarmind_lightning_v2',
-      DEFAULT_ICR: 15,
-      MODE: 'instant' // 'instant' | 'accurate'
-    };
+    (function() {
+      // ==========================================
+      // CONFIGURATION
+      // ==========================================
+      const CONFIG = {
+        CACHE_KEY: 'sugarmind_meal_analyzer_v1',  // لتخزين الوجبات المخصصة
+        ICR_KEY: 'sugarmind_icr_result_v2',       // نفس مفتاح ICR من الصفحة الرئيسية
+        DEBOUNCE_MS: 150
+      };
 
-    // State
-    let cache = {};
-    let debounceTimer = null;
-    let currentResult = null;
-    let selectedImage = null;
+      // ==========================================
+      // MEGA CACHE - أكثر من 200 وجبة
+      // ==========================================
+      const BASE_MEALS = {
+        // أطباق عربية (موسعة)
+        'كبسة': {c:65, p:28, f:18, cal:520},
+        'كبسة دجاج': {c:65, p:28, f:18, cal:520},
+        'كبسة لحم': {c:60, p:30, f:20, cal:560},
+        'مندي': {c:55, p:32, f:25, cal:550},
+        'مندي دجاج': {c:55, p:32, f:25, cal:550},
+        'مندي لحم': {c:50, p:35, f:28, cal:580},
+        'مظبي': {c:60, p:33, f:22, cal:570},
+        'مدفون': {c:58, p:30, f:24, cal:560},
+        'حنيذ': {c:45, p:38, f:30, cal:620},
+        'شاورما': {c:35, p:25, f:22, cal:450},
+        'شاورما عربي': {c:35, p:25, f:22, cal:450},
+        'شاورما سوري': {c:38, p:26, f:23, cal:470},
+        'شاورما دجاج': {c:35, p:28, f:18, cal:420},
+        'شاورما لحم': {c:32, p:27, f:25, cal:460},
+        'فول': {c:40, p:15, f:8, cal:320},
+        'فول مدمس': {c:40, p:15, f:8, cal:320},
+        'فلافل': {c:45, p:13, f:18, cal:380},
+        'فلافل عربي': {c:45, p:13, f:18, cal:380},
+        'حمص': {c:45, p:12, f:18, cal:380},
+        'حمص بطحينة': {c:42, p:11, f:20, cal:390},
+        'متبل': {c:8, p:2, f:16, cal:190},
+        'بابا غنوج': {c:10, p:2, f:14, cal:170},
+        'ورق عنب': {c:30, p:4, f:12, cal:250},
+        'محشي ورق عنب': {c:30, p:4, f:12, cal:250},
+        'محشي كوسا': {c:25, p:8, f:15, cal:270},
+        'محشي باذنجان': {c:22, p:6, f:18, cal:280},
+        'كبة': {c:28, p:12, f:22, cal:350},
+        'كبة مقلية': {c:28, p:12, f:22, cal:350},
+        'كبة نيئة': {c:20, p:14, f:15, cal:280},
+        'تبولة': {c:12, p:2, f:8, cal:130},
+        'فتوش': {c:15, p:3, f:10, cal:160},
+        'سلطة عربية': {c:8, p:2, f:8, cal:120},
+        'مكدوس': {c:15, p:3, f:20, cal:250},
+        'منسف': {c:70, p:30, f:20, cal:580},
+        'منسف لحم': {c:70, p:30, f:20, cal:580},
+        'مقلوبة': {c:60, p:25, f:18, cal:520},
+        'مقلوبة دجاج': {c:60, p:25, f:18, cal:520},
+        'مقلوبة لحم': {c:55, p:28, f:20, cal:540},
+        'مسخن': {c:35, p:20, f:28, cal:480},
+        'مسخن دجاج': {c:35, p:20, f:28, cal:480},
+        'صفيحة': {c:40, p:18, f:20, cal:420},
+        'صفيحة لحم': {c:40, p:18, f:20, cal:420},
+        'سمبوسك': {c:30, p:8, f:22, cal:340},
+        'سمبوسك جبن': {c:28, p:10, f:24, cal:360},
+        'سمبوسك لحم': {c:28, p:12, f:22, cal:350},
+        'برياني': {c:65, p:28, f:22, cal:560},
+        'برياني دجاج': {c:65, p:28, f:22, cal:560},
+        'برياني لحم': {c:60, p:30, f:24, cal:580},
+        'كشري': {c:85, p:18, f:12, cal:520},
+        'كشري مصري': {c:85, p:18, f:12, cal:520},
+        'مكرونة بشاميل': {c:48, p:12, f:18, cal:400},
+        'لازانيا': {c:50, p:15, f:16, cal:420},
+        'بيتزا': {c:60, p:20, f:25, cal:550},
+        'بيتزا جبن': {c:58, p:22, f:26, cal:560},
+        'بيتزا خضار': {c:55, p:18, f:22, cal:500},
+        'برجر': {c:40, p:28, f:35, cal:580},
+        'برجر لحم': {c:40, p:28, f:35, cal:580},
+        'برجر دجاج': {c:38, p:26, f:30, cal:520},
+        'هوت دوغ': {c:35, p:12, f:30, cal:450},
+        'شيش طاووق': {c:8, p:32, f:12, cal:280},
+        'شيش طاووق مشوي': {c:8, p:32, f:12, cal:280},
+        'كفتة': {c:12, p:24, f:22, cal:340},
+        'كفتة مشوية': {c:12, p:24, f:22, cal:340},
+        'كباب': {c:10, p:26, f:24, cal:360},
+        'كباب مشوي': {c:10, p:26, f:24, cal:360},
+        'طاجن': {c:25, p:18, f:16, cal:300},
+        'طاجن لحم': {c:25, p:18, f:16, cal:300},
+        'مولخية': {c:12, p:8, f:10, cal:170},
+        'مولخية دجاج': {c:15, p:18, f:12, cal:240},
+        'بامية': {c:15, p:6, f:8, cal:140},
+        'بامية لحم': {c:18, p:20, f:14, cal:260},
+        'فاصوليا': {c:22, p:10, f:7, cal:180},
+        'فاصوليا بيضاء': {c:22, p:10, f:7, cal:180},
+        'عدس': {c:40, p:18, f:2, cal:240},
+        'شوربة عدس': {c:30, p:12, f:2, cal:180},
+        'شوربة خضار': {c:12, p:4, f:2, cal:80},
+        'شوربة دجاج': {c:8, p:10, f:5, cal:120},
+        'شوربة طماطم': {c:15, p:2, f:2, cal:80},
 
-    // Mega Cache - 50+ meals preloaded
-    const MEGA_CACHE = {
-      'كبسة':{c:65,p:28,f:18,cal:520,ins:'أرز + دجاج + بهارات'},
-      'كبسة دجاج':{c:65,p:28,f:18,cal:520,ins:'أرز + دجاج + بهارات'},
-      'شاورما':{c:35,p:25,f:22,cal:450,ins:'خبز + لحم + ثومية'},
-      'فول':{c:40,p:15,f:8,cal:320,ins:'كارب معقد + ألياف عالية'},
-      'فلافل':{c:45,p:13,f:18,cal:380,ins:'حمص مقلي - دهون عالية'},
-      'منسف':{c:70,p:30,f:20,cal:580,ins:'أرز + لحم + لبن - كارب عالي'},
-      'مندي':{c:55,p:32,f:25,cal:550,ins:'أرز مدخن + لحم'},
-      'برجر':{c:40,p:28,f:35,cal:580,ins:'خبز + لحم + جبن'},
-      'بيتزا':{c:60,p:20,f:25,cal:550,ins:'عجينة + جبن - سريع الامتصاص'},
-      'كشري':{c:85,p:18,f:12,cal:520,ins:'أرز + مكرونة - كارب عالي جداً'},
-      'محشي':{c:45,p:12,f:15,cal:380,ins:'خضار + أرز + زيت'},
-      'تمر':{c:75,p:2,f:0,cal:280,ins:'سكر طبيعي سريع - ممتاز للهبوط'},
-      'موز':{c:23,p:1,f:0,cal:89,ins:'سريع - جيد قبل التمرين'},
-      'رز':{c:28,p:3,f:0,cal:130,ins:'كارب سريع الامتصاص'},
-      'رز أبيض':{c:28,p:3,f:0,cal:130,ins:'كارب سريع - يرفع السكر بسرعة'},
-      'عصير':{c:26,p:0,f:0,cal:112,ins:'سكر سريع بدون ألياف'},
-      'عصير برتقال':{c:26,p:0,f:0,cal:112,ins:'سكر سريع - أسرع من البرتقال'},
-      'حليب':{c:5,p:3,f:3,cal:64,ins:'لاكتوز - بطيء الامتصاص'},
-      'جبن':{c:1,p:25,f:33,cal:402,ins:'كارب منخفض - بروتين عالي'},
-      'بيض':{c:1,p:13,f:11,cal:155,ins:'بروتين كامل - كارب معدوم'},
-      'شوفان':{c:66,p:17,f:7,cal:389,ins:'كارب معقد - بطيء الامتصاص'},
-      'خبز':{c:49,p:9,f:3,cal:265,ins:'كارب سريع'},
-      'خبز أسمر':{c:41,p:13,f:4,cal:247,ins:'ألياف عالية - أفضل للسكري'},
-      'معكرونة':{c:25,p:5,f:1,cal:131,ins:'كارب معقد'},
-      'بطاطس':{c:17,p:2,f:0,cal:77,ins:'نشا - متوسط السرعة'},
-      'بطاطا':{c:20,p:2,f:0,cal:86,ins:'أفضل من البطاطس العادية'},
-      'تفاح':{c:14,p:0,f:0,cal:52,ins:'ألياف تبطئ الامتصاص'},
-      'برتقال':{c:12,p:1,f:0,cal:47,ins:'فيتامين C + ألياف'},
-      'جزر':{c:10,p:1,f:0,cal:41,ins:'سكر طبيعي - بطيء'},
-      'بندورة':{c:4,p:1,f:0,cal:18,ins:'كارب منخفض جداً'},
-      'خيار':{c:4,p:1,f:0,cal:16,ins:'كارب منخفض'},
-      'سلطة':{c:8,p:2,f:8,cal:120,ins:'خضار + زيت - صحية'},
-      'زبادي':{c:5,p:10,f:0,cal:59,ins:'بروبيوتيك ممتاز'},
-      'تونة':{c:0,p:30,f:1,cal:132,ins:'بروتين نقي - كارب معدوم'},
-      'دجاج':{c:0,p:31,f:4,cal:165,ins:'بروتين كامل - ممتاز'},
-      'لحم':{c:0,p:26,f:17,cal:250,ins:'بروتين + حديد'},
-      'سمك':{c:0,p:22,f:12,cal:206,ins:'أوميغا 3 + بروتين'},
-      'أفوكادو':{c:9,p:2,f:15,cal:160,ins:'دهون صحية - كارب منخفض'},
-      'مكسرات':{c:7,p:9,f:16,cal:185,ins:'دهون صحية - وجبة خفيفة'},
-      'عسل':{c:82,p:0,f:0,cal:304,ins:'سكر سريع - انتبه للكمية'},
-      'شوكولاتة':{c:61,p:4,f:31,cal:546,ins:'سكر + دهون - تجنب'},
-      'آيس كريم':{c:24,p:4,f:11,cal:207,ins:'سكر سريع - تجنب'},
-      'كيك':{c:53,p:5,f:26,cal:371,ins:'سكر + دقيق - تجنب'},
-      'بسكويت':{c:64,p:7,f:26,cal:502,ins:'كارب سريع - تجنب'},
-      'شيبس':{c:54,p:7,f:35,cal:536,ins:'دهون مضرة - تجنب'},
-      'كولا':{c:11,p:0,f:0,cal:42,ins:'سكر صناعي - تجنب تماماً'},
-      'ماء':{c:0,p:0,f:0,cal:0,ins:'الأفضل دائماً'},
-      'قهوة':{c:0,p:0,f:0,cal:2,ins:'آمنة - بدون سكر'},
-      'شاي':{c:0,p:0,f:0,cal:2,ins:'آمن - بدون سكر'}
-    };
+        // مكونات فردية (المغذيات لكل 100g)
+        'أرز': {c:28, p:3, f:0, cal:130},
+        'أرز أبيض': {c:28, p:3, f:0, cal:130},
+        'أرز بسمتي': {c:30, p:3, f:0, cal:135},
+        'خبز عربي': {c:49, p:9, f:3, cal:265},
+        'خبز أسمر': {c:41, p:13, f:4, cal:247},
+        'خبز برجر': {c:50, p:10, f:5, cal:280},
+        'خبز توست': {c:50, p:9, f:4, cal:270},
+        'معكرونة': {c:25, p:5, f:1, cal:131},
+        'معكرونة مسلوقة': {c:25, p:5, f:1, cal:131},
+        'بطاطس': {c:17, p:2, f:0, cal:77},
+        'بطاطس مقلية': {c:38, p:3, f:15, cal:300},
+        'بطاطا حلوة': {c:20, p:2, f:0, cal:86},
+        'بطاطا': {c:20, p:2, f:0, cal:86},
+        'دجاج مشوي': {c:0, p:27, f:7, cal:180},
+        'دجاج مقلي': {c:10, p:25, f:15, cal:280},
+        'لحم بقري': {c:0, p:26, f:17, cal:250},
+        'لحم غنم': {c:0, p:25, f:21, cal:290},
+        'سمك مشوي': {c:0, p:22, f:12, cal:200},
+        'سمك مقلي': {c:8, p:20, f:18, cal:280},
+        'تونة': {c:0, p:30, f:1, cal:132},
+        'تونة بالزيت': {c:0, p:25, f:10, cal:190},
+        'بيض': {c:1, p:13, f:11, cal:155},
+        'بيض مسلوق': {c:1, p:13, f:11, cal:155},
+        'بيض مقلي': {c:1, p:13, f:15, cal:180},
+        'جبن أبيض': {c:3, p:20, f:18, cal:250},
+        'جبن فيتا': {c:4, p:14, f:21, cal:260},
+        'جبن شيدر': {c:1, p:25, f:33, cal:400},
+        'جبن موزاريلا': {c:3, p:22, f:22, cal:300},
+        'حليب': {c:5, p:3, f:3, cal:64},
+        'حليب كامل الدسم': {c:5, p:3, f:3, cal:64},
+        'زبادي': {c:5, p:10, f:0, cal:59},
+        'زبادي يوناني': {c:4, p:10, f:0, cal:60},
+        'لبنة': {c:4, p:12, f:10, cal:150},
+        'زيت زيتون': {c:0, p:0, f:100, cal:900},
+        'زيت نباتي': {c:0, p:0, f:100, cal:900},
+        'سمن': {c:0, p:0, f:99, cal:890},
+        'زبدة': {c:0, p:1, f:81, cal:720},
+        'فواكه': {},
+        'تفاح': {c:14, p:0, f:0, cal:52},
+        'برتقال': {c:12, p:1, f:0, cal:47},
+        'موز': {c:23, p:1, f:0, cal:89},
+        'عنب': {c:18, p:1, f:0, cal:70},
+        'فراولة': {c:8, p:1, f:0, cal:32},
+        'توت': {c:14, p:1, f:0, cal:60},
+        'بطيخ': {c:8, p:1, f:0, cal:30},
+        'شمام': {c:8, p:1, f:0, cal:34},
+        'مانجو': {c:15, p:1, f:0, cal:60},
+        'أناناس': {c:13, p:1, f:0, cal:50},
+        'كيوي': {c:14, p:1, f:1, cal:60},
+        'خضار': {},
+        'خيار': {c:4, p:1, f:0, cal:16},
+        'طماطم': {c:4, p:1, f:0, cal:18},
+        'جزر': {c:10, p:1, f:0, cal:41},
+        'خس': {c:3, p:1, f:0, cal:15},
+        'بصل': {c:9, p:1, f:0, cal:40},
+        'ثوم': {c:33, p:6, f:0, cal:150},
+        'فلفل رومي': {c:6, p:1, f:0, cal:26},
+        'فلفل حار': {c:9, p:2, f:0, cal:40},
+        'باذنجان': {c:6, p:1, f:0, cal:25},
+        'كوسا': {c:3, p:1, f:0, cal:17},
+        'قرع': {c:7, p:1, f:0, cal:26},
+        'فاصوليا خضراء': {c:7, p:2, f:0, cal:31},
+        'بازلاء': {c:14, p:5, f:0, cal:80},
+        'ذرة': {c:19, p:3, f:1, cal:90},
+        'مشروم': {c:3, p:3, f:0, cal:22},
+        'سبانخ': {c:4, p:3, f:0, cal:23},
+        'ملوخية': {c:6, p:4, f:0, cal:40},
+        'بامية': {c:7, p:2, f:0, cal:33},
 
-    // Init
-    function init() {
-      loadCache();
-      setupEvents();
-      prefetchCommon();
-    }
+        // حبوب وبقوليات
+        'حمص حب': {c:27, p:9, f:3, cal:160},
+        'فول حب': {c:33, p:8, f:1, cal:160},
+        'عدس حب': {c:40, p:18, f:2, cal:240},
+        'فاصوليا بيضاء حب': {c:40, p:15, f:1, cal:220},
+        'فاصوليا حمراء': {c:35, p:14, f:1, cal:200},
+        'شوفان': {c:66, p:17, f:7, cal:389},
+        'شوفان خام': {c:66, p:17, f:7, cal:389},
+        'كورن فليكس': {c:84, p:7, f:1, cal:380},
+        'جرانولا': {c:60, p:10, f:20, cal:450},
+        'كينوا': {c:21, p:4, f:2, cal:120},
+        'كينوا مطبوخة': {c:21, p:4, f:2, cal:120},
 
-    function loadCache() {
-      try {
-        const saved = localStorage.getItem(CONFIG.CACHE_KEY);
-        cache = saved ? JSON.parse(saved) : {};
-      } catch {
-        cache = {};
+        // مشروبات
+        'عصير برتقال': {c:11, p:1, f:0, cal:45},
+        'عصير تفاح': {c:12, p:0, f:0, cal:48},
+        'عصير مانجو': {c:13, p:0, f:0, cal:55},
+        'كولا': {c:11, p:0, f:0, cal:42},
+        'مياه غازية': {c:0, p:0, f:0, cal:0},
+        'قهوة': {c:0, p:0, f:0, cal:2},
+        'قهوة سادة': {c:0, p:0, f:0, cal:2},
+        'شاي': {c:0, p:0, f:0, cal:2},
+        'شاي أخضر': {c:0, p:0, f:0, cal:2},
+        'حليب شوكولاتة': {c:10, p:3, f:3, cal:80},
+        'مشروب طاقة': {c:14, p:0, f:0, cal:60},
+
+        // حلويات
+        'كنافة': {c:50, p:8, f:25, cal:450},
+        'كنافة نابلسية': {c:50, p:8, f:25, cal:450},
+        'قطايف': {c:55, p:6, f:20, cal:420},
+        'قطايف بالقشطة': {c:50, p:7, f:22, cal:430},
+        'قطايف بالجوز': {c:48, p:8, f:23, cal:440},
+        'بسبوسة': {c:60, p:5, f:15, cal:400},
+        'هريسة': {c:60, p:5, f:15, cal:400},
+        'بقلاوة': {c:40, p:6, f:30, cal:480},
+        'بقلاوة بالفستق': {c:38, p:7, f:32, cal:500},
+        'غريبة': {c:50, p:5, f:25, cal:450},
+        'معمول': {c:55, p:6, f:20, cal:420},
+        'معمول تمر': {c:60, p:5, f:18, cal:430},
+        'كعك': {c:70, p:8, f:12, cal:430},
+        'كعك بالتمر': {c:65, p:6, f:10, cal:390},
+        'حلاوة طحينية': {c:50, p:15, f:30, cal:550},
+        'طحينة': {c:20, p:18, f:50, cal:600},
+        'عسل': {c:82, p:0, f:0, cal:304},
+        'عسل نحل': {c:82, p:0, f:0, cal:304},
+        'مربى': {c:65, p:0, f:0, cal:260},
+        'شوكولاتة': {c:60, p:6, f:30, cal:530},
+        'شوكولاتة داكنة': {c:45, p:5, f:40, cal:550},
+        'شوكولاتة حليب': {c:55, p:8, f:30, cal:540},
+        'بسكويت': {c:70, p:6, f:20, cal:490},
+        'كوكيز': {c:60, p:5, f:25, cal:490},
+        'كيك': {c:55, p:5, f:20, cal:420},
+        'كيك شوكولاتة': {c:50, p:5, f:22, cal:430},
+        'آيس كريم': {c:25, p:4, f:11, cal:210},
+        'آيس كريم فانيليا': {c:25, p:4, f:11, cal:210},
+        'مثلجات': {c:25, p:4, f:11, cal:210},
+        'بسكويت شاي': {c:75, p:7, f:15, cal:460},
+
+        // وجبات سريعة
+        'بيج ماك': {c:45, p:26, f:30, cal:560},
+        'ماك تشيكن': {c:40, p:20, f:25, cal:480},
+        'تشيز برجر': {c:35, p:25, f:30, cal:530},
+        'دبل برجر': {c:30, p:30, f:35, cal:580},
+        'ناجتس': {c:20, p:14, f:20, cal:320},
+        'بطاطس مقلية (ماك)': {c:38, p:4, f:15, cal:300},
+        'بيبسي': {c:11, p:0, f:0, cal:42},
+        'سبرايت': {c:11, p:0, f:0, cal:42},
+        'فانتا': {c:12, p:0, f:0, cal:48},
+        'ساندويتش فلافل': {c:50, p:12, f:20, cal:420},
+        'ساندويتش شاورما': {c:40, p:20, f:22, cal:440},
+        'ساندويتش كبدة': {c:35, p:22, f:18, cal:400},
+        'ساندويتش سجق': {c:30, p:15, f:25, cal:420},
+        'ساندويتش حمص': {c:45, p:12, f:15, cal:360},
+        'ساندويتش فول': {c:45, p:12, f:10, cal:320},
+        'بيتزا هت': {c:60, p:20, f:25, cal:550},
+        'دومينوز': {c:58, p:18, f:24, cal:530},
+
+        // إضافات
+        'كاتشب': {c:22, p:1, f:0, cal:100},
+        'مايونيز': {c:0, p:0, f:75, cal:680},
+        'ماسترد': {c:5, p:1, f:3, cal:50},
+        'صوص باربكيو': {c:30, p:1, f:1, cal:130},
+        'صوص ثومية': {c:5, p:1, f:20, cal:200},
+        'طحينية': {c:20, p:18, f:50, cal:600},
+        'دبس رمان': {c:65, p:1, f:0, cal:260},
+        'خل': {c:0, p:0, f:0, cal:5},
+        'ليمون': {c:9, p:1, f:0, cal:30},
+        'ملح': {c:0, p:0, f:0, cal:0},
+        'فلفل أسود': {c:0, p:0, f:0, cal:0},
+        'كمون': {c:0, p:0, f:0, cal:0},
+        'بهارات': {c:0, p:0, f:0, cal:0}
+      };
+
+      // ==========================================
+      // STATE
+      // ==========================================
+      let userMeals = {};        // الوجبات المخصصة للمستخدم
+      let currentResult = null;   // آخر نتيجة محللة
+      let currentQuery = '';      // آخر بحث
+      let debounceTimer = null;
+      let icrValue = 15;          // قيمة ICR افتراضية
+
+      // عناصر DOM
+      const els = {
+        splash: document.getElementById('splashScreen'),
+        timeChip: document.getElementById('timeChip'),
+        greetingTitle: document.getElementById('greetingTitle'),
+        greetingSub: document.getElementById('greetingSub'),
+        mealInput: document.getElementById('mealInput'),
+        instantPreview: document.getElementById('instantPreview'),
+        instantCarbs: document.getElementById('instantCarbs'),
+        suggestions: document.getElementById('suggestions'),
+        weightInput: document.getElementById('weightInput'),
+        analyzeBtn: document.getElementById('analyzeBtn'),
+        results: document.getElementById('results'),
+        resultSource: document.getElementById('resultSource'),
+        heroCarbs: document.getElementById('heroCarbs'),
+        mProtein: document.getElementById('mProtein'),
+        mFat: document.getElementById('mFat'),
+        mCal: document.getElementById('mCal'),
+        mInsulin: document.getElementById('mInsulin'),
+        saveBtn: document.getElementById('saveBtn'),
+        shareBtn: document.getElementById('shareBtn'),
+        openAddMealBtn: document.getElementById('openAddMealBtn'),
+        addMealOverlay: document.getElementById('addMealOverlay'),
+        closeAddMealBtn: document.getElementById('closeAddMealBtn'),
+        cancelAddMealBtn: document.getElementById('cancelAddMealBtn'),
+        saveNewMealBtn: document.getElementById('saveNewMealBtn'),
+        newMealName: document.getElementById('newMealName'),
+        newMealCarbs: document.getElementById('newMealCarbs'),
+        newMealProtein: document.getElementById('newMealProtein'),
+        newMealFat: document.getElementById('newMealFat'),
+        newMealCal: document.getElementById('newMealCal'),
+        toast: document.getElementById('toast')
+      };
+
+      // ==========================================
+      // HELPER FUNCTIONS
+      // ==========================================
+      function showToast(msg, duration = 2600) {
+        els.toast.textContent = msg;
+        els.toast.classList.add('show');
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => {
+          els.toast.classList.remove('show');
+        }, duration);
       }
-      // Merge with mega cache
-      Object.assign(cache, MEGA_CACHE);
-    }
 
-    function saveCache() {
-      localStorage.setItem(CONFIG.CACHE_KEY, JSON.stringify(cache));
-    }
+      function getPeriod() {
+        const hour = new Date().getHours();
+        if (hour < 12) return { label: 'صباح الخير', hint: 'بداية يوم هادئ', icon: '🌤️' };
+        if (hour < 18) return { label: 'مساء الخير', hint: 'نكمل يومك بهدوء', icon: '☀️' };
+        return { label: 'مساء الخير', hint: 'خلنا نختم يومك بوضوح', icon: '🌙' };
+      }
 
-    // Events
-    function setupEvents() {
-      const input = document.getElementById('mealInput');
-      
-      input.addEventListener('input', (e) => {
-        clearTimeout(debounceTimer);
-        const value = e.target.value.trim();
-        
-        if (value.length < 2) {
-          hideSuggestions();
-          hideInstant();
+      function updateGreeting() {
+        const period = getPeriod();
+        els.timeChip.innerHTML = `${period.icon} <span>${period.hint}</span>`;
+        els.greetingTitle.textContent = 'محلل الوجبة';
+        els.greetingSub.textContent = 'ابحث عن أي وجبة، حدد وزنها، واحصل على تقدير دقيق للكارب.';
+      }
+
+      // ==========================================
+      // LOAD / SAVE USER MEALS
+      // ==========================================
+      function loadUserMeals() {
+        try {
+          const saved = localStorage.getItem(CONFIG.CACHE_KEY);
+          if (saved) {
+            userMeals = JSON.parse(saved);
+          } else {
+            userMeals = {};
+          }
+        } catch (e) {
+          userMeals = {};
+        }
+      }
+
+      function saveUserMeals() {
+        try {
+          localStorage.setItem(CONFIG.CACHE_KEY, JSON.stringify(userMeals));
+        } catch (e) {}
+      }
+
+      // دمج المكتبة الأساسية مع وجبات المستخدم (تكون userMeals أولوية)
+      function getFullMealsDatabase() {
+        return { ...BASE_MEALS, ...userMeals };
+      }
+
+      // تحميل ICR من التخزين
+      function loadICR() {
+        try {
+          const saved = localStorage.getItem(CONFIG.ICR_KEY);
+          if (saved) {
+            const data = JSON.parse(saved);
+            if (data && data.icr) {
+              icrValue = data.icr;
+            }
+          }
+        } catch (e) {}
+      }
+
+      // ==========================================
+      // SEARCH LOGIC
+      // ==========================================
+      function findInDatabase(query) {
+        if (!query) return null;
+        const q = query.toLowerCase().trim();
+        const db = getFullMealsDatabase();
+
+        // 1. exact match
+        for (let key in db) {
+          if (key.toLowerCase() === q) {
+            return { ...db[key], name: key };
+          }
+        }
+
+        // 2. includes
+        for (let key in db) {
+          if (key.toLowerCase().includes(q) || q.includes(key.toLowerCase())) {
+            return { ...db[key], name: key };
+          }
+        }
+
+        // 3. word match
+        const words = q.split(/\s+/).filter(w => w.length > 1);
+        for (let key in db) {
+          const keyLower = key.toLowerCase();
+          if (words.some(w => keyLower.includes(w))) {
+            return { ...db[key], name: key };
+          }
+        }
+
+        return null;
+      }
+
+      function showSuggestions(query) {
+        const q = query.toLowerCase().trim();
+        if (q.length < 2) {
+          els.suggestions.classList.remove('show');
           return;
         }
 
-        // Instant search (0ms)
-        const instant = findInCache(value);
-        if (instant) {
-          showInstant(instant);
+        const db = getFullMealsDatabase();
+        const matches = [];
+        for (let key in db) {
+          if (key.toLowerCase().includes(q) || q.includes(key.toLowerCase())) {
+            matches.push({ name: key, data: db[key] });
+            if (matches.length >= 7) break;
+          }
         }
 
-        // Debounced suggestions
-        debounceTimer = setTimeout(() => {
-          showSuggestions(value);
-        }, CONFIG.DEBOUNCE_MS);
-      });
-
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          analyze();
+        if (matches.length === 0) {
+          els.suggestions.innerHTML = '<div class="suggestion-item" style="color:var(--ink-2);">لا توجد نتائج، يمكنك إضافة وجبة جديدة</div>';
+        } else {
+          els.suggestions.innerHTML = matches.map(m => `
+            <div class="suggestion-item" onclick="window.selectSuggestion('${m.name}')">
+              <span class="suggestion-name">${m.name}</span>
+              <span class="suggestion-carbs">${m.data.c}g كارب/100g</span>
+            </div>
+          `).join('');
         }
-      });
-
-      // Prefetch on focus
-      input.addEventListener('focus', () => {
-        if (input.value.length > 1) {
-          showSuggestions(input.value);
-        }
-      });
-    }
-
-    // Lightning Search (0ms)
-    function findInCache(query) {
-      const q = query.toLowerCase();
-      
-      // Exact match
-      if (cache[q]) return cache[q];
-      
-      // Partial match
-      for (let key in cache) {
-        if (key.includes(q) || q.includes(key)) {
-          return cache[key];
-        }
-      }
-      
-      // Word match
-      const words = q.split(' ');
-      for (let key in cache) {
-        if (words.some(w => key.includes(w))) {
-          return cache[key];
-        }
-      }
-      
-      return null;
-    }
-
-    // UI Functions
-    function showInstant(data) {
-      document.getElementById('instantCarbs').textContent = data.c + 'g';
-      document.getElementById('instantPreview').classList.add('show');
-      document.getElementById('analyzeBtn').classList.add('instant');
-      document.getElementById('btnText').textContent = 'تحليل كامل ⚡';
-    }
-
-    function hideInstant() {
-      document.getElementById('instantPreview').classList.remove('show');
-      document.getElementById('analyzeBtn').classList.remove('instant');
-      document.getElementById('btnText').textContent = 'حلل فوراً';
-    }
-
-    function showSuggestions(query) {
-      const q = query.toLowerCase();
-      const matches = [];
-      
-      for (let key in cache) {
-        if (key.includes(q) || q.includes(key)) {
-          matches.push({name: key, data: cache[key]});
-        }
-        if (matches.length >= 5) break;
+        els.suggestions.classList.add('show');
       }
 
-      const container = document.getElementById('suggestions');
-      
-      if (matches.length === 0) {
-        container.innerHTML = '<div class="suggestion-item">اكتب وجبة أخرى أو استخدم الذكاء الاصطناعي</div>';
-      } else {
-        container.innerHTML = matches.map(m => `
-          <div class="suggestion-item" onclick="selectSuggestion('${m.name}')">
-            <span class="suggestion-name">${m.name}</span>
-            <span class="suggestion-carbs">${m.data.c}g كارب</span>
-          </div>
-        `).join('');
-      }
-      
-      container.classList.add('show');
-    }
-
-    function hideSuggestions() {
-      document.getElementById('suggestions').classList.remove('show');
-    }
-
-    function selectSuggestion(name) {
-      document.getElementById('mealInput').value = name;
-      hideSuggestions();
-      analyze();
-    }
-
-    function quickSearch(term) {
-      document.getElementById('mealInput').value = term;
-      analyze();
-    }
-
-    function setMode(mode) {
-      CONFIG.MODE = mode;
-      document.querySelectorAll('.speed-option').forEach(el => el.classList.remove('active'));
-      document.getElementById(mode === 'instant' ? 'modeInstant' : 'modeAccurate').classList.add('active');
-    }
-
-    // Analysis
-    async function analyze() {
-      const input = document.getElementById('mealInput').value.trim();
-      if (!input && !selectedImage) return;
-
-      // Check cache first (0ms)
-      const cached = findInCache(input);
-      if (cached && CONFIG.MODE === 'instant') {
-        displayResult(cached, 'cache');
-        return;
+      function hideSuggestions() {
+        els.suggestions.classList.remove('show');
       }
 
-      // Show progress
-      showProgress();
+      function showInstantPreview(data) {
+        if (!data) return;
+        els.instantCarbs.textContent = data.c + 'g';
+        els.instantPreview.classList.add('show');
+      }
 
-      // Try to fetch from Open Food Facts (fast)
-      if (input && CONFIG.MODE === 'accurate') {
-        const library = await fetchFromLibrary(input);
-        if (library) {
-          cache[input.toLowerCase()] = library;
-          saveCache();
-          displayResult(library, 'library');
+      function hideInstantPreview() {
+        els.instantPreview.classList.remove('show');
+      }
+
+      // ==========================================
+      // ANALYSIS
+      // ==========================================
+      function analyzeMeal() {
+        const query = els.mealInput.value.trim();
+        if (!query) {
+          showToast('اكتب اسم وجبة أولاً');
           return;
         }
-      }
 
-      // Fallback to AI
-      const aiResult = await fetchFromAI(input);
-      if (aiResult) {
-        cache[input.toLowerCase()] = aiResult;
-        saveCache();
-        displayResult(aiResult, 'ai');
-      }
-    }
-
-    async function fetchFromLibrary(query) {
-      try {
-        const res = await fetch(`https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=1`);
-        const data = await res.json();
-        
-        if (data.products?.[0]) {
-          const p = data.products[0];
-          const n = p.nutriments || {};
-          return {
-            c: Math.round(n.carbohydrates_100g || 0),
-            p: Math.round(n.proteins_100g || 0),
-            f: Math.round(n.fat_100g || 0),
-            cal: Math.round(n.energy-kcal_100g || 0),
-            ins: `من قاعدة البيانات: ${p.product_name || query}`
-          };
+        const weight = parseFloat(els.weightInput.value);
+        if (isNaN(weight) || weight < 10) {
+          showToast('أدخل وزناً صحيحاً (10 جرام فأكثر)');
+          return;
         }
-      } catch(e) {
-        console.log('Library error:', e);
+
+        const db = getFullMealsDatabase();
+        let matchedKey = null;
+        for (let key in db) {
+          if (key.toLowerCase() === query.toLowerCase()) {
+            matchedKey = key;
+            break;
+          }
+        }
+        if (!matchedKey) {
+          // حاول البحث الضبابي
+          const found = findInDatabase(query);
+          if (found) {
+            matchedKey = found.name;
+          } else {
+            showToast('لم نعثر على الوجبة، يمكنك إضافتها يدوياً');
+            return;
+          }
+        }
+
+        const base = db[matchedKey];
+        // الضرب في الوزن / 100
+        const factor = weight / 100;
+        const carbs = Math.round(base.c * factor);
+        const protein = Math.round(base.p * factor);
+        const fat = Math.round(base.f * factor);
+        const cal = Math.round(base.cal * factor);
+        const insulin = Math.round(carbs / icrValue);
+
+        currentResult = {
+          name: matchedKey,
+          weight,
+          carbs,
+          protein,
+          fat,
+          cal,
+          insulin,
+          base
+        };
+
+        // عرض النتائج
+        const source = userMeals.hasOwnProperty(matchedKey) ? 'من مكتبتك الشخصية' : 'من الذاكرة الذكية';
+        els.resultSource.innerHTML = `<span>⚡</span><span>${source}</span>`;
+        els.heroCarbs.textContent = carbs;
+        els.mProtein.textContent = protein + 'g';
+        els.mFat.textContent = fat + 'g';
+        els.mCal.textContent = cal;
+        els.mInsulin.textContent = insulin;
+
+        els.results.classList.add('show');
+        hideSuggestions();
+        hideInstantPreview();
       }
-      return null;
-    }
 
-    async function fetchFromAI(query) {
-      // Simulate or use real AI
-      // For now, return smart estimate
-      return {
-        c: 45,
-        p: 20,
-        f: 15,
-        cal: 400,
-        ins: 'تقدير ذكي - وجبة متوازنة'
-      };
-    }
+      // ==========================================
+      // EVENTS
+      // ==========================================
+      function bindEvents() {
+        // البحث الفوري
+        els.mealInput.addEventListener('input', (e) => {
+          const val = e.target.value.trim();
+          currentQuery = val;
 
-    function displayResult(data, source) {
-      hideProgress();
-      hideSuggestions();
-      hideInstant();
+          clearTimeout(debounceTimer);
 
-      const icr = parseFloat(localStorage.getItem('sugarmind_icr')) || CONFIG.DEFAULT_ICR;
-      const insulin = Math.round(data.c / icr);
+          if (val.length < 2) {
+            hideSuggestions();
+            hideInstantPreview();
+            return;
+          }
 
-      document.getElementById('heroCarbs').textContent = data.c;
-      document.getElementById('mProtein').textContent = data.p + 'g';
-      document.getElementById('mFat').textContent = data.f + 'g';
-      document.getElementById('mCal').textContent = data.cal;
-      document.getElementById('mInsulin').textContent = insulin;
-      document.getElementById('insightText').textContent = data.ins;
+          // instant preview (أول نتيجة)
+          const instant = findInDatabase(val);
+          if (instant) {
+            showInstantPreview(instant);
+          } else {
+            hideInstantPreview();
+          }
 
-      const sourceEl = document.getElementById('resultSource');
-      const sources = {
-        cache: {icon: '⚡', text: 'من الذاكرة الذكية', class: 'cache'},
-        library: {icon: '📚', text: 'من المكتبة العالمية', class: 'library'},
-        ai: {icon: '🧠', text: 'من الذكاء الاصطناعي', class: 'ai'}
-      };
-      const s = sources[source];
-      sourceEl.className = 'result-source ' + s.class;
-      sourceEl.innerHTML = `<span>${s.icon}</span><span>${s.text}</span>`;
-
-      document.getElementById('results').classList.add('show');
-      currentResult = {...data, name: input, insulin};
-
-      // Prefetch similar
-      prefetchSimilar(data);
-    }
-
-    // Image
-    function handleImage(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      
-      selectedImage = file;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        document.getElementById('imagePreview').src = e.target.result;
-        document.getElementById('imagePreview').classList.add('show');
-        document.getElementById('cameraBtn').classList.add('has-image');
-      };
-      reader.readAsDataURL(file);
-    }
-
-    // Progress
-    function showProgress() {
-      document.getElementById('progressBar').classList.add('show');
-      let width = 0;
-      const interval = setInterval(() => {
-        width += 10;
-        document.getElementById('progressFill').style.width = width + '%';
-        if (width >= 90) clearInterval(interval);
-      }, 50);
-    }
-
-    function hideProgress() {
-      document.getElementById('progressBar').classList.remove('show');
-      document.getElementById('progressFill').style.width = '0%';
-    }
-
-    // Prefetch
-    function prefetchCommon() {
-      // Preload common meals in background
-      setTimeout(() => {
-        Object.keys(MEGA_CACHE).forEach(key => {
-          if (!cache[key]) cache[key] = MEGA_CACHE[key];
+          // debounced suggestions
+          debounceTimer = setTimeout(() => {
+            showSuggestions(val);
+          }, CONFIG.DEBOUNCE_MS);
         });
-        saveCache();
-      }, 1000);
-    }
 
-    function prefetchSimilar(data) {
-      // Smart prefetch based on current result
-    }
+        els.mealInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            analyzeMeal();
+          }
+        });
 
-    // Actions
-    function saveMeal() {
-      if (!currentResult) return;
-      const meals = JSON.parse(localStorage.getItem('sugarmind_meals') || '[]');
-      meals.push({...currentResult, time: new Date().toISOString()});
-      localStorage.setItem('sugarmind_meals', JSON.stringify(meals));
-      alert('✅ تم الحفظ!');
-    }
+        // تحليل
+        els.analyzeBtn.addEventListener('click', analyzeMeal);
 
-    function share() {
-      if (!currentResult) return;
-      const text = `وجبة: ${currentResult.name}\nكارب: ${currentResult.c}g\nأنسولين: ${currentResult.insulin} وحدة`;
-      navigator.share?.({text}) || navigator.clipboard.writeText(text);
-    }
+        // حفظ
+        els.saveBtn.addEventListener('click', () => {
+          if (!currentResult) {
+            showToast('حلل وجبة أولاً');
+            return;
+          }
+          // حفظ في localStorage (قائمة meals)
+          try {
+            const meals = JSON.parse(localStorage.getItem('sugarmind_meals') || '[]');
+            meals.push({
+              name: currentResult.name,
+              carbs: currentResult.carbs,
+              protein: currentResult.protein,
+              fat: currentResult.fat,
+              cal: currentResult.cal,
+              insulin: currentResult.insulin,
+              weight: currentResult.weight,
+              time: new Date().toISOString()
+            });
+            localStorage.setItem('sugarmind_meals', JSON.stringify(meals));
+            showToast('تم حفظ الوجبة');
+          } catch (e) {
+            showToast('تعذر الحفظ');
+          }
+        });
 
-    // Start
-    init();
+        // مشاركة
+        els.shareBtn.addEventListener('click', () => {
+          if (!currentResult) {
+            showToast('حلل وجبة أولاً');
+            return;
+          }
+          const text = `🍽️ ${currentResult.name}\n⚖️ الوزن: ${currentResult.weight}g\n🥖 كارب: ${currentResult.carbs}g\n💪 بروتين: ${currentResult.protein}g\n🧈 دهون: ${currentResult.fat}g\n🔥 سعرات: ${currentResult.cal}\n💉 أنسولين تقريبي: ${currentResult.insulin}`;
+          if (navigator.share) {
+            navigator.share({ text }).catch(() => {});
+          } else {
+            navigator.clipboard.writeText(text);
+            showToast('تم نسخ الملخص');
+          }
+        });
+
+        // إضافة وجبة
+        els.openAddMealBtn.addEventListener('click', openAddMealSheet);
+        els.closeAddMealBtn.addEventListener('click', closeAddMealSheet);
+        els.cancelAddMealBtn.addEventListener('click', closeAddMealSheet);
+        els.saveNewMealBtn.addEventListener('click', saveNewMeal);
+
+        // النقر خارج الـ suggestions
+        document.addEventListener('click', (e) => {
+          if (!els.mealInput.contains(e.target) && !els.suggestions.contains(e.target)) {
+            hideSuggestions();
+          }
+        });
+
+        // overlay background click
+        els.addMealOverlay.addEventListener('click', (e) => {
+          if (e.target === els.addMealOverlay) closeAddMealSheet();
+        });
+      }
+
+      // دوال الإضافة
+      function openAddMealSheet() {
+        els.addMealOverlay.classList.add('show');
+        els.addMealOverlay.setAttribute('aria-hidden', 'false');
+        setTimeout(() => els.newMealName.focus(), 60);
+      }
+
+      function closeAddMealSheet() {
+        els.addMealOverlay.classList.remove('show');
+        els.addMealOverlay.setAttribute('aria-hidden', 'true');
+        // clear inputs
+        els.newMealName.value = '';
+        els.newMealCarbs.value = '';
+        els.newMealProtein.value = '';
+        els.newMealFat.value = '';
+        els.newMealCal.value = '';
+      }
+
+      function saveNewMeal() {
+        const name = els.newMealName.value.trim();
+        const carbs = parseFloat(els.newMealCarbs.value);
+        const protein = parseFloat(els.newMealProtein.value);
+        const fat = parseFloat(els.newMealFat.value);
+        const cal = parseFloat(els.newMealCal.value);
+
+        if (!name) {
+          showToast('أدخل اسم الوجبة');
+          return;
+        }
+        if (isNaN(carbs) || carbs < 0) {
+          showToast('أدخل قيمة صحيحة للكارب');
+          return;
+        }
+        // يمكن أن تكون باقي القيم اختيارية، نضع 0 إذا لم تدخل
+        const finalProtein = isNaN(protein) ? 0 : protein;
+        const finalFat = isNaN(fat) ? 0 : fat;
+        const finalCal = isNaN(cal) ? (carbs*4 + finalProtein*4 + finalFat*9) : cal; // تقريبي
+
+        // إضافة إلى userMeals
+        userMeals[name] = {
+          c: carbs,
+          p: finalProtein,
+          f: finalFat,
+          cal: finalCal
+        };
+        saveUserMeals();
+
+        // إغلاق الشيت
+        closeAddMealSheet();
+        showToast('تم إضافة الوجبة');
+
+        // كتابة الاسم في مربع البحث وتحليل فوري
+        els.mealInput.value = name;
+        analyzeMeal();
+      }
+
+      // دوال للاستدعاء من HTML (للـ chips)
+      window.quickSearch = function(term) {
+        els.mealInput.value = term;
+        analyzeMeal();
+      };
+
+      window.selectSuggestion = function(name) {
+        els.mealInput.value = name;
+        hideSuggestions();
+        analyzeMeal();
+      };
+
+      // ==========================================
+      // INIT
+      // ==========================================
+      function init() {
+        loadUserMeals();
+        loadICR();
+        updateGreeting();
+        bindEvents();
+
+        // إخفاء splash
+        setTimeout(() => {
+          if (els.splash) els.splash.classList.add('hide');
+        }, 1000);
+      }
+
+      document.addEventListener('DOMContentLoaded', init);
+    })();
   </script>
 </body>
 </html>
