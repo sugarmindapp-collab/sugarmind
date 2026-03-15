@@ -55,7 +55,7 @@
     }
 
     *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Tajawal',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-    html{background:var(--bg);overflow-x:hidden}
+    html{background:var(--bg);overflow-x:hidden;scroll-behavior:smooth}
     body{
       min-height:100vh;
       color:var(--ink);
@@ -146,9 +146,24 @@
     .greeting-title{font-size:31px; font-weight:900; line-height:1.24; letter-spacing:-1px; color:var(--ink); margin-bottom:8px}
     .greeting-sub{font-size:15px; color:var(--ink-2); line-height:1.9}
 
-    .section{margin-bottom:18px}
+    .section{
+      margin-bottom:24px; /* زيادة التباعد */
+      position:relative;
+    }
+    /* إضافة فاصل بصري بين الأقسام (ما عدا الأول) */
+    .section:not(:first-of-type)::before{
+      content:'';
+      position:absolute;
+      top:-12px;
+      left:50%;
+      transform:translateX(-50%);
+      width:60px;
+      height:1px;
+      background:var(--line);
+      opacity:0.6;
+    }
     .section-head{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:12px;
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:14px; /* زيادة طفيفة */
     }
     .section-title{font-size:18px; font-weight:900; letter-spacing:-.4px; color:var(--ink)}
     .section-note{font-size:12px; color:var(--ink-3); font-weight:900}
@@ -163,15 +178,18 @@
     }
     .wallet-card{
       position:relative;
-      min-height:280px; /* تم التصغير من 350px */
-      padding:18px; /* تم التصغير من 22px */
+      min-height:280px;
+      padding:18px;
       border-radius:calc(var(--radius-xxl) - 1px);
+      /* حدود دقيقة لتحديد الحواف */
+      border:0.5px solid rgba(255,255,255,0.15);
       overflow:hidden;
       background:
         radial-gradient(circle at 12% 16%, rgba(123,170,146,.16), transparent 26%),
         radial-gradient(circle at 88% 14%, rgba(125,139,174,.18), transparent 26%),
         linear-gradient(160deg, var(--hero) 0%, #252B3F 54%, var(--hero-2) 100%);
       color:#F7F4EF;
+      box-shadow:0 10px 20px rgba(0,0,0,0.2);
     }
     .wallet-card::before{
       content:"";
@@ -182,8 +200,8 @@
       pointer-events:none;
     }
 
-    .wallet-top,.wallet-bottom{position:relative; z-index:2; display:flex; align-items:flex-start; justify-content:space-between; gap:12px} /* تصغير gap */
-    .wallet-top{margin-bottom:14px} /* تصغير من 18px */
+    .wallet-top,.wallet-bottom{position:relative; z-index:2; display:flex; align-items:flex-start; justify-content:space-between; gap:12px}
+    .wallet-top{margin-bottom:14px}
     .wallet-brand{
       font-size:12px; color:rgba(247,244,239,.74); font-weight:800;
     }
@@ -200,24 +218,27 @@
     .wallet-main{
       position:relative; z-index:2;
       display:grid; grid-template-columns:1.2fr .8fr; gap:10px; align-items:stretch;
-      margin-bottom:12px; /* تصغير من 16px */
+      margin-bottom:12px;
     }
     .wallet-profile{
       padding:0;
       display:flex; flex-direction:column; justify-content:flex-start;
     }
     .wallet-name{
-      font-size:28px; /* تصغير من 32px */
-      font-weight:900; line-height:1.1; letter-spacing:-1px; color:#fff;
+      font-size:28px;
+      font-weight:900; line-height:1.2; letter-spacing:-1px; color:#fff;
       margin-bottom:6px;
-      white-space:nowrap;
+      /* السماح بسطرين مع اقتصاص ذكي */
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width:180px;
+      max-width:200px;
     }
     .wallet-message{
-      font-size:13px; /* تصغير من 16px */
-      line-height:1.7; color:rgba(247,244,239,.85);
+      font-size:13px;
+      line-height:1.7; color:rgba(247,244,239,.9); /* زيادة التباين */
       margin-bottom:10px;
       display:-webkit-box;
       -webkit-line-clamp:2;
@@ -233,18 +254,19 @@
       border:1px solid transparent;
     }
 
-    .metric-stack{display:flex; flex-direction:column; gap:10px} /* تغيير grid إلى flex */
+    .metric-stack{display:flex; flex-direction:column; gap:10px}
     .metric-box,.ratio-box{
-      border-radius:20px; /* تصغير من 24px */
+      border-radius:20px;
       background:rgba(255,255,255,.055);
       border:1px solid rgba(255,255,255,.08);
       backdrop-filter:blur(12px);
-      padding:12px; /* تصغير من 16px */
-      min-height:auto; /* إزالة min-height */
+      padding:12px;
+      min-height:auto;
+      box-shadow:inset 0 2px 4px rgba(0,0,0,0.05); /* ظل داخلي خفيف */
     }
     .metric-label,.ratio-label{font-size:11px; color:rgba(247,244,239,.62); font-weight:900; margin-bottom:6px}
     .metric-value{display:flex; align-items:flex-end; gap:6px; margin-bottom:6px}
-    .metric-value strong{font-size:48px; /* تصغير من 58px */ line-height:.9; font-weight:900; letter-spacing:-1px; color:#fff}
+    .metric-value strong{font-size:48px; line-height:.9; font-weight:900; letter-spacing:-1px; color:#fff}
     .metric-value span{font-size:12px; color:rgba(247,244,239,.72); padding-bottom:6px}
     .metric-foot{display:flex; flex-wrap:wrap; gap:6px}
     .micro-chip{
@@ -254,7 +276,7 @@
       font-size:10px; color:rgba(247,244,239,.80); font-weight:900;
     }
     .ratio-main{display:flex; align-items:flex-end; gap:6px; margin-bottom:4px}
-    .ratio-main strong{font-size:28px; /* تصغير من 36px */ line-height:1; font-weight:900; letter-spacing:-1px; color:#fff}
+    .ratio-main strong{font-size:28px; line-height:1; font-weight:900; letter-spacing:-1px; color:#fff}
     .ratio-main span{font-size:12px; color:rgba(247,244,239,.72); padding-bottom:4px}
     .ratio-copy{font-size:11px; color:rgba(247,244,239,.82); line-height:1.6; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
 
@@ -265,10 +287,10 @@
       padding-top:12px;
     }
     .wallet-footer-meta{min-width:0}
-    .wallet-footer-title{font-size:15px; /* تصغير من 18px */ font-weight:900; color:#fff; margin-bottom:4px}
+    .wallet-footer-title{font-size:15px; font-weight:900; color:#fff; margin-bottom:4px}
     .wallet-footer-copy{font-size:11px; color:rgba(247,244,239,.78); line-height:1.6; max-width:220px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
     .qr-wrap{
-      width:70px; /* تصغير من 86px */ flex-shrink:0; display:flex; flex-direction:column; align-items:center; gap:6px;
+      width:70px; flex-shrink:0; display:flex; flex-direction:column; align-items:center; gap:6px;
     }
     .qr-box{
       width:70px; height:70px; padding:6px; border-radius:18px; background:#fff;
@@ -279,7 +301,7 @@
     .qr-caption{font-size:10px; color:rgba(247,244,239,.65); font-weight:900; text-align:center}
 
     .card-actions{
-      display:grid; grid-template-columns:1fr 1fr auto; gap:8px; margin-top:12px;
+      display:grid; grid-template-columns:1fr 1fr auto; gap:8px; margin-top:14px; /* زيادة طفيفة */
     }
     .btn{
       min-height:50px; border-radius:18px; display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -317,14 +339,20 @@
     .scan-card,.decision-card,.quick-block,.summary-block{
       border-radius:var(--radius-xl);
       background:rgba(255,255,255,.8);
-      border:1px solid var(--line);
-      box-shadow:var(--shadow-md);
+      border:1.5px solid var(--line); /* زيادة سمك الحدود */
+      box-shadow:var(--shadow-md), inset 0 2px 4px rgba(0,0,0,0.02); /* ظل داخلي */
       backdrop-filter:blur(12px);
-      transition:transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+      transition:transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s var(--ease);
     }
     .scan-card:hover,.decision-card:hover,.quick-block:hover,.summary-block:hover{
-      box-shadow:var(--shadow-hover);
+      box-shadow:var(--shadow-hover), inset 0 2px 4px rgba(0,0,0,0.02);
       transform:translateY(-2px);
+      border-color:rgba(125,139,174,.3);
+    }
+
+    /* تمييز بطاقة "خطوتك الآن" */
+    .decision-card{
+      background:var(--surface-2); /* خلفية أغمق قليلاً */
     }
 
     .scan-card{padding:18px}
@@ -379,7 +407,7 @@
     .decision-copy{font-size:13px; line-height:1.8; color:var(--ink-2); margin-bottom:12px}
     .decision-action{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:12px; border-radius:18px; background:var(--surface-2); border:1px solid var(--line);
+      padding:12px; border-radius:18px; background:var(--surface-3); border:1px solid var(--line);
     }
     .decision-action strong{display:block; font-size:15px; font-weight:900; color:var(--ink); margin-bottom:3px}
     .decision-action span{display:block; font-size:12px; color:var(--ink-2); line-height:1.7}
@@ -388,15 +416,20 @@
     .quick-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
     .quick-card{
       min-height:120px; border-radius:20px; padding:12px;
-      background:#fff; border:1px solid var(--line); box-shadow:var(--shadow-sm);
+      background:#fff; border:1.5px solid var(--line); box-shadow:var(--shadow-sm);
       display:flex; flex-direction:column; justify-content:space-between; align-items:flex-start;
       transition:transform .2s var(--ease), border-color .2s var(--ease), box-shadow .2s var(--ease);
     }
-    .quick-card:hover{transform:translateY(-3px); border-color:rgba(69,73,106,.2); box-shadow:var(--shadow-md);}
+    .quick-card:hover{
+      transform:translateY(-3px);
+      border-color:var(--hero-3);
+      box-shadow:var(--shadow-hover);
+    }
     .quick-icon{
-      width:40px; height:40px; border-radius:14px;
-      background:linear-gradient(135deg, rgba(125,139,174,.2), rgba(123,170,146,.15));
-      display:flex; align-items:center; justify-content:center; font-size:18px;
+      width:44px; height:44px; border-radius:14px;
+      background:linear-gradient(135deg, rgba(125,139,174,.25), rgba(123,170,146,.2));
+      display:flex; align-items:center; justify-content:center; font-size:20px;
+      color:var(--hero-2);
     }
     .quick-card strong{display:block; font-size:13px; font-weight:900; line-height:1.4; color:var(--ink); margin-bottom:4px}
     .quick-card span{display:block; font-size:11px; color:var(--ink-2); line-height:1.6}
@@ -405,11 +438,15 @@
     .summary-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
     .summary-card{
       min-height:110px; padding:12px; border-radius:18px; background:#fff;
-      border:1px solid var(--line); box-shadow:var(--shadow-sm);
+      border:1.5px solid var(--line); box-shadow:var(--shadow-sm);
       transition:transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
     }
     .summary-card:hover{transform:translateY(-2px); box-shadow:var(--shadow-md);}
-    .summary-label{font-size:11px; color:var(--ink-3); font-weight:900; margin-bottom:8px}
+    .summary-label{
+      font-size:11px; color:var(--ink-3); font-weight:900; margin-bottom:8px;
+      display:flex; align-items:center; gap:4px;
+    }
+    .summary-label span{font-size:14px;} /* للأيقونات */
     .summary-value{font-size:15px; font-weight:900; color:var(--ink); line-height:1.4; margin-bottom:6px}
     .summary-meta{font-size:11px; color:var(--ink-2); line-height:1.7}
 
@@ -432,11 +469,20 @@
       min-height:56px; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
       font-size:11px; font-weight:900; color:var(--ink-3);
       transition:all .2s var(--ease);
+      cursor:pointer;
     }
-    .nav-item span:first-child{font-size:18px; line-height:1}
+    .nav-item span:first-child{font-size:18px; line-height:1; transition:transform 0.15s ease;}
     .nav-item.active{
       background:linear-gradient(135deg, rgba(125,139,174,.2), rgba(123,170,146,.15));
-      color:var(--ink); transform:translateY(-2px);
+      color:var(--primary);
+      transform:translateY(-2px);
+    }
+    .nav-item.active span:first-child{
+      font-size:22px; /* تكبير الأيقونة */
+      transform:scale(1.1);
+    }
+    .nav-item:active span:first-child{
+      transform:scale(0.9); /* تأثير bounce عند النقر */
     }
 
     .sheet-overlay{
@@ -498,9 +544,10 @@
       .greeting-title{font-size:26px}
       .wallet-main{grid-template-columns:1fr}
       .summary-grid,.quick-grid,.inline-fields,.card-actions,.scan-form,.sheet-actions{grid-template-columns:1fr}
-      .wallet-name{font-size:26px}
+      .wallet-name{font-size:24px; max-width:100%;}
       .metric-value strong{font-size:44px}
       .decision-action{align-items:flex-start; flex-direction:column}
+      .section:not(:first-of-type)::before{width:40px;}
     }
   </style>
 </head>
@@ -718,19 +765,19 @@
       <div class="summary-block">
         <div class="summary-grid">
           <div class="summary-card">
-            <div class="summary-label">آخر وجبة</div>
+            <div class="summary-label"><span>🍽️</span> آخر وجبة</div>
             <div class="summary-value" id="mealSummaryValue">ما فيه وجبة محفوظة</div>
             <div class="summary-meta" id="mealSummaryMeta">ابدأ من محلل الوجبة</div>
           </div>
 
           <div class="summary-card">
-            <div class="summary-label">آخر معامل</div>
+            <div class="summary-label"><span>🧮</span> آخر معامل</div>
             <div class="summary-value" id="icrSummaryValue">--</div>
             <div class="summary-meta" id="icrSummaryMeta">بانتظار أول حساب</div>
           </div>
 
           <div class="summary-card">
-            <div class="summary-label">آخر تحديث</div>
+            <div class="summary-label"><span>⏱️</span> آخر تحديث</div>
             <div class="summary-value" id="updateSummaryValue">اليوم</div>
             <div class="summary-meta" id="updateSummaryMeta">إذا سجلت قراءة يظهر هنا</div>
           </div>
@@ -904,10 +951,9 @@
       closeRecorderBtn: document.getElementById('closeRecorderBtn'),
       cancelRecorderBtn: document.getElementById('cancelRecorderBtn'),
       saveReadingBtn: document.getElementById('saveReadingBtn'),
-      deleteDataBtn: document.getElementById('deleteDataBtn'),  // زر جديد
+      deleteDataBtn: document.getElementById('deleteDataBtn'),
       nameInput: document.getElementById('nameInput'),
       readingInput: document.getElementById('readingInput'),
-      // تم إزالة timeInput
 
       shareCardBtn: document.getElementById('shareCardBtn'),
       saveCardBtn: document.getElementById('saveCardBtn'),
@@ -1333,7 +1379,6 @@
     function fillFormFromState(){
       els.nameInput.value = state.profile?.name || '';
       els.readingInput.value = state.home?.reading ?? '';
-      // تم إزالة timeInput
     }
 
     function render(){
@@ -1430,14 +1475,14 @@
 
     async function createCardBlob(){
       const canvas = await html2canvas(els.cardCaptureSurface, {
-        scale: Math.min(window.devicePixelRatio || 2, 2.5), // زيادة الجودة قليلاً
+        scale: Math.min(window.devicePixelRatio || 2, 3), // زيادة الدقة
         backgroundColor: '#252B3F', // خلفية موحدة للبطاقة
         useCORS: true,
         allowTaint: true
       });
 
       return new Promise((resolve) => {
-        canvas.toBlob((blob) => resolve(blob), 'image/png', 0.95);
+        canvas.toBlob((blob) => resolve(blob), 'image/png', 0.9); // جودة مناسبة
       });
     }
 
@@ -1630,7 +1675,7 @@
       els.closeRecorderBtn.addEventListener('click', closeRecorder);
       els.cancelRecorderBtn.addEventListener('click', closeRecorder);
       els.saveReadingBtn.addEventListener('click', saveReading);
-      els.deleteDataBtn.addEventListener('click', deleteUserData);  // ربط زر الحذف
+      els.deleteDataBtn.addEventListener('click', deleteUserData);
 
       els.shareCardBtn.addEventListener('click', shareCardImage);
       els.saveCardBtn.addEventListener('click', saveCardImage);
