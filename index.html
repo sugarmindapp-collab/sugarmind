@@ -1076,4 +1076,340 @@
       if(ratio){
         parts.push(`معامل الكارب المحفوظ عندك ${ratio}.`);
       }else{
-        parts.p
+        parts.push('إذا حسبت معاملك من الحاسبة، يكتمل أهم عنصر داخل البطاقة.');
+      }
+
+      if(meal){
+        parts.push(`آخر وجبة محفوظة هي ${meal}.`);
+      }
+
+      els.insightCopy.textContent = parts.join(' ');
+    }
+
+    function fillFormFromState(){
+      els.nameInput.value = state.profile?.name || '';
+      els.readingInput.value = state.home?.reading ?? '';
+      els.timeInput.value = normalizeTimeValue(state.home?.time);
+    }
+
+    function renderQrCode(){
+      const targetUrl = `${window.location.origin}${window.location.pathname}`;
+      els.qrCode.innerHTML = '';
+
+      state.qrInstance = new QRCode(els.qrCode, {
+        text: targetUrl,
+        width: 72,
+        height: 72,
+        colorDark: '#111522',
+        colorLight: '#FFFFFF',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    }
+
+    function render(){
+      hydrateState();
+      setGreeting();
+      setWalletCard();
+      setSummary();
+      setInsight();
+      fillFormFromState();
+      renderQrCode();
+      refreshInstallButton();
+    }
+
+    function showToast(message){
+      els.toast.textContent = message;
+      els.toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        els.toast.classList.remove('show');
+      }, 2600);
+    }
+
+    function openRecorder(){
+      fillFormFromState();
+      els.recorderOverlay.classList.add('show');
+      els.recorderOverlay.setAttribute('aria-hidden', 'false');
+      setTimeout(() => els.nameInput.focus(), 60);
+    }
+
+    function closeRecorder(){
+      els.recorderOverlay.classList.remove('show');
+      els.recorderOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    function saveReading(){
+      const name = els.nameInput.value.trim();
+      const readingValue = Number(els.readingInput.value.trim());
+      const time = els.timeInput.value || currentTimeValue();
+
+      if(!name){
+        showToast('اكتب اسمك أولًا');
+        els.nameInput.focus();
+        return;
+      }
+
+      if(!Number.isFinite(readingValue) || readingValue < 20 || readingValue > 600){
+        showToast('أدخل قراءة واضحة بين 20 و 600');
+        els.readingInput.focus();
+        return;
+      }
+
+      state.profile = { name };
+      state.home = {
+        reading: readingValue,
+        time,
+        savedAt: new Date().toISOString()
+      };
+
+      writeJSON(KEYS.PROFILE, state.profile);
+      writeJSON(KEYS.HOME, state.home);
+      syncLegacyStores();
+
+      localStorage.setItem(KEYS.VALUE_MOMENT, 'true');
+
+      closeRecorder();
+      render();
+      showToast('تم تحديث بطاقتك');
+      maybePromptInstallAfterValue();
+    }
+
+    async function createCardBlob(){
+      const canvas = await html2canvas(els.cardCaptureSurface, {
+        scale: Math.min(window.devicePixelRatio || 2, 3),
+        backgroundColor: null,
+        useCORS: true,
+        allowTaint: true
+      });
+
+      return new Promise((resolve) => {
+        canvas.toBlob((blob) => resolve(blob), 'image/png', 1);
+      });
+    }
+
+    function buildCardFileName(){
+      const safeName = (state.profile?.name || 'SugarMind').replace(/[^\w\u0600-\u06FF-]+/g, '_');
+      return `SugarMind-${safeName}.png`;
+    }
+
+    async function saveCardImage(){
+      try{
+        showToast('جاري تجهيز البطاقة...');
+        const blob = await createCardBlob();
+        if(!blob){
+          showToast('تعذر تجهيز الصورة');
+          return;
+        }
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = buildCardFileName();
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(link.href), 1500);
+
+        showToast('تم حفظ البطاقة كصورة');
+      }catch(_){
+        showToast('تعذر حفظ البطاقة الآن');
+      }
+    }
+
+    async function shareCardImage(){
+      try{
+        showToast('جاري تجهيز البطاقة للمشاركة...');
+        const blob = await createCardBlob();
+        if(!blob){
+          showToast('تعذر تجهيز البطاقة');
+          return;
+        }
+
+        const file = new File([blob], buildCardFileName(), { type:'image/png' });
+
+        if(navigator.share && navigator.canShare && navigator.canShare({ files:[file] })){
+          await navigator.share({
+            files:[file],
+            title:'SugarMind Card',
+            text:'هذه بطاقتي من SugarMind'
+          });
+          showToast('تم فتح المشاركة');
+          return;
+        }
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = buildCardFileName();
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(link.href), 1500);
+        showToast('المشاركة المباشرة غير مدعومة هنا، فتم حفظ البطاقة كصورة');
+      }catch(error){
+        if(error && error.name === 'AbortError'){
+          showToast('تم إلغاء المشاركة');
+          return;
+        }
+        showToast('تعذر مشاركة البطاقة الآن');
+      }
+    }
+
+    function shouldOfferInstall(){
+      if(state.isStandalone) return false;
+      if(localStorage.getItem(KEYS.INSTALL_COMPLETED) === 'true') return false;
+      if(localStorage.getItem(KEYS.INSTALL_DISMISSED) === 'true') return false;
+      return state.isIOS || !!state.deferredInstallPrompt;
+    }
+
+    function refreshInstallButton(){
+      els.installTrigger.style.display = shouldOfferInstall() ? 'inline-flex' : 'none';
+    }
+
+    function openInstallSheet(){
+      if(!shouldOfferInstall()) return;
+
+      if(state.isIOS){
+        els.installSub.textContent = 'على الآيفون يكون التثبيت من زر المشاركة داخل Safari.';
+        els.installCopy.textContent = 'بعد أول استخدام فعلي، هذا أفضل وقت تضيف فيه التطبيق للشاشة الرئيسية.';
+        els.iosInstallSteps.classList.remove('hidden');
+        els.installNowBtn.textContent = 'فهمت الطريقة';
+      }else{
+        els.installSub.textContent = 'إذا ثبته الآن، بيفتح بشكل أقرب للتطبيق من الشاشة الرئيسية.';
+        els.installCopy.textContent = 'بمجرد ضغطك على تثبيت والموافقة، يحاول المتصفح إضافته لشاشتك الرئيسية مباشرة.';
+        els.iosInstallSteps.classList.add('hidden');
+        els.installNowBtn.textContent = 'تثبيت الآن';
+      }
+
+      els.installOverlay.classList.add('show');
+      els.installOverlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeInstallSheet(){
+      els.installOverlay.classList.remove('show');
+      els.installOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    async function handleInstallNow(){
+      if(state.isIOS){
+        localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
+        closeInstallSheet();
+        refreshInstallButton();
+        showToast('نفّذ الخطوات من Safari ثم أضفه للشاشة');
+        return;
+      }
+
+      if(!state.deferredInstallPrompt){
+        closeInstallSheet();
+        showToast('التثبيت غير متاح الآن من هذا المتصفح');
+        return;
+      }
+
+      try{
+        state.deferredInstallPrompt.prompt();
+        const choice = await state.deferredInstallPrompt.userChoice;
+
+        if(choice && choice.outcome === 'accepted'){
+          localStorage.setItem(KEYS.INSTALL_COMPLETED, 'true');
+          localStorage.removeItem(KEYS.INSTALL_DISMISSED);
+          showToast('تم إرسال طلب التثبيت');
+        }else{
+          localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
+          showToast('تمام، نخليه لوقت لاحق');
+        }
+      }catch(_){
+        showToast('تعذر فتح نافذة التثبيت الآن');
+      }finally{
+        state.deferredInstallPrompt = null;
+        closeInstallSheet();
+        refreshInstallButton();
+      }
+    }
+
+    function maybePromptInstallAfterValue(){
+      if(!shouldOfferInstall()) return;
+      clearTimeout(state.installTimer);
+      state.installTimer = setTimeout(openInstallSheet, 1400);
+    }
+
+    function scheduleInstallForReturningUser(){
+      if(!localStorage.getItem(KEYS.VALUE_MOMENT)) return;
+      if(!shouldOfferInstall()) return;
+      clearTimeout(state.installTimer);
+      state.installTimer = setTimeout(openInstallSheet, 6500);
+    }
+
+    function bindEvents(){
+      els.openRecorderBtn.addEventListener('click', openRecorder);
+      els.editCardBtn.addEventListener('click', openRecorder);
+      els.closeRecorderBtn.addEventListener('click', closeRecorder);
+      els.cancelRecorderBtn.addEventListener('click', closeRecorder);
+      els.saveReadingBtn.addEventListener('click', saveReading);
+
+      els.shareCardBtn.addEventListener('click', shareCardImage);
+      els.saveCardBtn.addEventListener('click', saveCardImage);
+
+      els.installTrigger.addEventListener('click', openInstallSheet);
+      els.closeInstallBtn.addEventListener('click', closeInstallSheet);
+      els.dismissInstallBtn.addEventListener('click', () => {
+        localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
+        closeInstallSheet();
+        refreshInstallButton();
+      });
+      els.installNowBtn.addEventListener('click', handleInstallNow);
+
+      els.recorderOverlay.addEventListener('click', (event) => {
+        if(event.target === els.recorderOverlay) closeRecorder();
+      });
+
+      els.installOverlay.addEventListener('click', (event) => {
+        if(event.target === els.installOverlay) closeInstallSheet();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if(event.key === 'Escape'){
+          closeRecorder();
+          closeInstallSheet();
+        }
+
+        if(
+          event.key === 'Enter' &&
+          els.recorderOverlay.classList.contains('show') &&
+          event.target.tagName !== 'BUTTON'
+        ){
+          saveReading();
+        }
+      });
+    }
+
+    function setupInstallEvents(){
+      window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        state.deferredInstallPrompt = event;
+        refreshInstallButton();
+        scheduleInstallForReturningUser();
+      });
+
+      window.addEventListener('appinstalled', () => {
+        localStorage.setItem(KEYS.INSTALL_COMPLETED, 'true');
+        localStorage.removeItem(KEYS.INSTALL_DISMISSED);
+        closeInstallSheet();
+        refreshInstallButton();
+        showToast('تم تثبيت SugarMind على جهازك');
+      });
+    }
+
+    function hideSplash(){
+      setTimeout(() => {
+        els.splash.classList.add('hide');
+      }, 1050);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      bindEvents();
+      setupInstallEvents();
+      render();
+      hideSplash();
+      scheduleInstallForReturningUser();
+    });
+  </script>
+</body>
+</html>
