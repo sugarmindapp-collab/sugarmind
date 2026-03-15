@@ -176,282 +176,535 @@
     .section-title{font-size:18px; font-weight:900; letter-spacing:-.4px; color:var(--ink)}
     .section-note{font-size:12px; color:var(--ink-3); font-weight:900}
 
-    .card-capture-surface{
-      position:relative;
-      border-radius:var(--radius-xxl);
-      padding:1px;
-      background:linear-gradient(145deg, rgba(125,139,174,.38), rgba(255,255,255,.12), rgba(123,170,146,.26));
-      box-shadow:0 24px 50px rgba(24,30,45,.10);
-      overflow:hidden;
-    }
-    .wallet-card{
-      position:relative;
-      min-height:260px; /* تم التصغير من 280px */
-      padding:16px; /* تم التصغير من 18px */
-      border-radius:calc(var(--radius-xxl) - 1px);
-      border:1px solid rgba(255,255,255,0.2); /* حدود أوضح */
-      overflow:hidden;
-      background:
-        radial-gradient(circle at 12% 16%, rgba(123,170,146,.16), transparent 26%),
-        radial-gradient(circle at 88% 14%, rgba(125,139,174,.18), transparent 26%),
-        linear-gradient(160deg, var(--hero) 0%, #252B3F 54%, var(--hero-2) 100%);
-      color:#F7F4EF;
-      box-shadow:0 10px 20px rgba(0,0,0,0.25); /* ظل أقوى */
-    }
-    .wallet-card::before{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,.08), transparent 26%, transparent 74%, rgba(255,255,255,.05)),
-        radial-gradient(circle at 100% 0%, rgba(255,255,255,.08), transparent 22%);
-      pointer-events:none;
+    /* ===== البطاقة المعاد تصميمها ===== */
+    .card-wrapper {
+      position: relative;
+      margin-bottom: 24px;
     }
 
-    .wallet-top,.wallet-bottom{position:relative; z-index:2; display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
-    .wallet-top{margin-bottom:12px}
-    .wallet-brand{
-      font-size:11px; color:rgba(247,244,239,.74); font-weight:800;
-    }
-    .wallet-brand strong{display:block; font-size:15px; color:#fff; font-weight:900; margin-bottom:2px}
-    .wallet-tag{
-      min-height:28px; padding:0 10px; border-radius:999px;
-      display:inline-flex; align-items:center; justify-content:center;
-      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08);
-      font-size:10px; font-weight:900; color:#fff;
-      backdrop-filter:blur(10px);
-      white-space:nowrap;
+    .card-capture-surface {
+      position: relative;
+      border-radius: var(--radius-xxl);
+      padding: 2px;
+      background: linear-gradient(145deg, rgba(125,139,174,.4), rgba(123,170,146,.3), rgba(255,255,255,.1));
+      box-shadow: 0 30px 60px rgba(24,30,45,.15);
+      overflow: hidden;
     }
 
-    .wallet-main{
-      position:relative; z-index:2;
-      display:grid; grid-template-columns:1.2fr .8fr; gap:8px; align-items:stretch;
-      margin-bottom:10px;
-    }
-    .wallet-profile{
-      padding:0;
-      display:flex; flex-direction:column; justify-content:flex-start;
-    }
-    .wallet-name{
-      font-size:26px; /* تصغير طفيف */
-      font-weight:900; line-height:1.2; letter-spacing:-1px; color:#fff;
-      margin-bottom:4px;
-      /* السماح بالالتفاف وعدم القص */
-      word-wrap:break-word;
-      max-width:180px;
-    }
-    .wallet-message{
-      font-size:12px;
-      line-height:1.6; color:rgba(247,244,239,.9);
-      margin-bottom:8px;
-      display:-webkit-box;
-      -webkit-line-clamp:2;
-      -webkit-box-orient:vertical;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .wallet-state-chip{
-      display:inline-flex; align-items:center; gap:8px;
-      min-height:26px; padding:0 10px; border-radius:999px;
-      font-size:10px; font-weight:900;
-      width:max-content;
-      border:1px solid transparent;
+    .wallet-card {
+      position: relative;
+      min-height: 200px; /* تصغير الارتفاع */
+      padding: 18px;
+      border-radius: calc(var(--radius-xxl) - 2px);
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(123,170,146,.15), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(125,139,174,.2), transparent 30%),
+        linear-gradient(145deg, var(--hero) 0%, #252B3F 100%);
+      color: #fff;
+      overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,.1), 0 10px 20px rgba(0,0,0,.3);
     }
 
-    .metric-stack{display:flex; flex-direction:column; gap:8px}
-    .metric-box,.ratio-box{
-      border-radius:18px; /* تصغير */
-      background:rgba(255,255,255,.055);
-      border:1px solid rgba(255,255,255,.08);
-      backdrop-filter:blur(12px);
-      padding:10px; /* تصغير */
-      min-height:auto;
-      box-shadow:inset 0 2px 4px rgba(0,0,0,0.05);
-    }
-    .metric-label,.ratio-label{font-size:10px; color:rgba(247,244,239,.62); font-weight:900; margin-bottom:4px}
-    .metric-value{display:flex; align-items:flex-end; gap:4px; margin-bottom:4px}
-    .metric-value strong{font-size:42px; /* تصغير */ line-height:.9; font-weight:900; letter-spacing:-1px; color:#fff}
-    .metric-value span{font-size:11px; color:rgba(247,244,239,.72); padding-bottom:4px}
-    .metric-foot{display:flex; flex-wrap:wrap; gap:4px}
-    .micro-chip{
-      display:inline-flex; align-items:center; justify-content:center; gap:4px;
-      min-height:24px; padding:0 6px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.04);
-      font-size:9px; color:rgba(247,244,239,.80); font-weight:900;
-    }
-    .ratio-main{display:flex; align-items:flex-end; gap:4px; margin-bottom:4px}
-    .ratio-main strong{font-size:24px; line-height:1; font-weight:900; letter-spacing:-1px; color:#fff}
-    .ratio-main span{font-size:11px; color:rgba(247,244,239,.72); padding-bottom:3px}
-    .ratio-copy{font-size:10px; color:rgba(247,244,239,.82); line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
-
-    .wallet-bottom{
-      gap:8px;
-      align-items:flex-end;
-      border-top:1px solid rgba(255,255,255,.08);
-      padding-top:10px;
-    }
-    .wallet-footer-meta{min-width:0}
-    .wallet-footer-title{font-size:14px; font-weight:900; color:#fff; margin-bottom:3px}
-    .wallet-footer-copy{font-size:10px; color:rgba(247,244,239,.78); line-height:1.5; max-width:200px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
-    .qr-wrap{
-      width:65px; flex-shrink:0; display:flex; flex-direction:column; align-items:center; gap:4px;
-    }
-    .qr-box{
-      width:65px; height:65px; padding:5px; border-radius:16px; background:#fff;
-      display:flex; align-items:center; justify-content:center;
-      box-shadow:0 8px 16px rgba(0,0,0,.18);
-    }
-    .qr-box div{width:55px; height:55px !important;}
-    .qr-caption{font-size:9px; color:rgba(247,244,239,.65); font-weight:900; text-align:center}
-
-    .card-actions{
-      display:grid; grid-template-columns:1fr 1fr auto; gap:8px; margin-top:12px;
-    }
-    .btn{
-      min-height:48px; border-radius:16px; display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      padding:0 14px; font-size:13px; font-weight:900;
-      transition:transform .22s var(--ease), box-shadow .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease);
-    }
-    .btn:hover{transform:translateY(-2px)}
-    .btn-primary{
-      background:linear-gradient(135deg, var(--primary), #6E9A81);
-      color:#fff; box-shadow:0 12px 24px rgba(123,170,146,.20);
-    }
-    .btn-accent{
-      background:linear-gradient(135deg, var(--hero-2), var(--hero-3));
-      color:#fff; box-shadow:0 12px 24px rgba(69,73,106,.18);
-    }
-    .btn-secondary{
-      min-width:48px;
-      background:#fff; border:1px solid var(--line); color:var(--ink);
-      box-shadow:var(--shadow-sm);
-    }
-    .btn-ghost{
-      min-height:46px; border-radius:16px; padding:0 12px;
-      background:transparent; border:1px solid var(--line); color:var(--ink); font-size:13px; font-weight:900;
-    }
-    .btn-danger{
-      background:rgba(218,114,109,.12);
-      color:var(--danger);
-      border:1px solid rgba(218,114,109,.3);
-    }
-    .btn-danger:hover{
-      background:rgba(218,114,109,.2);
+    .wallet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
     }
 
-    /* باقي الأنماط كما هي دون تغيير */
-    .scan-card,.decision-card,.quick-block,.summary-block{
-      border-radius:var(--radius-xl);
-      background:rgba(255,255,255,.8);
-      border:1.5px solid var(--line);
-      box-shadow:var(--shadow-md), inset 0 2px 4px rgba(0,0,0,0.02);
-      backdrop-filter:blur(12px);
-      transition:transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s var(--ease);
-    }
-    .scan-card:hover,.decision-card:hover,.quick-block:hover,.summary-block:hover{
-      box-shadow:var(--shadow-hover), inset 0 2px 4px rgba(0,0,0,0.02);
-      transform:translateY(-2px);
-      border-color:rgba(125,139,174,.3);
+    .wallet-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      color: rgba(255,255,255,.7);
     }
 
-    .decision-card{
-      background:var(--surface-2);
+    .wallet-logo svg {
+      width: 24px;
+      height: 14px;
     }
 
-    .scan-card{padding:18px}
-    .scan-card-head{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:14px;
+    .wallet-logo svg path {
+      stroke: #fff;
+      stroke-width: 4;
+      fill: none;
     }
-    .scan-icon{
-      width:46px; height:46px; border-radius:16px; flex-shrink:0;
-      display:flex; align-items:center; justify-content:center;
-      background:linear-gradient(135deg, rgba(125,139,174,.2), rgba(123,170,146,.15));
-      color:var(--hero-2); font-size:20px;
-    }
-    .scan-title{font-size:18px; font-weight:900; color:var(--ink); margin-bottom:6px}
-    .scan-copy{font-size:13px; color:var(--ink-2); line-height:1.8}
-    .scan-form{display:grid; grid-template-columns:1fr auto; gap:8px; margin-top:14px}
-    .input{
-      width:100%; min-height:50px; border-radius:16px; border:1px solid var(--line);
-      background:#fff; color:var(--ink); outline:none; padding:0 14px; font-size:14px;
-      transition:border-color .2s ease, box-shadow .2s ease;
-    }
-    .input:focus{border-color:rgba(69,73,106,.25); box-shadow:0 0 0 4px rgba(125,139,174,.10)}
-    .scan-result{
-      margin-top:14px; padding:14px; border-radius:20px; border:1px solid var(--line);
-      background:linear-gradient(180deg, #FFFFFF 0%, #FBFAF7 100%);
-      display:none;
-    }
-    .scan-result.show{display:block}
-    .scan-result-top{
-      display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px;
-    }
-    .scan-reading{
-      font-size:28px; font-weight:900; color:var(--ink); letter-spacing:-1px;
-      display:flex; align-items:flex-end; gap:4px;
-    }
-    .scan-reading span{font-size:13px; font-weight:700; color:var(--ink-2); padding-bottom:4px}
-    .scan-status{
-      min-height:30px; padding:0 12px; border-radius:999px;
-      display:inline-flex; align-items:center; justify-content:center;
-      font-size:11px; font-weight:900;
-    }
-    .scan-message{font-size:13px; line-height:1.8; color:var(--ink)}
 
-    .decision-card{padding:18px}
-    .decision-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:12px}
-    .decision-icon{
-      width:44px; height:44px; border-radius:16px; flex-shrink:0;
-      display:flex; align-items:center; justify-content:center;
-      background:linear-gradient(135deg, rgba(125,139,174,.2), rgba(123,170,146,.15));
-      color:var(--hero-2); font-size:20px;
+    .wallet-badge {
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(4px);
+      padding: 6px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.15);
     }
-    .decision-title{font-size:18px; font-weight:900; color:var(--ink); margin-bottom:4px}
-    .decision-copy{font-size:13px; line-height:1.8; color:var(--ink-2); margin-bottom:12px}
-    .decision-action{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:12px; border-radius:18px; background:var(--surface-3); border:1px solid var(--line);
-    }
-    .decision-action strong{display:block; font-size:15px; font-weight:900; color:var(--ink); margin-bottom:3px}
-    .decision-action span{display:block; font-size:12px; color:var(--ink-2); line-height:1.7}
 
-    .quick-block{padding:18px}
-    .quick-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
-    .quick-card{
-      min-height:120px; border-radius:20px; padding:12px;
-      background:#fff; border:1.5px solid var(--line); box-shadow:var(--shadow-sm);
-      display:flex; flex-direction:column; justify-content:space-between; align-items:flex-start;
-      transition:transform .2s var(--ease), border-color .2s var(--ease), box-shadow .2s var(--ease);
+    .wallet-main-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
     }
-    .quick-card:hover{
-      transform:translateY(-3px);
-      border-color:var(--hero-3);
-      box-shadow:var(--shadow-hover);
-    }
-    .quick-icon{
-      width:44px; height:44px; border-radius:14px;
-      background:linear-gradient(135deg, rgba(125,139,174,.25), rgba(123,170,146,.2));
-      display:flex; align-items:center; justify-content:center; font-size:20px;
-      color:var(--hero-2);
-    }
-    .quick-card strong{display:block; font-size:13px; font-weight:900; line-height:1.4; color:var(--ink); margin-bottom:4px}
-    .quick-card span{display:block; font-size:11px; color:var(--ink-2); line-height:1.6}
 
-    .summary-block{padding:18px}
-    .summary-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
-    .summary-card{
-      min-height:110px; padding:12px; border-radius:18px; background:#fff;
-      border:1.5px solid var(--line); box-shadow:var(--shadow-sm);
-      transition:transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    .wallet-name-section {
+      flex: 2;
     }
-    .summary-card:hover{transform:translateY(-2px); box-shadow:var(--shadow-md);}
-    .summary-label{
-      font-size:11px; color:var(--ink-3); font-weight:900; margin-bottom:8px;
-      display:flex; align-items:center; gap:4px;
-    }
-    .summary-label span{font-size:14px;}
-    .summary-value{font-size:15px; font-weight:900; color:var(--ink); line-height:1.4; margin-bottom:6px}
-    .summary-meta{font-size:11px; color:var(--ink-2); line-height:1.7}
 
+    .wallet-name {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .wallet-message {
+      font-size: 12px;
+      color: rgba(255,255,255,.8);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .wallet-reading-section {
+      flex: 1;
+      text-align: left; /* لأن الاتجاه RTL، left تعني اليمين بصرياً */
+      min-width: 100px;
+    }
+
+    .wallet-reading-label {
+      font-size: 11px;
+      color: rgba(255,255,255,.6);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .wallet-reading-value {
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1;
+      color: #fff;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      justify-content: flex-end;
+    }
+
+    .wallet-reading-unit {
+      font-size: 14px;
+      color: rgba(255,255,255,.6);
+    }
+
+    .wallet-details {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .wallet-detail-item {
+      flex: 1;
+      min-width: 100px;
+      background: rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 12px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .wallet-detail-label {
+      font-size: 11px;
+      color: rgba(255,255,255,.6);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .wallet-detail-value {
+      font-size: 24px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .wallet-detail-unit {
+      font-size: 12px;
+      color: rgba(255,255,255,.6);
+      margin-right: 4px;
+    }
+
+    .wallet-detail-footnote {
+      font-size: 10px;
+      color: rgba(255,255,255,.5);
+      margin-top: 4px;
+    }
+
+    .wallet-state-chip {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(255,255,255,.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(4px);
+    }
+
+    /* ===== QR code منفصل ===== */
+    .qr-section {
+      margin-top: 12px;
+      padding: 16px;
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .qr-box {
+      width: 100px;
+      height: 100px;
+      background: #fff;
+      border-radius: 18px;
+      padding: 8px;
+      box-shadow: 0 8px 16px rgba(0,0,0,.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-box div {
+      width: 84px !important;
+      height: 84px !important;
+    }
+
+    .qr-text {
+      flex: 1;
+    }
+
+    .qr-text strong {
+      display: block;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .qr-text p {
+      font-size: 13px;
+      color: var(--ink-2);
+      line-height: 1.6;
+    }
+
+    /* أزرار البطاقة */
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 48px;
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 20px;
+      font-size: 14px;
+      font-weight: 900;
+      transition: transform .22s var(--ease), box-shadow .22s var(--ease);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #6E9A81);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(123,170,146,.2);
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, var(--hero-2), var(--hero-3));
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(69,73,106,.18);
+    }
+
+    .btn-outline {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* بطاقات الأدوات */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .quick-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px 12px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s var(--ease);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .quick-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .quick-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(123,170,146,.2), rgba(125,139,174,.15));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: var(--hero-2);
+      margin-bottom: 12px;
+    }
+
+    .quick-card strong {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .quick-card span {
+      font-size: 12px;
+      color: var(--ink-2);
+      line-height: 1.5;
+    }
+
+    /* قسم الإنجازات */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .achievement-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s var(--ease);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .achievement-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--hero-3);
+    }
+
+    .achievement-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .achievement-value {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .achievement-label {
+      font-size: 12px;
+      color: var(--ink-2);
+      margin-bottom: 6px;
+    }
+
+    .achievement-trend {
+      font-size: 11px;
+      color: var(--primary);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--surface-3);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 10px 0 4px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--hero-3));
+      border-radius: 999px;
+      width: 0%;
+    }
+
+    /* القراءة السريعة */
+    .scan-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 20px;
+    }
+
+    .scan-head {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .scan-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(123,170,146,.15), rgba(125,139,174,.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: var(--hero-2);
+      flex-shrink: 0;
+    }
+
+    .scan-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .scan-copy {
+      font-size: 13px;
+      color: var(--ink-2);
+      line-height: 1.7;
+    }
+
+    .scan-form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .input {
+      flex: 1;
+      min-width: 150px;
+      height: 52px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 0 16px;
+      font-size: 15px;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(123,170,146,.15);
+    }
+
+    .scan-result {
+      background: var(--surface-2);
+      border-radius: 18px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      display: none;
+    }
+
+    .scan-result.show {
+      display: block;
+    }
+
+    .scan-reading {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .scan-reading span {
+      font-size: 14px;
+      color: var(--ink-2);
+    }
+
+    .scan-status {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .scan-message {
+      font-size: 13px;
+      color: var(--ink-2);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .btn-save-reading {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      padding: 10px 16px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-save-reading:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* باقي العناصر (شريط التنقل، الشيتات، التوست) تبقى كما هي مع تحسينات بسيطة */
     .bottom-nav-wrap{
       position:fixed; right:0; left:0; bottom:0; z-index:30; pointer-events:none;
       padding:0 18px calc(14px + var(--safe-bottom));
@@ -482,9 +735,6 @@
     .nav-item.active span:first-child{
       font-size:22px;
       transform:scale(1.1);
-    }
-    .nav-item:active span:first-child{
-      transform:scale(0.9);
     }
 
     .sheet-overlay{
@@ -544,12 +794,15 @@
 
     @media (max-width:430px){
       .greeting-title{font-size:26px}
-      .wallet-main{grid-template-columns:1fr}
-      .summary-grid,.quick-grid,.inline-fields,.card-actions,.scan-form,.sheet-actions{grid-template-columns:1fr}
-      .wallet-name{font-size:22px; max-width:100%;}
-      .metric-value strong{font-size:38px}
-      .decision-action{align-items:flex-start; flex-direction:column}
-      .section:not(:first-of-type)::before{width:40px;}
+      .quick-grid,
+      .achievements-grid,
+      .card-actions,
+      .scan-form,
+      .sheet-actions{grid-template-columns:1fr}
+      .wallet-main-row{flex-direction:column}
+      .wallet-reading-section{text-align:right; width:100%}
+      .wallet-reading-value{justify-content:flex-start}
+      .qr-section{flex-direction:column; align-items:flex-start}
     }
   </style>
 </head>
@@ -598,190 +851,162 @@
       <p class="greeting-sub" id="greetingSub">رحلة السكر الخاصة بك تبدأ هنا.</p>
     </section>
 
+    <!-- ===== البطاقة الرئيسية ===== -->
     <section class="section">
       <div class="section-head">
         <div class="section-title">بطاقتك</div>
         <div class="section-note">جاهزة للحفظ والمشاركة</div>
       </div>
 
-      <div class="card-capture-surface" id="cardCaptureSurface">
-        <div class="wallet-card" id="walletCard">
-          <div class="wallet-top">
-            <div class="wallet-brand">
-              <strong>SugarMind</strong>
-              <span id="walletBrandSub">بطاقتك اليومية</span>
-            </div>
-            <div class="wallet-tag" id="walletTag">بطاقة متابعة</div>
-          </div>
-
-          <div class="wallet-main">
-            <div class="wallet-profile">
-              <div class="wallet-name" id="walletName">ضيفنا الجديد</div>
-              <div class="wallet-message" id="walletMessage">خلنا نبدأ باسمك وآخر قراءة واضحة، وبعدها تصير بطاقتك مرتبة وجاهزة للحفظ والمشاركة.</div>
-              <div class="wallet-state-chip" id="walletStateChip">بانتظار القراءة</div>
+      <div class="card-wrapper">
+        <div class="card-capture-surface" id="cardCaptureSurface">
+          <div class="wallet-card" id="walletCard">
+            <div class="wallet-header">
+              <div class="wallet-logo">
+                <svg viewBox="0 0 100 40" width="24" height="14">
+                  <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
+                </svg>
+                <span>SugarMind</span>
+              </div>
+              <div class="wallet-badge" id="walletTag">بطاقة يومية</div>
             </div>
 
-            <div class="metric-stack">
-              <div class="metric-box">
-                <div class="metric-label">قراءة السكر الحالية</div>
-                <div class="metric-value">
-                  <strong id="walletReading">--</strong>
-                  <span>mg/dL</span>
-                </div>
-                <div class="metric-foot">
-                  <div class="micro-chip" id="walletStatusChip">بدون بيانات</div>
-                  <div class="micro-chip" id="walletTimeChip">آخر تحديث: الآن</div>
+            <div class="wallet-main-row">
+              <div class="wallet-name-section">
+                <div class="wallet-name" id="walletName">ضيفنا الجديد</div>
+                <div class="wallet-message" id="walletMessage">سجل اسمك وقراءتك لتفعيل البطاقة</div>
+              </div>
+              <div class="wallet-reading-section">
+                <div class="wallet-reading-label">قراءة السكر</div>
+                <div class="wallet-reading-value">
+                  <span id="walletReading">--</span>
+                  <span class="wallet-reading-unit">mg/dL</span>
                 </div>
               </div>
+            </div>
 
-              <div class="ratio-box">
-                <div class="ratio-label">معامل الكارب</div>
-                <div class="ratio-main">
-                  <strong id="walletRatio">1:--</strong>
-                  <span>تقريبًا</span>
-                </div>
-                <div class="ratio-copy" id="walletRatioCopy">إذا حسبت معاملك من الحاسبة، يظهر هنا مباشرة داخل البطاقة.</div>
+            <div class="wallet-details">
+              <div class="wallet-detail-item">
+                <div class="wallet-detail-label">الحالة</div>
+                <div class="wallet-detail-value" id="walletStateChip">بانتظار القراءة</div>
+              </div>
+              <div class="wallet-detail-item">
+                <div class="wallet-detail-label">معامل الكارب</div>
+                <div class="wallet-detail-value" id="walletRatio">1:--</div>
+                <div class="wallet-detail-unit">ICR</div>
               </div>
             </div>
-          </div>
 
-          <div class="wallet-bottom">
-            <div class="wallet-footer-meta">
-              <div class="wallet-footer-title" id="walletFooterTitle">جاهزة للمشاركة</div>
-              <div class="wallet-footer-copy" id="walletFooterCopy">احفظ بطاقتك كصورة أو شاركها مع من يهمك بطريقة أنيقة وواضحة.</div>
-            </div>
-
-            <div class="qr-wrap">
-              <div class="qr-box">
-                <div id="qrCode"></div>
-              </div>
-              <div class="qr-caption">امسح الكود وافتح التطبيق</div>
-            </div>
+            <div class="wallet-state-chip" id="walletStatusChip" style="display: inline-block; margin-top: 8px;">بدون بيانات</div>
           </div>
         </div>
-      </div>
 
-      <div class="card-actions">
-        <button class="btn btn-primary" id="shareCardBtn" type="button">شارك بطاقتك</button>
-        <button class="btn btn-accent" id="saveCardBtn" type="button">احفظها كصورة</button>
-        <button class="btn btn-secondary" id="editCardBtn" type="button" aria-label="تعديل البطاقة">✏️</button>
+        <!-- QR code منفصل -->
+        <div class="qr-section">
+          <div class="qr-box">
+            <div id="qrCode"></div>
+          </div>
+          <div class="qr-text">
+            <strong>حمّل SugarMind لصديق</strong>
+            <p>امسح الباركود وادخل عالم السكر الذكي. شارك البطاقة مع من تحب.</p>
+          </div>
+        </div>
+
+        <div class="card-actions">
+          <button class="btn btn-primary" id="shareCardBtn">شارك بطاقتك</button>
+          <button class="btn btn-accent" id="saveCardBtn">احفظها كصورة</button>
+          <button class="btn btn-outline" id="editCardBtn">تعديل</button>
+        </div>
       </div>
     </section>
 
+    <!-- ===== القراءة السريعة ===== -->
     <section class="section">
       <div class="section-head">
         <div class="section-title">اعرف قراءتك الآن</div>
-        <div class="section-note">قيمة سريعة للزائر الجديد</div>
+        <div class="section-note">تحليل فوري</div>
       </div>
 
       <div class="scan-card">
-        <div class="scan-card-head">
+        <div class="scan-head">
+          <div class="scan-icon">🩺</div>
           <div>
             <div class="scan-title">جرّب القراءة بشكل فوري</div>
-            <div class="scan-copy">أدخل رقم السكر عندك، وSugarMind يوضح لك الحالة برسالة قصيرة ومفهومة.</div>
+            <div class="scan-copy">أدخل رقم السكر عندك، وSugarMind يوضح لك الحالة.</div>
           </div>
-          <div class="scan-icon">🩺</div>
         </div>
 
         <div class="scan-form">
           <input class="input" id="quickReadingInput" type="number" inputmode="numeric" min="20" max="600" placeholder="مثال: 124" />
-          <button class="btn btn-primary" id="quickReadingBtn" type="button">اعرف قراءتك</button>
+          <button class="btn btn-primary" id="quickReadingBtn">اعرف قراءتك</button>
         </div>
 
         <div class="scan-result" id="quickReadingResult">
-          <div class="scan-result-top">
-            <div class="scan-reading"><strong id="quickReadingValue">--</strong><span>mg/dL</span></div>
-            <div class="scan-status" id="quickReadingStatus">--</div>
+          <div class="scan-reading">
+            <span id="quickReadingValue">--</span>
+            <span>mg/dL</span>
           </div>
+          <div class="scan-status" id="quickReadingStatus">--</div>
           <div class="scan-message" id="quickReadingMessage">أدخل القراءة حتى تظهر لك النتيجة.</div>
+          <button class="btn-save-reading" id="saveQuickReadingBtn">
+            <span>💾</span> حفظ في بطاقتي
+          </button>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="section-head">
-        <div class="section-title">خطوتك الآن</div>
-        <div class="section-note">قرار واحد أوضح</div>
-      </div>
-
-      <div class="decision-card">
-        <div class="decision-head">
-          <div>
-            <div class="decision-title" id="decisionTitle">ابدأ من بطاقتك</div>
-            <div class="decision-copy" id="decisionCopy">سجل معنا وابني رحلتك.</div>
-          </div>
-          <div class="decision-icon">✨</div>
-        </div>
-
-        <div class="decision-action">
-          <div>
-            <strong id="decisionActionTitle">أول خطوة</strong>
-            <span id="decisionActionCopy">سجل اسمك وقراءتك لتنطلق.</span>
-          </div>
-          <button class="btn btn-primary" id="decisionActionBtn" type="button" data-target="setup">سجل الآن</button>
-        </div>
-      </div>
-    </section>
-
+    <!-- ===== أدواتك ===== -->
     <section class="section">
       <div class="section-head">
         <div class="section-title">أدواتك</div>
         <div class="section-note">الأساس اليومي</div>
       </div>
 
-      <div class="quick-block">
-        <div class="quick-grid">
-          <a class="quick-card" href="meal-analyzer.html">
-            <div class="quick-icon">🍽️</div>
-            <div>
-              <strong>احسب الوجبة</strong>
-              <span>تقدير الكارب والأنسولين.</span>
-            </div>
-          </a>
-
-          <a class="quick-card" href="carb-calculator.html">
-            <div class="quick-icon">🧮</div>
-            <div>
-              <strong>احسب المعامل</strong>
-              <span>معامل الكارب من بياناتك.</span>
-            </div>
-          </a>
-
-          <a class="quick-card" href="daily-guide.html">
-            <div class="quick-icon">📋</div>
-            <div>
-              <strong>الدليل اليومي</strong>
-              <span>ملخص يومك بسرعة.</span>
-            </div>
-          </a>
-        </div>
+      <div class="quick-grid">
+        <a class="quick-card" href="meal-analyzer.html">
+          <div class="quick-icon">🍽️</div>
+          <strong>محلل الوجبة</strong>
+          <span>تقدير الكارب والمغذيات</span>
+        </a>
+        <a class="quick-card" href="carb-calculator.html">
+          <div class="quick-icon">🧮</div>
+          <strong>حاسبة المعامل</strong>
+          <span>احسب معامل الكارب والتصحيح</span>
+        </a>
+        <a class="quick-card" href="daily-guide.html">
+          <div class="quick-icon">📋</div>
+          <strong>الدليل اليومي</strong>
+          <span>ملخص يومك وتوصيات</span>
+        </a>
       </div>
     </section>
 
+    <!-- ===== إنجازاتي (بدلاً من الملخص المكرر) ===== -->
     <section class="section">
       <div class="section-head">
-        <div class="section-title">ملخص يومك</div>
-        <div class="section-note">آخر شيء مهم عندك</div>
+        <div class="section-title">إنجازات اليوم</div>
+        <div class="section-note">لحظة وعيك</div>
       </div>
 
-      <div class="summary-block">
-        <div class="summary-grid">
-          <div class="summary-card">
-            <div class="summary-label"><span>🍽️</span> آخر وجبة</div>
-            <div class="summary-value" id="mealSummaryValue">ما فيه وجبة محفوظة</div>
-            <div class="summary-meta" id="mealSummaryMeta">ابدأ من محلل الوجبة</div>
-          </div>
-
-          <div class="summary-card">
-            <div class="summary-label"><span>🧮</span> آخر معامل</div>
-            <div class="summary-value" id="icrSummaryValue">--</div>
-            <div class="summary-meta" id="icrSummaryMeta">بانتظار أول حساب</div>
-          </div>
-
-          <div class="summary-card">
-            <div class="summary-label"><span>⏱️</span> آخر تحديث</div>
-            <div class="summary-value" id="updateSummaryValue">اليوم</div>
-            <div class="summary-meta" id="updateSummaryMeta">إذا سجلت قراءة يظهر هنا</div>
+      <div class="achievements-grid">
+        <div class="achievement-card">
+          <div class="achievement-icon">🏆</div>
+          <div class="achievement-value" id="achievementHigh">--</div>
+          <div class="achievement-label">أعلى قراءة اليوم</div>
+          <div class="achievement-trend" id="achievementHighTrend"></div>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-icon">⭐</div>
+          <div class="achievement-value" id="achievementBestMeal">--</div>
+          <div class="achievement-label">أفضل وجبة</div>
+          <div class="achievement-trend" id="achievementBestMealTrend"></div>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-icon">📊</div>
+          <div class="achievement-value" id="achievementRangePercent">0%</div>
+          <div class="achievement-label">في النطاق</div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="rangeProgress" style="width:0%"></div>
           </div>
         </div>
       </div>
@@ -797,81 +1022,59 @@
     </nav>
   </div>
 
+  <!-- شيت تعديل البطاقة -->
   <div class="sheet-overlay" id="recorderOverlay" aria-hidden="true">
     <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="recorderTitle">
       <div class="sheet-handle"></div>
-
       <div class="sheet-head">
         <div>
           <h3 class="sheet-title" id="recorderTitle">تعديل بطاقتك</h3>
-          <p class="sheet-sub">أدخل اسمك وآخر قراءة، وسيتم تسجيل الوقت تلقائياً.</p>
+          <p class="sheet-sub">أدخل اسمك وآخر قراءة.</p>
         </div>
         <button class="close-btn" id="closeRecorderBtn" type="button" aria-label="إغلاق">×</button>
       </div>
-
       <div class="field">
         <label for="nameInput">الاسم</label>
         <input class="input" id="nameInput" type="text" placeholder="مثال: خالد" maxlength="30" />
       </div>
-
       <div class="field">
         <label for="readingInput">قراءة السكر</label>
         <input class="input" id="readingInput" type="number" inputmode="numeric" min="20" max="600" placeholder="مثال: 120" />
       </div>
-
-      <p class="helper">التخزين محلي على نفس الجهاز فقط. الوقت يُسجل تلقائياً من جهازك.</p>
-
+      <p class="helper">التخزين محلي على جهازك فقط.</p>
       <div class="sheet-actions">
-        <button class="btn btn-primary" id="saveReadingBtn" type="button">💾 حفظ البيانات</button>
-        <button class="btn btn-danger" id="deleteDataBtn" type="button">🗑️ حذف البيانات</button>
-        <button class="btn btn-ghost" id="cancelRecorderBtn" type="button">إلغاء</button>
+        <button class="btn btn-primary" id="saveReadingBtn">💾 حفظ</button>
+        <button class="btn btn-outline" id="deleteDataBtn">🗑️ حذف</button>
+        <button class="btn btn-outline" id="cancelRecorderBtn">إلغاء</button>
       </div>
     </div>
   </div>
 
+  <!-- شيت التثبيت -->
   <div class="sheet-overlay" id="installOverlay" aria-hidden="true">
     <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="installTitle">
       <div class="sheet-handle"></div>
-
       <div class="sheet-head">
         <div>
           <h3 class="sheet-title" id="installTitle">ثبت SugarMind على شاشتك</h3>
-          <p class="sheet-sub" id="installSub">إذا فتحته من الشاشة الرئيسية، بيحس أكثر كتطبيق يومي سريع وخفيف.</p>
+          <p class="sheet-sub" id="installSub">للوصول السريع كتطبيق.</p>
         </div>
         <button class="close-btn" id="closeInstallBtn" type="button" aria-label="إغلاق">×</button>
       </div>
-
       <div class="install-steps hidden" id="iosInstallSteps">
         <div class="install-step">
           <div class="install-step-index">1</div>
-          <div>
-            <strong>افتح زر المشاركة</strong>
-            <span>من أسفل أو أعلى Safari حسب جهازك.</span>
-          </div>
+          <div><strong>زر المشاركة</strong><span>من أسفل المتصفح.</span></div>
         </div>
-
         <div class="install-step">
           <div class="install-step-index">2</div>
-          <div>
-            <strong>اختر إضافة إلى الشاشة الرئيسية</strong>
-            <span>ثم أكّد الإضافة حتى تظهر لك أيقونة SugarMind.</span>
-          </div>
-        </div>
-
-        <div class="install-step">
-          <div class="install-step-index">3</div>
-          <div>
-            <strong>افتحه من الأيقونة</strong>
-            <span>وبيشتغل بإحساس أقرب للتطبيق داخل جهازك.</span>
-          </div>
+          <div><strong>إضافة للشاشة الرئيسية</strong><span>ثم أكد.</span></div>
         </div>
       </div>
-
-      <p class="helper" id="installCopy">أفضل وقت للتثبيت هو بعد أول استخدام فعلي داخل التطبيق.</p>
-
+      <p class="helper" id="installCopy">أفضل وقت للتثبيت بعد أول استخدام.</p>
       <div class="sheet-actions">
-        <button class="btn btn-primary" id="installNowBtn" type="button">تثبيت الآن</button>
-        <button class="btn btn-ghost" id="dismissInstallBtn" type="button">لاحقًا</button>
+        <button class="btn btn-primary" id="installNowBtn">تثبيت الآن</button>
+        <button class="btn btn-outline" id="dismissInstallBtn">لاحقًا</button>
       </div>
     </div>
   </div>
@@ -879,6 +1082,9 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    // ========================
+    // مفاتيح التخزين
+    // ========================
     const KEYS = {
       PROFILE: 'sugarmind_profile_v1',
       HOME: 'sugarmind_home_v1',
@@ -892,6 +1098,9 @@
       VALUE_MOMENT: 'sugarmind_value_moment_v1'
     };
 
+    // ========================
+    // الحالة العامة
+    // ========================
     const state = {
       profile: {},
       home: {},
@@ -904,49 +1113,27 @@
       isStandalone: window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
     };
 
+    // ========================
+    // العناصر
+    // ========================
     const els = {
       splash: document.getElementById('splashScreen'),
       greetingTitle: document.getElementById('greetingTitle'),
       greetingSub: document.getElementById('greetingSub'),
       timeChip: document.getElementById('timeChip'),
-
       walletName: document.getElementById('walletName'),
       walletMessage: document.getElementById('walletMessage'),
-      walletStateChip: document.getElementById('walletStateChip'),
+      walletTag: document.getElementById('walletTag'),
       walletReading: document.getElementById('walletReading'),
       walletRatio: document.getElementById('walletRatio'),
-      walletRatioCopy: document.getElementById('walletRatioCopy'),
+      walletStateChip: document.getElementById('walletStateChip'),
       walletStatusChip: document.getElementById('walletStatusChip'),
-      walletTimeChip: document.getElementById('walletTimeChip'),
-      walletBrandSub: document.getElementById('walletBrandSub'),
-      walletTag: document.getElementById('walletTag'),
-      walletFooterTitle: document.getElementById('walletFooterTitle'),
-      walletFooterCopy: document.getElementById('walletFooterCopy'),
       qrCode: document.getElementById('qrCode'),
       cardCaptureSurface: document.getElementById('cardCaptureSurface'),
-
-      quickReadingInput: document.getElementById('quickReadingInput'),
-      quickReadingBtn: document.getElementById('quickReadingBtn'),
-      quickReadingResult: document.getElementById('quickReadingResult'),
-      quickReadingValue: document.getElementById('quickReadingValue'),
-      quickReadingStatus: document.getElementById('quickReadingStatus'),
-      quickReadingMessage: document.getElementById('quickReadingMessage'),
-
-      decisionTitle: document.getElementById('decisionTitle'),
-      decisionCopy: document.getElementById('decisionCopy'),
-      decisionActionTitle: document.getElementById('decisionActionTitle'),
-      decisionActionCopy: document.getElementById('decisionActionCopy'),
-      decisionActionBtn: document.getElementById('decisionActionBtn'),
-
-      mealSummaryValue: document.getElementById('mealSummaryValue'),
-      mealSummaryMeta: document.getElementById('mealSummaryMeta'),
-      icrSummaryValue: document.getElementById('icrSummaryValue'),
-      icrSummaryMeta: document.getElementById('icrSummaryMeta'),
-      updateSummaryValue: document.getElementById('updateSummaryValue'),
-      updateSummaryMeta: document.getElementById('updateSummaryMeta'),
-
-      openRecorderBtn: document.getElementById('openRecorderBtn'),
+      shareCardBtn: document.getElementById('shareCardBtn'),
+      saveCardBtn: document.getElementById('saveCardBtn'),
       editCardBtn: document.getElementById('editCardBtn'),
+      openRecorderBtn: document.getElementById('openRecorderBtn'),
       recorderOverlay: document.getElementById('recorderOverlay'),
       closeRecorderBtn: document.getElementById('closeRecorderBtn'),
       cancelRecorderBtn: document.getElementById('cancelRecorderBtn'),
@@ -954,10 +1141,19 @@
       deleteDataBtn: document.getElementById('deleteDataBtn'),
       nameInput: document.getElementById('nameInput'),
       readingInput: document.getElementById('readingInput'),
-
-      shareCardBtn: document.getElementById('shareCardBtn'),
-      saveCardBtn: document.getElementById('saveCardBtn'),
-
+      quickReadingInput: document.getElementById('quickReadingInput'),
+      quickReadingBtn: document.getElementById('quickReadingBtn'),
+      quickReadingResult: document.getElementById('quickReadingResult'),
+      quickReadingValue: document.getElementById('quickReadingValue'),
+      quickReadingStatus: document.getElementById('quickReadingStatus'),
+      quickReadingMessage: document.getElementById('quickReadingMessage'),
+      saveQuickReadingBtn: document.getElementById('saveQuickReadingBtn'),
+      achievementHigh: document.getElementById('achievementHigh'),
+      achievementHighTrend: document.getElementById('achievementHighTrend'),
+      achievementBestMeal: document.getElementById('achievementBestMeal'),
+      achievementBestMealTrend: document.getElementById('achievementBestMealTrend'),
+      achievementRangePercent: document.getElementById('achievementRangePercent'),
+      rangeProgress: document.getElementById('rangeProgress'),
       installTrigger: document.getElementById('installTrigger'),
       installOverlay: document.getElementById('installOverlay'),
       closeInstallBtn: document.getElementById('closeInstallBtn'),
@@ -966,10 +1162,12 @@
       iosInstallSteps: document.getElementById('iosInstallSteps'),
       installSub: document.getElementById('installSub'),
       installCopy: document.getElementById('installCopy'),
-
       toast: document.getElementById('toast')
     };
 
+    // ========================
+    // دوال مساعدة
+    // ========================
     function readJSON(key){
       try{
         const raw = localStorage.getItem(key);
@@ -983,16 +1181,17 @@
       localStorage.setItem(key, JSON.stringify(value));
     }
 
-    function currentTimeValue(){
-      const d = new Date();
-      return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    function showToast(message){
+      els.toast.textContent = message;
+      els.toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        els.toast.classList.remove('show');
+      }, 2600);
     }
 
-    function normalizeTimeValue(value){
-      if(!value) return currentTimeValue();
-      if(/^\d{2}:\d{2}$/.test(value)) return value;
-      const d = new Date(value);
-      if(Number.isNaN(d.getTime())) return currentTimeValue();
+    function currentTimeValue(){
+      const d = new Date();
       return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
     }
 
@@ -1009,12 +1208,6 @@
       return d.toLocaleTimeString('ar-SA', { hour:'numeric', minute:'2-digit' });
     }
 
-    function formatDateLabel(value){
-      const d = new Date(value);
-      if(Number.isNaN(d.getTime())) return 'اليوم';
-      return d.toLocaleDateString('ar-SA', { day:'numeric', month:'short' });
-    }
-
     function getPeriod(){
       const hour = new Date().getHours();
       if(hour < 12) return {label:'صباح الخير', hint:'بداية يوم هادئ', icon:'🌤️'};
@@ -1022,110 +1215,82 @@
       return {label:'مساء الخير', hint:'خلنا نختم يومك بوضوح', icon:'🌙'};
     }
 
+    // حالات القراءة مع ألوان محسنة
     function getReadingState(reading){
       const value = Number(reading);
-
       if(!Number.isFinite(value)){
         return {
           key:'empty',
-          label:'بدون بيانات',
-          tag:'بطاقة جديدة',
-          chip:'بانتظار القراءة',
-          message:'خلنا نبدأ باسمك وآخر قراءة واضحة، وبعدها تصير بطاقتك مرتبة وجاهزة للحفظ والمشاركة.',
-          footerTitle:'جاهزة للمشاركة',
-          footerCopy:'احفظ بطاقتك كصورة أو شاركها مع من يهمك بطريقة أنيقة وواضحة.',
-          tone:'rgba(255,255,255,.08)',
-          color:'#F7F4EF',
-          soft:'#FFFFFF',
-          scanMessage:'سجل القراءة حتى تشوف النتيجة هنا.',
-          achievement: 'ضيفنا الجديد'
+          label:'بانتظار القراءة',
+          tag:'جديد',
+          chip:'بدون بيانات',
+          message:'سجل اسمك وقراءتك لتفعيل البطاقة',
+          colorBg:'#E6E1D8',
+          colorText:'#1D2433',
+          soft:'#F0ECE7'
         };
       }
-
       if(value < 70){
         return {
           key:'low',
           label:'منخفض',
           tag:'يحتاج انتباه',
           chip:'منخفض',
-          message:'الأولوية الآن للانتباه للحالة الحالية قبل أي خطوة ثانية.',
-          footerTitle:'بطاقة متابعة مهمة',
-          footerCopy:'إذا احتجت، حدّث القراءة بعد فترة قصيرة حتى تكون الصورة أوضح.',
-          tone:'rgba(218,114,109,.18)',
-          color:'#FFB6AE',
-          soft:'var(--danger-soft)',
-          scanMessage:'قراءتك منخفضة وتحتاج انتباه الآن.',
-          achievement: 'أنت منتبه'
+          message:'قراءتك منخفضة، تحتاج تدخل سريع.',
+          colorBg:'#DA726D',
+          colorText:'#FFFFFF',
+          soft:'rgba(218,114,109,.15)'
         };
       }
-
       if(value <= 140){
         return {
           key:'range',
           label:'في النطاق',
-          tag:'مطمّنة',
-          chip:'في النطاق',
-          message:'أمورك اليوم مطمّنة، وقراءتك الحالية داخل النطاق المناسب تقريبًا.',
-          footerTitle:'بطاقة يومية مطمّنة',
-          footerCopy:'وقت ممتاز تحفظ بطاقتك أو تشاركها مع من يهمك.',
-          tone:'rgba(97,176,127,.18)',
-          color:'#C8F0D6',
-          soft:'var(--success-soft)',
-          scanMessage:'أمورك مطمّنة، وقراءتك داخل النطاق.',
-          achievement: 'أنت مسيطر'
+          tag:'مطمئن',
+          chip:'ممتاز',
+          message:'قراءتك في النطاق المثالي، أحسنت.',
+          colorBg:'#61B07F',
+          colorText:'#FFFFFF',
+          soft:'rgba(97,176,127,.15)'
         };
       }
-
       if(value <= 180){
         return {
           key:'slightly-high',
-          label:'أعلى من النطاق قليلًا',
-          tag:'انتباه بسيط',
-          chip:'أعلى قليلًا',
-          message:'القراءة أعلى من المثالي شوي، لكنها ما زالت قابلة للفهم والضبط بهدوء.',
-          footerTitle:'بطاقة مراجعة ذكية',
-          footerCopy:'الأنسب الآن أنك تراجع آخر وجبة أو حساب المعامل قبل الخطوة الجاية.',
-          tone:'rgba(230,184,92,.18)',
-          color:'#FFE1A3',
-          soft:'var(--warning-soft)',
-          scanMessage:'قراءتك أعلى من المثالي شوي، تابع بهدوء.',
-          achievement: 'أنت متمكن'
+          label:'مرتفع قليلاً',
+          tag:'انتبه',
+          chip:'أعلى قليلاً',
+          message:'قراءتك أعلى من المثالي، راقب نفسك.',
+          colorBg:'#E6B85C',
+          colorText:'#1D2433',
+          soft:'rgba(230,184,92,.15)'
         };
       }
-
       if(value <= 250){
         return {
           key:'high',
           label:'مرتفع',
-          tag:'تحتاج مراجعة',
+          tag:'مراجعة',
           chip:'مرتفع',
-          message:'فيه ارتفاع واضح، وغالبًا أفضل خطوة الآن أنك ترجع لآخر وجبة أو تحسب المعامل.',
-          footerTitle:'بطاقة متابعة واضحة',
-          footerCopy:'راجع آخر وجبة أو حدّث القراءة حتى تكون الصورة أدق.',
-          tone:'rgba(230,184,92,.18)',
-          color:'#FFE1A3',
-          soft:'var(--warning-soft)',
-          scanMessage:'قراءتك مرتفعة وتحتاج مراجعة أقرب.',
-          achievement: 'أنت مستكشف'
+          message:'قراءتك مرتفعة، راجع وجبتك أو جرعتك.',
+          colorBg:'#DA726D',
+          colorText:'#FFFFFF',
+          soft:'rgba(218,114,109,.15)'
         };
       }
-
       return {
         key:'very-high',
-        label:'مرتفع جدًا',
-        tag:'انتبه أكثر',
-        chip:'مرتفع جدًا',
-        message:'القراءة مرتفعة بشكل واضح، ويفضل متابعة الحالة بدقة أكبر الآن.',
-        footerTitle:'بطاقة تحتاج متابعة',
-        footerCopy:'حدّث القراءة أو انتقل مباشرة للأداة الأنسب حتى تكون خطوتك القادمة أوضح.',
-        tone:'rgba(218,114,109,.18)',
-        color:'#FFB6AE',
-        soft:'var(--danger-soft)',
-        scanMessage:'القراءة مرتفعة بشكل واضح، انتبه وتابعها بدقة.',
-        achievement: 'أنت بطل بالتحدي'
+        label:'مرتفع جداً',
+        tag:'خطر',
+        chip:'مرتفع جداً',
+        message:'قراءتك مرتفعة جداً، تدخل طبي فوري.',
+        colorBg:'#B33F3A',
+        colorText:'#FFFFFF',
+        soft:'rgba(218,114,109,.15)'
       };
     }
 
+    // تحميل أحدث وجبة
     function getLatestMeal(){
       const direct = readJSON(KEYS.MEAL);
       if(direct) return direct;
@@ -1134,17 +1299,15 @@
       if(Array.isArray(list) && list.length){
         const last = list[list.length - 1];
         return {
-          mealName: last.name || 'آخر وجبة محفوظة',
+          mealName: last.name || 'آخر وجبة',
           carbs: last.c ?? last.carbs ?? null,
-          dose: last.insulin ?? last.dose ?? null,
           savedAt: last.time || null,
-          summary: last.ins ? last.ins : null
         };
       }
-
       return null;
     }
 
+    // ترحيل البيانات القديمة
     function migrateLegacy(){
       const legacy = readJSON(KEYS.USER_LEGACY) || readJSON(KEYS.GUIDE_LEGACY);
       const profile = readJSON(KEYS.PROFILE);
@@ -1153,7 +1316,6 @@
       if(!profile && legacy?.name){
         writeJSON(KEYS.PROFILE, { name: String(legacy.name).trim() });
       }
-
       if(!home && (legacy?.reading || legacy?.time)){
         writeJSON(KEYS.HOME, {
           reading: legacy.reading ?? '',
@@ -1163,6 +1325,7 @@
       }
     }
 
+    // مزامنة مع المخازن القديمة
     function syncLegacyStores(){
       const payload = {
         name: state.profile?.name || '',
@@ -1170,11 +1333,11 @@
         time: state.home?.time || '',
         savedAt: state.home?.savedAt || new Date().toISOString()
       };
-
       writeJSON(KEYS.USER_LEGACY, payload);
       writeJSON(KEYS.GUIDE_LEGACY, payload);
     }
 
+    // تحميل الحالة من التخزين
     function hydrateState(){
       migrateLegacy();
       state.profile = readJSON(KEYS.PROFILE) || {};
@@ -1183,25 +1346,21 @@
       state.meal = getLatestMeal();
     }
 
+    // تحديث التحية
     function setGreeting(){
       const period = getPeriod();
       const name = state.profile?.name?.trim();
-
       els.timeChip.innerHTML = `${period.icon} <span>${period.hint}</span>`;
-
       if(name){
-        if(Number.isFinite(Number(state.home?.reading))){
-          els.greetingSub.textContent = 'بطاقتك تعكس تقدمك، كل يوم خطوة أقرب لفهم جسمك.';
-        } else {
-          els.greetingSub.textContent = 'أنت على بعد خطوة من إكمال بطاقتك وإطلاق رحلتك.';
-        }
         els.greetingTitle.textContent = `${period.label} يا ${name}`;
+        els.greetingSub.textContent = 'بطاقتك تعكس تقدمك اليوم.';
       } else {
         els.greetingTitle.textContent = 'حياك الله في SugarMind';
-        els.greetingSub.textContent = 'رحلة السكر الخاصة بك تبدأ اليوم.';
+        els.greetingSub.textContent = 'ابدأ بتسجيل اسمك وقراءتك.';
       }
     }
 
+    // تحديث البطاقة
     function setWalletCard(){
       const name = state.profile?.name?.trim() || 'ضيفنا الجديد';
       const reading = Number(state.home?.reading);
@@ -1210,196 +1369,96 @@
 
       els.walletName.textContent = name;
       els.walletMessage.textContent = readingState.message;
-      els.walletStateChip.textContent = readingState.tag;
-      els.walletStateChip.style.background = readingState.tone;
-      els.walletStateChip.style.color = readingState.color;
-      els.walletStateChip.style.borderColor = 'transparent';
-
+      els.walletTag.textContent = readingState.tag;
       els.walletReading.textContent = Number.isFinite(reading) ? reading : '--';
       els.walletRatio.textContent = ratio;
-      els.walletRatioCopy.textContent = state.icr?.icr
-        ? `آخر معامل محفوظ عندك ${ratio}${state.icr?.confidenceLabel ? ` · والثقة ${state.icr.confidenceLabel}` : ''}.`
-        : 'إذا حسبت معاملك من الحاسبة، يظهر هنا مباشرة داخل البطاقة.';
-
-      els.walletStatusChip.textContent = readingState.chip;
-      els.walletStatusChip.style.background = readingState.tone;
-      els.walletStatusChip.style.color = readingState.color;
-      els.walletStatusChip.style.borderColor = 'transparent';
-
-      els.walletTimeChip.textContent = state.home?.time ? `آخر تحديث: ${formatTime(state.home.time)}` : 'آخر تحديث: الآن';
-      els.walletBrandSub.textContent = state.icr?.icr ? `معاملك الحالي ${ratio}` : 'بطاقتك اليومية';
-      els.walletTag.textContent = state.profile?.name ? 'بطاقة متابعة' : 'بطاقة يومية';
-      els.walletFooterTitle.textContent = readingState.footerTitle;
-      els.walletFooterCopy.textContent = readingState.footerCopy;
+      els.walletStateChip.textContent = readingState.chip;
+      els.walletStateChip.style.background = readingState.colorBg;
+      els.walletStateChip.style.color = readingState.colorText;
+      els.walletStatusChip.textContent = readingState.label;
+      els.walletStatusChip.style.background = readingState.soft;
+      els.walletStatusChip.style.color = readingState.colorText;
     }
 
-    function setSummary(){
-      if(state.meal){
-        els.mealSummaryValue.textContent = state.meal.mealName || 'وجبة محفوظة';
-        if(state.meal.carbs || state.meal.dose){
-          const carbsText = state.meal.carbs ? `${state.meal.carbs}g كارب` : 'بدون كارب واضح';
-          const doseText = state.meal.dose ? ` · ${state.meal.dose}u` : '';
-          els.mealSummaryMeta.textContent = `${carbsText}${doseText}`;
-        }else{
-          els.mealSummaryMeta.textContent = state.meal.summary || 'عندك وجبة محفوظة من قبل.';
-        }
-      }else{
-        els.mealSummaryValue.textContent = 'ما فيه وجبة محفوظة';
-        els.mealSummaryMeta.textContent = 'ابدأ من محلل الوجبة إذا تبي ملخص أقرب.';
-      }
-
-      if(state.icr?.icr){
-        els.icrSummaryValue.textContent = `1:${state.icr.icr}`;
-        els.icrSummaryMeta.textContent = `الثقة: ${state.icr.confidenceLabel || 'أولية'}`;
-      }else{
-        els.icrSummaryValue.textContent = '--';
-        els.icrSummaryMeta.textContent = 'بانتظار أول حساب واضح.';
-      }
-
-      if(state.home?.savedAt){
-        els.updateSummaryValue.textContent = formatDateLabel(state.home.savedAt);
-        els.updateSummaryMeta.textContent = `آخر حفظ ${formatTime(state.home.savedAt)}`;
-      }else{
-        els.updateSummaryValue.textContent = 'اليوم';
-        els.updateSummaryMeta.textContent = 'إذا سجلت قراءة، يرجع لك التحديث هنا فورًا.';
-      }
-    }
-
-    function setDecisionBox(){
-      const name = state.profile?.name?.trim();
+    // تحديث قسم الإنجازات
+    function updateAchievements(){
+      // أعلى قراءة اليوم (من المخزن، لكن هنا نبسطها)
       const reading = Number(state.home?.reading);
-      const hasReading = Number.isFinite(reading);
-      const hasRatio = !!state.icr?.icr;
+      if(Number.isFinite(reading)){
+        els.achievementHigh.textContent = reading + ' mg/dL';
+      } else {
+        els.achievementHigh.textContent = '--';
+      }
+      // يمكن تحسينها لتعرض أعلى قراءة من سجل لاحق
 
-      let payload = {
-        title: 'ابدأ من بطاقتك',
-        copy: 'سجل معنا وابني رحلتك.',
-        actionTitle: 'أول خطوة',
-        actionCopy: 'سجل اسمك وقراءتك لتنطلق.',
-        actionText: 'سجل الآن',
-        target: 'setup'
-      };
-
-      if(name && !hasReading){
-        payload = {
-          title: 'كمّل بياناتك',
-          copy: 'اسمك مسجل، والآن أضف قراءتك لتكتمل بطاقتك.',
-          actionTitle: 'الخطوة الأنسب',
-          actionCopy: 'حدّث بطاقتك بآخر قراءة.',
-          actionText: 'أضف القراءة',
-          target: 'setup'
-        };
-      } else if(hasReading && !hasRatio){
-        payload = {
-          title: 'اقترب من الاحتراف',
-          copy: 'قراءتك موجودة، أضف معامل الكارب لتصبح خبيراً بجسمك.',
-          actionTitle: 'الخطوة الأنسب',
-          actionCopy: 'احسب المعامل الآن.',
-          actionText: 'احسب المعامل',
-          target: 'icr'
-        };
-      } else if(hasReading){
-        const stateInfo = getReadingState(reading);
-
-        if(stateInfo.key === 'low'){
-          payload = {
-            title: stateInfo.achievement,
-            copy: 'ننصحك بمتابعة القراءة وإعادة القياس بعد فترة.',
-            actionTitle: 'الأنسب لك',
-            actionCopy: 'حدّث القراءة بعد تحسن الحالة.',
-            actionText: 'تحديث القراءة',
-            target: 'setup'
-          };
-        } else if(stateInfo.key === 'range'){
-          payload = {
-            title: stateInfo.achievement,
-            copy: 'وضعك ممتاز، شارك بطاقتك مع من تحب.',
-            actionTitle: 'الأنسب لك',
-            actionCopy: 'احفظ بطاقتك كصورة أو شاركها.',
-            actionText: 'شارك البطاقة',
-            target: 'share'
-          };
-        } else if(stateInfo.key === 'slightly-high' || stateInfo.key === 'high'){
-          payload = {
-            title: stateInfo.achievement,
-            copy: 'القراءة تحتاج مراجعة، ننصح بحساب المعامل أو مراجعة الوجبة.',
-            actionTitle: 'الأنسب لك',
-            actionCopy: 'اذهب لحاسبة المعامل.',
-            actionText: 'احسب المعامل',
-            target: 'icr'
-          };
-        } else if(stateInfo.key === 'very-high'){
-          payload = {
-            title: stateInfo.achievement,
-            copy: 'القراءة مرتفعة جداً، انتبه وتابع حالتك بدقة.',
-            actionTitle: 'الأنسب لك',
-            actionCopy: 'حدث القراءة بعد قليل.',
-            actionText: 'تحديث القراءة',
-            target: 'setup'
-          };
-        }
+      // أفضل وجبة
+      if(state.meal?.mealName){
+        els.achievementBestMeal.textContent = state.meal.mealName;
+        els.achievementBestMealTrend.innerHTML = '🍽️ ' + (state.meal.carbs ? state.meal.carbs + 'g كارب' : '');
+      } else {
+        els.achievementBestMeal.textContent = 'لا توجد';
+        els.achievementBestMealTrend.innerHTML = 'سجل وجبة';
       }
 
-      els.decisionTitle.textContent = payload.title;
-      els.decisionCopy.textContent = payload.copy;
-      els.decisionActionTitle.textContent = payload.actionTitle;
-      els.decisionActionCopy.textContent = payload.actionCopy;
-      els.decisionActionBtn.textContent = payload.actionText;
-      els.decisionActionBtn.dataset.target = payload.target;
+      // نسبة القراءات في النطاق (محاكاة بسيطة)
+      if(Number.isFinite(reading)){
+        const stateInfo = getReadingState(reading);
+        if(stateInfo.key === 'range'){
+          els.achievementRangePercent.textContent = '100%';
+          els.rangeProgress.style.width = '100%';
+        } else {
+          els.achievementRangePercent.textContent = '0%';
+          els.rangeProgress.style.width = '0%';
+        }
+      } else {
+        els.achievementRangePercent.textContent = '0%';
+        els.rangeProgress.style.width = '0%';
+      }
     }
 
+    // عرض نتيجة القراءة السريعة
     function setQuickReadingResult(reading){
       const readingState = getReadingState(reading);
-      const statusColor = readingState.key === 'range'
-        ? 'var(--success)'
-        : (readingState.key === 'low' || readingState.key === 'very-high' ? 'var(--danger)' : 'var(--warning)');
-
       els.quickReadingValue.textContent = reading;
       els.quickReadingStatus.textContent = readingState.label;
       els.quickReadingStatus.style.background = readingState.soft;
-      els.quickReadingStatus.style.color = statusColor;
-      els.quickReadingMessage.textContent = readingState.scanMessage;
+      els.quickReadingStatus.style.color = readingState.colorText;
+      els.quickReadingMessage.textContent = readingState.message;
       els.quickReadingResult.classList.add('show');
     }
 
+    // إنشاء QR code
     function renderQrCode(){
       const targetUrl = `${window.location.origin}${window.location.pathname}`;
       els.qrCode.innerHTML = '';
       state.qrInstance = new QRCode(els.qrCode, {
         text: targetUrl,
-        width: 70,
-        height: 70,
+        width: 84,
+        height: 84,
         colorDark: '#1D2433',
         colorLight: '#FFFFFF',
         correctLevel: QRCode.CorrectLevel.M
       });
     }
 
+    // تعبئة النموذج من الحالة
     function fillFormFromState(){
       els.nameInput.value = state.profile?.name || '';
       els.readingInput.value = state.home?.reading ?? '';
     }
 
+    // التصيير الكامل
     function render(){
       hydrateState();
       setGreeting();
       setWalletCard();
-      setSummary();
-      setDecisionBox();
+      updateAchievements();
       fillFormFromState();
       renderQrCode();
       refreshInstallButton();
     }
 
-    function showToast(message){
-      els.toast.textContent = message;
-      els.toast.classList.add('show');
-      clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => {
-        els.toast.classList.remove('show');
-      }, 2600);
-    }
-
+    // فتح شيت التعديل
     function openRecorder(){
       fillFormFromState();
       els.recorderOverlay.classList.add('show');
@@ -1412,6 +1471,7 @@
       els.recorderOverlay.setAttribute('aria-hidden', 'true');
     }
 
+    // حفظ البيانات من الشيت
     function saveReading(){
       const name = els.nameInput.value.trim();
       const readingValue = Number(els.readingInput.value.trim());
@@ -1439,7 +1499,6 @@
       writeJSON(KEYS.PROFILE, state.profile);
       writeJSON(KEYS.HOME, state.home);
       syncLegacyStores();
-
       localStorage.setItem(KEYS.VALUE_MOMENT, 'true');
 
       closeRecorder();
@@ -1448,8 +1507,9 @@
       maybePromptInstallAfterValue();
     }
 
+    // حذف البيانات
     function deleteUserData(){
-      if(confirm('هل أنت متأكد من حذف جميع بياناتك؟ لا يمكن التراجع عن هذا الإجراء.')){
+      if(confirm('هل أنت متأكد من حذف جميع بياناتك؟ لا يمكن التراجع.')){
         localStorage.removeItem(KEYS.PROFILE);
         localStorage.removeItem(KEYS.HOME);
         localStorage.removeItem(KEYS.USER_LEGACY);
@@ -1467,9 +1527,10 @@
       }
     }
 
+    // تصدير البطاقة كصورة
     async function createCardBlob(){
       const canvas = await html2canvas(els.cardCaptureSurface, {
-        scale: 3, // دقة عالية جداً
+        scale: 3,
         backgroundColor: '#252B3F',
         useCORS: true,
         allowTaint: true,
@@ -1477,7 +1538,6 @@
         windowWidth: els.cardCaptureSurface.scrollWidth,
         windowHeight: els.cardCaptureSurface.scrollHeight
       });
-
       return new Promise((resolve) => {
         canvas.toBlob((blob) => resolve(blob), 'image/png', 1);
       });
@@ -1496,7 +1556,6 @@
           showToast('تعذر تجهيز الصورة');
           return;
         }
-
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = buildCardFileName();
@@ -1504,7 +1563,6 @@
         link.click();
         link.remove();
         setTimeout(() => URL.revokeObjectURL(link.href), 1500);
-
         showToast('تم حفظ البطاقة كصورة');
       }catch(_){
         showToast('تعذر حفظ البطاقة الآن');
@@ -1519,9 +1577,7 @@
           showToast('تعذر تجهيز البطاقة');
           return;
         }
-
         const file = new File([blob], buildCardFileName(), { type:'image/png' });
-
         if(navigator.share && navigator.canShare && navigator.canShare({ files:[file] })){
           await navigator.share({
             files:[file],
@@ -1531,15 +1587,12 @@
           showToast('تم فتح المشاركة');
           return;
         }
-
+        // fallback
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = buildCardFileName();
-        document.body.appendChild(link);
         link.click();
-        link.remove();
-        setTimeout(() => URL.revokeObjectURL(link.href), 1500);
-        showToast('المشاركة المباشرة غير مدعومة هنا، فتم حفظ البطاقة كصورة');
+        showToast('تم حفظ الصورة (المشاركة غير مدعومة)');
       }catch(error){
         if(error && error.name === 'AbortError'){
           showToast('تم إلغاء المشاركة');
@@ -1549,6 +1602,41 @@
       }
     }
 
+    // القراءة السريعة
+    function handleQuickReading(){
+      const value = Number(els.quickReadingInput.value.trim());
+      if(!Number.isFinite(value) || value < 20 || value > 600){
+        showToast('أدخل قراءة واضحة بين 20 و 600');
+        els.quickReadingInput.focus();
+        return;
+      }
+      setQuickReadingResult(value);
+    }
+
+    // حفظ القراءة السريعة في البطاقة
+    function saveQuickReadingToCard(){
+      const value = Number(els.quickReadingValue.textContent);
+      if(!Number.isFinite(value) || value < 20 || value > 600){
+        showToast('لا توجد قراءة صالحة للحفظ');
+        return;
+      }
+      const name = state.profile?.name?.trim() || 'ضيفنا الجديد';
+      const time = currentTimeValue();
+      state.profile = { name };
+      state.home = {
+        reading: value,
+        time,
+        savedAt: new Date().toISOString()
+      };
+      writeJSON(KEYS.PROFILE, state.profile);
+      writeJSON(KEYS.HOME, state.home);
+      syncLegacyStores();
+      localStorage.setItem(KEYS.VALUE_MOMENT, 'true');
+      render();
+      showToast('تم حفظ القراءة في البطاقة');
+    }
+
+    // دوال التثبيت (كما هي)
     function shouldOfferInstall(){
       if(state.isStandalone) return false;
       if(localStorage.getItem(KEYS.INSTALL_COMPLETED) === 'true') return false;
@@ -1562,26 +1650,22 @@
 
     function openInstallSheet(){
       if(!shouldOfferInstall()) return;
-
       if(state.isIOS){
-        els.installSub.textContent = 'على الآيفون يكون التثبيت من زر المشاركة داخل Safari.';
-        els.installCopy.textContent = 'بعد أول استخدام فعلي، هذا أفضل وقت تضيف فيه التطبيق للشاشة الرئيسية.';
+        els.installSub.textContent = 'على الآيفون من زر المشاركة في Safari.';
+        els.installCopy.textContent = 'أضف للشاشة الرئيسية.';
         els.iosInstallSteps.classList.remove('hidden');
-        els.installNowBtn.textContent = 'فهمت الطريقة';
+        els.installNowBtn.textContent = 'فهمت';
       }else{
-        els.installSub.textContent = 'إذا ثبته الآن، بيفتح بشكل أقرب للتطبيق من الشاشة الرئيسية.';
-        els.installCopy.textContent = 'بمجرد ضغطك على تثبيت والموافقة، يحاول المتصفح إضافته لشاشتك الرئيسية مباشرة.';
+        els.installSub.textContent = 'ثبت التطبيق على جهازك.';
+        els.installCopy.textContent = 'سيتم إضافته للشاشة الرئيسية.';
         els.iosInstallSteps.classList.add('hidden');
-        els.installNowBtn.textContent = 'تثبيت الآن';
+        els.installNowBtn.textContent = 'تثبيت';
       }
-
       els.installOverlay.classList.add('show');
-      els.installOverlay.setAttribute('aria-hidden', 'false');
     }
 
     function closeInstallSheet(){
       els.installOverlay.classList.remove('show');
-      els.installOverlay.setAttribute('aria-hidden', 'true');
     }
 
     async function handleInstallNow(){
@@ -1589,30 +1673,26 @@
         localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
         closeInstallSheet();
         refreshInstallButton();
-        showToast('نفّذ الخطوات من Safari ثم أضفه للشاشة');
+        showToast('اتبع الخطوات من Safari');
         return;
       }
-
       if(!state.deferredInstallPrompt){
         closeInstallSheet();
-        showToast('التثبيت غير متاح الآن من هذا المتصفح');
+        showToast('التثبيت غير متاح الآن');
         return;
       }
-
       try{
         state.deferredInstallPrompt.prompt();
         const choice = await state.deferredInstallPrompt.userChoice;
-
         if(choice && choice.outcome === 'accepted'){
           localStorage.setItem(KEYS.INSTALL_COMPLETED, 'true');
           localStorage.removeItem(KEYS.INSTALL_DISMISSED);
-          showToast('تم إرسال طلب التثبيت');
+          showToast('تم تثبيت التطبيق');
         }else{
           localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
-          showToast('تمام، نخليه لوقت لاحق');
         }
       }catch(_){
-        showToast('تعذر فتح نافذة التثبيت الآن');
+        showToast('تعذر التثبيت');
       }finally{
         state.deferredInstallPrompt = null;
         closeInstallSheet();
@@ -1626,46 +1706,7 @@
       state.installTimer = setTimeout(openInstallSheet, 1400);
     }
 
-    function scheduleInstallForReturningUser(){
-      if(!localStorage.getItem(KEYS.VALUE_MOMENT)) return;
-      if(!shouldOfferInstall()) return;
-      clearTimeout(state.installTimer);
-      state.installTimer = setTimeout(openInstallSheet, 6500);
-    }
-
-    function handleQuickReading(){
-      const value = Number(els.quickReadingInput.value.trim());
-      if(!Number.isFinite(value) || value < 20 || value > 600){
-        showToast('أدخل قراءة واضحة بين 20 و 600');
-        els.quickReadingInput.focus();
-        return;
-      }
-      setQuickReadingResult(value);
-    }
-
-    function handleDecisionAction(){
-      const target = els.decisionActionBtn.dataset.target;
-
-      if(target === 'setup'){
-        openRecorder();
-        return;
-      }
-
-      if(target === 'share'){
-        shareCardImage();
-        return;
-      }
-
-      if(target === 'icr'){
-        window.location.href = 'carb-calculator.html';
-        return;
-      }
-
-      if(target === 'meals'){
-        window.location.href = 'meal-analyzer.html';
-      }
-    }
-
+    // ربط الأحداث
     function bindEvents(){
       els.openRecorderBtn.addEventListener('click', openRecorder);
       els.editCardBtn.addEventListener('click', openRecorder);
@@ -1673,13 +1714,10 @@
       els.cancelRecorderBtn.addEventListener('click', closeRecorder);
       els.saveReadingBtn.addEventListener('click', saveReading);
       els.deleteDataBtn.addEventListener('click', deleteUserData);
-
       els.shareCardBtn.addEventListener('click', shareCardImage);
       els.saveCardBtn.addEventListener('click', saveCardImage);
-
       els.quickReadingBtn.addEventListener('click', handleQuickReading);
-      els.decisionActionBtn.addEventListener('click', handleDecisionAction);
-
+      els.saveQuickReadingBtn.addEventListener('click', saveQuickReadingToCard);
       els.installTrigger.addEventListener('click', openInstallSheet);
       els.closeInstallBtn.addEventListener('click', closeInstallSheet);
       els.dismissInstallBtn.addEventListener('click', () => {
@@ -1689,25 +1727,24 @@
       });
       els.installNowBtn.addEventListener('click', handleInstallNow);
 
-      els.recorderOverlay.addEventListener('click', (event) => {
-        if(event.target === els.recorderOverlay) closeRecorder();
+      // إغلاق الشيتات بالنقر على الخلفية
+      els.recorderOverlay.addEventListener('click', (e) => {
+        if(e.target === els.recorderOverlay) closeRecorder();
+      });
+      els.installOverlay.addEventListener('click', (e) => {
+        if(e.target === els.installOverlay) closeInstallSheet();
       });
 
-      els.installOverlay.addEventListener('click', (event) => {
-        if(event.target === els.installOverlay) closeInstallSheet();
-      });
-
-      document.addEventListener('keydown', (event) => {
-        if(event.key === 'Escape'){
+      // مفتاح Escape
+      document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape'){
           closeRecorder();
           closeInstallSheet();
         }
-
-        if(event.key === 'Enter'){
-          if(els.recorderOverlay.classList.contains('show') && event.target.tagName !== 'BUTTON'){
+        if(e.key === 'Enter'){
+          if(els.recorderOverlay.classList.contains('show') && e.target.tagName !== 'BUTTON'){
             saveReading();
           }
-
           if(document.activeElement === els.quickReadingInput){
             handleQuickReading();
           }
@@ -1715,6 +1752,7 @@
       });
     }
 
+    // أحداث التثبيت
     function setupInstallEvents(){
       window.addEventListener('beforeinstallprompt', (event) => {
         event.preventDefault();
@@ -1722,14 +1760,20 @@
         refreshInstallButton();
         scheduleInstallForReturningUser();
       });
-
       window.addEventListener('appinstalled', () => {
         localStorage.setItem(KEYS.INSTALL_COMPLETED, 'true');
         localStorage.removeItem(KEYS.INSTALL_DISMISSED);
         closeInstallSheet();
         refreshInstallButton();
-        showToast('تم تثبيت SugarMind على جهازك');
+        showToast('تم تثبيت SugarMind');
       });
+    }
+
+    function scheduleInstallForReturningUser(){
+      if(!localStorage.getItem(KEYS.VALUE_MOMENT)) return;
+      if(!shouldOfferInstall()) return;
+      clearTimeout(state.installTimer);
+      state.installTimer = setTimeout(openInstallSheet, 6500);
     }
 
     function hideSplash(){
@@ -1738,6 +1782,7 @@
       }, 1000);
     }
 
+    // تهيئة الصفحة
     document.addEventListener('DOMContentLoaded', () => {
       bindEvents();
       setupInstallEvents();
