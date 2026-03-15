@@ -278,4 +278,802 @@
       transition:transform .22s var(--ease), box-shadow .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease);
     }
     .btn:hover{transform:translateY(-2px)}
-    .btn-pr
+    .btn-primary{
+      background:linear-gradient(135deg, var(--primary), #69927B);
+      color:#fff; box-shadow:0 18px 34px rgba(123,170,146,.24);
+    }
+    .btn-primary:hover{box-shadow:0 22px 38px rgba(123,170,146,.30)}
+    .btn-accent{
+      background:linear-gradient(135deg, var(--accent-deep), var(--accent));
+      color:#fff; box-shadow:0 18px 34px rgba(69,73,106,.26);
+    }
+    .btn-accent:hover{box-shadow:0 22px 38px rgba(69,73,106,.32)}
+    .btn-secondary{
+      background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); color:var(--text);
+      min-width:56px;
+    }
+
+    .section{margin-bottom:18px}
+    .quick-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+    .quick-card{
+      min-height:134px; padding:16px 14px;
+      border-radius:24px; border:1px solid rgba(255,255,255,.07);
+      background:rgba(255,255,255,.04); box-shadow:var(--shadow-sm);
+      display:flex; flex-direction:column; justify-content:space-between; align-items:flex-start;
+      transition:transform .22s var(--ease), border-color .22s var(--ease), background .22s var(--ease);
+    }
+    .quick-card:hover{transform:translateY(-3px); border-color:rgba(125,139,174,.22); background:rgba(255,255,255,.05)}
+    .quick-icon{
+      width:46px; height:46px; border-radius:16px;
+      background:linear-gradient(135deg, rgba(125,139,174,.20), rgba(123,170,146,.16));
+      color:var(--cream); display:flex; align-items:center; justify-content:center; font-size:20px;
+    }
+    .quick-card strong{display:block; font-size:14px; font-weight:900; line-height:1.5; margin-bottom:6px}
+    .quick-card span{display:block; font-size:12px; color:var(--text-2); line-height:1.7}
+
+    .summary-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+    .summary-card{
+      min-height:124px; padding:16px;
+      border-radius:22px; border:1px solid rgba(255,255,255,.07);
+      background:rgba(255,255,255,.038); box-shadow:var(--shadow-sm);
+    }
+    .summary-label{font-size:12px; color:var(--text-3); font-weight:800; margin-bottom:12px}
+    .summary-value{font-size:16px; font-weight:900; line-height:1.45; margin-bottom:8px}
+    .summary-meta{font-size:12px; color:var(--text-2); line-height:1.8}
+
+    .insight-card{
+      border-radius:28px; border:1px solid rgba(255,255,255,.07);
+      background:
+        radial-gradient(circle at 100% 0%, rgba(125,139,174,.18), transparent 22%),
+        rgba(255,255,255,.042);
+      box-shadow:var(--shadow-md); padding:20px;
+    }
+    .insight-head{display:flex; align-items:center; gap:10px; margin-bottom:12px}
+    .insight-badge{
+      width:40px; height:40px; border-radius:14px;
+      background:linear-gradient(135deg, rgba(125,139,174,.26), rgba(123,170,146,.18));
+      display:flex; align-items:center; justify-content:center; font-size:18px;
+    }
+    .insight-title{font-size:17px; font-weight:900}
+    .insight-copy{font-size:14px; color:var(--text-2); line-height:1.95}
+
+    .bottom-nav-wrap{
+      position:fixed; right:0; left:0; bottom:0; z-index:30; pointer-events:none;
+      padding:0 18px calc(14px + var(--safe-bottom));
+    }
+    .bottom-nav{
+      max-width:var(--max-width); margin:0 auto;
+      border-radius:26px; border:1px solid rgba(255,255,255,.08);
+      background:rgba(19,24,39,.88);
+      backdrop-filter:blur(18px);
+      box-shadow:0 20px 55px rgba(0,0,0,.30);
+      padding:10px;
+      display:grid; grid-template-columns:repeat(4,1fr); gap:6px;
+      pointer-events:auto;
+    }
+    .nav-item{
+      min-height:62px; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:6px; font-size:11px; font-weight:800; color:var(--text-3);
+      transition:background .22s var(--ease), color .22s var(--ease), transform .22s var(--ease);
+    }
+    .nav-item span:first-child{font-size:20px; line-height:1}
+    .nav-item.active{
+      background:linear-gradient(135deg, rgba(125,139,174,.18), rgba(123,170,146,.15));
+      color:var(--text);
+      transform:translateY(-2px);
+    }
+
+    .sheet-overlay{
+      position:fixed; inset:0; background:rgba(4,7,14,.56); backdrop-filter:blur(10px);
+      z-index:50; display:flex; align-items:flex-end; justify-content:center;
+      opacity:0; visibility:hidden; transition:opacity .24s ease, visibility .24s ease;
+      padding:14px;
+    }
+    .sheet-overlay.show{opacity:1; visibility:visible}
+    .sheet{
+      width:min(100%, var(--max-width));
+      background:linear-gradient(180deg, #1B2132 0%, #151A28 100%);
+      border-radius:30px; border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow-lg);
+      padding:16px 16px 18px; transform:translateY(24px); transition:transform .28s var(--ease);
+    }
+    .sheet-overlay.show .sheet{transform:translateY(0)}
+    .sheet-handle{width:52px; height:5px; border-radius:999px; background:rgba(255,255,255,.12); margin:0 auto 16px}
+    .sheet-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:16px}
+    .sheet-title{font-size:22px; font-weight:900; line-height:1.3; letter-spacing:-.5px}
+    .sheet-sub{font-size:13px; color:var(--text-2); line-height:1.8; margin-top:6px}
+    .close-btn{
+      width:40px; height:40px; border-radius:14px; flex-shrink:0;
+      border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.04); font-size:24px;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .field{margin-bottom:12px}
+    .field label{display:block; font-size:13px; font-weight:800; color:var(--text-2); margin-bottom:8px}
+    .input{
+      width:100%; min-height:54px; border-radius:18px; border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.045); color:var(--text); outline:none;
+      padding:0 16px; font-size:15px;
+      transition:border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .input:focus{border-color:rgba(125,139,174,.35); background:rgba(255,255,255,.06); box-shadow:0 0 0 4px rgba(125,139,174,.10)}
+    .inline-fields{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .helper{font-size:12px; color:var(--text-3); line-height:1.8; margin:6px 2px 14px}
+    .sheet-actions{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+
+    .install-steps{display:grid; gap:10px; margin-top:8px; margin-bottom:16px}
+    .install-step{
+      display:flex; align-items:flex-start; gap:10px; padding:14px;
+      border-radius:18px; border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.04);
+    }
+    .install-step-index{
+      width:28px; height:28px; border-radius:10px; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(125,139,174,.18); color:var(--cream); font-size:13px; font-weight:900; margin-top:2px;
+    }
+    .install-step strong{display:block; font-size:13px; font-weight:900; margin-bottom:4px}
+    .install-step span{display:block; font-size:12px; color:var(--text-2); line-height:1.7}
+    .hidden{display:none !important}
+
+    .toast{
+      position:fixed; right:50%; bottom:calc(104px + var(--safe-bottom)); z-index:60;
+      transform:translateX(50%) translateY(18px);
+      min-width:220px; max-width:calc(100vw - 32px);
+      padding:14px 16px; border-radius:16px;
+      border:1px solid rgba(255,255,255,.08); background:rgba(19,24,39,.92); backdrop-filter:blur(14px);
+      color:var(--text); text-align:center; font-size:13px; font-weight:800;
+      box-shadow:var(--shadow-md); opacity:0; visibility:hidden; transition:all .22s ease;
+    }
+    .toast.show{opacity:1; visibility:visible; transform:translateX(50%) translateY(0)}
+
+    @media (max-width:420px){
+      .greeting-title{font-size:28px}
+      .wallet-name{font-size:25px}
+      .wallet-grid,.summary-grid,.quick-grid,.inline-fields,.card-actions{grid-template-columns:1fr}
+      .metric-value strong{font-size:50px}
+      .install-btn{padding:0 12px}
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-noise"></div>
+
+  <div class="splash" id="splashScreen">
+    <div class="splash-inner">
+      <div class="splash-mark">
+        <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
+        </svg>
+      </div>
+      <div class="splash-title">SugarMind</div>
+      <div class="splash-sub">أوضح بطاقة يومية لحالتك</div>
+      <div class="splash-bar"><span></span></div>
+    </div>
+  </div>
+
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 100 40" preserveAspectRatio="none">
+            <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">SugarMind</div>
+          <div class="brand-sub">بطاقتك اليومية للسكر والكارب</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="install-btn" id="installTrigger" type="button">
+          <span>⬇️</span>
+          <span>ثبت التطبيق</span>
+        </button>
+        <button class="icon-btn" id="openRecorderBtn" type="button" aria-label="تعديل البطاقة">✏️</button>
+      </div>
+    </header>
+
+    <section class="greeting">
+      <div class="time-chip" id="timeChip">🌤️ <span id="timeText">بداية يوم هادئ</span></div>
+      <h1 class="greeting-title" id="greetingTitle">حياك الله في SugarMind</h1>
+      <p class="greeting-sub" id="greetingSub">خلنا نبدأ بإعداد بسيط، وبعدها تصير بطاقتك جاهزة للحفظ والمشاركة.</p>
+    </section>
+
+    <section class="main-card-wrap">
+      <div class="main-card-head">
+        <div class="section-title">بطاقتك</div>
+        <div class="section-note">الحصان الرابح للمشاركة</div>
+      </div>
+
+      <div class="card-capture-surface" id="cardCaptureSurface">
+        <div class="wallet-card" id="walletCard">
+          <div class="wallet-pulse" aria-hidden="true">
+            <svg viewBox="0 0 140 46" preserveAspectRatio="none">
+              <path d="M0 24 H16 L24 14 L34 34 L45 10 L56 28 L66 18 L78 24 H140"></path>
+            </svg>
+          </div>
+
+          <div class="wallet-top">
+            <div>
+              <div class="wallet-badge" id="walletBadge">بطاقة SugarMind</div>
+            </div>
+            <div class="wallet-brand">
+              <strong>SugarMind</strong>
+              <span id="walletBrandSub">رفيقك اليومي</span>
+            </div>
+          </div>
+
+          <div class="wallet-name" id="walletName">ضيفنا الجديد</div>
+          <div class="wallet-state" id="walletState">سجل اسمك وآخر قراءة عندك، وبعدها تصير بطاقتك أوضح وأجهز للمشاركة.</div>
+
+          <div class="wallet-grid">
+            <div class="metric-box">
+              <div class="metric-label">قراءة السكر الحالية</div>
+              <div class="metric-value">
+                <strong id="walletReading">--</strong>
+                <span>mg/dL</span>
+              </div>
+              <div class="metric-sub">
+                <div class="micro-chip" id="walletStatusChip">بانتظار القراءة</div>
+                <div class="micro-chip" id="walletTimeChip">آخر تحديث: الآن</div>
+              </div>
+            </div>
+
+            <div class="ratio-box">
+              <div class="ratio-label">معامل الكارب</div>
+              <div class="ratio-main">
+                <strong id="walletRatio">1:--</strong>
+                <span>تقريبًا</span>
+              </div>
+              <div class="ratio-copy" id="walletRatioCopy">إذا حسبت معاملك من الحاسبة، يظهر هنا مباشرة داخل بطاقتك.</div>
+            </div>
+          </div>
+
+          <div class="wallet-bottom">
+            <div class="wallet-footer-meta">
+              <div class="wallet-footer-kicker" id="walletFooterKicker">بطاقة قابلة للمشاركة</div>
+              <div class="wallet-footer-title" id="walletFooterTitle">جاهزة للحفظ والإرسال</div>
+              <div class="wallet-footer-copy" id="walletFooterCopy">شاركها مع أهلك أو مجتمعك أو احفظها في جهازك كصورة أنيقة وواضحة.</div>
+            </div>
+
+            <div class="qr-wrap">
+              <div class="qr-box">
+                <div id="qrCode"></div>
+              </div>
+              <div class="qr-caption">امسح الكود وافتح التطبيق</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn btn-primary" id="shareCardBtn" type="button">شارك بطاقتك</button>
+        <button class="btn btn-accent" id="saveCardBtn" type="button">احفظها كصورة</button>
+        <button class="btn btn-secondary" id="editCardBtn" type="button" aria-label="تعديل البطاقة">✏️</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="main-card-head">
+        <div class="section-title">أدواتك</div>
+        <div class="section-note">الأساس اليومي</div>
+      </div>
+
+      <div class="quick-grid">
+        <a class="quick-card" href="meal-analyzer.html">
+          <div class="quick-icon">🍽️</div>
+          <div>
+            <strong>احسب الوجبة</strong>
+            <span>صوّر أو اكتب وجبتك وخذ تقدير أقرب للكارب والأنسولين.</span>
+          </div>
+        </a>
+
+        <a class="quick-card" href="carb-calculator.html">
+          <div class="quick-icon">🧮</div>
+          <div>
+            <strong>احسب المعامل</strong>
+            <span>ابنِ معامل الكارب على بياناتك الحالية وخله يظهر داخل بطاقتك.</span>
+          </div>
+        </a>
+
+        <a class="quick-card" href="daily-guide.html">
+          <div class="quick-icon">📋</div>
+          <div>
+            <strong>الدليل اليومي</strong>
+            <span>شوف ملخص يومك كامل بسرعة وفي شاشة أوضح.</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="main-card-head">
+        <div class="section-title">ملخص يومك</div>
+        <div class="section-note">آخر شيء مهم عندك</div>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="summary-label">آخر وجبة</div>
+          <div class="summary-value" id="mealSummaryValue">ما فيه وجبة محفوظة</div>
+          <div class="summary-meta" id="mealSummaryMeta">ابدأ من محلل الوجبة إذا تبي ملخص أقرب.</div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-label">آخر معامل</div>
+          <div class="summary-value" id="icrSummaryValue">--</div>
+          <div class="summary-meta" id="icrSummaryMeta">بانتظار أول حساب واضح.</div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-label">آخر تحديث</div>
+          <div class="summary-value" id="updateSummaryValue">اليوم</div>
+          <div class="summary-meta" id="updateSummaryMeta">إذا سجلت قراءة، يرجع لك التحديث هنا فورًا.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="insight-card">
+        <div class="insight-head">
+          <div class="insight-badge">✨</div>
+          <div class="insight-title">قراءة SugarMind</div>
+        </div>
+        <p class="insight-copy" id="insightCopy">الفكرة هنا بسيطة: بطاقة واحدة واضحة تعرّف عنك وتعطيك أهم ما تحتاجه الآن، بدل التشتت بين الصفحات والأرقام.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="bottom-nav-wrap">
+    <nav class="bottom-nav" aria-label="التنقل السفلي">
+      <a class="nav-item active" href="index.html"><span>🏠</span><span>الرئيسية</span></a>
+      <a class="nav-item" href="meal-analyzer.html"><span>🍽️</span><span>الوجبات</span></a>
+      <a class="nav-item" href="carb-calculator.html"><span>🧮</span><span>الحساب</span></a>
+      <a class="nav-item" href="daily-guide.html"><span>📋</span><span>اليوم</span></a>
+    </nav>
+  </div>
+
+  <div class="sheet-overlay" id="recorderOverlay" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="recorderTitle">
+      <div class="sheet-handle"></div>
+
+      <div class="sheet-head">
+        <div>
+          <h3 class="sheet-title" id="recorderTitle">تعديل بطاقتك</h3>
+          <p class="sheet-sub">أدخل اسمك وآخر قراءة، وSugarMind يرتب البطاقة لك مباشرة.</p>
+        </div>
+        <button class="close-btn" id="closeRecorderBtn" type="button" aria-label="إغلاق">×</button>
+      </div>
+
+      <div class="field">
+        <label for="nameInput">الاسم</label>
+        <input class="input" id="nameInput" type="text" placeholder="مثال: خالد" maxlength="30" />
+      </div>
+
+      <div class="inline-fields">
+        <div class="field">
+          <label for="readingInput">قراءة السكر</label>
+          <input class="input" id="readingInput" type="number" inputmode="numeric" min="20" max="600" placeholder="120" />
+        </div>
+
+        <div class="field">
+          <label for="timeInput">وقت القراءة</label>
+          <input class="input" id="timeInput" type="time" />
+        </div>
+      </div>
+
+      <p class="helper">التخزين محلي على نفس الجهاز فقط، حتى يتعرف عليك الهوم وتظل بطاقتك محدثة داخل التطبيق.</p>
+
+      <div class="sheet-actions">
+        <button class="btn btn-primary" id="saveReadingBtn" type="button">حفظ البطاقة</button>
+        <button class="btn btn-secondary" id="cancelRecorderBtn" type="button">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet-overlay" id="installOverlay" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="installTitle">
+      <div class="sheet-handle"></div>
+
+      <div class="sheet-head">
+        <div>
+          <h3 class="sheet-title" id="installTitle">ثبت SugarMind على شاشتك</h3>
+          <p class="sheet-sub" id="installSub">إذا فتحته من الشاشة الرئيسية، بيحس أكثر كتطبيق يومي سريع وخفيف.</p>
+        </div>
+        <button class="close-btn" id="closeInstallBtn" type="button" aria-label="إغلاق">×</button>
+      </div>
+
+      <div class="install-steps hidden" id="iosInstallSteps">
+        <div class="install-step">
+          <div class="install-step-index">1</div>
+          <div>
+            <strong>افتح زر المشاركة</strong>
+            <span>من أسفل أو أعلى Safari حسب جهازك.</span>
+          </div>
+        </div>
+
+        <div class="install-step">
+          <div class="install-step-index">2</div>
+          <div>
+            <strong>اختر إضافة إلى الشاشة الرئيسية</strong>
+            <span>ثم أكّد الإضافة حتى تظهر لك أيقونة SugarMind.</span>
+          </div>
+        </div>
+
+        <div class="install-step">
+          <div class="install-step-index">3</div>
+          <div>
+            <strong>افتحه من الأيقونة</strong>
+            <span>وبيشتغل بإحساس أقرب للتطبيق داخل جهازك.</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="helper" id="installCopy">أفضل وقت للتثبيت هو بعد أول استخدام فعلي داخل التطبيق.</p>
+
+      <div class="sheet-actions">
+        <button class="btn btn-primary" id="installNowBtn" type="button">تثبيت الآن</button>
+        <button class="btn btn-secondary" id="dismissInstallBtn" type="button">لاحقًا</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const KEYS = {
+      PROFILE: 'sugarmind_profile_v1',
+      HOME: 'sugarmind_home_v1',
+      USER_LEGACY: 'sugarmind_user',
+      GUIDE_LEGACY: 'sugarmind_v5',
+      ICR: 'sugarmind_icr_result_v2',
+      MEAL: 'sugarmind_meal_result_v1',
+      MEALS_LIST: 'sugarmind_meals',
+      INSTALL_DISMISSED: 'sugarmind_install_dismissed_v1',
+      INSTALL_COMPLETED: 'sugarmind_install_completed_v1',
+      VALUE_MOMENT: 'sugarmind_value_moment_v1'
+    };
+
+    const state = {
+      profile: {},
+      home: {},
+      icr: null,
+      meal: null,
+      deferredInstallPrompt: null,
+      installTimer: null,
+      qrInstance: null,
+      isIOS: /iphone|ipad|ipod/i.test(navigator.userAgent),
+      isStandalone: window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
+    };
+
+    const els = {
+      splash: document.getElementById('splashScreen'),
+      greetingTitle: document.getElementById('greetingTitle'),
+      greetingSub: document.getElementById('greetingSub'),
+      timeChip: document.getElementById('timeChip'),
+      timeText: document.getElementById('timeText'),
+
+      walletName: document.getElementById('walletName'),
+      walletState: document.getElementById('walletState'),
+      walletReading: document.getElementById('walletReading'),
+      walletRatio: document.getElementById('walletRatio'),
+      walletRatioCopy: document.getElementById('walletRatioCopy'),
+      walletStatusChip: document.getElementById('walletStatusChip'),
+      walletTimeChip: document.getElementById('walletTimeChip'),
+      walletBadge: document.getElementById('walletBadge'),
+      walletBrandSub: document.getElementById('walletBrandSub'),
+      walletFooterKicker: document.getElementById('walletFooterKicker'),
+      walletFooterTitle: document.getElementById('walletFooterTitle'),
+      walletFooterCopy: document.getElementById('walletFooterCopy'),
+      qrCode: document.getElementById('qrCode'),
+      cardCaptureSurface: document.getElementById('cardCaptureSurface'),
+
+      mealSummaryValue: document.getElementById('mealSummaryValue'),
+      mealSummaryMeta: document.getElementById('mealSummaryMeta'),
+      icrSummaryValue: document.getElementById('icrSummaryValue'),
+      icrSummaryMeta: document.getElementById('icrSummaryMeta'),
+      updateSummaryValue: document.getElementById('updateSummaryValue'),
+      updateSummaryMeta: document.getElementById('updateSummaryMeta'),
+      insightCopy: document.getElementById('insightCopy'),
+
+      openRecorderBtn: document.getElementById('openRecorderBtn'),
+      editCardBtn: document.getElementById('editCardBtn'),
+      recorderOverlay: document.getElementById('recorderOverlay'),
+      closeRecorderBtn: document.getElementById('closeRecorderBtn'),
+      cancelRecorderBtn: document.getElementById('cancelRecorderBtn'),
+      saveReadingBtn: document.getElementById('saveReadingBtn'),
+      nameInput: document.getElementById('nameInput'),
+      readingInput: document.getElementById('readingInput'),
+      timeInput: document.getElementById('timeInput'),
+
+      shareCardBtn: document.getElementById('shareCardBtn'),
+      saveCardBtn: document.getElementById('saveCardBtn'),
+
+      installTrigger: document.getElementById('installTrigger'),
+      installOverlay: document.getElementById('installOverlay'),
+      closeInstallBtn: document.getElementById('closeInstallBtn'),
+      dismissInstallBtn: document.getElementById('dismissInstallBtn'),
+      installNowBtn: document.getElementById('installNowBtn'),
+      iosInstallSteps: document.getElementById('iosInstallSteps'),
+      installSub: document.getElementById('installSub'),
+      installCopy: document.getElementById('installCopy'),
+
+      toast: document.getElementById('toast')
+    };
+
+    function readJSON(key){
+      try{
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : null;
+      }catch(_){
+        return null;
+      }
+    }
+
+    function writeJSON(key, value){
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function currentTimeValue(){
+      const d = new Date();
+      return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    }
+
+    function normalizeTimeValue(value){
+      if(!value) return currentTimeValue();
+      if(/^\d{2}:\d{2}$/.test(value)) return value;
+      const d = new Date(value);
+      if(Number.isNaN(d.getTime())) return currentTimeValue();
+      return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    }
+
+    function formatTime(value){
+      if(!value) return 'الآن';
+      if(/^\d{2}:\d{2}$/.test(value)){
+        const [h,m] = value.split(':').map(Number);
+        const d = new Date();
+        d.setHours(h,m,0,0);
+        return d.toLocaleTimeString('ar-SA', { hour:'numeric', minute:'2-digit' });
+      }
+      const d = new Date(value);
+      if(Number.isNaN(d.getTime())) return 'الآن';
+      return d.toLocaleTimeString('ar-SA', { hour:'numeric', minute:'2-digit' });
+    }
+
+    function formatDateLabel(value){
+      const d = new Date(value);
+      if(Number.isNaN(d.getTime())) return 'اليوم';
+      return d.toLocaleDateString('ar-SA', { day:'numeric', month:'short' });
+    }
+
+    function getPeriod(){
+      const hour = new Date().getHours();
+      if(hour < 12) return {label:'صباح الخير', hint:'بداية يوم هادئ', icon:'🌤️'};
+      if(hour < 18) return {label:'مساء الخير', hint:'نكمل يومك بهدوء', icon:'☀️'};
+      return {label:'مساء الخير', hint:'خلنا نختم يومك بوضوح', icon:'🌙'};
+    }
+
+    function getReadingState(reading){
+      const value = Number(reading);
+
+      if(!Number.isFinite(value)){
+        return {
+          label:'بانتظار القراءة',
+          pill:'بطاقة جديدة',
+          tone:'rgba(255,255,255,.045)',
+          color:'var(--cream)',
+          title:'سجل أول قراءة حتى تجهز بطاقتك',
+          body:'بمجرد حفظ الاسم والقراءة، يصير عندك كرت يومي واضح وجاهز للمشاركة.',
+          footerTitle:'جاهزة للحفظ والإرسال',
+          footerCopy:'شاركها مع أهلك أو مجتمعك أو احفظها في جهازك كصورة أنيقة وواضحة.'
+        };
+      }
+
+      if(value < 70){
+        return {
+          label:'منخفض',
+          pill:'يحتاج انتباه',
+          tone:'rgba(218,114,109,.14)',
+          color:'var(--danger)',
+          title:'القراءة الحالية منخفضة وتحتاج تركيز',
+          body:'الأولوية الآن للانتباه للحالة الحالية قبل أي خطوة ثانية.',
+          footerTitle:'بطاقة متابعة مهمة',
+          footerCopy:'إذا احتجت، حدّث القراءة بعد فترة قصيرة حتى تكون الصورة أوضح.'
+        };
+      }
+
+      if(value <= 140){
+        return {
+          label:'في النطاق',
+          pill:'مطمّنة',
+          tone:'rgba(97,176,127,.14)',
+          color:'var(--success)',
+          title:'أمورك اليوم مطمّنة',
+          body:'القراءة الحالية ضمن النطاق المناسب تقريبًا، وهذا يعطي انطباع جيد عن وضعك الآن.',
+          footerTitle:'بطاقة يومية مطمّنة',
+          footerCopy:'وقت ممتاز تشارك بطاقتك أو تنتقل لحساب الوجبة الجاية بهدوء.'
+        };
+      }
+
+      if(value <= 180){
+        return {
+          label:'مرتفع قليلًا',
+          pill:'انتباه بسيط',
+          tone:'rgba(230,184,92,.14)',
+          color:'var(--warning)',
+          title:'الوضع يحتاج انتباه بسيط',
+          body:'القراءة أعلى من المثالي قليلًا، لكنها ما زالت قابلة للفهم والضبط بهدوء.',
+          footerTitle:'بطاقة مراجعة ذكية',
+          footerCopy:'راجع معامل الكارب أو آخر وجبة حتى تتضح الصورة أكثر.'
+        };
+      }
+
+      return {
+        label:'مرتفع',
+        pill:'يحتاج مراجعة',
+        tone:'rgba(230,184,92,.14)',
+        color:'var(--warning)',
+        title:'القراءة تحتاج مراجعة أهدأ',
+        body:'فيه ارتفاع واضح، وغالبًا أفضل خطوة الآن أنك ترجع لآخر وجبة أو تحدّث القراءة.',
+        footerTitle:'بطاقة متابعة واضحة',
+        footerCopy:'حدّث القراءة أو راجع آخر وجبة حتى تكون المشاركة أدق وأوضح.'
+      };
+    }
+
+    function getLatestMeal(){
+      const direct = readJSON(KEYS.MEAL);
+      if(direct) return direct;
+
+      const list = readJSON(KEYS.MEALS_LIST);
+      if(Array.isArray(list) && list.length){
+        const last = list[list.length - 1];
+        return {
+          mealName: last.name || 'آخر وجبة محفوظة',
+          carbs: last.c ?? last.carbs ?? null,
+          dose: last.insulin ?? last.dose ?? null,
+          savedAt: last.time || null,
+          summary: last.ins ? last.ins : null
+        };
+      }
+
+      return null;
+    }
+
+    function migrateLegacy(){
+      const legacy = readJSON(KEYS.USER_LEGACY) || readJSON(KEYS.GUIDE_LEGACY);
+      const profile = readJSON(KEYS.PROFILE);
+      const home = readJSON(KEYS.HOME);
+
+      if(!profile && legacy?.name){
+        writeJSON(KEYS.PROFILE, { name: String(legacy.name).trim() });
+      }
+
+      if(!home && (legacy?.reading || legacy?.time)){
+        writeJSON(KEYS.HOME, {
+          reading: legacy.reading ?? '',
+          time: legacy.time || '',
+          savedAt: legacy.savedAt || new Date().toISOString()
+        });
+      }
+    }
+
+    function syncLegacyStores(){
+      const payload = {
+        name: state.profile?.name || '',
+        reading: state.home?.reading ?? '',
+        time: state.home?.time || '',
+        savedAt: state.home?.savedAt || new Date().toISOString()
+      };
+
+      writeJSON(KEYS.USER_LEGACY, payload);
+      writeJSON(KEYS.GUIDE_LEGACY, payload);
+    }
+
+    function hydrateState(){
+      migrateLegacy();
+      state.profile = readJSON(KEYS.PROFILE) || {};
+      state.home = readJSON(KEYS.HOME) || {};
+      state.icr = readJSON(KEYS.ICR) || null;
+      state.meal = getLatestMeal();
+    }
+
+    function setGreeting(){
+      const period = getPeriod();
+      const name = state.profile?.name?.trim();
+
+      els.timeChip.innerHTML = `${period.icon} <span id="timeText">${period.hint}</span>`;
+
+      if(name){
+        els.greetingTitle.textContent = `${period.label} يا ${name}`;
+        els.greetingSub.textContent = Number.isFinite(Number(state.home?.reading))
+          ? 'بطاقتك جاهزة الآن للحفظ والمشاركة، ومعها أهم ما تحتاجه من نظرة واحدة.'
+          : 'خلنا نكمل من حيث وقفنا ونحدّث بطاقتك بقراءة واضحة.';
+      }else{
+        els.greetingTitle.textContent = 'حياك الله في SugarMind';
+        els.greetingSub.textContent = 'خلنا نبدأ بإعداد بسيط، وبعدها تصير بطاقتك جاهزة للحفظ والمشاركة.';
+      }
+    }
+
+    function setWalletCard(){
+      const name = state.profile?.name?.trim() || 'ضيفنا الجديد';
+      const reading = Number(state.home?.reading);
+      const readingState = getReadingState(reading);
+      const ratio = state.icr?.icr ? `1:${state.icr.icr}` : '1:--';
+
+      els.walletName.textContent = name;
+      els.walletState.textContent = readingState.body;
+      els.walletReading.textContent = Number.isFinite(reading) ? reading : '--';
+      els.walletRatio.textContent = ratio;
+      els.walletRatioCopy.textContent = state.icr?.icr
+        ? `آخر معامل محفوظ عندك ${ratio}${state.icr?.confidenceLabel ? ` · والثقة ${state.icr.confidenceLabel}` : ''}.`
+        : 'إذا حسبت معاملك من الحاسبة، يظهر هنا مباشرة داخل بطاقتك.';
+
+      els.walletStatusChip.textContent = readingState.label;
+      els.walletStatusChip.style.background = readingState.tone;
+      els.walletStatusChip.style.color = readingState.color;
+      els.walletStatusChip.style.borderColor = 'transparent';
+
+      els.walletTimeChip.textContent = state.home?.time ? `آخر تحديث: ${formatTime(state.home.time)}` : 'آخر تحديث: الآن';
+      els.walletBadge.textContent = name && state.profile?.name ? `بطاقة ${name}` : 'بطاقة SugarMind';
+      els.walletBrandSub.textContent = Number.isFinite(reading) ? readingState.pill : 'ابدأ من أول خطوة';
+      els.walletFooterKicker.textContent = state.icr?.icr ? `معاملك الحالي ${ratio}` : 'بطاقة قابلة للمشاركة';
+      els.walletFooterTitle.textContent = readingState.footerTitle;
+      els.walletFooterCopy.textContent = readingState.footerCopy;
+    }
+
+    function setSummary(){
+      if(state.meal){
+        els.mealSummaryValue.textContent = state.meal.mealName || 'وجبة محفوظة';
+        if(state.meal.carbs || state.meal.dose){
+          const carbsText = state.meal.carbs ? `${state.meal.carbs}g كارب` : 'بدون كارب واضح';
+          const doseText = state.meal.dose ? ` · ${state.meal.dose}u` : '';
+          els.mealSummaryMeta.textContent = `${carbsText}${doseText}`;
+        }else{
+          els.mealSummaryMeta.textContent = state.meal.summary || 'عندك وجبة محفوظة من قبل.';
+        }
+      }else{
+        els.mealSummaryValue.textContent = 'ما فيه وجبة محفوظة';
+        els.mealSummaryMeta.textContent = 'ابدأ من محلل الوجبة إذا تبي ملخص أقرب.';
+      }
+
+      if(state.icr?.icr){
+        els.icrSummaryValue.textContent = `1:${state.icr.icr}`;
+        els.icrSummaryMeta.textContent = `الثقة: ${state.icr.confidenceLabel || 'أولية'}`;
+      }else{
+        els.icrSummaryValue.textContent = '--';
+        els.icrSummaryMeta.textContent = 'بانتظار أول حساب واضح.';
+      }
+
+      if(state.home?.savedAt){
+        els.updateSummaryValue.textContent = formatDateLabel(state.home.savedAt);
+        els.updateSummaryMeta.textContent = `آخر حفظ ${formatTime(state.home.savedAt)}`;
+      }else{
+        els.updateSummaryValue.textContent = 'اليوم';
+        els.updateSummaryMeta.textContent = 'إذا سجلت قراءة، يرجع لك التحديث هنا فورًا.';
+      }
+    }
+
+    function setInsight(){
+      const name = state.profile?.name?.trim();
+      const reading = Number(state.home?.reading);
+      const ratio = state.icr?.icr ? `1:${state.icr.icr}` : null;
+      const meal = state.meal?.mealName;
+
+      if(!name && !Number.isFinite(reading)){
+        els.insightCopy.textContent = 'الفكرة هنا بسيطة: بطاقة واحدة واضحة تعرّف عنك وتعطيك أهم ما تحتاجه الآن، بدل التشتت بين الصفحات والأرقام.';
+        return;
+      }
+
+      const parts = [];
+      parts.push(name ? `بطاقتك الآن شخصية باسم ${name}.` : 'بطاقتك جاهزة للتخصيص باسمك.');
+
+      if(Number.isFinite(reading)){
+        const info = getReadingState(reading);
+        parts.push(`آخر قراءة عندك ${reading} وحالتها ${info.label}.`);
+      }else{
+        parts.push('باقي نحتاج قراءة واضحة حتى تكون البطاقة أدق.');
+      }
+
+      if(ratio){
+        parts.push(`معامل الكارب المحفوظ عندك ${ratio}.`);
+      }else{
+        parts.p
