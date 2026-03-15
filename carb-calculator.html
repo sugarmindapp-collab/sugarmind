@@ -2,1254 +2,1357 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>احسب معاملك المتطور - SugarMind</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>احسب المعامل - SugarMind</title>
+  <meta name="description" content="احسب معامل الكارب أو معامل التصحيح بطريقة أوضح وتتطور مع تكرار التجارب." />
+  <meta name="theme-color" content="#F6F3EE" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
   <style>
-    /* الأنماط الحالية محفوظة مع بعض الإضافات */
     :root{
-      --bg:#0F172A;
-      --bg-elevated:#1E293B;
-      --surface:rgba(255,255,255,0.05);
-      --surface-hover:rgba(255,255,255,0.08);
-      --border:rgba(255,255,255,0.1);
-      --text-primary:#F8FAFC;
-      --text-secondary:#94A3B8;
-      --text-muted:#64748B;
-      --primary:#10B981;
-      --primary-light:#34D399;
-      --purple:#8B5CF6;
-      --blue:#3B82F6;
-      --gold:#FBBF24;
-      --danger:#EF4444;
-      --radius:24px;
-      --radius-sm:16px;
-      --font-family:'Tajawal',sans-serif;
-      --shadow:0 20px 40px rgba(0,0,0,0.25);
+      --bg:#F6F3EE;
+      --bg-2:#EFEAE3;
+      --surface:#FFFFFF;
+      --surface-2:#F8F6F2;
+      --surface-3:#F0ECE7;
+      --hero:#2A2F45;
+      --hero-2:#45496A;
+      --hero-3:#7D8BAE;
+      --primary:#7BAA92;
+      --primary-2:#A9C9B9;
+      --ink:#1D2433;
+      --ink-2:#667085;
+      --ink-3:#8C94A4;
+      --line:#E6E1D8;
+      --line-strong:rgba(69,73,106,.14);
+      --success:#61B07F;
+      --warning:#E6B85C;
+      --danger:#DA726D;
+      --success-soft:rgba(97,176,127,.12);
+      --warning-soft:rgba(230,184,92,.14);
+      --danger-soft:rgba(218,114,109,.14);
+      --info-soft:rgba(125,139,174,.14);
+      --shadow-lg:0 24px 60px rgba(30,36,51,.10);
+      --shadow-md:0 16px 32px rgba(30,36,51,.08);
+      --shadow-sm:0 10px 18px rgba(30,36,51,.05);
+      --radius-xxl:32px;
+      --radius-xl:26px;
+      --radius-lg:22px;
+      --radius-md:18px;
+      --radius-sm:14px;
+      --safe-top:env(safe-area-inset-top);
+      --safe-bottom:env(safe-area-inset-bottom);
+      --max-width:500px;
+      --ease:cubic-bezier(.2,.8,.2,1);
     }
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:var(--font-family);
-      -webkit-tap-highlight-color:transparent;
-    }
-
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Tajawal',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+    html{background:var(--bg);overflow-x:hidden}
     body{
-      background:
-        radial-gradient(circle at top right, rgba(16,185,129,0.12), transparent 25%),
-        radial-gradient(circle at bottom left, rgba(59,130,246,0.08), transparent 25%),
-        var(--bg);
-      color:var(--text-primary);
       min-height:100vh;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(123,170,146,.10), transparent 24%),
+        radial-gradient(circle at top right, rgba(125,139,174,.10), transparent 22%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
+    a{text-decoration:none;color:inherit}
+    button,input,select{font:inherit}
+    button{border:0;background:none;color:inherit;cursor:pointer}
 
     .app{
-      max-width:600px;
+      max-width:var(--max-width);
       margin:0 auto;
-      padding:20px;
-      padding-bottom:120px;
+      min-height:100vh;
+      padding:calc(18px + var(--safe-top)) 18px calc(120px + var(--safe-bottom));
     }
 
-    .header{
-      display:flex;
-      align-items:center;
-      gap:16px;
-      margin-bottom:24px;
-      padding-top:20px;
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      margin-bottom:20px;
     }
-
-    .back-btn{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      background:var(--surface);
-      border:1px solid var(--border);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:20px;
-      color:var(--text-primary);
-      text-decoration:none;
-      transition:0.25s;
+    .brand-wrap{display:flex; align-items:center; gap:12px; min-width:0; flex:1}
+    .back-btn,.ghost-icon{
+      width:46px; height:46px; border-radius:16px; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(255,255,255,.72); border:1px solid var(--line); color:var(--ink);
+      box-shadow:var(--shadow-sm); transition:all .22s var(--ease);
     }
-
-    .back-btn:hover{
-      background:var(--surface-hover);
-      transform:translateY(-2px);
-    }
-
-    .header-wrap{flex:1}
-
-    .header-title{
-      font-size:24px;
-      font-weight:900;
-      margin-bottom:4px;
-    }
-
-    .header-sub{
-      font-size:13px;
-      color:var(--text-secondary);
-      line-height:1.7;
-    }
+    .back-btn:hover,.ghost-icon:hover{transform:translateY(-2px); border-color:rgba(69,73,106,.20)}
+    .brand-copy{min-width:0}
+    .brand-title{font-size:22px; font-weight:900; letter-spacing:-.6px; color:var(--ink); line-height:1.2; margin-bottom:4px}
+    .brand-sub{font-size:13px; color:var(--ink-2); line-height:1.8}
 
     .hero{
-      background:linear-gradient(145deg, rgba(16,185,129,0.12), rgba(255,255,255,0.02));
-      border:1px solid rgba(16,185,129,0.18);
-      border-radius:var(--radius);
-      padding:24px;
-      margin-bottom:22px;
-      box-shadow:var(--shadow);
-      position:relative;
-      overflow:hidden;
+      background:linear-gradient(145deg, rgba(255,255,255,.72), rgba(255,255,255,.88));
+      border:1px solid var(--line); border-radius:var(--radius-xxl); box-shadow:var(--shadow-lg);
+      padding:22px; margin-bottom:18px;
+      position:relative; overflow:hidden;
     }
-
     .hero::before{
-      content:'';
-      position:absolute;
-      inset:0;
-      background:linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.03) 50%, transparent 65%);
-      transform:translateX(-100%);
-      animation:shine 6s linear infinite;
+      content:""; position:absolute; inset:0;
+      background:radial-gradient(circle at top right, rgba(125,139,174,.10), transparent 25%), radial-gradient(circle at bottom left, rgba(123,170,146,.10), transparent 24%);
+      pointer-events:none;
     }
-
-    @keyframes shine{
-      0%{transform:translateX(-100%)}
-      30%,100%{transform:translateX(100%)}
-    }
-
     .hero-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 14px;
-      border-radius:999px;
-      background:rgba(16,185,129,0.12);
-      color:var(--primary-light);
-      font-size:12px;
-      font-weight:800;
-      margin-bottom:16px;
-      border:1px solid rgba(16,185,129,0.2);
-      position:relative;
-      z-index:1;
+      position:relative; z-index:1;
+      display:inline-flex; align-items:center; gap:8px;
+      min-height:34px; padding:0 12px; border-radius:999px;
+      background:rgba(125,139,174,.12); border:1px solid rgba(125,139,174,.16);
+      color:var(--hero-2); font-size:12px; font-weight:900; margin-bottom:14px;
+    }
+    .hero-title{position:relative; z-index:1; font-size:28px; font-weight:900; color:var(--ink); line-height:1.45; letter-spacing:-1px; margin-bottom:10px}
+    .hero-text{position:relative; z-index:1; font-size:14px; color:var(--ink-2); line-height:1.95}
+
+    .section{margin-bottom:18px}
+    .section-head{display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:12px}
+    .section-title{font-size:18px; font-weight:900; color:var(--ink); letter-spacing:-.4px}
+    .section-note{font-size:12px; font-weight:900; color:var(--ink-3)}
+
+    .mode-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .mode-card{
+      padding:18px; border-radius:24px; border:1px solid var(--line); background:rgba(255,255,255,.78);
+      box-shadow:var(--shadow-md); transition:all .22s var(--ease); cursor:pointer;
+    }
+    .mode-card:hover{transform:translateY(-3px)}
+    .mode-card.active{border-color:rgba(69,73,106,.20); background:linear-gradient(145deg, rgba(255,255,255,.95), rgba(240,236,231,.96)); box-shadow:0 18px 36px rgba(30,36,51,.10)}
+    .mode-chip{display:inline-flex; align-items:center; justify-content:center; min-width:42px; min-height:42px; border-radius:16px; margin-bottom:14px; font-size:20px; background:linear-gradient(135deg, rgba(125,139,174,.16), rgba(123,170,146,.12))}
+    .mode-card strong{display:block; font-size:17px; font-weight:900; color:var(--ink); margin-bottom:6px}
+    .mode-card span{display:block; font-size:13px; line-height:1.8; color:var(--ink-2)}
+
+    .panel, .soft-card, .result-card, .history-card, .chart-card{
+      border-radius:var(--radius-xl); background:rgba(255,255,255,.80); border:1px solid var(--line); box-shadow:var(--shadow-md);
+    }
+    .panel{padding:18px}
+    .soft-card{padding:18px}
+    .field{margin-bottom:12px}
+    .field:last-child{margin-bottom:0}
+    .field label{display:block; font-size:13px; color:var(--ink-2); font-weight:900; margin-bottom:8px}
+    .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .input, .select{
+      width:100%; min-height:54px; border-radius:18px; border:1px solid var(--line);
+      background:#fff; color:var(--ink); outline:none; padding:0 16px; font-size:15px; font-weight:700;
+      transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .input:focus, .select:focus{border-color:rgba(69,73,106,.24); box-shadow:0 0 0 4px rgba(125,139,174,.10)}
+    .helper{font-size:12px; color:var(--ink-3); line-height:1.8; margin-top:8px}
+    .mini-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+
+    .segmented{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:10px;
+    }
+    .segment{
+      min-height:48px; border-radius:16px; border:1px solid var(--line); background:#fff;
+      display:flex; align-items:center; justify-content:center; text-align:center;
+      padding:8px; font-size:13px; font-weight:900; color:var(--ink-2); transition:all .2s ease; cursor:pointer;
+    }
+    .segment.active{background:linear-gradient(135deg, var(--primary), #6E9A81); border-color:transparent; color:#fff; box-shadow:0 14px 28px rgba(123,170,146,.18)}
+
+    .pill-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+    .pill{
+      min-height:34px; padding:0 12px; border-radius:999px; border:1px solid var(--line);
+      background:var(--surface-2); color:var(--ink-2); font-size:12px; font-weight:900;
+      display:inline-flex; align-items:center; justify-content:center; gap:6px;
     }
 
-    .hero-title{
-      font-size:26px;
-      font-weight:900;
-      line-height:1.5;
-      margin-bottom:10px;
-      position:relative;
-      z-index:1;
+    .cta{
+      width:100%; min-height:58px; border-radius:20px; display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:0 18px; font-size:17px; font-weight:900; color:#fff;
+      background:linear-gradient(135deg, var(--primary), #6E9A81);
+      box-shadow:0 18px 34px rgba(123,170,146,.22); transition:all .22s var(--ease);
+      margin-top:18px;
     }
+    .cta:hover{transform:translateY(-2px)}
 
-    .hero-text{
-      font-size:14px;
-      color:var(--text-secondary);
-      line-height:1.9;
-      position:relative;
-      z-index:1;
-    }
-
-    .steps{
-      display:flex;
-      gap:8px;
-      margin-bottom:24px;
-    }
-
-    .step{
-      flex:1;
-      height:5px;
-      background:var(--surface);
-      border-radius:999px;
-      transition:all 0.3s;
-    }
-
-    .step.active{
-      background:var(--primary);
-      box-shadow:0 0 20px rgba(16,185,129,0.45);
-    }
-
-    .step.completed{
-      background:var(--primary);
-      opacity:0.45;
-    }
-
-    .input-card{
-      background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:22px;
-      margin-bottom:16px;
-      box-shadow:var(--shadow);
-    }
-
-    .input-label{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      font-size:14px;
-      color:var(--text-secondary);
-      margin-bottom:12px;
-      font-weight:800;
-    }
-
-    .input-field{
-      width:100%;
-      background:transparent;
-      border:2px solid var(--border);
-      border-radius:var(--radius-sm);
-      padding:16px;
-      color:var(--text-primary);
-      font-size:18px;
-      font-weight:800;
+    .result-card{padding:20px; display:none}
+    .result-card.show{display:block}
+    .result-hero{
+      border-radius:24px; padding:22px; margin-bottom:16px;
+      background:linear-gradient(145deg, rgba(125,139,174,.10), rgba(123,170,146,.10));
+      border:1px solid rgba(69,73,106,.08);
       text-align:center;
-      transition:all 0.25s;
     }
+    .result-badge{display:inline-flex; align-items:center; justify-content:center; min-height:34px; padding:0 12px; border-radius:999px; background:rgba(125,139,174,.12); color:var(--hero-2); font-size:12px; font-weight:900; margin-bottom:14px}
+    .result-number{font-size:58px; font-weight:900; line-height:1; color:var(--ink); letter-spacing:-2px}
+    .result-label{font-size:14px; color:var(--ink-2); line-height:1.9; margin-top:10px}
+    .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px}
+    .stat{padding:14px; border-radius:20px; background:#fff; border:1px solid var(--line); box-shadow:var(--shadow-sm); text-align:center}
+    .stat-value{font-size:24px; font-weight:900; color:var(--ink); line-height:1.1}
+    .stat-label{font-size:12px; color:var(--ink-2); line-height:1.7; margin-top:6px}
 
-    .input-field:focus{
-      outline:none;
-      border-color:var(--primary);
-      box-shadow:0 0 20px rgba(16,185,129,0.18);
+    .callout{
+      padding:16px; border-radius:20px; border:1px solid transparent; margin-bottom:14px;
     }
-
-    .input-field::placeholder{
-      color:var(--text-muted);
-    }
-
-    select.input-field{
-      appearance:none;
-      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
-      background-repeat:no-repeat;
-      background-position:left 1rem center;
-      background-size:1.5rem;
-      text-align:right;
-      padding-left:3rem;
-    }
-
-    .helper{
-      font-size:12px;
-      color:var(--text-muted);
-      margin-top:10px;
-      line-height:1.8;
-    }
-
-    .options{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
-      margin-top:12px;
-    }
-
-    .option{
-      padding:14px 8px;
-      background:var(--bg-elevated);
-      border:2px solid var(--border);
-      border-radius:var(--radius-sm);
-      text-align:center;
-      cursor:pointer;
-      transition:all 0.2s;
-      font-size:13px;
-      font-weight:800;
-      color:var(--text-secondary);
-      user-select:none;
-    }
-
-    .option:hover{
-      border-color:var(--primary);
-      color:var(--primary-light);
-      transform:translateY(-2px);
-    }
-
-    .option.selected{
-      background:linear-gradient(135deg, var(--primary), var(--primary-light));
-      border-color:transparent;
-      color:#fff;
-      box-shadow:0 10px 25px rgba(16,185,129,0.28);
-    }
-
-    .grid-2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
-    .calc-btn{
-      width:100%;
-      padding:20px;
-      border-radius:var(--radius);
-      background:linear-gradient(135deg,var(--primary),var(--primary-light));
-      border:none;
-      color:#fff;
-      font-size:18px;
-      font-weight:900;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-      margin:24px 0;
-      box-shadow:0 12px 30px rgba(16,185,129,0.3);
-      transition:0.25s;
-    }
-
-    .calc-btn:hover{
-      transform:translateY(-2px);
-      box-shadow:0 16px 34px rgba(16,185,129,0.35);
-    }
-
-    .calc-btn:disabled{
-      opacity:0.6;
-      cursor:not-allowed;
-      transform:none;
-      box-shadow:none;
-    }
-
-    .result-card{
-      background:var(--surface);
-      border:2px solid var(--primary);
-      border-radius:var(--radius);
-      padding:28px;
-      display:none;
-      animation:flashIn 0.4s ease;
-      margin-bottom:18px;
-      box-shadow:var(--shadow);
-    }
-
-    .result-card.show{
-      display:block;
-    }
-
-    @keyframes flashIn{
-      from{opacity:0;transform:scale(0.96) translateY(6px)}
-      to{opacity:1;transform:scale(1) translateY(0)}
-    }
-
-    .result-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:8px 16px;
-      background:rgba(16,185,129,0.15);
-      border-radius:999px;
-      font-size:12px;
-      font-weight:800;
-      color:var(--primary);
-      margin-bottom:20px;
-    }
-
-    .icr-hero{
-      text-align:center;
-      padding:28px;
-      background:linear-gradient(145deg, rgba(16,185,129,0.15), rgba(16,185,129,0.03));
-      border-radius:var(--radius);
-      margin-bottom:20px;
-      border:1px solid rgba(16,185,129,0.15);
-    }
-
-    .icr-number{
-      font-size:72px;
-      font-weight:900;
-      color:var(--primary);
-      line-height:1;
-      letter-spacing:-1px;
-    }
-
-    .icr-label{
-      font-size:14px;
-      color:var(--text-secondary);
-      margin-top:10px;
-      line-height:1.8;
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:12px;
-      margin-bottom:20px;
-    }
-
-    .stat{
-      padding:16px;
-      background:rgba(255,255,255,0.03);
-      border-radius:var(--radius-sm);
-      text-align:center;
-      border:1px solid rgba(255,255,255,0.06);
-    }
-
-    .stat-value{
-      font-size:24px;
-      font-weight:900;
-      color:var(--text-primary);
-    }
-
-    .stat-label{
-      font-size:11px;
-      color:var(--text-secondary);
-      margin-top:5px;
-      line-height:1.6;
-    }
-
-    .insight-box{
-      background:rgba(139,92,246,0.1);
-      border:1px solid rgba(139,92,246,0.3);
-      border-radius:var(--radius-sm);
-      padding:20px;
-      margin-bottom:20px;
-    }
-
-    .insight-title{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      font-size:14px;
-      font-weight:900;
-      color:var(--purple);
-      margin-bottom:12px;
-    }
-
-    .insight-text{
-      font-size:14px;
-      color:#D8D4FE;
-      line-height:2;
-      white-space:pre-line;
-    }
+    .callout-title{font-size:14px; font-weight:900; margin-bottom:8px}
+    .callout-text{font-size:13px; line-height:1.9; white-space:pre-line}
+    .callout.info{background:var(--info-soft); border-color:rgba(125,139,174,.16); color:var(--hero-2)}
+    .callout.success{background:var(--success-soft); border-color:rgba(97,176,127,.16); color:#2F6A43}
+    .callout.warning{background:var(--warning-soft); border-color:rgba(230,184,92,.18); color:#8A6420}
 
     .confidence-box{
-      background:rgba(59,130,246,0.1);
-      border:1px solid rgba(59,130,246,0.25);
-      border-radius:var(--radius-sm);
-      padding:18px;
-      margin-bottom:20px;
+      padding:16px; border-radius:20px; background:#fff; border:1px solid var(--line); box-shadow:var(--shadow-sm);
     }
+    .confidence-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px}
+    .confidence-title{font-size:14px; font-weight:900; color:var(--ink)}
+    .confidence-badge{min-height:32px; padding:0 12px; border-radius:999px; background:var(--surface-2); border:1px solid var(--line); color:var(--hero-2); font-size:12px; font-weight:900; display:inline-flex; align-items:center; justify-content:center}
+    .confidence-bar{width:100%; height:10px; border-radius:999px; background:var(--surface-3); overflow:hidden; margin-bottom:10px}
+    .confidence-fill{height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg, var(--hero-2), var(--primary)); transition:width .4s ease}
+    .confidence-text{font-size:12px; color:var(--ink-2); line-height:1.8}
 
-    .confidence-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:12px;
+    .chart-card, .history-card{padding:18px}
+    .chart-wrap{height:220px}
+    .history-list{display:grid; gap:8px; max-height:240px; overflow:auto}
+    .history-empty{font-size:13px; color:var(--ink-3); text-align:center; line-height:1.9; padding:16px 8px}
+    .history-item{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px;
+      border-radius:16px; background:#fff; border:1px solid var(--line); box-shadow:var(--shadow-sm);
     }
+    .history-main{min-width:0}
+    .history-title{font-size:13px; font-weight:900; color:var(--ink); margin-bottom:4px}
+    .history-meta{font-size:12px; color:var(--ink-2); line-height:1.7}
+    .history-badge{min-height:30px; padding:0 10px; border-radius:999px; background:rgba(125,139,174,.12); color:var(--hero-2); font-size:12px; font-weight:900; display:inline-flex; align-items:center; justify-content:center; white-space:nowrap}
 
-    .confidence-title{
-      font-size:14px;
-      font-weight:900;
-      color:var(--blue);
-    }
-
-    .confidence-badge{
-      padding:7px 12px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:900;
-      background:rgba(255,255,255,0.08);
-      color:#BFDBFE;
-      border:1px solid rgba(255,255,255,0.08);
-    }
-
-    .confidence-bar{
-      width:100%;
-      height:10px;
-      background:rgba(255,255,255,0.08);
-      border-radius:999px;
-      overflow:hidden;
-      margin-bottom:10px;
-    }
-
-    .confidence-fill{
-      height:100%;
-      width:0%;
-      background:linear-gradient(90deg, var(--blue), #60A5FA);
-      border-radius:999px;
-      transition:width 0.5s ease;
-    }
-
-    .confidence-text{
-      font-size:12px;
-      color:#BFDBFE;
-      line-height:1.8;
-    }
-
-    .chart-container{
-      background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:var(--radius-sm);
-      padding:16px;
-      margin-bottom:20px;
-      height:200px;
-    }
-
-    .meals-list{
-      background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:var(--radius-sm);
-      padding:16px;
-      margin-bottom:20px;
-      max-height:200px;
-      overflow-y:auto;
-    }
-
-    .meal-item{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:12px;
-      background:rgba(255,255,255,0.03);
-      border-radius:12px;
-      margin-bottom:6px;
-      border:1px solid rgba(255,255,255,0.05);
-    }
-
-    .meal-item .icr-badge{
-      background:var(--primary);
-      color:#fff;
-      padding:4px 8px;
-      border-radius:20px;
-      font-size:12px;
-      font-weight:900;
-    }
-
-    .meal-item .date{
-      color:var(--text-secondary);
-      font-size:11px;
-    }
-
-    .actions{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
+    .button-row{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px}
     .btn{
-      padding:16px;
-      border-radius:14px;
-      border:none;
-      font-size:14px;
-      font-weight:900;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      transition:0.25s;
+      min-height:50px; border-radius:16px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:0 14px;
+      font-size:14px; font-weight:900; transition:all .22s var(--ease);
     }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:linear-gradient(135deg, var(--primary), #6E9A81); color:#fff; box-shadow:0 14px 28px rgba(123,170,146,.18)}
+    .btn-secondary{background:#fff; border:1px solid var(--line); color:var(--ink); box-shadow:var(--shadow-sm)}
+    .btn-danger{background:rgba(218,114,109,.10); border:1px solid rgba(218,114,109,.18); color:var(--danger)}
 
-    .btn-primary{
-      background:var(--primary);
-      color:#fff;
+    .bottom-nav-wrap{
+      position:fixed; right:0; left:0; bottom:0; z-index:30; pointer-events:none; padding:0 18px calc(14px + var(--safe-bottom));
     }
-
-    .btn-secondary{
-      background:var(--surface);
-      color:var(--text-primary);
-      border:1px solid var(--border);
+    .bottom-nav{
+      max-width:var(--max-width); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding:10px;
+      border-radius:26px; background:rgba(255,255,255,.90); border:1px solid var(--line); backdrop-filter:blur(16px); box-shadow:0 18px 40px rgba(24,30,45,.10); pointer-events:auto;
     }
-
-    .btn-danger{
-      background:rgba(239,68,68,0.2);
-      color:var(--danger);
-      border:1px solid rgba(239,68,68,0.3);
-    }
-
-    .btn:hover{
-      transform:translateY(-2px);
-    }
-
-    .tracking-card{
-      background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:20px;
-      margin-top:20px;
-      display:none;
-      box-shadow:var(--shadow);
-    }
-
-    .tracking-card.show{
-      display:block;
-    }
-
-    .tracking-title{
-      font-size:16px;
-      font-weight:900;
-      margin-bottom:16px;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .tracking-item{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:12px;
-      background:rgba(255,255,255,0.03);
-      border-radius:12px;
-      margin-bottom:8px;
-      border:1px solid rgba(255,255,255,0.05);
-    }
-
-    .tracking-day{
-      font-size:13px;
-      font-weight:900;
-      color:var(--text-primary);
-      min-width:74px;
-    }
-
-    .tracking-text{
-      font-size:13px;
-      color:var(--text-secondary);
-      line-height:1.8;
-      flex:1;
-    }
-
-    .tracking-badge{
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(16,185,129,0.12);
-      color:var(--primary);
-      font-size:11px;
-      font-weight:900;
-      white-space:nowrap;
-    }
+    .nav-item{min-height:62px; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; font-size:11px; font-weight:900; color:var(--ink-3); transition:all .22s var(--ease)}
+    .nav-item span:first-child{font-size:20px; line-height:1}
+    .nav-item.active{background:linear-gradient(135deg, rgba(125,139,174,.16), rgba(123,170,146,.12)); color:var(--ink); transform:translateY(-2px)}
 
     .toast{
-      position:fixed;
-      bottom:24px;
-      left:50%;
-      transform:translateX(-50%);
-      background:rgba(255,255,255,0.96);
-      color:#0F172A;
-      padding:14px 20px;
-      border-radius:14px;
-      box-shadow:0 18px 40px rgba(0,0,0,0.25);
-      font-size:14px;
-      font-weight:900;
-      z-index:9999;
-      opacity:0;
-      pointer-events:none;
-      transition:0.25s;
-      white-space:nowrap;
+      position:fixed; right:50%; bottom:calc(104px + var(--safe-bottom)); z-index:60; transform:translateX(50%) translateY(18px);
+      min-width:220px; max-width:calc(100vw - 32px); padding:14px 16px; border-radius:16px; border:1px solid var(--line);
+      background:rgba(255,255,255,.96); box-shadow:var(--shadow-md); color:var(--ink); text-align:center; font-size:13px; font-weight:900;
+      opacity:0; visibility:hidden; transition:all .22s ease;
     }
+    .toast.show{opacity:1; visibility:visible; transform:translateX(50%) translateY(0)}
 
-    .toast.show{
-      opacity:1;
-      transform:translateX(-50%) translateY(-6px);
-    }
+    .hidden{display:none !important}
 
-    .hidden{display:none}
-
-    @media (max-width:520px){
-      .options{grid-template-columns:repeat(2,1fr)}
-      .stats{grid-template-columns:1fr}
-      .actions{grid-template-columns:1fr}
-      .grid-2{grid-template-columns:1fr}
-      .icr-number{font-size:58px}
-      .tracking-item{align-items:flex-start;flex-direction:column}
-      .tracking-day{min-width:auto}
+    @media (max-width:430px){
+      .mode-grid,.grid-2,.button-row,.stats{grid-template-columns:1fr}
+      .result-number{font-size:48px}
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <div class="header">
-      <a href="index.html" class="back-btn">→</a>
-      <div class="header-wrap">
-        <h1 class="header-title">احسب معاملك</h1>
-        <p class="header-sub">أداة ذكية تجمع بين بياناتك الشخصية وتحليل الوجبات لتقدير معامل الكارب الأقرب لك.</p>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <a href="index.html" class="back-btn" aria-label="العودة">→</a>
+        <div class="brand-copy">
+          <div class="brand-title">احسب المعامل</div>
+          <div class="brand-sub">اختر بين معامل الكارب أو معامل التصحيح، وخلك على مسار تعلّم يرفع الثقة مع الوقت.</div>
+        </div>
       </div>
-    </div>
+      <button class="ghost-icon" id="openLastMealBtn" type="button" title="استخدم آخر وجبة">🍽️</button>
+    </header>
 
-    <div class="hero">
-      <div class="hero-badge">🧬 خوارزمية متطورة</div>
-      <div class="hero-title">معامل كارب دقيق...<br>بتكرارك تزيد الدقة</div>
-      <div class="hero-text">
-        أدخل بياناتك مرة واحدة (الوزن، العمر، ...) ثم سجل وجباتك. النظام يحسب لك ICR مخصص ويتعلم من كل وجبة.
+    <section class="hero">
+      <div class="hero-badge">🧠 تقدير أولي + تعلّم تراكمي</div>
+      <h1 class="hero-title">نتيجة أصدق...<br>كلما تكررت التجارب</h1>
+      <p class="hero-text">SugarMind هنا ما يعطيك رقمًا نهائيًا من مرة واحدة. يبدأ بتقدير أولي، ثم يتعلم من التجارب النظيفة، ويرفع لك درجة الثقة خطوة بخطوة.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">اختر المسار</div>
+        <div class="section-note">مساران منفصلان بوضوح</div>
       </div>
-    </div>
+      <div class="mode-grid">
+        <button class="mode-card active" id="modeIcr" type="button" data-mode="icr">
+          <div class="mode-chip">🧮</div>
+          <strong>احسب معامل الكارب</strong>
+          <span>كم غرام كارب تغطيه 1 وحدة تقريبًا.</span>
+        </button>
 
-    <!-- الملف الشخصي (مرة واحدة) -->
-    <div class="input-card">
-      <div class="input-label">👤 بياناتك الشخصية (مرة واحدة)</div>
+        <button class="mode-card" id="modeIsf" type="button" data-mode="isf">
+          <div class="mode-chip">🎯</div>
+          <strong>احسب معامل التصحيح</strong>
+          <span>كم تنزل 1 وحدة من السكر تقريبًا.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="section soft-card">
+      <div class="section-head">
+        <div class="section-title">بياناتك الأساسية</div>
+        <div class="section-note">تساعدنا في التقدير الأولي</div>
+      </div>
+
       <div class="grid-2">
-        <div>
-          <label style="font-size:13px; color:var(--text-secondary);">الجنس</label>
-          <select id="gender" class="input-field">
+        <div class="field">
+          <label for="genderInput">الجنس</label>
+          <select class="select" id="genderInput">
             <option value="male">ذكر</option>
             <option value="female">أنثى</option>
           </select>
         </div>
-        <div>
-          <label style="font-size:13px; color:var(--text-secondary);">العمر (سنة)</label>
-          <input type="number" id="age" class="input-field" placeholder="مثال 35" min="2" max="100">
+
+        <div class="field">
+          <label for="ageInput">العمر</label>
+          <input class="input" id="ageInput" type="number" min="2" max="100" placeholder="مثال: 18" />
         </div>
       </div>
-      <div style="margin-top:12px;">
-        <label style="font-size:13px; color:var(--text-secondary);">الوزن (كجم)</label>
-        <input type="number" id="weight" class="input-field" placeholder="مثال 70" min="10" max="200">
-      </div>
-      <div style="margin-top:12px;">
-        <label style="font-size:13px; color:var(--text-secondary);">النشاط البدني</label>
-        <select id="activity" class="input-field">
-          <option value="low">خفيف (عمل مكتبي)</option>
-          <option value="moderate" selected>متوسط (حركة يومية)</option>
-          <option value="high">كبير (رياضي)</option>
-        </select>
-      </div>
-      <div style="margin-top:12px;">
-        <label style="font-size:13px; color:var(--text-secondary);">القراءة المستهدفة بعد الأكل (اختياري)</label>
-        <input type="number" id="targetGlucose" class="input-field" placeholder="مثال 140" value="140" min="80" max="200">
-      </div>
-      <div class="helper">هذه المعلومات تحسن دقة التقدير الأولي، ويمكنك تعديلها لاحقاً.</div>
-    </div>
 
-    <!-- وجبة جديدة -->
-    <div class="input-card">
-      <div class="input-label">🍽️ سجل وجبة جديدة</div>
-      <div style="margin-bottom:12px;">
-        <label style="font-size:13px; color:var(--text-secondary);">كمية الكارب (جرام)</label>
-        <input type="number" id="carbsInput" class="input-field" placeholder="مثال 45" min="1" max="300">
-        <div class="helper">يمكنك استخدام أداة "احسب كارب الوجبة" لحساب الكارب بدقة.</div>
-      </div>
-      <div style="margin-bottom:12px;">
-        <label style="font-size:13px; color:var(--text-secondary);">وحدات الأنسولين للوجبة</label>
-        <input type="number" id="insulinInput" class="input-field" placeholder="مثال 3" min="0.5" max="50" step="0.5">
-      </div>
       <div class="grid-2">
-        <div>
-          <label style="font-size:13px; color:var(--text-secondary);">قبل الأكل</label>
-          <input type="number" id="beforeInput" class="input-field" placeholderمثال 115" min="40" max="500">
+        <div class="field">
+          <label for="weightInput">الوزن (كجم)</label>
+          <input class="input" id="weightInput" type="number" min="10" max="250" placeholder="مثال: 70" />
         </div>
-        <div>
-          <label style="font-size:13px; color:var(--text-secondary);">بعد ساعتين</label>
-          <input type="number" id="afterInput" class="input-field" placeholder="مثال 168" min="40" max="500">
-        </div>
-      </div>
-      <div style="margin-top:12px;">
-        <label style="font-size:13px; color:var(--text-secondary);">⏱️ كيف كانت النسبة بعد الوجبة؟</label>
-        <div class="options" id="timingOptions">
-          <div class="option" data-value="stable">مستقرة</div>
-          <div class="option" data-value="high">مرتفعة</div>
-          <div class="option" data-value="low">منخفضة</div>
+
+        <div class="field">
+          <label for="tddInput">إجمالي الإنسولين اليومي TDD (اختياري)</label>
+          <input class="input" id="tddInput" type="number" min="1" max="300" step="0.5" placeholder="مثال: 40" />
         </div>
       </div>
-    </div>
 
-    <button class="calc-btn" id="calcBtn">
-      <span>⚡</span>
-      <span>سجل الوجبة واحسب المعامل</span>
-    </button>
+      <div class="grid-2">
+        <div class="field">
+          <label for="activityInput">النشاط اليومي</label>
+          <select class="select" id="activityInput">
+            <option value="low">خفيف</option>
+            <option value="moderate">متوسط</option>
+            <option value="high">عالٍ</option>
+          </select>
+        </div>
 
-    <!-- النتائج والإحصائيات -->
-    <div class="result-card" id="resultCard">
-      <div class="result-badge">✅ تحليل ذكي متعدد الوجبات</div>
+        <div class="field">
+          <label for="targetInput">القراءة المستهدفة</label>
+          <input class="input" id="targetInput" type="number" min="80" max="200" placeholder="مثال: 140" value="140" />
+        </div>
+      </div>
 
-      <div class="icr-hero">
-        <div class="icr-number" id="icrNumber">1:--</div>
-        <div class="icr-label">المعامل المقترح حالياً (متوسط مرجح)</div>
+      <div class="mini-actions">
+        <button class="btn btn-secondary" id="saveProfileBtn" type="button">💾 حفظ البيانات</button>
+      </div>
+      <div class="helper">إذا كنت تعرف إجمالي الإنسولين اليومي TDD فهو أدق من التقدير المبني على الوزن. وإذا ما تعرفه، يظل التقدير أوليًا ويتحسن مع التجارب.</div>
+    </section>
+
+    <section class="section panel" id="modeWorkspace">
+      <div class="section-head">
+        <div class="section-title" id="workspaceTitle">تجربة معامل الكارب</div>
+        <div class="section-note" id="workspaceNote">أدخل تجربة نظيفة قدر الإمكان</div>
+      </div>
+
+      <div class="callout info" id="startingEstimateBox">
+        <div class="callout-title" id="startingEstimateTitle">التقدير الأولي</div>
+        <div class="callout-text" id="startingEstimateText">أكمل بياناتك الأساسية حتى نولد لك نقطة بداية أقرب.</div>
+      </div>
+
+      <div id="icrFields">
+        <div class="grid-2">
+          <div class="field">
+            <label for="carbsInput">كمية الكارب (غرام)</label>
+            <input class="input" id="carbsInput" type="number" min="1" max="300" placeholder="مثال: 45" />
+          </div>
+          <div class="field">
+            <label for="mealBolusInput">جرعة الوجبة فقط (وحدة)</label>
+            <input class="input" id="mealBolusInput" type="number" min="0.5" max="50" step="0.5" placeholder="مثال: 3" />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="icrBeforeInput">قبل الأكل</label>
+            <input class="input" id="icrBeforeInput" type="number" min="40" max="500" placeholder="مثال: 118" />
+          </div>
+          <div class="field">
+            <label for="icrAfterInput">بعد الأكل بساعتين إلى ثلاث</label>
+            <input class="input" id="icrAfterInput" type="number" min="40" max="500" placeholder="مثال: 154" />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="mealPeriodInput">وقت الوجبة</label>
+            <select class="select" id="mealPeriodInput">
+              <option value="breakfast">فطور</option>
+              <option value="lunch">غداء</option>
+              <option value="dinner">عشاء</option>
+              <option value="snack">سناك</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="icrCleanlinessInput">نظافة التجربة</label>
+            <select class="select" id="icrCleanlinessInput">
+              <option value="clean">نظيفة وواضحة</option>
+              <option value="mixed">فيها تشويش بسيط</option>
+              <option value="disturbed">متأثرة بعامل واضح</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>كيف كانت الوجبة أو التوقيت؟</label>
+          <div class="segmented" id="icrFeelingOptions">
+            <button class="segment active" type="button" data-group="icrFeeling" data-value="stable">مستقرة</button>
+            <button class="segment" type="button" data-group="icrFeeling" data-value="high">ارتفعت أكثر</button>
+            <button class="segment" type="button" data-group="icrFeeling" data-value="low">انخفضت أكثر</button>
+          </div>
+          <div class="helper">هذا الإدخال يدعم التفسير، لكنه ما يتفوق على القراءة الفعلية.</div>
+        </div>
+
+        <div class="mini-actions">
+          <button class="btn btn-secondary" id="useLastMealBtn" type="button">🍽️ استخدم آخر وجبة</button>
+        </div>
+      </div>
+
+      <div id="isfFields" class="hidden">
+        <div class="grid-2">
+          <div class="field">
+            <label for="isfBeforeInput">القراءة قبل التصحيح</label>
+            <input class="input" id="isfBeforeInput" type="number" min="40" max="500" placeholder="مثال: 240" />
+          </div>
+          <div class="field">
+            <label for="isfAfterInput">القراءة بعد 3-4 ساعات</label>
+            <input class="input" id="isfAfterInput" type="number" min="40" max="500" placeholder="مثال: 178" />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="correctionDoseInput">جرعة التصحيح فقط (وحدة)</label>
+            <input class="input" id="correctionDoseInput" type="number" min="0.5" max="30" step="0.5" placeholder="مثال: 2" />
+          </div>
+          <div class="field">
+            <label for="isfCleanlinessInput">نظافة التجربة</label>
+            <select class="select" id="isfCleanlinessInput">
+              <option value="clean">نظيفة وواضحة</option>
+              <option value="mixed">فيها تشويش بسيط</option>
+              <option value="disturbed">متأثرة بعامل واضح</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>هل كان فيه إنسولين نشط أو وجبة قريبة؟</label>
+          <div class="segmented" id="isfConditionOptions">
+            <button class="segment active" type="button" data-group="isfCondition" data-value="clean">لا، التجربة نظيفة</button>
+            <button class="segment" type="button" data-group="isfCondition" data-value="meal-near">فيه وجبة قريبة</button>
+            <button class="segment" type="button" data-group="isfCondition" data-value="active-insulin">فيه إنسولين نشط</button>
+          </div>
+          <div class="helper">كلما كانت التجربة أنظف، كانت النتيجة أقرب للواقع.</div>
+        </div>
+      </div>
+
+      <button class="cta" id="primaryActionBtn" type="button">⚡ سجل التجربة واحسب المعامل</button>
+      <div class="helper" id="primaryActionHelper">النتيجة هنا تقديرية تعليمية، وتصبح أقوى مع تكرار التجارب المشابهة.</div>
+    </section>
+
+    <section class="section result-card" id="resultCard">
+      <div class="result-hero">
+        <div class="result-badge" id="resultBadge">نتيجتك الحالية</div>
+        <div class="result-number" id="resultNumber">1:--</div>
+        <div class="result-label" id="resultLabel">بانتظار أول تجربة</div>
       </div>
 
       <div class="stats">
         <div class="stat">
-          <div class="stat-value" id="avgIcr">--</div>
-          <div class="stat-label">متوسط ICR</div>
+          <div class="stat-value" id="statPrimary">--</div>
+          <div class="stat-label" id="statPrimaryLabel">المعامل الحالي</div>
         </div>
         <div class="stat">
-          <div class="stat-value" id="stdIcr">--</div>
-          <div class="stat-label">الانحراف المعياري</div>
+          <div class="stat-value" id="statCount">0</div>
+          <div class="stat-label">عدد التجارب</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="statStd">--</div>
+          <div class="stat-label">مستوى التباين</div>
         </div>
       </div>
 
-      <div class="chart-container">
-        <canvas id="icrChart"></canvas>
-      </div>
-
-      <div class="meals-list" id="mealsListContainer">
-        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-          <span class="input-label">📋 الوجبات المسجلة</span>
-          <button class="btn btn-danger" style="padding:6px 12px; font-size:12px;" onclick="clearAllMeals()">مسح الكل</button>
-        </div>
-        <div id="mealsList"></div>
-      </div>
-
-      <div class="insight-box">
-        <div class="insight-title">
-          <span>✨</span>
-          <span>توصية SugarMind الذكية</span>
-        </div>
-        <div class="insight-text" id="insightText">بانتظار تسجيل وجبات...</div>
+      <div class="callout success" id="insightBox">
+        <div class="callout-title">توصية SugarMind</div>
+        <div class="callout-text" id="insightText">سجل أول تجربة حتى نبدأ نفهم نمطك.</div>
       </div>
 
       <div class="confidence-box">
         <div class="confidence-head">
-          <div class="confidence-title">📊 مستوى الثقة في المتوسط</div>
-          <div class="confidence-badge" id="confidenceBadge">--</div>
+          <div class="confidence-title">درجة الثقة الحالية</div>
+          <div class="confidence-badge" id="confidenceBadge">أولية</div>
         </div>
-        <div class="confidence-bar">
-          <div class="confidence-fill" id="confidenceFill"></div>
-        </div>
-        <div class="confidence-text" id="confidenceText"></div>
+        <div class="confidence-bar"><div class="confidence-fill" id="confidenceFill"></div></div>
+        <div class="confidence-text" id="confidenceText">كل تجربة نظيفة ومتقاربة ترفع الثقة في النتيجة.</div>
       </div>
 
-      <div class="actions">
-        <button class="btn btn-primary" onclick="saveProfile()">
-          <span>💾</span>
-          <span>حفظ البيانات الشخصية</span>
-        </button>
-        <button class="btn btn-secondary" onclick="resetAllData()">
-          <span>↺</span>
-          <span>إعادة تعيين الكل</span>
-        </button>
+      <div class="button-row">
+        <button class="btn btn-primary" id="saveSummaryBtn" type="button">💾 حفظ النتيجة</button>
+        <button class="btn btn-secondary" id="clearModeBtn" type="button">🧹 مسح هذا المسار</button>
+        <button class="btn btn-danger" id="resetEverythingBtn" type="button">↺ إعادة الكل</button>
       </div>
+    </section>
 
-      <div class="disclaimer" style="text-align:center; padding:16px; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.2); border-radius:var(--radius-sm); margin-top:20px;">
-        <div class="disclaimer-text" style="font-size:12px; color:var(--gold); line-height:1.9;">
-          هذه النتيجة تقديرية تعليمية لمساعدتك على فهم الاتجاه، وليست بديلاً عن الخطة الطبية أو قرار الطبيب المعالج.
-        </div>
+    <section class="section chart-card" id="chartCard">
+      <div class="section-head">
+        <div class="section-title">اتجاهك الأخير</div>
+        <div class="section-note">يتضح أكثر مع التكرار</div>
       </div>
-    </div>
+      <div class="chart-wrap"><canvas id="ratioChart"></canvas></div>
+    </section>
+
+    <section class="section history-card" id="historyCard">
+      <div class="section-head">
+        <div class="section-title">التجارب المحفوظة</div>
+        <div class="section-note">الأحدث أولًا</div>
+      </div>
+      <div class="history-list" id="historyList"></div>
+    </section>
+  </main>
+
+  <div class="bottom-nav-wrap">
+    <nav class="bottom-nav" aria-label="التنقل السفلي">
+      <a class="nav-item" href="index.html"><span>🏠</span><span>الرئيسية</span></a>
+      <a class="nav-item" href="meal-analyzer.html"><span>🍽️</span><span>الوجبات</span></a>
+      <a class="nav-item active" href="carb-calculator.html"><span>🧮</span><span>الحساب</span></a>
+      <a class="nav-item" href="daily-guide.html"><span>📋</span><span>اليوم</span></a>
+    </nav>
   </div>
 
   <div class="toast" id="toast"></div>
 
   <script>
-    // ========================
-    // الإعدادات والمتغيرات
-    // ========================
-    const STORAGE_KEY = 'sugarmind_icr_advanced';
-    let meals = [];          // مصفوفة الوجبات المسجلة
-    let profile = {           // البيانات الشخصية
-      gender: 'male',
-      age: null,
-      weight: null,
-      activity: 'moderate',
-      target: 140
+    const STORAGE_KEY = 'sugarmind_ratio_lab_v2';
+    const ICR_RESULT_KEY = 'sugarmind_icr_result_v2';
+    const ISF_RESULT_KEY = 'sugarmind_correction_result_v1';
+    const MEAL_RESULT_KEY = 'sugarmind_meal_result_v1';
+    const MEAL_LIST_KEY = 'sugarmind_meals';
+
+    const state = {
+      mode: 'icr',
+      profile: {
+        gender: 'male',
+        age: '',
+        weight: '',
+        activity: 'moderate',
+        target: 140,
+        tdd: ''
+      },
+      inputs: {
+        icrFeeling: 'stable',
+        isfCondition: 'clean'
+      },
+      icrExperiments: [],
+      isfExperiments: []
     };
-    let chart = null;
-    let selectedTiming = null;
 
-    // عناصر DOM
-    const toast = document.getElementById('toast');
-    const timingOptions = document.querySelectorAll('.option');
-    const calcBtn = document.getElementById('calcBtn');
-    const resultCard = document.getElementById('resultCard');
-    const icrNumber = document.getElementById('icrNumber');
-    const avgIcrSpan = document.getElementById('avgIcr');
-    const stdIcrSpan = document.getElementById('stdIcr');
-    const confidenceBadge = document.getElementById('confidenceBadge');
-    const confidenceFill = document.getElementById('confidenceFill');
-    const confidenceText = document.getElementById('confidenceText');
-    const insightText = document.getElementById('insightText');
-    const mealsListDiv = document.getElementById('mealsList');
-    const genderSelect = document.getElementById('gender');
-    const ageInput = document.getElementById('age');
-    const weightInput = document.getElementById('weight');
-    const activitySelect = document.getElementById('activity');
-    const targetInput = document.getElementById('targetGlucose');
+    let ratioChart = null;
 
-    // ========================
-    // التوست والإشعارات
-    // ========================
-    function showToast(msg, duration = 2600) {
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), duration);
-    }
+    const els = {
+      modeIcr: document.getElementById('modeIcr'),
+      modeIsf: document.getElementById('modeIsf'),
+      openLastMealBtn: document.getElementById('openLastMealBtn'),
 
-    // ========================
-    // التعامل مع التوقيت (الخيارات)
-    // ========================
-    timingOptions.forEach(option => {
-      option.addEventListener('click', () => {
-        timingOptions.forEach(o => o.classList.remove('selected'));
-        option.classList.add('selected');
-        selectedTiming = option.dataset.value;
-      });
-    });
+      genderInput: document.getElementById('genderInput'),
+      ageInput: document.getElementById('ageInput'),
+      weightInput: document.getElementById('weightInput'),
+      activityInput: document.getElementById('activityInput'),
+      targetInput: document.getElementById('targetInput'),
+      tddInput: document.getElementById('tddInput'),
+      saveProfileBtn: document.getElementById('saveProfileBtn'),
 
-    // ========================
-    // تحميل البيانات من localStorage
-    // ========================
-    function loadData() {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          const data = JSON.parse(saved);
-          meals = data.meals || [];
-          profile = data.profile || profile;
+      workspaceTitle: document.getElementById('workspaceTitle'),
+      workspaceNote: document.getElementById('workspaceNote'),
+      startingEstimateTitle: document.getElementById('startingEstimateTitle'),
+      startingEstimateText: document.getElementById('startingEstimateText'),
+      primaryActionBtn: document.getElementById('primaryActionBtn'),
+      primaryActionHelper: document.getElementById('primaryActionHelper'),
 
-          // تعبئة الحقول
-          genderSelect.value = profile.gender || 'male';
-          ageInput.value = profile.age || '';
-          weightInput.value = profile.weight || '';
-          activitySelect.value = profile.activity || 'moderate';
-          targetInput.value = profile.target || 140;
-        }
-      } catch (e) {
-        console.warn('فشل تحميل البيانات', e);
+      icrFields: document.getElementById('icrFields'),
+      isfFields: document.getElementById('isfFields'),
+      carbsInput: document.getElementById('carbsInput'),
+      mealBolusInput: document.getElementById('mealBolusInput'),
+      icrBeforeInput: document.getElementById('icrBeforeInput'),
+      icrAfterInput: document.getElementById('icrAfterInput'),
+      mealPeriodInput: document.getElementById('mealPeriodInput'),
+      icrCleanlinessInput: document.getElementById('icrCleanlinessInput'),
+      useLastMealBtn: document.getElementById('useLastMealBtn'),
+
+      isfBeforeInput: document.getElementById('isfBeforeInput'),
+      isfAfterInput: document.getElementById('isfAfterInput'),
+      correctionDoseInput: document.getElementById('correctionDoseInput'),
+      isfCleanlinessInput: document.getElementById('isfCleanlinessInput'),
+
+      resultCard: document.getElementById('resultCard'),
+      resultBadge: document.getElementById('resultBadge'),
+      resultNumber: document.getElementById('resultNumber'),
+      resultLabel: document.getElementById('resultLabel'),
+      statPrimary: document.getElementById('statPrimary'),
+      statPrimaryLabel: document.getElementById('statPrimaryLabel'),
+      statCount: document.getElementById('statCount'),
+      statStd: document.getElementById('statStd'),
+      insightText: document.getElementById('insightText'),
+      confidenceBadge: document.getElementById('confidenceBadge'),
+      confidenceFill: document.getElementById('confidenceFill'),
+      confidenceText: document.getElementById('confidenceText'),
+      saveSummaryBtn: document.getElementById('saveSummaryBtn'),
+      clearModeBtn: document.getElementById('clearModeBtn'),
+      resetEverythingBtn: document.getElementById('resetEverythingBtn'),
+
+      chartCard: document.getElementById('chartCard'),
+      historyCard: document.getElementById('historyCard'),
+      ratioChart: document.getElementById('ratioChart'),
+      historyList: document.getElementById('historyList'),
+
+      toast: document.getElementById('toast')
+    };
+
+    function readJSON(key){
+      try{
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : null;
+      }catch(_){
+        return null;
       }
     }
 
-    // ========================
-    // حفظ البيانات
-    // ========================
-    function saveData() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ meals, profile }));
-      } catch (e) {
-        showToast('تعذر الحفظ');
-      }
+    function writeJSON(key, value){
+      localStorage.setItem(key, JSON.stringify(value));
     }
 
-    // حفظ الملف الشخصي
-    function saveProfile() {
-      profile.gender = genderSelect.value;
-      profile.age = parseFloat(ageInput.value) || null;
-      profile.weight = parseFloat(weightInput.value) || null;
-      profile.activity = activitySelect.value;
-      profile.target = parseFloat(targetInput.value) || 140;
-      saveData();
-      showToast('تم حفظ البيانات الشخصية');
-    }
-
-    // ========================
-    // دوال مساعدة
-    // ========================
-    function safeNumber(value) {
+    function safeNumber(value){
       const num = parseFloat(value);
       return Number.isFinite(num) ? num : null;
     }
 
-    function clamp(value, min, max) {
+    function clamp(value, min, max){
       return Math.min(max, Math.max(min, value));
     }
 
-    // ========================
-    // تقدير ICR من الملف الشخصي (معادلة 450)
-    // ========================
-    function estimateIcrFromProfile() {
-      const weight = profile.weight;
-      if (!weight || weight < 20) return null;
-      let tddFactor = 0.55; // للبالغين
-      if (profile.age && profile.age < 18) tddFactor = 0.7; // أطفال
-      if (profile.gender === 'female') tddFactor *= 0.95; // النساء أقل بقليل
-      let tdd = weight * tddFactor;
-      if (profile.activity === 'high') tdd *= 0.9; // نشاط يزيد الحساسية
-      else if (profile.activity === 'low') tdd *= 1.1; // خمول يقلل الحساسية
-      // قاعدة 450 (متوسط)
-      let icr = 450 / tdd;
-      return clamp(icr, 3, 30);
+    function showToast(message){
+      els.toast.textContent = message;
+      els.toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => els.toast.classList.remove('show'), 2600);
     }
 
-    // ========================
-    // حساب ICR لوجبة واحدة مع تعديل ذكي
-    // ========================
-    function calculateSingleMealIcr(meal) {
-      const { carbs, insulin, before, after, timing } = meal;
-      if (!carbs || !insulin || insulin <= 0) return null;
-      let rawIcr = carbs / insulin;
-      const target = profile.target || 140;
-      const delta = after - before;
-      // تعديل بناءً على الانحراف عن الهدف
-      let adjustment = 0;
-      if (after > target + 30) {
-        // فوق الهدف بـ 30 -> يحتاج ICR أصغر (جرعة أكبر)
-        adjustment = ((after - target) / 20) * 0.5;
-      } else if (after < target - 20) {
-        // تحت الهدف -> يحتاج ICR أكبر (جرعة أقل)
-        adjustment = -((target - after) / 20) * 0.3;
+    function formatDate(dateString){
+      const date = new Date(dateString);
+      if (Number.isNaN(date.getTime())) return 'الآن';
+      return date.toLocaleString('ar-SA', { day:'numeric', month:'short', hour:'numeric', minute:'2-digit' });
+    }
+
+    function labelMealPeriod(period){
+      return ({ breakfast:'فطور', lunch:'غداء', dinner:'عشاء', snack:'سناك' })[period] || 'وجبة';
+    }
+
+    function labelCleanliness(value){
+      return ({ clean:'نظيفة', mixed:'تشويش بسيط', disturbed:'متأثرة' })[value] || 'غير محدد';
+    }
+
+    function saveState(){
+      writeJSON(STORAGE_KEY, state);
+    }
+
+    function loadState(){
+      const saved = readJSON(STORAGE_KEY);
+      if(!saved) return;
+
+      state.mode = saved.mode || 'icr';
+      state.profile = { ...state.profile, ...(saved.profile || {}) };
+      state.inputs = { ...state.inputs, ...(saved.inputs || {}) };
+      state.icrExperiments = Array.isArray(saved.icrExperiments) ? saved.icrExperiments : [];
+      state.isfExperiments = Array.isArray(saved.isfExperiments) ? saved.isfExperiments : [];
+    }
+
+    function syncProfileInputs(){
+      els.genderInput.value = state.profile.gender || 'male';
+      els.ageInput.value = state.profile.age || '';
+      els.weightInput.value = state.profile.weight || '';
+      els.activityInput.value = state.profile.activity || 'moderate';
+      els.targetInput.value = state.profile.target || 140;
+      els.tddInput.value = state.profile.tdd || '';
+    }
+
+    function pullProfileFromInputs(){
+      state.profile.gender = els.genderInput.value;
+      state.profile.age = safeNumber(els.ageInput.value) ?? '';
+      state.profile.weight = safeNumber(els.weightInput.value) ?? '';
+      state.profile.activity = els.activityInput.value;
+      state.profile.target = safeNumber(els.targetInput.value) || 140;
+      state.profile.tdd = safeNumber(els.tddInput.value) ?? '';
+    }
+
+    function estimatedTdd(){
+      if (safeNumber(state.profile.tdd)) return safeNumber(state.profile.tdd);
+      const weight = safeNumber(state.profile.weight);
+      if (!weight || weight < 10) return null;
+
+      let factor = 0.55;
+      const age = safeNumber(state.profile.age);
+      if (age && age < 18) factor = 0.70;
+      if (state.profile.gender === 'female') factor *= 0.95;
+      if (state.profile.activity === 'high') factor *= 0.92;
+      if (state.profile.activity === 'low') factor *= 1.08;
+
+      return clamp(weight * factor, 8, 180);
+    }
+
+    function startingIcrEstimate(){
+      const tdd = estimatedTdd();
+      if (!tdd) return null;
+      return clamp(500 / tdd, 3, 30);
+    }
+
+    function startingIsfEstimate(){
+      const tdd = estimatedTdd();
+      if (!tdd) return null;
+      return clamp(1800 / tdd, 10, 200);
+    }
+
+    function updateStartingEstimateBox(){
+      if (state.mode === 'icr') {
+        const estimate = startingIcrEstimate();
+        els.startingEstimateTitle.textContent = 'التقدير الأولي لمعامل الكارب';
+        if (estimate) {
+          els.startingEstimateText.textContent = `تقدير البداية عندك الآن قريب من 1:${Math.round(estimate)}. هذا ليس رقمًا نهائيًا، لكنه نقطة انطلاق جيدة قبل ما نتعلم من التجارب.`;
+        } else {
+          els.startingEstimateText.textContent = 'أدخل الوزن أو إجمالي الإنسولين اليومي TDD حتى نولد لك نقطة بداية أقرب، ثم نرفع الدقة من التجارب.';
+        }
+      } else {
+        const estimate = startingIsfEstimate();
+        els.startingEstimateTitle.textContent = 'التقدير الأولي لمعامل التصحيح';
+        if (estimate) {
+          els.startingEstimateText.textContent = `تقدير البداية عندك الآن قريب من 1 وحدة ≈ ${Math.round(estimate)} mg/dL. هذا تقدير أولي فقط، ويتعدل مع التجارب النظيفة.`;
+        } else {
+          els.startingEstimateText.textContent = 'أدخل الوزن أو إجمالي الإنسولين اليومي TDD حتى نولد لك نقطة بداية لمعامل التصحيح قبل التعلّم من التجارب.';
+        }
       }
-      let adjusted = rawIcr - adjustment; // if after high, adjustment positive => icr smaller
-      // تعديل إضافي حسب تقييم المستخدم
-      if (timing === 'high') adjusted -= 0.8;
-      else if (timing === 'low') adjusted += 0.8;
-      // نطاق أمان
+    }
+
+    function setupSegments(){
+      document.querySelectorAll('.segment').forEach(segment => {
+        segment.addEventListener('click', () => {
+          const group = segment.dataset.group;
+          document.querySelectorAll(`.segment[data-group="${group}"]`).forEach(item => item.classList.remove('active'));
+          segment.classList.add('active');
+          if (group === 'icrFeeling') state.inputs.icrFeeling = segment.dataset.value;
+          if (group === 'isfCondition') state.inputs.isfCondition = segment.dataset.value;
+          saveState();
+        });
+      });
+    }
+
+    function applySegmentState(){
+      document.querySelectorAll('.segment[data-group="icrFeeling"]').forEach(item => {
+        item.classList.toggle('active', item.dataset.value === state.inputs.icrFeeling);
+      });
+      document.querySelectorAll('.segment[data-group="isfCondition"]').forEach(item => {
+        item.classList.toggle('active', item.dataset.value === state.inputs.isfCondition);
+      });
+    }
+
+    function switchMode(mode){
+      state.mode = mode;
+      els.modeIcr.classList.toggle('active', mode === 'icr');
+      els.modeIsf.classList.toggle('active', mode === 'isf');
+      els.icrFields.classList.toggle('hidden', mode !== 'icr');
+      els.isfFields.classList.toggle('hidden', mode !== 'isf');
+
+      if (mode === 'icr') {
+        els.workspaceTitle.textContent = 'تجربة معامل الكارب';
+        els.workspaceNote.textContent = 'سجل وجبة واضحة قدر الإمكان';
+        els.primaryActionBtn.innerHTML = '⚡ سجل التجربة واحسب معامل الكارب';
+        els.primaryActionHelper.textContent = 'كل وجبة نظيفة ومتقاربة ترفع الثقة في معامل الكارب عندك.';
+      } else {
+        els.workspaceTitle.textContent = 'تجربة معامل التصحيح';
+        els.workspaceNote.textContent = 'سجل تصحيحًا نظيفًا وواضحًا';
+        els.primaryActionBtn.innerHTML = '⚡ سجل التجربة واحسب معامل التصحيح';
+        els.primaryActionHelper.textContent = 'كل تصحيح نظيف بدون تشويش يرفع الثقة في معامل التصحيح عندك.';
+      }
+
+      updateStartingEstimateBox();
+      renderResults();
+      saveState();
+    }
+
+    function getLastMeal(){
+      const direct = readJSON(MEAL_RESULT_KEY);
+      if (direct && (direct.carbs || direct.mealName)) {
+        return {
+          mealName: direct.mealName || 'آخر وجبة محفوظة',
+          carbs: safeNumber(direct.carbs),
+          savedAt: direct.savedAt || new Date().toISOString()
+        };
+      }
+
+      const list = readJSON(MEAL_LIST_KEY);
+      if (Array.isArray(list) && list.length) {
+        const last = list[list.length - 1];
+        return {
+          mealName: last.name || 'آخر وجبة محفوظة',
+          carbs: safeNumber(last.c ?? last.carbs),
+          savedAt: last.time || new Date().toISOString()
+        };
+      }
+      return null;
+    }
+
+    function useLastMeal(){
+      const lastMeal = getLastMeal();
+      if (!lastMeal || !lastMeal.carbs) {
+        showToast('ما لقيت وجبة محفوظة قابلة للاستخدام');
+        return;
+      }
+
+      switchMode('icr');
+      els.carbsInput.value = lastMeal.carbs;
+      showToast(`تم تعبئة آخر وجبة: ${lastMeal.mealName}`);
+    }
+
+    function buildIcrExperiment(){
+      const carbs = safeNumber(els.carbsInput.value);
+      const mealBolus = safeNumber(els.mealBolusInput.value);
+      const before = safeNumber(els.icrBeforeInput.value);
+      const after = safeNumber(els.icrAfterInput.value);
+      const mealPeriod = els.mealPeriodInput.value;
+      const cleanliness = els.icrCleanlinessInput.value;
+      const feeling = state.inputs.icrFeeling;
+
+      if (!carbs || !mealBolus || !before || !after || mealBolus <= 0) {
+        showToast('أكمل حقول تجربة الوجبة أولًا');
+        return null;
+      }
+
+      if (carbs < 3 || mealBolus < 0.5) {
+        showToast('تأكد من القيم، تبدو صغيرة جدًا');
+        return null;
+      }
+
+      return {
+        id: Date.now(),
+        type: 'icr',
+        carbs,
+        mealBolus,
+        before,
+        after,
+        mealPeriod,
+        cleanliness,
+        feeling,
+        createdAt: new Date().toISOString()
+      };
+    }
+
+    function buildIsfExperiment(){
+      const before = safeNumber(els.isfBeforeInput.value);
+      const after = safeNumber(els.isfAfterInput.value);
+      const correctionDose = safeNumber(els.correctionDoseInput.value);
+      const cleanliness = els.isfCleanlinessInput.value;
+      const condition = state.inputs.isfCondition;
+
+      if (!before || !after || !correctionDose || correctionDose <= 0) {
+        showToast('أكمل حقول تجربة التصحيح أولًا');
+        return null;
+      }
+
+      if (before < (safeNumber(state.profile.target) || 140) + 15) {
+        showToast('يفضل أن تكون تجربة التصحيح من قراءة أعلى من الهدف بوضوح');
+      }
+
+      return {
+        id: Date.now(),
+        type: 'isf',
+        before,
+        after,
+        correctionDose,
+        cleanliness,
+        condition,
+        createdAt: new Date().toISOString()
+      };
+    }
+
+    function icrWeight(exp){
+      const target = safeNumber(state.profile.target) || 140;
+      let weight = 1;
+
+      if (exp.before >= 80 && exp.before <= 160) weight += 0.35;
+      const diffAfter = Math.abs(exp.after - target);
+      if (diffAfter <= 20) weight += 0.55;
+      else if (diffAfter <= 40) weight += 0.25;
+      else if (diffAfter > 80) weight -= 0.20;
+
+      if (exp.cleanliness === 'clean') weight += 0.35;
+      if (exp.cleanliness === 'disturbed') weight -= 0.25;
+
+      if (exp.feeling === 'stable') weight += 0.10;
+      if (exp.feeling === 'high' || exp.feeling === 'low') weight -= 0.05;
+
+      return clamp(weight, 0.35, 2);
+    }
+
+    function isfWeight(exp){
+      const target = safeNumber(state.profile.target) || 140;
+      let weight = 1;
+
+      if (exp.before >= target + 40) weight += 0.25;
+      const diffAfter = Math.abs(exp.after - target);
+      if (diffAfter <= 20) weight += 0.55;
+      else if (diffAfter <= 40) weight += 0.25;
+      else if (diffAfter > 80) weight -= 0.25;
+
+      if (exp.cleanliness === 'clean') weight += 0.35;
+      if (exp.cleanliness === 'disturbed') weight -= 0.25;
+
+      if (exp.condition === 'clean') weight += 0.25;
+      if (exp.condition === 'meal-near' || exp.condition === 'active-insulin') weight -= 0.25;
+
+      return clamp(weight, 0.30, 2);
+    }
+
+    function singleIcrValue(exp){
+      const raw = exp.carbs / exp.mealBolus;
+      const target = safeNumber(state.profile.target) || 140;
+      const diff = exp.after - target;
+      let adjusted = raw;
+
+      if (diff > 30) adjusted = raw * (1 - Math.min(diff / 250, 0.22));
+      if (diff < -20) adjusted = raw * (1 + Math.min(Math.abs(diff) / 250, 0.18));
+
+      if (exp.feeling === 'high') adjusted *= 0.95;
+      if (exp.feeling === 'low') adjusted *= 1.05;
+
       return clamp(adjusted, 3, 30);
     }
 
-    // ========================
-    // إضافة وجبة جديدة
-    // ========================
-    function addMeal() {
-      const carbs = safeNumber(document.getElementById('carbsInput').value);
-      const insulin = safeNumber(document.getElementById('insulinInput').value);
-      const before = safeNumber(document.getElementById('beforeInput').value);
-      const after = safeNumber(document.getElementById('afterInput').value);
+    function singleIsfValue(exp){
+      const rawDrop = (exp.before - exp.after) / exp.correctionDose;
+      const target = safeNumber(state.profile.target) || 140;
+      let adjusted = rawDrop;
 
-      if (!carbs || !insulin || !before || !after || insulin <= 0) {
-        showToast('أكمل جميع الحقول الأساسية');
-        return false;
-      }
-      if (carbs < 3 || insulin < 0.5) {
-        showToast('القيم صغيرة جداً، تأكد من الصحة');
-        return false;
-      }
+      if (exp.after > target + 25) adjusted *= 0.92;
+      if (exp.after < target - 20) adjusted *= 1.06;
+      if (exp.condition === 'active-insulin') adjusted *= 0.92;
+      if (exp.condition === 'meal-near') adjusted *= 0.94;
 
-      const meal = {
-        id: Date.now(),
-        carbs,
-        insulin,
-        before,
-        after,
-        timing: selectedTiming || 'stable',
-        date: new Date().toLocaleString('ar-SA')
-      };
-      meals.push(meal);
-      saveData();
-      return true;
+      return clamp(adjusted, 10, 200);
     }
 
-    // ========================
-    // حساب المتوسط المرجح لجميع الوجبات
-    // ========================
-    function calculateWeightedAverageIcr() {
-      if (meals.length === 0) return null;
-      let totalWeight = 0;
-      let weightedSum = 0;
-      meals.forEach(meal => {
-        const icr = calculateSingleMealIcr(meal);
-        if (!icr) return;
-        // الوزن يعتمد على: 1) قرب القراءة قبل من الهدف، 2) بعد الوجبة من الهدف
-        let weight = 1.0;
-        const target = profile.target || 140;
-        // إذا كانت القراءة قبل مثالية (80-160) نزيد الوزن
-        if (meal.before >= 80 && meal.before <= 160) weight *= 1.2;
-        // كلما كان after أقرب للهدف نزيد الوزن
-        const diffAfter = Math.abs(meal.after - target);
-        if (diffAfter <= 20) weight *= 1.5;
-        else if (diffAfter <= 40) weight *= 1.2;
-        else if (diffAfter <= 60) weight *= 0.9;
-        else weight *= 0.6;
-        weightedSum += icr * weight;
-        totalWeight += weight;
-      });
-      if (totalWeight === 0) return null;
-      return weightedSum / totalWeight;
+    function average(values){
+      if (!values.length) return null;
+      return values.reduce((sum, value) => sum + value, 0) / values.length;
     }
 
-    // ========================
-    // حساب الانحراف المعياري
-    // ========================
-    function calculateStdDev(icrs) {
-      if (icrs.length < 2) return 0;
-      const mean = icrs.reduce((a, b) => a + b, 0) / icrs.length;
-      const variance = icrs.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / (icrs.length - 1);
+    function standardDeviation(values){
+      if (values.length < 2) return 0;
+      const mean = average(values);
+      const variance = values.reduce((sum, value) => sum + Math.pow(value - mean, 2), 0) / (values.length - 1);
       return Math.sqrt(variance);
     }
 
-    // ========================
-    // تحديث الواجهة والرسم البياني
-    // ========================
-    function updateUI() {
-      if (meals.length === 0) {
-        resultCard.classList.remove('show');
+    function weightedAverage(values, weights){
+      let totalWeighted = 0;
+      let totalWeight = 0;
+      values.forEach((value, index) => {
+        const weight = weights[index] || 1;
+        totalWeighted += value * weight;
+        totalWeight += weight;
+      });
+      return totalWeight ? totalWeighted / totalWeight : null;
+    }
+
+    function blendWithStartingEstimate(mode, learnedValue, count){
+      const start = mode === 'icr' ? startingIcrEstimate() : startingIsfEstimate();
+      if (!start) return learnedValue;
+      if (count >= 5) return learnedValue;
+
+      const weights = mode === 'icr'
+        ? { 1:[0.68,0.32], 2:[0.50,0.50], 3:[0.35,0.65], 4:[0.22,0.78] }
+        : { 1:[0.70,0.30], 2:[0.52,0.48], 3:[0.38,0.62], 4:[0.24,0.76] };
+
+      const blend = weights[count] || [0.18, 0.82];
+      return (start * blend[0]) + (learnedValue * blend[1]);
+    }
+
+    function confidenceModel(count, std, mode){
+      let score = 35;
+      score += Math.min(count * 10, 35);
+      score -= mode === 'icr' ? std * 3.2 : std * 0.45;
+      score = clamp(Math.round(score), 25, 95);
+
+      let label = 'أولية';
+      if (score >= 82) label = 'قوية';
+      else if (score >= 65) label = 'جيدة';
+      else if (score >= 48) label = 'متوسطة';
+
+      return { score, label };
+    }
+
+    function getIcrSummary(){
+      const experiments = state.icrExperiments;
+      if (!experiments.length) return null;
+
+      const values = experiments.map(singleIcrValue);
+      const weights = experiments.map(icrWeight);
+      const learnedAverage = weightedAverage(values, weights);
+      const std = standardDeviation(values);
+      const finalValue = blendWithStartingEstimate('icr', learnedAverage, experiments.length);
+      const confidence = confidenceModel(experiments.length, std, 'icr');
+
+      return {
+        mode: 'icr',
+        count: experiments.length,
+        values,
+        learnedAverage,
+        finalValue,
+        rounded: Math.round(finalValue),
+        std,
+        confidence,
+        latest: experiments[experiments.length - 1],
+        start: startingIcrEstimate()
+      };
+    }
+
+    function getIsfSummary(){
+      const experiments = state.isfExperiments;
+      if (!experiments.length) return null;
+
+      const values = experiments.map(singleIsfValue);
+      const weights = experiments.map(isfWeight);
+      const learnedAverage = weightedAverage(values, weights);
+      const std = standardDeviation(values);
+      const finalValue = blendWithStartingEstimate('isf', learnedAverage, experiments.length);
+      const confidence = confidenceModel(experiments.length, std, 'isf');
+
+      return {
+        mode: 'isf',
+        count: experiments.length,
+        values,
+        learnedAverage,
+        finalValue,
+        rounded: Math.round(finalValue),
+        std,
+        confidence,
+        latest: experiments[experiments.length - 1],
+        start: startingIsfEstimate()
+      };
+    }
+
+    function buildInsight(summary){
+      if (!summary) return 'سجل أول تجربة حتى نبدأ نفهم نمطك.';
+
+      const lines = [];
+      if (summary.count === 1) {
+        lines.push('هذه أول تجربة عندك، لذلك النتيجة ما زالت بداية وليست معيارًا نهائيًا.');
+      } else if (summary.count < 3) {
+        lines.push('بدأ الاتجاه يتكون، لكننا ما زلنا نحتاج تجارب أكثر حتى ترتفع الثقة بوضوح.');
+      } else if (summary.std <= (summary.mode === 'icr' ? 2.2 : 12)) {
+        lines.push('تجاربك متقاربة نسبيًا، وهذا يعطي انطباعًا جيدًا عن ثبات النتيجة الحالية.');
+      } else {
+        lines.push('فيه تباين واضح بين التجارب، فالأفضل التركيز على تجارب أنظف ومتقاربة أكثر.');
+      }
+
+      if (summary.start) {
+        const diff = Math.abs(summary.finalValue - summary.start);
+        if (summary.mode === 'icr') {
+          if (diff <= 2) lines.push('نتيجتك الحالية قريبة من نقطة البداية النظرية، وهذا مؤشر مطمئن.');
+          if (diff >= 5) lines.push('النتيجة الحالية بعيدة عن نقطة البداية النظرية، وهذا يعني أن النمط الفعلي عندك أهم من التقدير النظري.');
+        } else {
+          if (diff <= 12) lines.push('معامل التصحيح الحالي قريب من نقطة البداية النظرية، وهذا يعطي انسجامًا جيدًا.');
+          if (diff >= 30) lines.push('معامل التصحيح الحالي يختلف بوضوح عن التقدير النظري، لذلك نحتاج تجارب نظيفة قبل تثبيته.');
+        }
+      }
+
+      if (summary.mode === 'icr') {
+        lines.push('لا تعتمد على النتيجة وحدها للجرعة النهائية؛ استخدمها كمرشد ذكي يتقوى مع التكرار.');
+      } else {
+        lines.push('تأكد أن تجارب التصحيح ما فيها وجبة قريبة أو إنسولين نشط حتى تكون النتيجة أصدق.');
+      }
+
+      return lines.join('\n');
+    }
+
+    function updateChart(summary){
+      if (ratioChart) ratioChart.destroy();
+
+      if (!summary || !summary.values.length) {
+        els.chartCard.classList.add('hidden');
         return;
       }
-      resultCard.classList.add('show');
 
-      // حساب جميع ICRs
-      const icrs = meals.map(m => calculateSingleMealIcr(m)).filter(v => v !== null);
-      if (icrs.length === 0) return;
-
-      const avgWeighted = calculateWeightedAverageIcr() || icrs[0];
-      const avgSimple = icrs.reduce((a, b) => a + b, 0) / icrs.length;
-      const std = calculateStdDev(icrs);
-      const suggestedIcr = Math.round(avgWeighted); // المعروض
-
-      // عرض المتوسط والانحراف
-      icrNumber.textContent = `1:${suggestedIcr}`;
-      avgIcrSpan.textContent = suggestedIcr;
-      stdIcrSpan.textContent = std.toFixed(1);
-
-      // مستوى الثقة (كلما قل الانحراف وكثرت الوجبات زادت الثقة)
-      let confidence = 50;
-      confidence += meals.length * 5; // كل وجبة تزيد 5% حتى حد أقصى
-      confidence -= std * 2; // الانحراف يقلل الثقة
-      confidence = clamp(Math.round(confidence), 30, 95);
-      let confLabel = 'منخفضة';
-      if (confidence >= 80) confLabel = 'مرتفعة';
-      else if (confidence >= 60) confLabel = 'جيدة';
-      else if (confidence >= 45) confLabel = 'متوسطة';
-      else confLabel = 'أولية';
-      confidenceBadge.textContent = confLabel;
-      confidenceFill.style.width = confidence + '%';
-      confidenceText.textContent = `الثقة في المتوسط: ${confidence}% (${meals.length} وجبة، انحراف ${std.toFixed(1)})`;
-
-      // رسم بياني
-      if (chart) chart.destroy();
-      const ctx = document.getElementById('icrChart').getContext('2d');
-      chart = new Chart(ctx, {
+      els.chartCard.classList.remove('hidden');
+      const ctx = els.ratioChart.getContext('2d');
+      ratioChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: meals.map((_, i) => `وجبة ${i+1}`),
+          labels: summary.values.map((_, index) => `تجربة ${index + 1}`),
           datasets: [{
-            label: 'معامل الكارب (ICR)',
-            data: icrs,
-            borderColor: '#10B981',
-            backgroundColor: 'rgba(16,185,129,0.1)',
-            tension: 0.2,
-            pointBackgroundColor: '#34D399'
+            data: summary.values.map(value => Number(value.toFixed(2))),
+            borderColor: '#7BAA92',
+            backgroundColor: 'rgba(123,170,146,.12)',
+            fill: true,
+            tension: 0.28,
+            pointBackgroundColor: '#45496A',
+            pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 2,
+            pointRadius: 4
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false }
-          },
+          plugins: { legend: { display:false } },
           scales: {
             y: {
-              min: 0,
-              max: 30,
-              grid: { color: 'rgba(255,255,255,0.1)' },
-              ticks: { color: '#94A3B8' }
+              grid: { color:'rgba(102,112,133,.10)' },
+              ticks: { color:'#667085' }
             },
             x: {
-              grid: { display: false },
-              ticks: { color: '#94A3B8' }
+              grid: { display:false },
+              ticks: { color:'#667085' }
             }
           }
         }
       });
-
-      // توليد توصية ذكية
-      generateInsight(icrs, avgWeighted, std);
-
-      // عرض قائمة الوجبات
-      renderMealsList();
     }
 
-    // ========================
-    // توصية ذكية مبنية على التحليل
-    // ========================
-    function generateInsight(icrs, avg, std) {
-      if (icrs.length === 0) {
-        insightText.textContent = 'سجل أول وجبة لتبدأ التحليل.';
-        return;
-      }
-      let insight = '';
-      if (icrs.length === 1) {
-        insight = 'هذه أول وجبة لك. استمر في تسجيل المزيد من الوجبات (يفضل 3 على الأقل) لتحصل على متوسط أكثر دقة.';
-      } else {
-        if (std < 2) {
-          insight = 'نتائجك متسقة جداً! معامل الكارب يبدو مستقراً. يمكنك البدء بالاعتماد على المتوسط الحالي مع متابعة القراءات.';
-        } else if (std < 4) {
-          insight = 'هناك تباين بسيط في النتائج. ربما تحتاج لتثبيت نوع الوجبات أو توقيت الأنسولين. استمر في التسجيل.';
-        } else {
-          insight = 'التباين كبير بين الوجبات. قد يكون السبب اختلاف الكارب المحسوب أو نشاط بدني. حاول تسجيل وجبات متشابهة ومراجعة الطبيب.';
-        }
-        // مقارنة مع التقدير من الملف الشخصي
-        const est = estimateIcrFromProfile();
-        if (est) {
-          const diff = Math.abs(avg - est);
-          if (diff > 5) {
-            insight += ' ملاحظة: متوسطك يختلف كثيراً عن التقدير بناءً على وزنك. قد تحتاج مراجعة الجرعات مع أخصائي.';
-          } else if (diff < 2) {
-            insight += ' متوسطك قريب جداً من التقدير النظري، وهذا مؤشر جيد.';
-          }
-        }
-      }
-      insightText.textContent = insight;
-    }
+    function updateHistory(summary){
+      const list = state.mode === 'icr' ? state.icrExperiments : state.isfExperiments;
 
-    // ========================
-    // عرض الوجبات المسجلة
-    // ========================
-    function renderMealsList() {
-      if (meals.length === 0) {
-        mealsListDiv.innerHTML = '<div class="helper" style="text-align:center;">لا توجد وجبات مسجلة بعد</div>';
+      if (!list.length) {
+        els.historyCard.classList.add('hidden');
+        els.historyList.innerHTML = '<div class="history-empty">ما فيه تجارب محفوظة بعد في هذا المسار.</div>';
         return;
       }
-      let html = '';
-      meals.slice().reverse().forEach(meal => {
-        const icr = calculateSingleMealIcr(meal);
-        html += `
-          <div class="meal-item">
-            <span class="icr-badge">1:${Math.round(icr)}</span>
-            <span class="date">${meal.date}</span>
-            <span style="flex:1; font-size:12px;">ك${meal.carbs} غ / أ${meal.insulin} و</span>
-            <span style="color:${meal.after > (profile.target+30) ? 'var(--danger)' : (meal.after < (profile.target-20) ? 'var(--gold)' : 'var(--primary)')}">${meal.after}</span>
+
+      els.historyCard.classList.remove('hidden');
+      const reversed = list.slice().reverse();
+      els.historyList.innerHTML = reversed.map(exp => {
+        if (state.mode === 'icr') {
+          const value = Math.round(singleIcrValue(exp));
+          return `
+            <div class="history-item">
+              <div class="history-main">
+                <div class="history-title">${labelMealPeriod(exp.mealPeriod)} · ${exp.carbs}غ كارب · ${exp.mealBolus}u</div>
+                <div class="history-meta">قبل ${exp.before} → بعد ${exp.after} · ${labelCleanliness(exp.cleanliness)} · ${formatDate(exp.createdAt)}</div>
+              </div>
+              <div class="history-badge">1:${value}</div>
+            </div>
+          `;
+        }
+
+        const value = Math.round(singleIsfValue(exp));
+        return `
+          <div class="history-item">
+            <div class="history-main">
+              <div class="history-title">تصحيح ${exp.correctionDose}u · قبل ${exp.before} → بعد ${exp.after}</div>
+              <div class="history-meta">${labelCleanliness(exp.cleanliness)} · ${formatDate(exp.createdAt)}</div>
+            </div>
+            <div class="history-badge">≈ ${value}</div>
           </div>
         `;
+      }).join('');
+    }
+
+    function persistSummaries(){
+      const icrSummary = getIcrSummary();
+      if (icrSummary) {
+        writeJSON(ICR_RESULT_KEY, {
+          icr: icrSummary.rounded,
+          confidence: icrSummary.confidence.score,
+          confidenceLabel: icrSummary.confidence.label,
+          experiments: icrSummary.count,
+          updatedAt: new Date().toISOString(),
+          source: 'carb-calculator'
+        });
+      }
+
+      const isfSummary = getIsfSummary();
+      if (isfSummary) {
+        writeJSON(ISF_RESULT_KEY, {
+          isf: isfSummary.rounded,
+          confidence: isfSummary.confidence.score,
+          confidenceLabel: isfSummary.confidence.label,
+          experiments: isfSummary.count,
+          updatedAt: new Date().toISOString(),
+          source: 'carb-calculator'
+        });
+      }
+    }
+
+    function renderResults(){
+      const summary = state.mode === 'icr' ? getIcrSummary() : getIsfSummary();
+      updateStartingEstimateBox();
+
+      if (!summary) {
+        els.resultCard.classList.remove('show');
+        els.chartCard.classList.add('hidden');
+        els.historyCard.classList.add('hidden');
+        return;
+      }
+
+      els.resultCard.classList.add('show');
+
+      if (summary.mode === 'icr') {
+        els.resultBadge.textContent = 'معامل الكارب الحالي';
+        els.resultNumber.textContent = `1:${summary.rounded}`;
+        els.resultLabel.textContent = 'كل 1 وحدة تغطي تقريبًا هذا المقدار من الكارب حسب تجاربك الحالية.';
+        els.statPrimary.textContent = `1:${summary.rounded}`;
+        els.statPrimaryLabel.textContent = 'المعامل الحالي';
+        els.statStd.textContent = summary.std.toFixed(1);
+      } else {
+        els.resultBadge.textContent = 'معامل التصحيح الحالي';
+        els.resultNumber.textContent = `≈ ${summary.rounded}`;
+        els.resultLabel.textContent = 'كل 1 وحدة تنزل السكر تقريبًا بهذا المقدار من mg/dL حسب تجاربك الحالية.';
+        els.statPrimary.textContent = `${summary.rounded}`;
+        els.statPrimaryLabel.textContent = 'mg/dL لكل 1u';
+        els.statStd.textContent = summary.std.toFixed(0);
+      }
+
+      els.statCount.textContent = summary.count;
+      els.insightText.textContent = buildInsight(summary);
+      els.confidenceBadge.textContent = summary.confidence.label;
+      els.confidenceFill.style.width = `${summary.confidence.score}%`;
+      els.confidenceText.textContent = `الثقة الحالية ${summary.confidence.score}% مبنية على ${summary.count} تجربة ومعيار تباين ${summary.mode === 'icr' ? summary.std.toFixed(1) : summary.std.toFixed(0)}.`;
+
+      updateChart(summary);
+      updateHistory(summary);
+      persistSummaries();
+    }
+
+    function clearExperimentInputs(){
+      els.carbsInput.value = '';
+      els.mealBolusInput.value = '';
+      els.icrBeforeInput.value = '';
+      els.icrAfterInput.value = '';
+      els.mealPeriodInput.value = 'breakfast';
+      els.icrCleanlinessInput.value = 'clean';
+      els.isfBeforeInput.value = '';
+      els.isfAfterInput.value = '';
+      els.correctionDoseInput.value = '';
+      els.isfCleanlinessInput.value = 'clean';
+      state.inputs.icrFeeling = 'stable';
+      state.inputs.isfCondition = 'clean';
+      applySegmentState();
+    }
+
+    function addCurrentExperiment(){
+      pullProfileFromInputs();
+
+      if (state.mode === 'icr') {
+        const experiment = buildIcrExperiment();
+        if (!experiment) return;
+        state.icrExperiments.push(experiment);
+        showToast('تم تسجيل تجربة معامل الكارب');
+      } else {
+        const experiment = buildIsfExperiment();
+        if (!experiment) return;
+        state.isfExperiments.push(experiment);
+        showToast('تم تسجيل تجربة معامل التصحيح');
+      }
+
+      saveState();
+      renderResults();
+      clearExperimentInputs();
+    }
+
+    function clearCurrentMode(){
+      const message = state.mode === 'icr'
+        ? 'هل أنت متأكد من مسح جميع تجارب معامل الكارب؟'
+        : 'هل أنت متأكد من مسح جميع تجارب معامل التصحيح؟';
+
+      if (!confirm(message)) return;
+
+      if (state.mode === 'icr') {
+        state.icrExperiments = [];
+        localStorage.removeItem(ICR_RESULT_KEY);
+      } else {
+        state.isfExperiments = [];
+        localStorage.removeItem(ISF_RESULT_KEY);
+      }
+
+      saveState();
+      renderResults();
+      showToast('تم مسح هذا المسار');
+    }
+
+    function resetEverything(){
+      if (!confirm('سيتم مسح الملف الشخصي وجميع التجارب في المسارين. هل أنت متأكد؟')) return;
+
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(ICR_RESULT_KEY);
+      localStorage.removeItem(ISF_RESULT_KEY);
+
+      state.mode = 'icr';
+      state.profile = { gender:'male', age:'', weight:'', activity:'moderate', target:140, tdd:'' };
+      state.inputs = { icrFeeling:'stable', isfCondition:'clean' };
+      state.icrExperiments = [];
+      state.isfExperiments = [];
+
+      syncProfileInputs();
+      applySegmentState();
+      clearExperimentInputs();
+      switchMode('icr');
+      saveState();
+      renderResults();
+      showToast('تمت إعادة التعيين بالكامل');
+    }
+
+    function saveProfileOnly(){
+      pullProfileFromInputs();
+      saveState();
+      renderResults();
+      showToast('تم حفظ البيانات الأساسية');
+    }
+
+    function saveCurrentSummary(){
+      pullProfileFromInputs();
+      saveState();
+      persistSummaries();
+      showToast('تم حفظ النتيجة الحالية');
+    }
+
+    function bindEvents(){
+      els.modeIcr.addEventListener('click', () => switchMode('icr'));
+      els.modeIsf.addEventListener('click', () => switchMode('isf'));
+      els.primaryActionBtn.addEventListener('click', addCurrentExperiment);
+      els.saveProfileBtn.addEventListener('click', saveProfileOnly);
+      els.saveSummaryBtn.addEventListener('click', saveCurrentSummary);
+      els.clearModeBtn.addEventListener('click', clearCurrentMode);
+      els.resetEverythingBtn.addEventListener('click', resetEverything);
+      els.useLastMealBtn.addEventListener('click', useLastMeal);
+      els.openLastMealBtn.addEventListener('click', useLastMeal);
+
+      [els.genderInput, els.ageInput, els.weightInput, els.activityInput, els.targetInput, els.tddInput].forEach(input => {
+        input.addEventListener('change', () => {
+          pullProfileFromInputs();
+          saveState();
+          renderResults();
+        });
       });
-      mealsListDiv.innerHTML = html;
     }
 
-    // ========================
-    // معالج زر الحساب
-    // ========================
-    function handleCalculate() {
-      // أولاً حفظ الملف الشخصي الحالي (اختياري)
-      profile.gender = genderSelect.value;
-      profile.age = safeNumber(ageInput.value);
-      profile.weight = safeNumber(weightInput.value);
-      profile.activity = activitySelect.value;
-      profile.target = safeNumber(targetInput.value) || 140;
-
-      // إضافة الوجبة
-      const added = addMeal();
-      if (!added) return;
-
-      // تحديث الواجهة
-      updateUI();
-
-      // مسح الحقول مع ترك البيانات الشخصية
-      document.getElementById('carbsInput').value = '';
-      document.getElementById('insulinInput').value = '';
-      document.getElementById('beforeInput').value = '';
-      document.getElementById('afterInput').value = '';
-      timingOptions.forEach(o => o.classList.remove('selected'));
-      selectedTiming = null;
-
-      showToast('تم تسجيل الوجبة بنجاح');
+    function init(){
+      loadState();
+      syncProfileInputs();
+      setupSegments();
+      applySegmentState();
+      bindEvents();
+      switchMode(state.mode || 'icr');
+      renderResults();
     }
 
-    // ========================
-    // مسح جميع الوجبات
-    // ========================
-    function clearAllMeals() {
-      if (confirm('هل أنت متأكد من مسح جميع الوجبات المسجلة؟')) {
-        meals = [];
-        saveData();
-        updateUI();
-        showToast('تم مسح جميع الوجبات');
-      }
-    }
-
-    // ========================
-    // إعادة تعيين الكل
-    // ========================
-    function resetAllData() {
-      if (confirm('سيتم مسح جميع البيانات (الملف الشخصي والوجبات). هل أنت متأكد؟')) {
-        localStorage.removeItem(STORAGE_KEY);
-        meals = [];
-        profile = { gender: 'male', age: null, weight: null, activity: 'moderate', target: 140 };
-        genderSelect.value = 'male';
-        ageInput.value = '';
-        weightInput.value = '';
-        activitySelect.value = 'moderate';
-        targetInput.value = '140';
-        resultCard.classList.remove('show');
-        renderMealsList();
-        showToast('تم إعادة التعيين');
-      }
-    }
-
-    // ========================
-    // التهيئة
-    // ========================
-    window.addEventListener('DOMContentLoaded', () => {
-      loadData();
-      updateUI();
-      calcBtn.addEventListener('click', handleCalculate);
-    });
-
-    // تعريف الدوال في النطاق العام للأزرار
-    window.saveProfile = saveProfile;
-    window.clearAllMeals = clearAllMeals;
-    window.resetAllData = resetAllData;
+    window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
