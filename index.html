@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>SugarMind - سكر مايند</title>
   <meta name="description" content="رفيقك اليومي لفهم القراءة والوجبة ومعامل الكارب بشكل أوضح." />
-  <meta name="theme-color" content="#111522" />
+  <meta name="theme-color" content="#F6F3EE" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,52 +18,50 @@
 
   <style>
     :root{
-      --bg:#111522;
-      --bg-2:#171C2B;
-      --surface:#1C2234;
-      --surface-2:#242B40;
-      --surface-3:#2B334C;
-      --line:rgba(255,255,255,.08);
-      --line-strong:rgba(125,139,174,.32);
-
+      --bg:#F6F3EE;
+      --bg-2:#EFEAE3;
+      --surface:#FFFFFF;
+      --surface-2:#F8F6F2;
+      --surface-3:#F0ECE7;
+      --hero:#2A2F45;
+      --hero-2:#45496A;
+      --hero-3:#7D8BAE;
       --primary:#7BAA92;
       --primary-2:#A9C9B9;
-      --accent:#7D8BAE;
-      --accent-deep:#45496A;
-      --cream:#F3EEE8;
-
-      --text:#F6F3EE;
-      --text-2:#C4CBD6;
-      --text-3:#8C94A4;
-
+      --ink:#1D2433;
+      --ink-2:#667085;
+      --ink-3:#8C94A4;
+      --line:#E6E1D8;
+      --line-soft:rgba(69,73,106,.10);
       --success:#61B07F;
       --warning:#E6B85C;
       --danger:#DA726D;
-
-      --shadow-lg:0 28px 70px rgba(0,0,0,.32);
-      --shadow-md:0 16px 36px rgba(0,0,0,.22);
-      --shadow-sm:0 10px 20px rgba(0,0,0,.16);
-
-      --radius-xxl:34px;
-      --radius-xl:28px;
+      --success-soft:rgba(97,176,127,.12);
+      --warning-soft:rgba(230,184,92,.14);
+      --danger-soft:rgba(218,114,109,.14);
+      --shadow-lg:0 24px 60px rgba(30,36,51,.10);
+      --shadow-md:0 16px 32px rgba(30,36,51,.08);
+      --shadow-sm:0 10px 18px rgba(30,36,51,.05);
+      --radius-xxl:32px;
+      --radius-xl:26px;
       --radius-lg:22px;
       --radius-md:18px;
       --radius-sm:14px;
       --safe-top:env(safe-area-inset-top);
       --safe-bottom:env(safe-area-inset-bottom);
+      --max-width:500px;
       --ease:cubic-bezier(.2,.8,.2,1);
-      --max-width:480px;
     }
 
     *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Tajawal',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
     html{background:var(--bg);overflow-x:hidden}
     body{
       min-height:100vh;
-      color:var(--text);
+      color:var(--ink);
       background:
-        radial-gradient(circle at top right, rgba(125,139,174,.18), transparent 26%),
-        radial-gradient(circle at 18% 18%, rgba(123,170,146,.12), transparent 24%),
-        linear-gradient(180deg, #111522 0%, #131827 45%, #0E1220 100%);
+        radial-gradient(circle at top left, rgba(123,170,146,.10), transparent 24%),
+        radial-gradient(circle at top right, rgba(125,139,174,.10), transparent 22%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
       overflow-x:hidden;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
@@ -80,28 +78,28 @@
 
     .splash{
       position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center;
-      background:linear-gradient(180deg,#111522 0%, #0E1220 100%);
+      background:linear-gradient(180deg, #F6F3EE 0%, #EFEAE3 100%);
       transition:opacity .45s ease, visibility .45s ease, transform .45s ease;
     }
-    .splash.hide{opacity:0; visibility:hidden; transform:scale(1.03)}
+    .splash.hide{opacity:0; visibility:hidden; transform:scale(1.02)}
     .splash-inner{text-align:center; padding:24px}
     .splash-mark{
-      width:110px; height:110px; border-radius:32px; margin:0 auto 22px;
+      width:108px; height:108px; border-radius:30px; margin:0 auto 20px;
       display:flex; align-items:center; justify-content:center;
-      background:linear-gradient(145deg, var(--accent-deep) 0%, var(--accent) 55%, var(--primary) 100%);
-      box-shadow:0 25px 60px rgba(69,73,106,.38), inset 0 1px 0 rgba(255,255,255,.18);
+      background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 58%, var(--primary) 100%);
+      box-shadow:0 20px 50px rgba(69,73,106,.20), inset 0 1px 0 rgba(255,255,255,.18);
     }
-    .splash-mark svg{width:58px; height:36px}
+    .splash-mark svg{width:56px; height:34px}
     .splash-mark path{stroke:#fff; stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
-    .splash-title{font-size:36px; font-weight:900; letter-spacing:-1px; margin-bottom:6px}
-    .splash-sub{font-size:15px; color:var(--text-2); margin-bottom:24px}
-    .splash-bar{width:160px; height:4px; background:rgba(255,255,255,.08); border-radius:999px; overflow:hidden; margin:0 auto}
+    .splash-title{font-size:36px; font-weight:900; letter-spacing:-1px; color:var(--ink); margin-bottom:8px}
+    .splash-sub{font-size:15px; color:var(--ink-2); margin-bottom:24px}
+    .splash-bar{width:160px; height:4px; background:rgba(69,73,106,.08); border-radius:999px; overflow:hidden; margin:0 auto}
     .splash-bar span{
-      display:block; height:100%; width:100%;
-      background:linear-gradient(90deg, var(--primary), var(--accent));
-      transform-origin:right; animation:loader 1.15s ease forwards;
+      display:block; width:100%; height:100%;
+      background:linear-gradient(90deg, var(--primary), var(--hero-3));
+      transform-origin:right; animation:loader 1.1s ease forwards;
     }
-    @keyframes loader{from{transform:scaleX(.12)}to{transform:scaleX(1)}}
+    @keyframes loader{from{transform:scaleX(.1)}to{transform:scaleX(1)}}
 
     .app{
       max-width:var(--max-width);
@@ -117,157 +115,155 @@
     }
     .brand{display:flex; align-items:center; gap:12px; min-width:0}
     .brand-mark{
-      width:54px; height:54px; border-radius:18px; flex-shrink:0;
+      width:52px; height:52px; border-radius:17px; flex-shrink:0;
       display:flex; align-items:center; justify-content:center;
-      background:linear-gradient(145deg, var(--accent-deep) 0%, var(--accent) 55%, var(--primary) 100%);
-      box-shadow:0 18px 36px rgba(69,73,106,.26);
+      background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 58%, var(--primary) 100%);
+      box-shadow:0 14px 28px rgba(69,73,106,.14);
     }
-    .brand-mark svg{width:30px; height:18px}
+    .brand-mark svg{width:28px; height:16px}
     .brand-mark path{stroke:#fff; stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
-    .brand-name{font-size:19px; font-weight:900; line-height:1}
-    .brand-sub{font-size:12px; color:var(--text-2); margin-top:5px}
+    .brand-name{font-size:19px; font-weight:900; color:var(--ink); line-height:1}
+    .brand-sub{font-size:12px; color:var(--ink-2); margin-top:5px}
     .top-actions{display:flex; align-items:center; gap:10px; flex-shrink:0}
     .icon-btn,.install-btn{
       min-height:46px; border-radius:16px; border:1px solid var(--line);
-      background:rgba(255,255,255,.04); box-shadow:var(--shadow-sm);
+      background:rgba(255,255,255,.65); color:var(--ink);
+      box-shadow:var(--shadow-sm);
       transition:transform .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease);
     }
-    .icon-btn:hover,.install-btn:hover{transform:translateY(-2px); background:rgba(255,255,255,.055); border-color:rgba(125,139,174,.2)}
+    .icon-btn:hover,.install-btn:hover{transform:translateY(-2px); border-color:rgba(69,73,106,.20)}
     .icon-btn{width:46px; display:flex; align-items:center; justify-content:center; font-size:22px}
-    .install-btn{padding:0 14px; display:none; align-items:center; gap:8px; font-size:13px; font-weight:800}
+    .install-btn{padding:0 14px; display:none; align-items:center; gap:8px; font-size:13px; font-weight:900}
 
     .greeting{margin-bottom:18px}
     .time-chip{
       display:inline-flex; align-items:center; gap:8px; min-height:34px; padding:0 12px;
-      border-radius:999px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.035);
-      color:var(--text-2); font-size:12px; font-weight:800; margin-bottom:16px;
+      border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.72);
+      color:var(--ink-2); font-size:12px; font-weight:900; margin-bottom:16px;
+      box-shadow:var(--shadow-sm);
     }
-    .greeting-title{font-size:31px; font-weight:900; line-height:1.22; letter-spacing:-1px; margin-bottom:8px}
-    .greeting-sub{font-size:15px; color:var(--text-2); line-height:1.9}
+    .greeting-title{font-size:31px; font-weight:900; line-height:1.24; letter-spacing:-1px; color:var(--ink); margin-bottom:8px}
+    .greeting-sub{font-size:15px; color:var(--ink-2); line-height:1.9}
 
-    .main-card-wrap{margin-bottom:18px}
-    .main-card-head{
+    .section{margin-bottom:18px}
+    .section-head{
       display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:12px;
     }
-    .section-title{font-size:18px; font-weight:900; letter-spacing:-.4px}
-    .section-note{font-size:12px; color:var(--text-3); font-weight:800}
+    .section-title{font-size:18px; font-weight:900; letter-spacing:-.4px; color:var(--ink)}
+    .section-note{font-size:12px; color:var(--ink-3); font-weight:900}
 
     .card-capture-surface{
       position:relative;
-      border-radius:32px;
+      border-radius:var(--radius-xxl);
       padding:1px;
-      background:linear-gradient(140deg, rgba(125,139,174,.45), rgba(123,170,146,.34), rgba(255,255,255,.12));
-      box-shadow:var(--shadow-lg);
+      background:linear-gradient(145deg, rgba(125,139,174,.38), rgba(255,255,255,.12), rgba(123,170,146,.26));
+      box-shadow:0 24px 50px rgba(24,30,45,.10);
       overflow:hidden;
     }
     .wallet-card{
       position:relative;
-      min-height:356px;
-      border-radius:31px;
-      overflow:hidden;
+      min-height:350px;
       padding:22px;
+      border-radius:calc(var(--radius-xxl) - 1px);
+      overflow:hidden;
       background:
-        radial-gradient(circle at 10% 10%, rgba(123,170,146,.20), transparent 28%),
-        radial-gradient(circle at 88% 14%, rgba(125,139,174,.22), transparent 28%),
-        radial-gradient(circle at 82% 84%, rgba(243,238,232,.10), transparent 22%),
-        linear-gradient(160deg, #1D2335 0%, #161B29 45%, #111522 100%);
+        radial-gradient(circle at 12% 16%, rgba(123,170,146,.16), transparent 26%),
+        radial-gradient(circle at 88% 14%, rgba(125,139,174,.18), transparent 26%),
+        linear-gradient(160deg, var(--hero) 0%, #252B3F 54%, var(--hero-2) 100%);
+      color:#F7F4EF;
     }
     .wallet-card::before{
       content:"";
       position:absolute; inset:0;
       background:
-        linear-gradient(135deg, rgba(255,255,255,.08), transparent 22%, transparent 78%, rgba(255,255,255,.05)),
-        radial-gradient(circle at 100% 0%, rgba(255,255,255,.08), transparent 24%);
+        linear-gradient(145deg, rgba(255,255,255,.08), transparent 26%, transparent 74%, rgba(255,255,255,.05)),
+        radial-gradient(circle at 100% 0%, rgba(255,255,255,.08), transparent 22%);
       pointer-events:none;
     }
-    .wallet-card::after{
-      content:"";
-      position:absolute; width:220px; height:220px; left:-80px; bottom:-100px;
-      background:radial-gradient(circle, rgba(123,170,146,.18), transparent 68%);
-      filter:blur(6px);
-      pointer-events:none;
-    }
-    .wallet-top,
-    .wallet-bottom{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:16px; position:relative; z-index:2;
-    }
-    .wallet-top{margin-bottom:20px}
-    .wallet-badge{
-      display:inline-flex; align-items:center; gap:8px;
-      min-height:32px; padding:0 12px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.06);
-      color:var(--cream); font-size:12px; font-weight:900;
-      backdrop-filter:blur(12px);
-    }
-    .wallet-brand{font-size:13px; color:rgba(246,243,238,.72); font-weight:800}
-    .wallet-brand strong{display:block; font-size:17px; color:var(--text); font-weight:900; margin-bottom:3px}
 
+    .wallet-top,.wallet-bottom{position:relative; z-index:2; display:flex; align-items:flex-start; justify-content:space-between; gap:14px}
+    .wallet-top{margin-bottom:18px}
+    .wallet-brand{
+      font-size:13px; color:rgba(247,244,239,.74); font-weight:800;
+    }
+    .wallet-brand strong{display:block; font-size:17px; color:#fff; font-weight:900; margin-bottom:4px}
+    .wallet-tag{
+      min-height:34px; padding:0 14px; border-radius:999px;
+      display:inline-flex; align-items:center; justify-content:center;
+      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08);
+      font-size:12px; font-weight:900; color:#fff;
+      backdrop-filter:blur(10px);
+      white-space:nowrap;
+    }
+
+    .wallet-main{
+      position:relative; z-index:2;
+      display:grid; grid-template-columns:1.15fr .85fr; gap:12px; align-items:stretch;
+      margin-bottom:16px;
+    }
+    .wallet-profile{
+      padding:6px 0 0;
+      display:flex; flex-direction:column; justify-content:flex-start;
+    }
     .wallet-name{
-      position:relative; z-index:2;
-      font-size:28px; font-weight:900; line-height:1.15; letter-spacing:-.8px;
-      margin-bottom:8px;
+      font-size:32px; font-weight:900; line-height:1.05; letter-spacing:-1px; color:#fff;
+      margin-bottom:10px;
     }
-    .wallet-state{
-      position:relative; z-index:2;
-      font-size:14px; color:var(--text-2); line-height:1.85; max-width:280px;
-      margin-bottom:18px;
+    .wallet-message{
+      font-size:16px; line-height:1.95; color:rgba(247,244,239,.85); max-width:280px;
+      margin-bottom:14px;
     }
-    .wallet-grid{
-      position:relative; z-index:2;
-      display:grid; grid-template-columns:1.15fr .85fr; gap:12px; margin-bottom:18px;
+    .wallet-state-chip{
+      display:inline-flex; align-items:center; gap:8px;
+      min-height:34px; padding:0 14px; border-radius:999px;
+      font-size:12px; font-weight:900;
+      width:max-content;
+      border:1px solid transparent;
     }
+
+    .metric-stack{display:grid; gap:12px}
     .metric-box,.ratio-box{
-      border-radius:24px; background:rgba(255,255,255,.055); border:1px solid rgba(255,255,255,.08);
-      backdrop-filter:blur(14px); min-height:128px; padding:16px;
+      border-radius:24px;
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(12px);
+      padding:16px;
+      min-height:128px;
     }
-    .metric-label,.ratio-label{font-size:12px; color:var(--text-3); font-weight:800; margin-bottom:10px}
+    .metric-label,.ratio-label{font-size:12px; color:rgba(247,244,239,.62); font-weight:900; margin-bottom:10px}
     .metric-value{display:flex; align-items:flex-end; gap:8px; margin-bottom:10px}
-    .metric-value strong{font-size:58px; line-height:.9; font-weight:900; letter-spacing:-2px}
-    .metric-value span{font-size:14px; color:var(--text-2); padding-bottom:8px}
-    .metric-sub{display:flex; flex-wrap:wrap; gap:8px}
+    .metric-value strong{font-size:58px; line-height:.9; font-weight:900; letter-spacing:-2px; color:#fff}
+    .metric-value span{font-size:14px; color:rgba(247,244,239,.72); padding-bottom:8px}
+    .metric-foot{display:flex; flex-wrap:wrap; gap:8px}
     .micro-chip{
-      display:inline-flex; align-items:center; gap:6px;
+      display:inline-flex; align-items:center; justify-content:center; gap:6px;
       min-height:31px; padding:0 10px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.045);
-      font-size:11px; color:var(--text-2); font-weight:800;
+      border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.04);
+      font-size:11px; color:rgba(247,244,239,.80); font-weight:900;
     }
-    .ratio-main{
-      display:flex; align-items:flex-end; gap:8px; margin-bottom:10px;
-    }
-    .ratio-main strong{font-size:36px; line-height:1; font-weight:900; letter-spacing:-1px}
-    .ratio-main span{font-size:14px; color:var(--text-2); padding-bottom:5px}
-    .ratio-copy{font-size:13px; color:var(--text-2); line-height:1.8}
+    .ratio-main{display:flex; align-items:flex-end; gap:8px; margin-bottom:8px}
+    .ratio-main strong{font-size:36px; line-height:1; font-weight:900; letter-spacing:-1px; color:#fff}
+    .ratio-main span{font-size:14px; color:rgba(247,244,239,.72); padding-bottom:5px}
+    .ratio-copy{font-size:13px; color:rgba(247,244,239,.82); line-height:1.8}
 
     .wallet-bottom{
-      position:relative; z-index:2;
       gap:14px;
       align-items:flex-end;
+      border-top:1px solid rgba(255,255,255,.08);
+      padding-top:16px;
     }
     .wallet-footer-meta{min-width:0}
-    .wallet-footer-kicker{
-      font-size:11px; color:var(--text-3); font-weight:800; margin-bottom:8px;
-      letter-spacing:.2px;
-    }
-    .wallet-footer-title{font-size:18px; font-weight:900; margin-bottom:6px}
-    .wallet-footer-copy{font-size:13px; color:var(--text-2); line-height:1.75}
+    .wallet-footer-title{font-size:18px; font-weight:900; color:#fff; margin-bottom:6px}
+    .wallet-footer-copy{font-size:13px; color:rgba(247,244,239,.78); line-height:1.8; max-width:260px}
     .qr-wrap{
-      width:88px; flex-shrink:0;
-      display:flex; flex-direction:column; align-items:center; gap:8px;
+      width:86px; flex-shrink:0; display:flex; flex-direction:column; align-items:center; gap:8px;
     }
     .qr-box{
-      width:88px; height:88px; padding:8px; border-radius:22px;
-      background:rgba(255,255,255,.92);
-      box-shadow:0 16px 30px rgba(0,0,0,.20);
+      width:86px; height:86px; padding:8px; border-radius:22px; background:#fff;
       display:flex; align-items:center; justify-content:center;
+      box-shadow:0 14px 28px rgba(0,0,0,.18);
     }
-    .qr-caption{font-size:11px; color:var(--text-3); font-weight:800; text-align:center}
-
-    .wallet-pulse{
-      position:absolute; right:22px; top:94px; width:134px; height:46px; opacity:.85;
-      pointer-events:none;
-    }
-    .wallet-pulse svg{width:100%; height:100%}
-    .wallet-pulse path{fill:none; stroke:rgba(243,238,232,.72); stroke-width:3.5; stroke-linecap:round; stroke-linejoin:round}
+    .qr-caption{font-size:11px; color:rgba(247,244,239,.65); font-weight:900; text-align:center}
 
     .card-actions{
       display:grid; grid-template-columns:1fr 1fr auto; gap:10px; margin-top:12px;
@@ -279,63 +275,114 @@
     }
     .btn:hover{transform:translateY(-2px)}
     .btn-primary{
-      background:linear-gradient(135deg, var(--primary), #69927B);
-      color:#fff; box-shadow:0 18px 34px rgba(123,170,146,.24);
+      background:linear-gradient(135deg, var(--primary), #6E9A81);
+      color:#fff; box-shadow:0 16px 30px rgba(123,170,146,.20);
     }
-    .btn-primary:hover{box-shadow:0 22px 38px rgba(123,170,146,.30)}
     .btn-accent{
-      background:linear-gradient(135deg, var(--accent-deep), var(--accent));
-      color:#fff; box-shadow:0 18px 34px rgba(69,73,106,.26);
+      background:linear-gradient(135deg, var(--hero-2), var(--hero-3));
+      color:#fff; box-shadow:0 16px 30px rgba(69,73,106,.18);
     }
-    .btn-accent:hover{box-shadow:0 22px 38px rgba(69,73,106,.32)}
     .btn-secondary{
-      background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); color:var(--text);
       min-width:56px;
+      background:#fff; border:1px solid var(--line); color:var(--ink);
+      box-shadow:var(--shadow-sm);
+    }
+    .btn-ghost{
+      min-height:50px; border-radius:16px; padding:0 16px;
+      background:transparent; border:1px solid var(--line); color:var(--ink); font-size:14px; font-weight:900;
     }
 
-    .section{margin-bottom:18px}
+    .scan-card,.decision-card,.quick-block,.summary-block{
+      border-radius:var(--radius-xl);
+      background:rgba(255,255,255,.76);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-md);
+      backdrop-filter:blur(12px);
+    }
+
+    .scan-card{padding:18px}
+    .scan-card-head{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:14px;
+    }
+    .scan-icon{
+      width:50px; height:50px; border-radius:18px; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg, rgba(125,139,174,.16), rgba(123,170,146,.12));
+      color:var(--hero-2); font-size:22px;
+    }
+    .scan-title{font-size:19px; font-weight:900; color:var(--ink); margin-bottom:6px}
+    .scan-copy{font-size:14px; color:var(--ink-2); line-height:1.9}
+    .scan-form{display:grid; grid-template-columns:1fr auto; gap:10px; margin-top:14px}
+    .input{
+      width:100%; min-height:54px; border-radius:18px; border:1px solid var(--line);
+      background:#fff; color:var(--ink); outline:none; padding:0 16px; font-size:15px;
+      transition:border-color .2s ease, box-shadow .2s ease;
+    }
+    .input:focus{border-color:rgba(69,73,106,.25); box-shadow:0 0 0 4px rgba(125,139,174,.10)}
+    .scan-result{
+      margin-top:14px; padding:16px; border-radius:22px; border:1px solid var(--line);
+      background:linear-gradient(180deg, #FFFFFF 0%, #FBFAF7 100%);
+      display:none;
+    }
+    .scan-result.show{display:block}
+    .scan-result-top{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;
+    }
+    .scan-reading{
+      font-size:32px; font-weight:900; color:var(--ink); letter-spacing:-1px;
+      display:flex; align-items:flex-end; gap:6px;
+    }
+    .scan-reading span{font-size:14px; font-weight:700; color:var(--ink-2); padding-bottom:4px}
+    .scan-status{
+      min-height:34px; padding:0 14px; border-radius:999px;
+      display:inline-flex; align-items:center; justify-content:center;
+      font-size:12px; font-weight:900;
+    }
+    .scan-message{font-size:14px; line-height:1.9; color:var(--ink)}
+
+    .decision-card{padding:18px}
+    .decision-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:14px}
+    .decision-icon{
+      width:48px; height:48px; border-radius:18px; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg, rgba(125,139,174,.16), rgba(123,170,146,.12));
+      color:var(--hero-2); font-size:22px;
+    }
+    .decision-title{font-size:19px; font-weight:900; color:var(--ink); margin-bottom:6px}
+    .decision-copy{font-size:14px; line-height:1.9; color:var(--ink-2); margin-bottom:14px}
+    .decision-action{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:14px; border-radius:20px; background:var(--surface-2); border:1px solid var(--line);
+    }
+    .decision-action strong{display:block; font-size:16px; font-weight:900; color:var(--ink); margin-bottom:4px}
+    .decision-action span{display:block; font-size:13px; color:var(--ink-2); line-height:1.8}
+
+    .quick-block{padding:18px}
     .quick-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
     .quick-card{
-      min-height:134px; padding:16px 14px;
-      border-radius:24px; border:1px solid rgba(255,255,255,.07);
-      background:rgba(255,255,255,.04); box-shadow:var(--shadow-sm);
+      min-height:132px; border-radius:22px; padding:14px;
+      background:#fff; border:1px solid var(--line); box-shadow:var(--shadow-sm);
       display:flex; flex-direction:column; justify-content:space-between; align-items:flex-start;
-      transition:transform .22s var(--ease), border-color .22s var(--ease), background .22s var(--ease);
+      transition:transform .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease);
     }
-    .quick-card:hover{transform:translateY(-3px); border-color:rgba(125,139,174,.22); background:rgba(255,255,255,.05)}
+    .quick-card:hover{transform:translateY(-3px); border-color:rgba(69,73,106,.16)}
     .quick-icon{
-      width:46px; height:46px; border-radius:16px;
-      background:linear-gradient(135deg, rgba(125,139,174,.20), rgba(123,170,146,.16));
-      color:var(--cream); display:flex; align-items:center; justify-content:center; font-size:20px;
+      width:44px; height:44px; border-radius:16px;
+      background:linear-gradient(135deg, rgba(125,139,174,.15), rgba(123,170,146,.12));
+      display:flex; align-items:center; justify-content:center; font-size:20px;
     }
-    .quick-card strong{display:block; font-size:14px; font-weight:900; line-height:1.5; margin-bottom:6px}
-    .quick-card span{display:block; font-size:12px; color:var(--text-2); line-height:1.7}
+    .quick-card strong{display:block; font-size:14px; font-weight:900; line-height:1.5; color:var(--ink); margin-bottom:6px}
+    .quick-card span{display:block; font-size:12px; color:var(--ink-2); line-height:1.75}
 
+    .summary-block{padding:18px}
     .summary-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
     .summary-card{
-      min-height:124px; padding:16px;
-      border-radius:22px; border:1px solid rgba(255,255,255,.07);
-      background:rgba(255,255,255,.038); box-shadow:var(--shadow-sm);
+      min-height:120px; padding:14px; border-radius:20px; background:#fff;
+      border:1px solid var(--line); box-shadow:var(--shadow-sm);
     }
-    .summary-label{font-size:12px; color:var(--text-3); font-weight:800; margin-bottom:12px}
-    .summary-value{font-size:16px; font-weight:900; line-height:1.45; margin-bottom:8px}
-    .summary-meta{font-size:12px; color:var(--text-2); line-height:1.8}
-
-    .insight-card{
-      border-radius:28px; border:1px solid rgba(255,255,255,.07);
-      background:
-        radial-gradient(circle at 100% 0%, rgba(125,139,174,.18), transparent 22%),
-        rgba(255,255,255,.042);
-      box-shadow:var(--shadow-md); padding:20px;
-    }
-    .insight-head{display:flex; align-items:center; gap:10px; margin-bottom:12px}
-    .insight-badge{
-      width:40px; height:40px; border-radius:14px;
-      background:linear-gradient(135deg, rgba(125,139,174,.26), rgba(123,170,146,.18));
-      display:flex; align-items:center; justify-content:center; font-size:18px;
-    }
-    .insight-title{font-size:17px; font-weight:900}
-    .insight-copy{font-size:14px; color:var(--text-2); line-height:1.95}
+    .summary-label{font-size:12px; color:var(--ink-3); font-weight:900; margin-bottom:12px}
+    .summary-value{font-size:16px; font-weight:900; color:var(--ink); line-height:1.45; margin-bottom:8px}
+    .summary-meta{font-size:12px; color:var(--ink-2); line-height:1.8}
 
     .bottom-nav-wrap{
       position:fixed; right:0; left:0; bottom:0; z-index:30; pointer-events:none;
@@ -343,74 +390,68 @@
     }
     .bottom-nav{
       max-width:var(--max-width); margin:0 auto;
-      border-radius:26px; border:1px solid rgba(255,255,255,.08);
-      background:rgba(19,24,39,.88);
-      backdrop-filter:blur(18px);
-      box-shadow:0 20px 55px rgba(0,0,0,.30);
-      padding:10px;
       display:grid; grid-template-columns:repeat(4,1fr); gap:6px;
+      padding:10px;
+      border-radius:26px;
+      background:rgba(255,255,255,.90);
+      border:1px solid var(--line);
+      backdrop-filter:blur(16px);
+      box-shadow:0 18px 40px rgba(24,30,45,.10);
       pointer-events:auto;
     }
     .nav-item{
-      min-height:62px; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center;
-      gap:6px; font-size:11px; font-weight:800; color:var(--text-3);
-      transition:background .22s var(--ease), color .22s var(--ease), transform .22s var(--ease);
+      min-height:62px; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+      font-size:11px; font-weight:900; color:var(--ink-3);
+      transition:all .22s var(--ease);
     }
     .nav-item span:first-child{font-size:20px; line-height:1}
     .nav-item.active{
-      background:linear-gradient(135deg, rgba(125,139,174,.18), rgba(123,170,146,.15));
-      color:var(--text);
-      transform:translateY(-2px);
+      background:linear-gradient(135deg, rgba(125,139,174,.16), rgba(123,170,146,.12));
+      color:var(--ink); transform:translateY(-2px);
     }
 
     .sheet-overlay{
-      position:fixed; inset:0; background:rgba(4,7,14,.56); backdrop-filter:blur(10px);
-      z-index:50; display:flex; align-items:flex-end; justify-content:center;
+      position:fixed; inset:0; z-index:50;
+      background:rgba(29,36,51,.28); backdrop-filter:blur(8px);
+      padding:14px; display:flex; align-items:flex-end; justify-content:center;
       opacity:0; visibility:hidden; transition:opacity .24s ease, visibility .24s ease;
-      padding:14px;
     }
     .sheet-overlay.show{opacity:1; visibility:visible}
     .sheet{
       width:min(100%, var(--max-width));
-      background:linear-gradient(180deg, #1B2132 0%, #151A28 100%);
-      border-radius:30px; border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow-lg);
+      background:linear-gradient(180deg, #FFFFFF 0%, #F8F6F2 100%);
+      border:1px solid var(--line); border-radius:30px; box-shadow:var(--shadow-lg);
       padding:16px 16px 18px; transform:translateY(24px); transition:transform .28s var(--ease);
     }
     .sheet-overlay.show .sheet{transform:translateY(0)}
-    .sheet-handle{width:52px; height:5px; border-radius:999px; background:rgba(255,255,255,.12); margin:0 auto 16px}
+    .sheet-handle{width:52px; height:5px; border-radius:999px; background:#D7D0C7; margin:0 auto 16px}
     .sheet-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:16px}
-    .sheet-title{font-size:22px; font-weight:900; line-height:1.3; letter-spacing:-.5px}
-    .sheet-sub{font-size:13px; color:var(--text-2); line-height:1.8; margin-top:6px}
+    .sheet-title{font-size:22px; font-weight:900; line-height:1.3; color:var(--ink); letter-spacing:-.5px}
+    .sheet-sub{font-size:13px; color:var(--ink-2); line-height:1.8; margin-top:6px}
     .close-btn{
       width:40px; height:40px; border-radius:14px; flex-shrink:0;
-      border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.04); font-size:24px;
+      border:1px solid var(--line); background:#fff; font-size:24px; color:var(--ink);
       display:flex; align-items:center; justify-content:center;
     }
     .field{margin-bottom:12px}
-    .field label{display:block; font-size:13px; font-weight:800; color:var(--text-2); margin-bottom:8px}
-    .input{
-      width:100%; min-height:54px; border-radius:18px; border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.045); color:var(--text); outline:none;
-      padding:0 16px; font-size:15px;
-      transition:border-color .2s ease, background .2s ease, box-shadow .2s ease;
-    }
-    .input:focus{border-color:rgba(125,139,174,.35); background:rgba(255,255,255,.06); box-shadow:0 0 0 4px rgba(125,139,174,.10)}
+    .field label{display:block; font-size:13px; color:var(--ink-2); font-weight:900; margin-bottom:8px}
     .inline-fields{display:grid; grid-template-columns:1fr 1fr; gap:10px}
-    .helper{font-size:12px; color:var(--text-3); line-height:1.8; margin:6px 2px 14px}
+    .helper{font-size:12px; color:var(--ink-3); line-height:1.8; margin:6px 2px 14px}
     .sheet-actions{display:grid; grid-template-columns:1fr 1fr; gap:10px}
 
-    .install-steps{display:grid; gap:10px; margin-top:8px; margin-bottom:16px}
+    .install-steps{display:grid; gap:10px; margin:8px 0 16px}
     .install-step{
       display:flex; align-items:flex-start; gap:10px; padding:14px;
-      border-radius:18px; border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.04);
+      border-radius:18px; border:1px solid var(--line); background:var(--surface-2);
     }
     .install-step-index{
       width:28px; height:28px; border-radius:10px; flex-shrink:0;
       display:flex; align-items:center; justify-content:center;
-      background:rgba(125,139,174,.18); color:var(--cream); font-size:13px; font-weight:900; margin-top:2px;
+      background:rgba(125,139,174,.16); color:var(--hero-2); font-size:13px; font-weight:900;
+      margin-top:2px;
     }
-    .install-step strong{display:block; font-size:13px; font-weight:900; margin-bottom:4px}
-    .install-step span{display:block; font-size:12px; color:var(--text-2); line-height:1.7}
+    .install-step strong{display:block; font-size:13px; color:var(--ink); font-weight:900; margin-bottom:4px}
+    .install-step span{display:block; font-size:12px; color:var(--ink-2); line-height:1.7}
     .hidden{display:none !important}
 
     .toast{
@@ -418,18 +459,18 @@
       transform:translateX(50%) translateY(18px);
       min-width:220px; max-width:calc(100vw - 32px);
       padding:14px 16px; border-radius:16px;
-      border:1px solid rgba(255,255,255,.08); background:rgba(19,24,39,.92); backdrop-filter:blur(14px);
-      color:var(--text); text-align:center; font-size:13px; font-weight:800;
-      box-shadow:var(--shadow-md); opacity:0; visibility:hidden; transition:all .22s ease;
+      border:1px solid var(--line); background:rgba(255,255,255,.96);
+      box-shadow:var(--shadow-md); color:var(--ink); text-align:center; font-size:13px; font-weight:900;
+      opacity:0; visibility:hidden; transition:all .22s ease;
     }
     .toast.show{opacity:1; visibility:visible; transform:translateX(50%) translateY(0)}
 
-    @media (max-width:420px){
+    @media (max-width:430px){
       .greeting-title{font-size:28px}
-      .wallet-name{font-size:25px}
-      .wallet-grid,.summary-grid,.quick-grid,.inline-fields,.card-actions{grid-template-columns:1fr}
+      .wallet-main,.summary-grid,.quick-grid,.inline-fields,.card-actions,.scan-form,.sheet-actions{grid-template-columns:1fr}
+      .wallet-name{font-size:28px}
       .metric-value strong{font-size:50px}
-      .install-btn{padding:0 12px}
+      .decision-action{align-items:flex-start; flex-direction:column}
     }
   </style>
 </head>
@@ -444,7 +485,7 @@
         </svg>
       </div>
       <div class="splash-title">SugarMind</div>
-      <div class="splash-sub">أوضح بطاقة يومية لحالتك</div>
+      <div class="splash-sub">بطاقتك اليومية للسكر والكارب</div>
       <div class="splash-bar"><span></span></div>
     </div>
   </div>
@@ -459,7 +500,7 @@
         </div>
         <div>
           <div class="brand-name">SugarMind</div>
-          <div class="brand-sub">بطاقتك اليومية للسكر والكارب</div>
+          <div class="brand-sub">واجهة يومية أوضح لحالتك</div>
         </div>
       </div>
 
@@ -475,64 +516,60 @@
     <section class="greeting">
       <div class="time-chip" id="timeChip">🌤️ <span id="timeText">بداية يوم هادئ</span></div>
       <h1 class="greeting-title" id="greetingTitle">حياك الله في SugarMind</h1>
-      <p class="greeting-sub" id="greetingSub">خلنا نبدأ بإعداد بسيط، وبعدها تصير بطاقتك جاهزة للحفظ والمشاركة.</p>
+      <p class="greeting-sub" id="greetingSub">ابدأ من بطاقتك، وبعدها خذ أقرب خطوة مناسبة لك داخل التطبيق.</p>
     </section>
 
-    <section class="main-card-wrap">
-      <div class="main-card-head">
+    <section class="section">
+      <div class="section-head">
         <div class="section-title">بطاقتك</div>
-        <div class="section-note">الحصان الرابح للمشاركة</div>
+        <div class="section-note">جاهزة للحفظ والمشاركة</div>
       </div>
 
       <div class="card-capture-surface" id="cardCaptureSurface">
         <div class="wallet-card" id="walletCard">
-          <div class="wallet-pulse" aria-hidden="true">
-            <svg viewBox="0 0 140 46" preserveAspectRatio="none">
-              <path d="M0 24 H16 L24 14 L34 34 L45 10 L56 28 L66 18 L78 24 H140"></path>
-            </svg>
-          </div>
-
           <div class="wallet-top">
-            <div>
-              <div class="wallet-badge" id="walletBadge">بطاقة SugarMind</div>
-            </div>
             <div class="wallet-brand">
               <strong>SugarMind</strong>
-              <span id="walletBrandSub">رفيقك اليومي</span>
+              <span id="walletBrandSub">بطاقتك اليومية</span>
             </div>
+            <div class="wallet-tag" id="walletTag">بطاقة متابعة</div>
           </div>
 
-          <div class="wallet-name" id="walletName">ضيفنا الجديد</div>
-          <div class="wallet-state" id="walletState">سجل اسمك وآخر قراءة عندك، وبعدها تصير بطاقتك أوضح وأجهز للمشاركة.</div>
-
-          <div class="wallet-grid">
-            <div class="metric-box">
-              <div class="metric-label">قراءة السكر الحالية</div>
-              <div class="metric-value">
-                <strong id="walletReading">--</strong>
-                <span>mg/dL</span>
-              </div>
-              <div class="metric-sub">
-                <div class="micro-chip" id="walletStatusChip">بانتظار القراءة</div>
-                <div class="micro-chip" id="walletTimeChip">آخر تحديث: الآن</div>
-              </div>
+          <div class="wallet-main">
+            <div class="wallet-profile">
+              <div class="wallet-name" id="walletName">ضيفنا الجديد</div>
+              <div class="wallet-message" id="walletMessage">خلنا نبدأ باسمك وآخر قراءة واضحة، وبعدها تصير بطاقتك مرتبة وجاهزة للحفظ والمشاركة.</div>
+              <div class="wallet-state-chip" id="walletStateChip">بانتظار القراءة</div>
             </div>
 
-            <div class="ratio-box">
-              <div class="ratio-label">معامل الكارب</div>
-              <div class="ratio-main">
-                <strong id="walletRatio">1:--</strong>
-                <span>تقريبًا</span>
+            <div class="metric-stack">
+              <div class="metric-box">
+                <div class="metric-label">قراءة السكر الحالية</div>
+                <div class="metric-value">
+                  <strong id="walletReading">--</strong>
+                  <span>mg/dL</span>
+                </div>
+                <div class="metric-foot">
+                  <div class="micro-chip" id="walletStatusChip">بدون بيانات</div>
+                  <div class="micro-chip" id="walletTimeChip">آخر تحديث: الآن</div>
+                </div>
               </div>
-              <div class="ratio-copy" id="walletRatioCopy">إذا حسبت معاملك من الحاسبة، يظهر هنا مباشرة داخل بطاقتك.</div>
+
+              <div class="ratio-box">
+                <div class="ratio-label">معامل الكارب</div>
+                <div class="ratio-main">
+                  <strong id="walletRatio">1:--</strong>
+                  <span>تقريبًا</span>
+                </div>
+                <div class="ratio-copy" id="walletRatioCopy">إذا حسبت معاملك من الحاسبة، يظهر هنا مباشرة داخل البطاقة.</div>
+              </div>
             </div>
           </div>
 
           <div class="wallet-bottom">
             <div class="wallet-footer-meta">
-              <div class="wallet-footer-kicker" id="walletFooterKicker">بطاقة قابلة للمشاركة</div>
-              <div class="wallet-footer-title" id="walletFooterTitle">جاهزة للحفظ والإرسال</div>
-              <div class="wallet-footer-copy" id="walletFooterCopy">شاركها مع أهلك أو مجتمعك أو احفظها في جهازك كصورة أنيقة وواضحة.</div>
+              <div class="wallet-footer-title" id="walletFooterTitle">جاهزة للمشاركة</div>
+              <div class="wallet-footer-copy" id="walletFooterCopy">احفظ بطاقتك كصورة أو شاركها مع من يهمك بطريقة أنيقة وواضحة.</div>
             </div>
 
             <div class="qr-wrap">
@@ -553,72 +590,121 @@
     </section>
 
     <section class="section">
-      <div class="main-card-head">
+      <div class="section-head">
+        <div class="section-title">اعرف قراءتك الآن</div>
+        <div class="section-note">قيمة سريعة للزائر الجديد</div>
+      </div>
+
+      <div class="scan-card">
+        <div class="scan-card-head">
+          <div>
+            <div class="scan-title">جرّب القراءة بشكل فوري</div>
+            <div class="scan-copy">أدخل رقم السكر عندك، وSugarMind يوضح لك الحالة برسالة قصيرة ومفهومة.</div>
+          </div>
+          <div class="scan-icon">🩺</div>
+        </div>
+
+        <div class="scan-form">
+          <input class="input" id="quickReadingInput" type="number" inputmode="numeric" min="20" max="600" placeholder="مثال: 124" />
+          <button class="btn btn-primary" id="quickReadingBtn" type="button">اعرف قراءتك</button>
+        </div>
+
+        <div class="scan-result" id="quickReadingResult">
+          <div class="scan-result-top">
+            <div class="scan-reading"><strong id="quickReadingValue">--</strong><span>mg/dL</span></div>
+            <div class="scan-status" id="quickReadingStatus">--</div>
+          </div>
+          <div class="scan-message" id="quickReadingMessage">أدخل القراءة حتى تظهر لك النتيجة.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">خطوتك الآن</div>
+        <div class="section-note">قرار واحد أوضح</div>
+      </div>
+
+      <div class="decision-card">
+        <div class="decision-head">
+          <div>
+            <div class="decision-title" id="decisionTitle">ابدأ من بطاقتك</div>
+            <div class="decision-copy" id="decisionCopy">إذا سجلت اسمك وآخر قراءة، يصير التطبيق أوضح لك من أول شاشة.</div>
+          </div>
+          <div class="decision-icon">✨</div>
+        </div>
+
+        <div class="decision-action">
+          <div>
+            <strong id="decisionActionTitle">أول خطوة</strong>
+            <span id="decisionActionCopy">ابدأ بإعداد بطاقتك حتى تكتمل التجربة من البداية.</span>
+          </div>
+          <button class="btn btn-primary" id="decisionActionBtn" type="button" data-target="setup">ابدأ الآن</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
         <div class="section-title">أدواتك</div>
         <div class="section-note">الأساس اليومي</div>
       </div>
 
-      <div class="quick-grid">
-        <a class="quick-card" href="meal-analyzer.html">
-          <div class="quick-icon">🍽️</div>
-          <div>
-            <strong>احسب الوجبة</strong>
-            <span>صوّر أو اكتب وجبتك وخذ تقدير أقرب للكارب والأنسولين.</span>
-          </div>
-        </a>
+      <div class="quick-block">
+        <div class="quick-grid">
+          <a class="quick-card" href="meal-analyzer.html">
+            <div class="quick-icon">🍽️</div>
+            <div>
+              <strong>احسب الوجبة</strong>
+              <span>صوّر أو اكتب وجبتك وخذ تقدير أقرب للكارب والأنسولين.</span>
+            </div>
+          </a>
 
-        <a class="quick-card" href="carb-calculator.html">
-          <div class="quick-icon">🧮</div>
-          <div>
-            <strong>احسب المعامل</strong>
-            <span>ابنِ معامل الكارب على بياناتك الحالية وخله يظهر داخل بطاقتك.</span>
-          </div>
-        </a>
+          <a class="quick-card" href="carb-calculator.html">
+            <div class="quick-icon">🧮</div>
+            <div>
+              <strong>احسب المعامل</strong>
+              <span>ابنِ معامل الكارب على بياناتك الحالية وخله يظهر داخل بطاقتك.</span>
+            </div>
+          </a>
 
-        <a class="quick-card" href="daily-guide.html">
-          <div class="quick-icon">📋</div>
-          <div>
-            <strong>الدليل اليومي</strong>
-            <span>شوف ملخص يومك كامل بسرعة وفي شاشة أوضح.</span>
-          </div>
-        </a>
+          <a class="quick-card" href="daily-guide.html">
+            <div class="quick-icon">📋</div>
+            <div>
+              <strong>الدليل اليومي</strong>
+              <span>شوف ملخص يومك كامل بسرعة وفي شاشة أوضح.</span>
+            </div>
+          </a>
+        </div>
       </div>
     </section>
 
     <section class="section">
-      <div class="main-card-head">
+      <div class="section-head">
         <div class="section-title">ملخص يومك</div>
         <div class="section-note">آخر شيء مهم عندك</div>
       </div>
 
-      <div class="summary-grid">
-        <div class="summary-card">
-          <div class="summary-label">آخر وجبة</div>
-          <div class="summary-value" id="mealSummaryValue">ما فيه وجبة محفوظة</div>
-          <div class="summary-meta" id="mealSummaryMeta">ابدأ من محلل الوجبة إذا تبي ملخص أقرب.</div>
-        </div>
+      <div class="summary-block">
+        <div class="summary-grid">
+          <div class="summary-card">
+            <div class="summary-label">آخر وجبة</div>
+            <div class="summary-value" id="mealSummaryValue">ما فيه وجبة محفوظة</div>
+            <div class="summary-meta" id="mealSummaryMeta">ابدأ من محلل الوجبة إذا تبي ملخص أقرب.</div>
+          </div>
 
-        <div class="summary-card">
-          <div class="summary-label">آخر معامل</div>
-          <div class="summary-value" id="icrSummaryValue">--</div>
-          <div class="summary-meta" id="icrSummaryMeta">بانتظار أول حساب واضح.</div>
-        </div>
+          <div class="summary-card">
+            <div class="summary-label">آخر معامل</div>
+            <div class="summary-value" id="icrSummaryValue">--</div>
+            <div class="summary-meta" id="icrSummaryMeta">بانتظار أول حساب واضح.</div>
+          </div>
 
-        <div class="summary-card">
-          <div class="summary-label">آخر تحديث</div>
-          <div class="summary-value" id="updateSummaryValue">اليوم</div>
-          <div class="summary-meta" id="updateSummaryMeta">إذا سجلت قراءة، يرجع لك التحديث هنا فورًا.</div>
+          <div class="summary-card">
+            <div class="summary-label">آخر تحديث</div>
+            <div class="summary-value" id="updateSummaryValue">اليوم</div>
+            <div class="summary-meta" id="updateSummaryMeta">إذا سجلت قراءة، يرجع لك التحديث هنا فورًا.</div>
+          </div>
         </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="insight-card">
-        <div class="insight-head">
-          <div class="insight-badge">✨</div>
-          <div class="insight-title">قراءة SugarMind</div>
-        </div>
-        <p class="insight-copy" id="insightCopy">الفكرة هنا بسيطة: بطاقة واحدة واضحة تعرّف عنك وتعطيك أهم ما تحتاجه الآن، بدل التشتت بين الصفحات والأرقام.</p>
       </div>
     </section>
   </main>
@@ -665,7 +751,7 @@
 
       <div class="sheet-actions">
         <button class="btn btn-primary" id="saveReadingBtn" type="button">حفظ البطاقة</button>
-        <button class="btn btn-secondary" id="cancelRecorderBtn" type="button">إلغاء</button>
+        <button class="btn btn-ghost" id="cancelRecorderBtn" type="button">إلغاء</button>
       </div>
     </div>
   </div>
@@ -712,7 +798,7 @@
 
       <div class="sheet-actions">
         <button class="btn btn-primary" id="installNowBtn" type="button">تثبيت الآن</button>
-        <button class="btn btn-secondary" id="dismissInstallBtn" type="button">لاحقًا</button>
+        <button class="btn btn-ghost" id="dismissInstallBtn" type="button">لاحقًا</button>
       </div>
     </div>
   </div>
@@ -750,22 +836,34 @@
       greetingTitle: document.getElementById('greetingTitle'),
       greetingSub: document.getElementById('greetingSub'),
       timeChip: document.getElementById('timeChip'),
-      timeText: document.getElementById('timeText'),
 
       walletName: document.getElementById('walletName'),
-      walletState: document.getElementById('walletState'),
+      walletMessage: document.getElementById('walletMessage'),
+      walletStateChip: document.getElementById('walletStateChip'),
       walletReading: document.getElementById('walletReading'),
       walletRatio: document.getElementById('walletRatio'),
       walletRatioCopy: document.getElementById('walletRatioCopy'),
       walletStatusChip: document.getElementById('walletStatusChip'),
       walletTimeChip: document.getElementById('walletTimeChip'),
-      walletBadge: document.getElementById('walletBadge'),
       walletBrandSub: document.getElementById('walletBrandSub'),
-      walletFooterKicker: document.getElementById('walletFooterKicker'),
+      walletTag: document.getElementById('walletTag'),
       walletFooterTitle: document.getElementById('walletFooterTitle'),
       walletFooterCopy: document.getElementById('walletFooterCopy'),
       qrCode: document.getElementById('qrCode'),
       cardCaptureSurface: document.getElementById('cardCaptureSurface'),
+
+      quickReadingInput: document.getElementById('quickReadingInput'),
+      quickReadingBtn: document.getElementById('quickReadingBtn'),
+      quickReadingResult: document.getElementById('quickReadingResult'),
+      quickReadingValue: document.getElementById('quickReadingValue'),
+      quickReadingStatus: document.getElementById('quickReadingStatus'),
+      quickReadingMessage: document.getElementById('quickReadingMessage'),
+
+      decisionTitle: document.getElementById('decisionTitle'),
+      decisionCopy: document.getElementById('decisionCopy'),
+      decisionActionTitle: document.getElementById('decisionActionTitle'),
+      decisionActionCopy: document.getElementById('decisionActionCopy'),
+      decisionActionBtn: document.getElementById('decisionActionBtn'),
 
       mealSummaryValue: document.getElementById('mealSummaryValue'),
       mealSummaryMeta: document.getElementById('mealSummaryMeta'),
@@ -773,7 +871,6 @@
       icrSummaryMeta: document.getElementById('icrSummaryMeta'),
       updateSummaryValue: document.getElementById('updateSummaryValue'),
       updateSummaryMeta: document.getElementById('updateSummaryMeta'),
-      insightCopy: document.getElementById('insightCopy'),
 
       openRecorderBtn: document.getElementById('openRecorderBtn'),
       editCardBtn: document.getElementById('editCardBtn'),
@@ -821,595 +918,4 @@
     function normalizeTimeValue(value){
       if(!value) return currentTimeValue();
       if(/^\d{2}:\d{2}$/.test(value)) return value;
-      const d = new Date(value);
-      if(Number.isNaN(d.getTime())) return currentTimeValue();
-      return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-    }
-
-    function formatTime(value){
-      if(!value) return 'الآن';
-      if(/^\d{2}:\d{2}$/.test(value)){
-        const [h,m] = value.split(':').map(Number);
-        const d = new Date();
-        d.setHours(h,m,0,0);
-        return d.toLocaleTimeString('ar-SA', { hour:'numeric', minute:'2-digit' });
-      }
-      const d = new Date(value);
-      if(Number.isNaN(d.getTime())) return 'الآن';
-      return d.toLocaleTimeString('ar-SA', { hour:'numeric', minute:'2-digit' });
-    }
-
-    function formatDateLabel(value){
-      const d = new Date(value);
-      if(Number.isNaN(d.getTime())) return 'اليوم';
-      return d.toLocaleDateString('ar-SA', { day:'numeric', month:'short' });
-    }
-
-    function getPeriod(){
-      const hour = new Date().getHours();
-      if(hour < 12) return {label:'صباح الخير', hint:'بداية يوم هادئ', icon:'🌤️'};
-      if(hour < 18) return {label:'مساء الخير', hint:'نكمل يومك بهدوء', icon:'☀️'};
-      return {label:'مساء الخير', hint:'خلنا نختم يومك بوضوح', icon:'🌙'};
-    }
-
-    function getReadingState(reading){
-      const value = Number(reading);
-
-      if(!Number.isFinite(value)){
-        return {
-          label:'بانتظار القراءة',
-          pill:'بطاقة جديدة',
-          tone:'rgba(255,255,255,.045)',
-          color:'var(--cream)',
-          title:'سجل أول قراءة حتى تجهز بطاقتك',
-          body:'بمجرد حفظ الاسم والقراءة، يصير عندك كرت يومي واضح وجاهز للمشاركة.',
-          footerTitle:'جاهزة للحفظ والإرسال',
-          footerCopy:'شاركها مع أهلك أو مجتمعك أو احفظها في جهازك كصورة أنيقة وواضحة.'
-        };
-      }
-
-      if(value < 70){
-        return {
-          label:'منخفض',
-          pill:'يحتاج انتباه',
-          tone:'rgba(218,114,109,.14)',
-          color:'var(--danger)',
-          title:'القراءة الحالية منخفضة وتحتاج تركيز',
-          body:'الأولوية الآن للانتباه للحالة الحالية قبل أي خطوة ثانية.',
-          footerTitle:'بطاقة متابعة مهمة',
-          footerCopy:'إذا احتجت، حدّث القراءة بعد فترة قصيرة حتى تكون الصورة أوضح.'
-        };
-      }
-
-      if(value <= 140){
-        return {
-          label:'في النطاق',
-          pill:'مطمّنة',
-          tone:'rgba(97,176,127,.14)',
-          color:'var(--success)',
-          title:'أمورك اليوم مطمّنة',
-          body:'القراءة الحالية ضمن النطاق المناسب تقريبًا، وهذا يعطي انطباع جيد عن وضعك الآن.',
-          footerTitle:'بطاقة يومية مطمّنة',
-          footerCopy:'وقت ممتاز تشارك بطاقتك أو تنتقل لحساب الوجبة الجاية بهدوء.'
-        };
-      }
-
-      if(value <= 180){
-        return {
-          label:'مرتفع قليلًا',
-          pill:'انتباه بسيط',
-          tone:'rgba(230,184,92,.14)',
-          color:'var(--warning)',
-          title:'الوضع يحتاج انتباه بسيط',
-          body:'القراءة أعلى من المثالي قليلًا، لكنها ما زالت قابلة للفهم والضبط بهدوء.',
-          footerTitle:'بطاقة مراجعة ذكية',
-          footerCopy:'راجع معامل الكارب أو آخر وجبة حتى تتضح الصورة أكثر.'
-        };
-      }
-
-      return {
-        label:'مرتفع',
-        pill:'يحتاج مراجعة',
-        tone:'rgba(230,184,92,.14)',
-        color:'var(--warning)',
-        title:'القراءة تحتاج مراجعة أهدأ',
-        body:'فيه ارتفاع واضح، وغالبًا أفضل خطوة الآن أنك ترجع لآخر وجبة أو تحدّث القراءة.',
-        footerTitle:'بطاقة متابعة واضحة',
-        footerCopy:'حدّث القراءة أو راجع آخر وجبة حتى تكون المشاركة أدق وأوضح.'
-      };
-    }
-
-    function getLatestMeal(){
-      const direct = readJSON(KEYS.MEAL);
-      if(direct) return direct;
-
-      const list = readJSON(KEYS.MEALS_LIST);
-      if(Array.isArray(list) && list.length){
-        const last = list[list.length - 1];
-        return {
-          mealName: last.name || 'آخر وجبة محفوظة',
-          carbs: last.c ?? last.carbs ?? null,
-          dose: last.insulin ?? last.dose ?? null,
-          savedAt: last.time || null,
-          summary: last.ins ? last.ins : null
-        };
-      }
-
-      return null;
-    }
-
-    function migrateLegacy(){
-      const legacy = readJSON(KEYS.USER_LEGACY) || readJSON(KEYS.GUIDE_LEGACY);
-      const profile = readJSON(KEYS.PROFILE);
-      const home = readJSON(KEYS.HOME);
-
-      if(!profile && legacy?.name){
-        writeJSON(KEYS.PROFILE, { name: String(legacy.name).trim() });
-      }
-
-      if(!home && (legacy?.reading || legacy?.time)){
-        writeJSON(KEYS.HOME, {
-          reading: legacy.reading ?? '',
-          time: legacy.time || '',
-          savedAt: legacy.savedAt || new Date().toISOString()
-        });
-      }
-    }
-
-    function syncLegacyStores(){
-      const payload = {
-        name: state.profile?.name || '',
-        reading: state.home?.reading ?? '',
-        time: state.home?.time || '',
-        savedAt: state.home?.savedAt || new Date().toISOString()
-      };
-
-      writeJSON(KEYS.USER_LEGACY, payload);
-      writeJSON(KEYS.GUIDE_LEGACY, payload);
-    }
-
-    function hydrateState(){
-      migrateLegacy();
-      state.profile = readJSON(KEYS.PROFILE) || {};
-      state.home = readJSON(KEYS.HOME) || {};
-      state.icr = readJSON(KEYS.ICR) || null;
-      state.meal = getLatestMeal();
-    }
-
-    function setGreeting(){
-      const period = getPeriod();
-      const name = state.profile?.name?.trim();
-
-      els.timeChip.innerHTML = `${period.icon} <span id="timeText">${period.hint}</span>`;
-
-      if(name){
-        els.greetingTitle.textContent = `${period.label} يا ${name}`;
-        els.greetingSub.textContent = Number.isFinite(Number(state.home?.reading))
-          ? 'بطاقتك جاهزة الآن للحفظ والمشاركة، ومعها أهم ما تحتاجه من نظرة واحدة.'
-          : 'خلنا نكمل من حيث وقفنا ونحدّث بطاقتك بقراءة واضحة.';
-      }else{
-        els.greetingTitle.textContent = 'حياك الله في SugarMind';
-        els.greetingSub.textContent = 'خلنا نبدأ بإعداد بسيط، وبعدها تصير بطاقتك جاهزة للحفظ والمشاركة.';
-      }
-    }
-
-    function setWalletCard(){
-      const name = state.profile?.name?.trim() || 'ضيفنا الجديد';
-      const reading = Number(state.home?.reading);
-      const readingState = getReadingState(reading);
-      const ratio = state.icr?.icr ? `1:${state.icr.icr}` : '1:--';
-
-      els.walletName.textContent = name;
-      els.walletState.textContent = readingState.body;
-      els.walletReading.textContent = Number.isFinite(reading) ? reading : '--';
-      els.walletRatio.textContent = ratio;
-      els.walletRatioCopy.textContent = state.icr?.icr
-        ? `آخر معامل محفوظ عندك ${ratio}${state.icr?.confidenceLabel ? ` · والثقة ${state.icr.confidenceLabel}` : ''}.`
-        : 'إذا حسبت معاملك من الحاسبة، يظهر هنا مباشرة داخل بطاقتك.';
-
-      els.walletStatusChip.textContent = readingState.label;
-      els.walletStatusChip.style.background = readingState.tone;
-      els.walletStatusChip.style.color = readingState.color;
-      els.walletStatusChip.style.borderColor = 'transparent';
-
-      els.walletTimeChip.textContent = state.home?.time ? `آخر تحديث: ${formatTime(state.home.time)}` : 'آخر تحديث: الآن';
-      els.walletBadge.textContent = name && state.profile?.name ? `بطاقة ${name}` : 'بطاقة SugarMind';
-      els.walletBrandSub.textContent = Number.isFinite(reading) ? readingState.pill : 'ابدأ من أول خطوة';
-      els.walletFooterKicker.textContent = state.icr?.icr ? `معاملك الحالي ${ratio}` : 'بطاقة قابلة للمشاركة';
-      els.walletFooterTitle.textContent = readingState.footerTitle;
-      els.walletFooterCopy.textContent = readingState.footerCopy;
-    }
-
-    function setSummary(){
-      if(state.meal){
-        els.mealSummaryValue.textContent = state.meal.mealName || 'وجبة محفوظة';
-        if(state.meal.carbs || state.meal.dose){
-          const carbsText = state.meal.carbs ? `${state.meal.carbs}g كارب` : 'بدون كارب واضح';
-          const doseText = state.meal.dose ? ` · ${state.meal.dose}u` : '';
-          els.mealSummaryMeta.textContent = `${carbsText}${doseText}`;
-        }else{
-          els.mealSummaryMeta.textContent = state.meal.summary || 'عندك وجبة محفوظة من قبل.';
-        }
-      }else{
-        els.mealSummaryValue.textContent = 'ما فيه وجبة محفوظة';
-        els.mealSummaryMeta.textContent = 'ابدأ من محلل الوجبة إذا تبي ملخص أقرب.';
-      }
-
-      if(state.icr?.icr){
-        els.icrSummaryValue.textContent = `1:${state.icr.icr}`;
-        els.icrSummaryMeta.textContent = `الثقة: ${state.icr.confidenceLabel || 'أولية'}`;
-      }else{
-        els.icrSummaryValue.textContent = '--';
-        els.icrSummaryMeta.textContent = 'بانتظار أول حساب واضح.';
-      }
-
-      if(state.home?.savedAt){
-        els.updateSummaryValue.textContent = formatDateLabel(state.home.savedAt);
-        els.updateSummaryMeta.textContent = `آخر حفظ ${formatTime(state.home.savedAt)}`;
-      }else{
-        els.updateSummaryValue.textContent = 'اليوم';
-        els.updateSummaryMeta.textContent = 'إذا سجلت قراءة، يرجع لك التحديث هنا فورًا.';
-      }
-    }
-
-    function setInsight(){
-      const name = state.profile?.name?.trim();
-      const reading = Number(state.home?.reading);
-      const ratio = state.icr?.icr ? `1:${state.icr.icr}` : null;
-      const meal = state.meal?.mealName;
-
-      if(!name && !Number.isFinite(reading)){
-        els.insightCopy.textContent = 'الفكرة هنا بسيطة: بطاقة واحدة واضحة تعرّف عنك وتعطيك أهم ما تحتاجه الآن، بدل التشتت بين الصفحات والأرقام.';
-        return;
-      }
-
-      const parts = [];
-      parts.push(name ? `بطاقتك الآن شخصية باسم ${name}.` : 'بطاقتك جاهزة للتخصيص باسمك.');
-
-      if(Number.isFinite(reading)){
-        const info = getReadingState(reading);
-        parts.push(`آخر قراءة عندك ${reading} وحالتها ${info.label}.`);
-      }else{
-        parts.push('باقي نحتاج قراءة واضحة حتى تكون البطاقة أدق.');
-      }
-
-      if(ratio){
-        parts.push(`معامل الكارب المحفوظ عندك ${ratio}.`);
-      }else{
-        parts.push('إذا حسبت معاملك من الحاسبة، يكتمل أهم عنصر داخل البطاقة.');
-      }
-
-      if(meal){
-        parts.push(`آخر وجبة محفوظة هي ${meal}.`);
-      }
-
-      els.insightCopy.textContent = parts.join(' ');
-    }
-
-    function fillFormFromState(){
-      els.nameInput.value = state.profile?.name || '';
-      els.readingInput.value = state.home?.reading ?? '';
-      els.timeInput.value = normalizeTimeValue(state.home?.time);
-    }
-
-    function renderQrCode(){
-      const targetUrl = `${window.location.origin}${window.location.pathname}`;
-      els.qrCode.innerHTML = '';
-
-      state.qrInstance = new QRCode(els.qrCode, {
-        text: targetUrl,
-        width: 72,
-        height: 72,
-        colorDark: '#111522',
-        colorLight: '#FFFFFF',
-        correctLevel: QRCode.CorrectLevel.M
-      });
-    }
-
-    function render(){
-      hydrateState();
-      setGreeting();
-      setWalletCard();
-      setSummary();
-      setInsight();
-      fillFormFromState();
-      renderQrCode();
-      refreshInstallButton();
-    }
-
-    function showToast(message){
-      els.toast.textContent = message;
-      els.toast.classList.add('show');
-      clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => {
-        els.toast.classList.remove('show');
-      }, 2600);
-    }
-
-    function openRecorder(){
-      fillFormFromState();
-      els.recorderOverlay.classList.add('show');
-      els.recorderOverlay.setAttribute('aria-hidden', 'false');
-      setTimeout(() => els.nameInput.focus(), 60);
-    }
-
-    function closeRecorder(){
-      els.recorderOverlay.classList.remove('show');
-      els.recorderOverlay.setAttribute('aria-hidden', 'true');
-    }
-
-    function saveReading(){
-      const name = els.nameInput.value.trim();
-      const readingValue = Number(els.readingInput.value.trim());
-      const time = els.timeInput.value || currentTimeValue();
-
-      if(!name){
-        showToast('اكتب اسمك أولًا');
-        els.nameInput.focus();
-        return;
-      }
-
-      if(!Number.isFinite(readingValue) || readingValue < 20 || readingValue > 600){
-        showToast('أدخل قراءة واضحة بين 20 و 600');
-        els.readingInput.focus();
-        return;
-      }
-
-      state.profile = { name };
-      state.home = {
-        reading: readingValue,
-        time,
-        savedAt: new Date().toISOString()
-      };
-
-      writeJSON(KEYS.PROFILE, state.profile);
-      writeJSON(KEYS.HOME, state.home);
-      syncLegacyStores();
-
-      localStorage.setItem(KEYS.VALUE_MOMENT, 'true');
-
-      closeRecorder();
-      render();
-      showToast('تم تحديث بطاقتك');
-      maybePromptInstallAfterValue();
-    }
-
-    async function createCardBlob(){
-      const canvas = await html2canvas(els.cardCaptureSurface, {
-        scale: Math.min(window.devicePixelRatio || 2, 3),
-        backgroundColor: null,
-        useCORS: true,
-        allowTaint: true
-      });
-
-      return new Promise((resolve) => {
-        canvas.toBlob((blob) => resolve(blob), 'image/png', 1);
-      });
-    }
-
-    function buildCardFileName(){
-      const safeName = (state.profile?.name || 'SugarMind').replace(/[^\w\u0600-\u06FF-]+/g, '_');
-      return `SugarMind-${safeName}.png`;
-    }
-
-    async function saveCardImage(){
-      try{
-        showToast('جاري تجهيز البطاقة...');
-        const blob = await createCardBlob();
-        if(!blob){
-          showToast('تعذر تجهيز الصورة');
-          return;
-        }
-
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = buildCardFileName();
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        setTimeout(() => URL.revokeObjectURL(link.href), 1500);
-
-        showToast('تم حفظ البطاقة كصورة');
-      }catch(_){
-        showToast('تعذر حفظ البطاقة الآن');
-      }
-    }
-
-    async function shareCardImage(){
-      try{
-        showToast('جاري تجهيز البطاقة للمشاركة...');
-        const blob = await createCardBlob();
-        if(!blob){
-          showToast('تعذر تجهيز البطاقة');
-          return;
-        }
-
-        const file = new File([blob], buildCardFileName(), { type:'image/png' });
-
-        if(navigator.share && navigator.canShare && navigator.canShare({ files:[file] })){
-          await navigator.share({
-            files:[file],
-            title:'SugarMind Card',
-            text:'هذه بطاقتي من SugarMind'
-          });
-          showToast('تم فتح المشاركة');
-          return;
-        }
-
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = buildCardFileName();
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        setTimeout(() => URL.revokeObjectURL(link.href), 1500);
-        showToast('المشاركة المباشرة غير مدعومة هنا، فتم حفظ البطاقة كصورة');
-      }catch(error){
-        if(error && error.name === 'AbortError'){
-          showToast('تم إلغاء المشاركة');
-          return;
-        }
-        showToast('تعذر مشاركة البطاقة الآن');
-      }
-    }
-
-    function shouldOfferInstall(){
-      if(state.isStandalone) return false;
-      if(localStorage.getItem(KEYS.INSTALL_COMPLETED) === 'true') return false;
-      if(localStorage.getItem(KEYS.INSTALL_DISMISSED) === 'true') return false;
-      return state.isIOS || !!state.deferredInstallPrompt;
-    }
-
-    function refreshInstallButton(){
-      els.installTrigger.style.display = shouldOfferInstall() ? 'inline-flex' : 'none';
-    }
-
-    function openInstallSheet(){
-      if(!shouldOfferInstall()) return;
-
-      if(state.isIOS){
-        els.installSub.textContent = 'على الآيفون يكون التثبيت من زر المشاركة داخل Safari.';
-        els.installCopy.textContent = 'بعد أول استخدام فعلي، هذا أفضل وقت تضيف فيه التطبيق للشاشة الرئيسية.';
-        els.iosInstallSteps.classList.remove('hidden');
-        els.installNowBtn.textContent = 'فهمت الطريقة';
-      }else{
-        els.installSub.textContent = 'إذا ثبته الآن، بيفتح بشكل أقرب للتطبيق من الشاشة الرئيسية.';
-        els.installCopy.textContent = 'بمجرد ضغطك على تثبيت والموافقة، يحاول المتصفح إضافته لشاشتك الرئيسية مباشرة.';
-        els.iosInstallSteps.classList.add('hidden');
-        els.installNowBtn.textContent = 'تثبيت الآن';
-      }
-
-      els.installOverlay.classList.add('show');
-      els.installOverlay.setAttribute('aria-hidden', 'false');
-    }
-
-    function closeInstallSheet(){
-      els.installOverlay.classList.remove('show');
-      els.installOverlay.setAttribute('aria-hidden', 'true');
-    }
-
-    async function handleInstallNow(){
-      if(state.isIOS){
-        localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
-        closeInstallSheet();
-        refreshInstallButton();
-        showToast('نفّذ الخطوات من Safari ثم أضفه للشاشة');
-        return;
-      }
-
-      if(!state.deferredInstallPrompt){
-        closeInstallSheet();
-        showToast('التثبيت غير متاح الآن من هذا المتصفح');
-        return;
-      }
-
-      try{
-        state.deferredInstallPrompt.prompt();
-        const choice = await state.deferredInstallPrompt.userChoice;
-
-        if(choice && choice.outcome === 'accepted'){
-          localStorage.setItem(KEYS.INSTALL_COMPLETED, 'true');
-          localStorage.removeItem(KEYS.INSTALL_DISMISSED);
-          showToast('تم إرسال طلب التثبيت');
-        }else{
-          localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
-          showToast('تمام، نخليه لوقت لاحق');
-        }
-      }catch(_){
-        showToast('تعذر فتح نافذة التثبيت الآن');
-      }finally{
-        state.deferredInstallPrompt = null;
-        closeInstallSheet();
-        refreshInstallButton();
-      }
-    }
-
-    function maybePromptInstallAfterValue(){
-      if(!shouldOfferInstall()) return;
-      clearTimeout(state.installTimer);
-      state.installTimer = setTimeout(openInstallSheet, 1400);
-    }
-
-    function scheduleInstallForReturningUser(){
-      if(!localStorage.getItem(KEYS.VALUE_MOMENT)) return;
-      if(!shouldOfferInstall()) return;
-      clearTimeout(state.installTimer);
-      state.installTimer = setTimeout(openInstallSheet, 6500);
-    }
-
-    function bindEvents(){
-      els.openRecorderBtn.addEventListener('click', openRecorder);
-      els.editCardBtn.addEventListener('click', openRecorder);
-      els.closeRecorderBtn.addEventListener('click', closeRecorder);
-      els.cancelRecorderBtn.addEventListener('click', closeRecorder);
-      els.saveReadingBtn.addEventListener('click', saveReading);
-
-      els.shareCardBtn.addEventListener('click', shareCardImage);
-      els.saveCardBtn.addEventListener('click', saveCardImage);
-
-      els.installTrigger.addEventListener('click', openInstallSheet);
-      els.closeInstallBtn.addEventListener('click', closeInstallSheet);
-      els.dismissInstallBtn.addEventListener('click', () => {
-        localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
-        closeInstallSheet();
-        refreshInstallButton();
-      });
-      els.installNowBtn.addEventListener('click', handleInstallNow);
-
-      els.recorderOverlay.addEventListener('click', (event) => {
-        if(event.target === els.recorderOverlay) closeRecorder();
-      });
-
-      els.installOverlay.addEventListener('click', (event) => {
-        if(event.target === els.installOverlay) closeInstallSheet();
-      });
-
-      document.addEventListener('keydown', (event) => {
-        if(event.key === 'Escape'){
-          closeRecorder();
-          closeInstallSheet();
-        }
-
-        if(
-          event.key === 'Enter' &&
-          els.recorderOverlay.classList.contains('show') &&
-          event.target.tagName !== 'BUTTON'
-        ){
-          saveReading();
-        }
-      });
-    }
-
-    function setupInstallEvents(){
-      window.addEventListener('beforeinstallprompt', (event) => {
-        event.preventDefault();
-        state.deferredInstallPrompt = event;
-        refreshInstallButton();
-        scheduleInstallForReturningUser();
-      });
-
-      window.addEventListener('appinstalled', () => {
-        localStorage.setItem(KEYS.INSTALL_COMPLETED, 'true');
-        localStorage.removeItem(KEYS.INSTALL_DISMISSED);
-        closeInstallSheet();
-        refreshInstallButton();
-        showToast('تم تثبيت SugarMind على جهازك');
-      });
-    }
-
-    function hideSplash(){
-      setTimeout(() => {
-        els.splash.classList.add('hide');
-      }, 1050);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      bindEvents();
-      setupInstallEvents();
-      render();
-      hideSplash();
-      scheduleInstallForReturningUser();
-    });
-  </script>
-</body>
-</html>
+      const d = new Date(va
