@@ -9,6 +9,15 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ44R4V060"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PZ44R4V060');
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
@@ -147,10 +156,9 @@
     .greeting-sub{font-size:15px; color:var(--ink-2); line-height:1.9}
 
     .section{
-      margin-bottom:24px; /* زيادة التباعد */
+      margin-bottom:24px;
       position:relative;
     }
-    /* إضافة فاصل بصري بين الأقسام (ما عدا الأول) */
     .section:not(:first-of-type)::before{
       content:'';
       position:absolute;
@@ -163,7 +171,7 @@
       opacity:0.6;
     }
     .section-head{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:14px; /* زيادة طفيفة */
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:14px;
     }
     .section-title{font-size:18px; font-weight:900; letter-spacing:-.4px; color:var(--ink)}
     .section-note{font-size:12px; color:var(--ink-3); font-weight:900}
@@ -178,18 +186,17 @@
     }
     .wallet-card{
       position:relative;
-      min-height:280px;
-      padding:18px;
+      min-height:260px; /* تم التصغير من 280px */
+      padding:16px; /* تم التصغير من 18px */
       border-radius:calc(var(--radius-xxl) - 1px);
-      /* حدود دقيقة لتحديد الحواف */
-      border:0.5px solid rgba(255,255,255,0.15);
+      border:1px solid rgba(255,255,255,0.2); /* حدود أوضح */
       overflow:hidden;
       background:
         radial-gradient(circle at 12% 16%, rgba(123,170,146,.16), transparent 26%),
         radial-gradient(circle at 88% 14%, rgba(125,139,174,.18), transparent 26%),
         linear-gradient(160deg, var(--hero) 0%, #252B3F 54%, var(--hero-2) 100%);
       color:#F7F4EF;
-      box-shadow:0 10px 20px rgba(0,0,0,0.2);
+      box-shadow:0 10px 20px rgba(0,0,0,0.25); /* ظل أقوى */
     }
     .wallet-card::before{
       content:"";
@@ -200,46 +207,42 @@
       pointer-events:none;
     }
 
-    .wallet-top,.wallet-bottom{position:relative; z-index:2; display:flex; align-items:flex-start; justify-content:space-between; gap:12px}
-    .wallet-top{margin-bottom:14px}
+    .wallet-top,.wallet-bottom{position:relative; z-index:2; display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
+    .wallet-top{margin-bottom:12px}
     .wallet-brand{
-      font-size:12px; color:rgba(247,244,239,.74); font-weight:800;
+      font-size:11px; color:rgba(247,244,239,.74); font-weight:800;
     }
-    .wallet-brand strong{display:block; font-size:16px; color:#fff; font-weight:900; margin-bottom:3px}
+    .wallet-brand strong{display:block; font-size:15px; color:#fff; font-weight:900; margin-bottom:2px}
     .wallet-tag{
-      min-height:30px; padding:0 12px; border-radius:999px;
+      min-height:28px; padding:0 10px; border-radius:999px;
       display:inline-flex; align-items:center; justify-content:center;
       background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08);
-      font-size:11px; font-weight:900; color:#fff;
+      font-size:10px; font-weight:900; color:#fff;
       backdrop-filter:blur(10px);
       white-space:nowrap;
     }
 
     .wallet-main{
       position:relative; z-index:2;
-      display:grid; grid-template-columns:1.2fr .8fr; gap:10px; align-items:stretch;
-      margin-bottom:12px;
+      display:grid; grid-template-columns:1.2fr .8fr; gap:8px; align-items:stretch;
+      margin-bottom:10px;
     }
     .wallet-profile{
       padding:0;
       display:flex; flex-direction:column; justify-content:flex-start;
     }
     .wallet-name{
-      font-size:28px;
+      font-size:26px; /* تصغير طفيف */
       font-weight:900; line-height:1.2; letter-spacing:-1px; color:#fff;
-      margin-bottom:6px;
-      /* السماح بسطرين مع اقتصاص ذكي */
-      display:-webkit-box;
-      -webkit-line-clamp:2;
-      -webkit-box-orient:vertical;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:200px;
+      margin-bottom:4px;
+      /* السماح بالالتفاف وعدم القص */
+      word-wrap:break-word;
+      max-width:180px;
     }
     .wallet-message{
-      font-size:13px;
-      line-height:1.7; color:rgba(247,244,239,.9); /* زيادة التباين */
-      margin-bottom:10px;
+      font-size:12px;
+      line-height:1.6; color:rgba(247,244,239,.9);
+      margin-bottom:8px;
       display:-webkit-box;
       -webkit-line-clamp:2;
       -webkit-box-orient:vertical;
@@ -248,64 +251,64 @@
     }
     .wallet-state-chip{
       display:inline-flex; align-items:center; gap:8px;
-      min-height:28px; padding:0 12px; border-radius:999px;
-      font-size:11px; font-weight:900;
+      min-height:26px; padding:0 10px; border-radius:999px;
+      font-size:10px; font-weight:900;
       width:max-content;
       border:1px solid transparent;
     }
 
-    .metric-stack{display:flex; flex-direction:column; gap:10px}
+    .metric-stack{display:flex; flex-direction:column; gap:8px}
     .metric-box,.ratio-box{
-      border-radius:20px;
+      border-radius:18px; /* تصغير */
       background:rgba(255,255,255,.055);
       border:1px solid rgba(255,255,255,.08);
       backdrop-filter:blur(12px);
-      padding:12px;
+      padding:10px; /* تصغير */
       min-height:auto;
-      box-shadow:inset 0 2px 4px rgba(0,0,0,0.05); /* ظل داخلي خفيف */
+      box-shadow:inset 0 2px 4px rgba(0,0,0,0.05);
     }
-    .metric-label,.ratio-label{font-size:11px; color:rgba(247,244,239,.62); font-weight:900; margin-bottom:6px}
-    .metric-value{display:flex; align-items:flex-end; gap:6px; margin-bottom:6px}
-    .metric-value strong{font-size:48px; line-height:.9; font-weight:900; letter-spacing:-1px; color:#fff}
-    .metric-value span{font-size:12px; color:rgba(247,244,239,.72); padding-bottom:6px}
-    .metric-foot{display:flex; flex-wrap:wrap; gap:6px}
+    .metric-label,.ratio-label{font-size:10px; color:rgba(247,244,239,.62); font-weight:900; margin-bottom:4px}
+    .metric-value{display:flex; align-items:flex-end; gap:4px; margin-bottom:4px}
+    .metric-value strong{font-size:42px; /* تصغير */ line-height:.9; font-weight:900; letter-spacing:-1px; color:#fff}
+    .metric-value span{font-size:11px; color:rgba(247,244,239,.72); padding-bottom:4px}
+    .metric-foot{display:flex; flex-wrap:wrap; gap:4px}
     .micro-chip{
       display:inline-flex; align-items:center; justify-content:center; gap:4px;
-      min-height:26px; padding:0 8px; border-radius:999px;
+      min-height:24px; padding:0 6px; border-radius:999px;
       border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.04);
-      font-size:10px; color:rgba(247,244,239,.80); font-weight:900;
+      font-size:9px; color:rgba(247,244,239,.80); font-weight:900;
     }
-    .ratio-main{display:flex; align-items:flex-end; gap:6px; margin-bottom:4px}
-    .ratio-main strong{font-size:28px; line-height:1; font-weight:900; letter-spacing:-1px; color:#fff}
-    .ratio-main span{font-size:12px; color:rgba(247,244,239,.72); padding-bottom:4px}
-    .ratio-copy{font-size:11px; color:rgba(247,244,239,.82); line-height:1.6; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+    .ratio-main{display:flex; align-items:flex-end; gap:4px; margin-bottom:4px}
+    .ratio-main strong{font-size:24px; line-height:1; font-weight:900; letter-spacing:-1px; color:#fff}
+    .ratio-main span{font-size:11px; color:rgba(247,244,239,.72); padding-bottom:3px}
+    .ratio-copy{font-size:10px; color:rgba(247,244,239,.82); line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
 
     .wallet-bottom{
-      gap:10px;
+      gap:8px;
       align-items:flex-end;
       border-top:1px solid rgba(255,255,255,.08);
-      padding-top:12px;
+      padding-top:10px;
     }
     .wallet-footer-meta{min-width:0}
-    .wallet-footer-title{font-size:15px; font-weight:900; color:#fff; margin-bottom:4px}
-    .wallet-footer-copy{font-size:11px; color:rgba(247,244,239,.78); line-height:1.6; max-width:220px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+    .wallet-footer-title{font-size:14px; font-weight:900; color:#fff; margin-bottom:3px}
+    .wallet-footer-copy{font-size:10px; color:rgba(247,244,239,.78); line-height:1.5; max-width:200px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
     .qr-wrap{
-      width:70px; flex-shrink:0; display:flex; flex-direction:column; align-items:center; gap:6px;
+      width:65px; flex-shrink:0; display:flex; flex-direction:column; align-items:center; gap:4px;
     }
     .qr-box{
-      width:70px; height:70px; padding:6px; border-radius:18px; background:#fff;
+      width:65px; height:65px; padding:5px; border-radius:16px; background:#fff;
       display:flex; align-items:center; justify-content:center;
-      box-shadow:0 10px 20px rgba(0,0,0,.18);
+      box-shadow:0 8px 16px rgba(0,0,0,.18);
     }
-    .qr-box div{width:58px; height:58px !important;}
-    .qr-caption{font-size:10px; color:rgba(247,244,239,.65); font-weight:900; text-align:center}
+    .qr-box div{width:55px; height:55px !important;}
+    .qr-caption{font-size:9px; color:rgba(247,244,239,.65); font-weight:900; text-align:center}
 
     .card-actions{
-      display:grid; grid-template-columns:1fr 1fr auto; gap:8px; margin-top:14px; /* زيادة طفيفة */
+      display:grid; grid-template-columns:1fr 1fr auto; gap:8px; margin-top:12px;
     }
     .btn{
-      min-height:50px; border-radius:18px; display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      padding:0 16px; font-size:14px; font-weight:900;
+      min-height:48px; border-radius:16px; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding:0 14px; font-size:13px; font-weight:900;
       transition:transform .22s var(--ease), box-shadow .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease);
     }
     .btn:hover{transform:translateY(-2px)}
@@ -318,12 +321,12 @@
       color:#fff; box-shadow:0 12px 24px rgba(69,73,106,.18);
     }
     .btn-secondary{
-      min-width:50px;
+      min-width:48px;
       background:#fff; border:1px solid var(--line); color:var(--ink);
       box-shadow:var(--shadow-sm);
     }
     .btn-ghost{
-      min-height:48px; border-radius:16px; padding:0 14px;
+      min-height:46px; border-radius:16px; padding:0 12px;
       background:transparent; border:1px solid var(--line); color:var(--ink); font-size:13px; font-weight:900;
     }
     .btn-danger{
@@ -335,12 +338,12 @@
       background:rgba(218,114,109,.2);
     }
 
-    /* تحسين البطاقات الأخرى */
+    /* باقي الأنماط كما هي دون تغيير */
     .scan-card,.decision-card,.quick-block,.summary-block{
       border-radius:var(--radius-xl);
       background:rgba(255,255,255,.8);
-      border:1.5px solid var(--line); /* زيادة سمك الحدود */
-      box-shadow:var(--shadow-md), inset 0 2px 4px rgba(0,0,0,0.02); /* ظل داخلي */
+      border:1.5px solid var(--line);
+      box-shadow:var(--shadow-md), inset 0 2px 4px rgba(0,0,0,0.02);
       backdrop-filter:blur(12px);
       transition:transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s var(--ease);
     }
@@ -350,9 +353,8 @@
       border-color:rgba(125,139,174,.3);
     }
 
-    /* تمييز بطاقة "خطوتك الآن" */
     .decision-card{
-      background:var(--surface-2); /* خلفية أغمق قليلاً */
+      background:var(--surface-2);
     }
 
     .scan-card{padding:18px}
@@ -446,7 +448,7 @@
       font-size:11px; color:var(--ink-3); font-weight:900; margin-bottom:8px;
       display:flex; align-items:center; gap:4px;
     }
-    .summary-label span{font-size:14px;} /* للأيقونات */
+    .summary-label span{font-size:14px;}
     .summary-value{font-size:15px; font-weight:900; color:var(--ink); line-height:1.4; margin-bottom:6px}
     .summary-meta{font-size:11px; color:var(--ink-2); line-height:1.7}
 
@@ -478,11 +480,11 @@
       transform:translateY(-2px);
     }
     .nav-item.active span:first-child{
-      font-size:22px; /* تكبير الأيقونة */
+      font-size:22px;
       transform:scale(1.1);
     }
     .nav-item:active span:first-child{
-      transform:scale(0.9); /* تأثير bounce عند النقر */
+      transform:scale(0.9);
     }
 
     .sheet-overlay{
@@ -544,8 +546,8 @@
       .greeting-title{font-size:26px}
       .wallet-main{grid-template-columns:1fr}
       .summary-grid,.quick-grid,.inline-fields,.card-actions,.scan-form,.sheet-actions{grid-template-columns:1fr}
-      .wallet-name{font-size:24px; max-width:100%;}
-      .metric-value strong{font-size:44px}
+      .wallet-name{font-size:22px; max-width:100%;}
+      .metric-value strong{font-size:38px}
       .decision-action{align-items:flex-start; flex-direction:column}
       .section:not(:first-of-type)::before{width:40px;}
     }
@@ -816,8 +818,6 @@
         <label for="readingInput">قراءة السكر</label>
         <input class="input" id="readingInput" type="number" inputmode="numeric" min="20" max="600" placeholder="مثال: 120" />
       </div>
-
-      <!-- تم إزالة حقل الوقت نهائياً -->
 
       <p class="helper">التخزين محلي على نفس الجهاز فقط. الوقت يُسجل تلقائياً من جهازك.</p>
 
@@ -1189,7 +1189,6 @@
 
       els.timeChip.innerHTML = `${period.icon} <span>${period.hint}</span>`;
 
-      // رسائل ترحيبية ابتكارية
       if(name){
         if(Number.isFinite(Number(state.home?.reading))){
           els.greetingSub.textContent = 'بطاقتك تعكس تقدمك، كل يوم خطوة أقرب لفهم جسمك.';
@@ -1416,7 +1415,6 @@
     function saveReading(){
       const name = els.nameInput.value.trim();
       const readingValue = Number(els.readingInput.value.trim());
-      // يتم أخذ الوقت الحالي تلقائياً
       const time = currentTimeValue();
 
       if(!name){
@@ -1450,19 +1448,15 @@
       maybePromptInstallAfterValue();
     }
 
-    // دالة جديدة لحذف جميع بيانات المستخدم
     function deleteUserData(){
       if(confirm('هل أنت متأكد من حذف جميع بياناتك؟ لا يمكن التراجع عن هذا الإجراء.')){
         localStorage.removeItem(KEYS.PROFILE);
         localStorage.removeItem(KEYS.HOME);
         localStorage.removeItem(KEYS.USER_LEGACY);
         localStorage.removeItem(KEYS.GUIDE_LEGACY);
-        // يمكن إبقاء ICR والوجبات إذا أردت، لكن حذفها أيضاً اختياري
-        // سنحذفها لتجربة نظيفة
         localStorage.removeItem(KEYS.ICR);
         localStorage.removeItem(KEYS.MEAL);
         localStorage.removeItem(KEYS.MEALS_LIST);
-        // إعادة تعيين الحالة
         state.profile = {};
         state.home = {};
         state.icr = null;
@@ -1475,14 +1469,17 @@
 
     async function createCardBlob(){
       const canvas = await html2canvas(els.cardCaptureSurface, {
-        scale: Math.min(window.devicePixelRatio || 2, 3), // زيادة الدقة
-        backgroundColor: '#252B3F', // خلفية موحدة للبطاقة
+        scale: 3, // دقة عالية جداً
+        backgroundColor: '#252B3F',
         useCORS: true,
-        allowTaint: true
+        allowTaint: true,
+        logging: false,
+        windowWidth: els.cardCaptureSurface.scrollWidth,
+        windowHeight: els.cardCaptureSurface.scrollHeight
       });
 
       return new Promise((resolve) => {
-        canvas.toBlob((blob) => resolve(blob), 'image/png', 0.9); // جودة مناسبة
+        canvas.toBlob((blob) => resolve(blob), 'image/png', 1);
       });
     }
 
