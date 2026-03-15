@@ -28,7 +28,6 @@
       --ink-2:#667085;
       --ink-3:#8C94A4;
       --line:#E6E1D8;
-      --line-strong:rgba(69,73,106,.14);
       --success:#61B07F;
       --warning:#E6B85C;
       --danger:#DA726D;
@@ -63,6 +62,7 @@
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
     }
+
     a{text-decoration:none;color:inherit}
     button,input,select{font:inherit}
     button{border:0;background:none;color:inherit;cursor:pointer}
@@ -92,13 +92,20 @@
 
     .hero{
       background:linear-gradient(145deg, rgba(255,255,255,.72), rgba(255,255,255,.88));
-      border:1px solid var(--line); border-radius:var(--radius-xxl); box-shadow:var(--shadow-lg);
-      padding:22px; margin-bottom:18px;
-      position:relative; overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:var(--radius-xxl);
+      box-shadow:var(--shadow-lg);
+      padding:22px;
+      margin-bottom:18px;
+      position:relative;
+      overflow:hidden;
     }
     .hero::before{
-      content:""; position:absolute; inset:0;
-      background:radial-gradient(circle at top right, rgba(125,139,174,.10), transparent 25%), radial-gradient(circle at bottom left, rgba(123,170,146,.10), transparent 24%);
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(circle at top right, rgba(125,139,174,.10), transparent 25%),
+        radial-gradient(circle at bottom left, rgba(123,170,146,.10), transparent 24%);
       pointer-events:none;
     }
     .hero-badge{
@@ -108,40 +115,95 @@
       background:rgba(125,139,174,.12); border:1px solid rgba(125,139,174,.16);
       color:var(--hero-2); font-size:12px; font-weight:900; margin-bottom:14px;
     }
-    .hero-title{position:relative; z-index:1; font-size:28px; font-weight:900; color:var(--ink); line-height:1.45; letter-spacing:-1px; margin-bottom:10px}
-    .hero-text{position:relative; z-index:1; font-size:14px; color:var(--ink-2); line-height:1.95}
+    .hero-title{
+      position:relative; z-index:1;
+      font-size:28px; font-weight:900; color:var(--ink); line-height:1.45; letter-spacing:-1px; margin-bottom:10px
+    }
+    .hero-text{
+      position:relative; z-index:1;
+      font-size:14px; color:var(--ink-2); line-height:1.95
+    }
 
     .section{margin-bottom:18px}
     .section-head{display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:12px}
     .section-title{font-size:18px; font-weight:900; color:var(--ink); letter-spacing:-.4px}
     .section-note{font-size:12px; font-weight:900; color:var(--ink-3)}
 
+    .surface{
+      border-radius:var(--radius-xl);
+      background:rgba(255,255,255,.80);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-md);
+    }
+
+    .mode-gateway{padding:18px}
     .mode-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
     .mode-card{
-      padding:18px; border-radius:24px; border:1px solid var(--line); background:rgba(255,255,255,.78);
-      box-shadow:var(--shadow-md); transition:all .22s var(--ease); cursor:pointer;
+      padding:20px;
+      border-radius:24px;
+      border:1px solid var(--line);
+      background:linear-gradient(145deg, rgba(255,255,255,.95), rgba(248,246,242,.92));
+      box-shadow:var(--shadow-sm);
+      transition:all .22s var(--ease);
+      cursor:pointer;
+      text-align:right;
     }
-    .mode-card:hover{transform:translateY(-3px)}
-    .mode-card.active{border-color:rgba(69,73,106,.20); background:linear-gradient(145deg, rgba(255,255,255,.95), rgba(240,236,231,.96)); box-shadow:0 18px 36px rgba(30,36,51,.10)}
-    .mode-chip{display:inline-flex; align-items:center; justify-content:center; min-width:42px; min-height:42px; border-radius:16px; margin-bottom:14px; font-size:20px; background:linear-gradient(135deg, rgba(125,139,174,.16), rgba(123,170,146,.12))}
-    .mode-card strong{display:block; font-size:17px; font-weight:900; color:var(--ink); margin-bottom:6px}
-    .mode-card span{display:block; font-size:13px; line-height:1.8; color:var(--ink-2)}
+    .mode-card:hover{transform:translateY(-3px); border-color:rgba(69,73,106,.18)}
+    .mode-chip{
+      width:50px; height:50px; border-radius:18px;
+      display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg, rgba(125,139,174,.16), rgba(123,170,146,.12));
+      margin-bottom:14px;
+      font-size:22px;
+    }
+    .mode-card strong{display:block; font-size:18px; font-weight:900; color:var(--ink); margin-bottom:6px}
+    .mode-card span{display:block; font-size:13px; line-height:1.85; color:var(--ink-2)}
+    .mode-card.active{
+      border-color:rgba(69,73,106,.22);
+      box-shadow:0 18px 36px rgba(30,36,51,.10);
+    }
 
-    .panel, .soft-card, .result-card, .history-card, .chart-card{
-      border-radius:var(--radius-xl); background:rgba(255,255,255,.80); border:1px solid var(--line); box-shadow:var(--shadow-md);
+    .workspace-shell{display:none}
+    .workspace-shell.show{display:block}
+
+    .flow-head{
+      padding:18px;
+      margin-bottom:18px;
     }
+    .crumbs{
+      display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+      margin-bottom:12px;
+      font-size:12px; color:var(--ink-3); font-weight:900;
+    }
+    .crumbs span:last-child{color:var(--hero-2)}
+    .flow-top{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+    }
+    .flow-title{font-size:22px; font-weight:900; color:var(--ink); line-height:1.35; margin-bottom:6px}
+    .flow-copy{font-size:14px; color:var(--ink-2); line-height:1.9; max-width:320px}
+    .switch-btn{
+      min-height:42px; padding:0 14px; border-radius:14px;
+      background:#fff; border:1px solid var(--line); color:var(--ink); box-shadow:var(--shadow-sm);
+      font-size:13px; font-weight:900; flex-shrink:0; transition:all .22s var(--ease);
+    }
+    .switch-btn:hover{transform:translateY(-2px)}
+
+    .flow-sections{
+      display:grid;
+      gap:18px;
+    }
+
     .panel{padding:18px}
-    .soft-card{padding:18px}
     .field{margin-bottom:12px}
     .field:last-child{margin-bottom:0}
     .field label{display:block; font-size:13px; color:var(--ink-2); font-weight:900; margin-bottom:8px}
     .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
-    .input, .select{
+    .input,.select{
       width:100%; min-height:54px; border-radius:18px; border:1px solid var(--line);
       background:#fff; color:var(--ink); outline:none; padding:0 16px; font-size:15px; font-weight:700;
-      transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
+      transition:border-color .2s ease, box-shadow .2s ease;
     }
-    .input:focus, .select:focus{border-color:rgba(69,73,106,.24); box-shadow:0 0 0 4px rgba(125,139,174,.10)}
+    .input:focus,.select:focus{border-color:rgba(69,73,106,.24); box-shadow:0 0 0 4px rgba(125,139,174,.10)}
     .helper{font-size:12px; color:var(--ink-3); line-height:1.8; margin-top:8px}
     .mini-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
 
@@ -153,13 +215,23 @@
       display:flex; align-items:center; justify-content:center; text-align:center;
       padding:8px; font-size:13px; font-weight:900; color:var(--ink-2); transition:all .2s ease; cursor:pointer;
     }
-    .segment.active{background:linear-gradient(135deg, var(--primary), #6E9A81); border-color:transparent; color:#fff; box-shadow:0 14px 28px rgba(123,170,146,.18)}
+    .segment.active{
+      background:linear-gradient(135deg, var(--primary), #6E9A81);
+      border-color:transparent; color:#fff; box-shadow:0 14px 28px rgba(123,170,146,.18);
+    }
 
-    .pill-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
-    .pill{
-      min-height:34px; padding:0 12px; border-radius:999px; border:1px solid var(--line);
-      background:var(--surface-2); color:var(--ink-2); font-size:12px; font-weight:900;
-      display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    .callout{
+      padding:16px; border-radius:20px; border:1px solid transparent;
+    }
+    .callout-title{font-size:14px; font-weight:900; margin-bottom:8px}
+    .callout-text{font-size:13px; line-height:1.9; white-space:pre-line}
+    .callout.info{background:var(--info-soft); border-color:rgba(125,139,174,.16); color:var(--hero-2)}
+    .callout.success{background:var(--success-soft); border-color:rgba(97,176,127,.16); color:#2F6A43}
+    .callout.warning{background:var(--warning-soft); border-color:rgba(230,184,92,.18); color:#8A6420}
+
+    .block-tag{
+      display:inline-flex; align-items:center; justify-content:center; min-height:32px; padding:0 12px; border-radius:999px;
+      background:var(--surface-2); border:1px solid var(--line); color:var(--ink-2); font-size:12px; font-weight:900; margin-bottom:12px;
     }
 
     .cta{
@@ -171,44 +243,48 @@
     }
     .cta:hover{transform:translateY(-2px)}
 
-    .result-card{padding:20px; display:none}
-    .result-card.show{display:block}
+    .result-card,.chart-card,.history-card{
+      display:none;
+      padding:18px;
+    }
+    .result-card.show,.chart-card.show,.history-card.show{display:block}
+
     .result-hero{
       border-radius:24px; padding:22px; margin-bottom:16px;
       background:linear-gradient(145deg, rgba(125,139,174,.10), rgba(123,170,146,.10));
       border:1px solid rgba(69,73,106,.08);
       text-align:center;
     }
-    .result-badge{display:inline-flex; align-items:center; justify-content:center; min-height:34px; padding:0 12px; border-radius:999px; background:rgba(125,139,174,.12); color:var(--hero-2); font-size:12px; font-weight:900; margin-bottom:14px}
+    .result-badge{
+      display:inline-flex; align-items:center; justify-content:center; min-height:34px; padding:0 12px; border-radius:999px;
+      background:rgba(125,139,174,.12); color:var(--hero-2); font-size:12px; font-weight:900; margin-bottom:14px;
+    }
     .result-number{font-size:58px; font-weight:900; line-height:1; color:var(--ink); letter-spacing:-2px}
     .result-label{font-size:14px; color:var(--ink-2); line-height:1.9; margin-top:10px}
+
     .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px}
-    .stat{padding:14px; border-radius:20px; background:#fff; border:1px solid var(--line); box-shadow:var(--shadow-sm); text-align:center}
+    .stat{
+      padding:14px; border-radius:20px; background:#fff; border:1px solid var(--line); box-shadow:var(--shadow-sm); text-align:center;
+    }
     .stat-value{font-size:24px; font-weight:900; color:var(--ink); line-height:1.1}
     .stat-label{font-size:12px; color:var(--ink-2); line-height:1.7; margin-top:6px}
-
-    .callout{
-      padding:16px; border-radius:20px; border:1px solid transparent; margin-bottom:14px;
-    }
-    .callout-title{font-size:14px; font-weight:900; margin-bottom:8px}
-    .callout-text{font-size:13px; line-height:1.9; white-space:pre-line}
-    .callout.info{background:var(--info-soft); border-color:rgba(125,139,174,.16); color:var(--hero-2)}
-    .callout.success{background:var(--success-soft); border-color:rgba(97,176,127,.16); color:#2F6A43}
-    .callout.warning{background:var(--warning-soft); border-color:rgba(230,184,92,.18); color:#8A6420}
 
     .confidence-box{
       padding:16px; border-radius:20px; background:#fff; border:1px solid var(--line); box-shadow:var(--shadow-sm);
     }
     .confidence-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px}
     .confidence-title{font-size:14px; font-weight:900; color:var(--ink)}
-    .confidence-badge{min-height:32px; padding:0 12px; border-radius:999px; background:var(--surface-2); border:1px solid var(--line); color:var(--hero-2); font-size:12px; font-weight:900; display:inline-flex; align-items:center; justify-content:center}
+    .confidence-badge{
+      min-height:32px; padding:0 12px; border-radius:999px; background:var(--surface-2); border:1px solid var(--line);
+      color:var(--hero-2); font-size:12px; font-weight:900; display:inline-flex; align-items:center; justify-content:center;
+    }
     .confidence-bar{width:100%; height:10px; border-radius:999px; background:var(--surface-3); overflow:hidden; margin-bottom:10px}
     .confidence-fill{height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg, var(--hero-2), var(--primary)); transition:width .4s ease}
     .confidence-text{font-size:12px; color:var(--ink-2); line-height:1.8}
 
-    .chart-card, .history-card{padding:18px}
     .chart-wrap{height:220px}
-    .history-list{display:grid; gap:8px; max-height:240px; overflow:auto}
+
+    .history-list{display:grid; gap:8px; max-height:260px; overflow:auto}
     .history-empty{font-size:13px; color:var(--ink-3); text-align:center; line-height:1.9; padding:16px 8px}
     .history-item{
       display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px;
@@ -217,7 +293,10 @@
     .history-main{min-width:0}
     .history-title{font-size:13px; font-weight:900; color:var(--ink); margin-bottom:4px}
     .history-meta{font-size:12px; color:var(--ink-2); line-height:1.7}
-    .history-badge{min-height:30px; padding:0 10px; border-radius:999px; background:rgba(125,139,174,.12); color:var(--hero-2); font-size:12px; font-weight:900; display:inline-flex; align-items:center; justify-content:center; white-space:nowrap}
+    .history-badge{
+      min-height:30px; padding:0 10px; border-radius:999px; background:rgba(125,139,174,.12); color:var(--hero-2);
+      font-size:12px; font-weight:900; display:inline-flex; align-items:center; justify-content:center; white-space:nowrap;
+    }
 
     .button-row{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px}
     .btn{
@@ -236,7 +315,10 @@
       max-width:var(--max-width); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding:10px;
       border-radius:26px; background:rgba(255,255,255,.90); border:1px solid var(--line); backdrop-filter:blur(16px); box-shadow:0 18px 40px rgba(24,30,45,.10); pointer-events:auto;
     }
-    .nav-item{min-height:62px; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; font-size:11px; font-weight:900; color:var(--ink-3); transition:all .22s var(--ease)}
+    .nav-item{
+      min-height:62px; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+      font-size:11px; font-weight:900; color:var(--ink-3); transition:all .22s var(--ease);
+    }
     .nav-item span:first-child{font-size:20px; line-height:1}
     .nav-item.active{background:linear-gradient(135deg, rgba(125,139,174,.16), rgba(123,170,146,.12)); color:var(--ink); transform:translateY(-2px)}
 
@@ -251,8 +333,10 @@
     .hidden{display:none !important}
 
     @media (max-width:430px){
-      .mode-grid,.grid-2,.button-row,.stats{grid-template-columns:1fr}
+      .mode-grid,.grid-2,.button-row,.stats,.segmented{grid-template-columns:1fr}
       .result-number{font-size:48px}
+      .flow-top{flex-direction:column}
+      .switch-btn{width:100%}
     }
   </style>
 </head>
@@ -263,261 +347,306 @@
         <a href="index.html" class="back-btn" aria-label="العودة">→</a>
         <div class="brand-copy">
           <div class="brand-title">احسب المعامل</div>
-          <div class="brand-sub">اختر بين معامل الكارب أو معامل التصحيح، وخلك على مسار تعلّم يرفع الثقة مع الوقت.</div>
+          <div class="brand-sub">اختر المسار اللي يخصك، وبعدها ندخلك في تجربة واضحة من البداية للنهاية.</div>
         </div>
       </div>
       <button class="ghost-icon" id="openLastMealBtn" type="button" title="استخدم آخر وجبة">🍽️</button>
     </header>
 
     <section class="hero">
-      <div class="hero-badge">🧠 تقدير أولي + تعلّم تراكمي</div>
-      <h1 class="hero-title">نتيجة أصدق...<br>كلما تكررت التجارب</h1>
-      <p class="hero-text">SugarMind هنا ما يعطيك رقمًا نهائيًا من مرة واحدة. يبدأ بتقدير أولي، ثم يتعلم من التجارب النظيفة، ويرفع لك درجة الثقة خطوة بخطوة.</p>
+      <div class="hero-badge">🧠 رحلة أوضح + تعلّم تراكمي</div>
+      <h1 class="hero-title">تقدير ذكي...<br>يفهمك أكثر مع التكرار</h1>
+      <p class="hero-text">هنا ما بنخلط بين معامل الكارب ومعامل التصحيح. اختر المسار، وابدأ من تجربة واضحة، ثم تابع كيف ترتفع الثقة مع الوقت.</p>
     </section>
 
-    <section class="section">
+    <!-- بوابة الاختيار -->
+    <section class="section surface mode-gateway" id="modeGateway">
       <div class="section-head">
-        <div class="section-title">اختر المسار</div>
-        <div class="section-note">مساران منفصلان بوضوح</div>
+        <div class="section-title">اختر مسارك الآن</div>
+        <div class="section-note">خطوة أولى واضحة</div>
       </div>
+
       <div class="mode-grid">
-        <button class="mode-card active" id="modeIcr" type="button" data-mode="icr">
+        <button class="mode-card" id="modeIcr" type="button" data-mode="icr">
           <div class="mode-chip">🧮</div>
           <strong>احسب معامل الكارب</strong>
-          <span>كم غرام كارب تغطيه 1 وحدة تقريبًا.</span>
+          <span>كم غرام كارب تغطيه 1 وحدة تقريبًا. هذا مسار الوجبة والكارب.</span>
         </button>
 
         <button class="mode-card" id="modeIsf" type="button" data-mode="isf">
           <div class="mode-chip">🎯</div>
           <strong>احسب معامل التصحيح</strong>
-          <span>كم تنزل 1 وحدة من السكر تقريبًا.</span>
+          <span>كم تنزل 1 وحدة من السكر تقريبًا. هذا مسار تصحيح الارتفاع.</span>
         </button>
       </div>
     </section>
 
-    <section class="section soft-card">
-      <div class="section-head">
-        <div class="section-title">بياناتك الأساسية</div>
-        <div class="section-note">تساعدنا في التقدير الأولي</div>
-      </div>
-
-      <div class="grid-2">
-        <div class="field">
-          <label for="genderInput">الجنس</label>
-          <select class="select" id="genderInput">
-            <option value="male">ذكر</option>
-            <option value="female">أنثى</option>
-          </select>
+    <!-- مساحة العمل -->
+    <section class="workspace-shell" id="workspaceShell">
+      <section class="surface flow-head">
+        <div class="crumbs">
+          <span>الحساب</span>
+          <span>←</span>
+          <span id="crumbCurrent">معامل الكارب</span>
         </div>
 
-        <div class="field">
-          <label for="ageInput">العمر</label>
-          <input class="input" id="ageInput" type="number" min="2" max="100" placeholder="مثال: 18" />
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="field">
-          <label for="weightInput">الوزن (كجم)</label>
-          <input class="input" id="weightInput" type="number" min="10" max="250" placeholder="مثال: 70" />
-        </div>
-
-        <div class="field">
-          <label for="tddInput">إجمالي الإنسولين اليومي TDD (اختياري)</label>
-          <input class="input" id="tddInput" type="number" min="1" max="300" step="0.5" placeholder="مثال: 40" />
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="field">
-          <label for="activityInput">النشاط اليومي</label>
-          <select class="select" id="activityInput">
-            <option value="low">خفيف</option>
-            <option value="moderate">متوسط</option>
-            <option value="high">عالٍ</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="targetInput">القراءة المستهدفة</label>
-          <input class="input" id="targetInput" type="number" min="80" max="200" placeholder="مثال: 140" value="140" />
-        </div>
-      </div>
-
-      <div class="mini-actions">
-        <button class="btn btn-secondary" id="saveProfileBtn" type="button">💾 حفظ البيانات</button>
-      </div>
-      <div class="helper">إذا كنت تعرف إجمالي الإنسولين اليومي TDD فهو أدق من التقدير المبني على الوزن. وإذا ما تعرفه، يظل التقدير أوليًا ويتحسن مع التجارب.</div>
-    </section>
-
-    <section class="section panel" id="modeWorkspace">
-      <div class="section-head">
-        <div class="section-title" id="workspaceTitle">تجربة معامل الكارب</div>
-        <div class="section-note" id="workspaceNote">أدخل تجربة نظيفة قدر الإمكان</div>
-      </div>
-
-      <div class="callout info" id="startingEstimateBox">
-        <div class="callout-title" id="startingEstimateTitle">التقدير الأولي</div>
-        <div class="callout-text" id="startingEstimateText">أكمل بياناتك الأساسية حتى نولد لك نقطة بداية أقرب.</div>
-      </div>
-
-      <div id="icrFields">
-        <div class="grid-2">
-          <div class="field">
-            <label for="carbsInput">كمية الكارب (غرام)</label>
-            <input class="input" id="carbsInput" type="number" min="1" max="300" placeholder="مثال: 45" />
+        <div class="flow-top">
+          <div>
+            <div class="flow-title" id="flowTitle">مسار معامل الكارب</div>
+            <div class="flow-copy" id="flowCopy">هذا المسار يركز على تغطية الكارب في الوجبة، ويعطيك نتيجة تتطور مع التجارب المتشابهة.</div>
           </div>
-          <div class="field">
-            <label for="mealBolusInput">جرعة الوجبة فقط (وحدة)</label>
-            <input class="input" id="mealBolusInput" type="number" min="0.5" max="50" step="0.5" placeholder="مثال: 3" />
-          </div>
+          <button class="switch-btn" id="changeModeBtn" type="button">تغيير المسار</button>
         </div>
+      </section>
 
-        <div class="grid-2">
-          <div class="field">
-            <label for="icrBeforeInput">قبل الأكل</label>
-            <input class="input" id="icrBeforeInput" type="number" min="40" max="500" placeholder="مثال: 118" />
-          </div>
-          <div class="field">
-            <label for="icrAfterInput">بعد الأكل بساعتين إلى ثلاث</label>
-            <input class="input" id="icrAfterInput" type="number" min="40" max="500" placeholder="مثال: 154" />
-          </div>
-        </div>
+      <div class="flow-sections">
+        <!-- 1. البيانات الأساسية -->
+        <section class="surface panel">
+          <div class="block-tag">1) جهز بياناتك الأساسية</div>
 
-        <div class="grid-2">
-          <div class="field">
-            <label for="mealPeriodInput">وقت الوجبة</label>
-            <select class="select" id="mealPeriodInput">
-              <option value="breakfast">فطور</option>
-              <option value="lunch">غداء</option>
-              <option value="dinner">عشاء</option>
-              <option value="snack">سناك</option>
-            </select>
+          <div class="section-head">
+            <div class="section-title">بياناتك الأساسية</div>
+            <div class="section-note">تساعدنا في التقدير الأولي</div>
           </div>
-          <div class="field">
-            <label for="icrCleanlinessInput">نظافة التجربة</label>
-            <select class="select" id="icrCleanlinessInput">
-              <option value="clean">نظيفة وواضحة</option>
-              <option value="mixed">فيها تشويش بسيط</option>
-              <option value="disturbed">متأثرة بعامل واضح</option>
-            </select>
-          </div>
-        </div>
 
-        <div class="field">
-          <label>كيف كانت الوجبة أو التوقيت؟</label>
-          <div class="segmented" id="icrFeelingOptions">
-            <button class="segment active" type="button" data-group="icrFeeling" data-value="stable">مستقرة</button>
-            <button class="segment" type="button" data-group="icrFeeling" data-value="high">ارتفعت أكثر</button>
-            <button class="segment" type="button" data-group="icrFeeling" data-value="low">انخفضت أكثر</button>
-          </div>
-          <div class="helper">هذا الإدخال يدعم التفسير، لكنه ما يتفوق على القراءة الفعلية.</div>
-        </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="genderInput">الجنس</label>
+              <select class="select" id="genderInput">
+                <option value="male">ذكر</option>
+                <option value="female">أنثى</option>
+              </select>
+            </div>
 
-        <div class="mini-actions">
-          <button class="btn btn-secondary" id="useLastMealBtn" type="button">🍽️ استخدم آخر وجبة</button>
-        </div>
+            <div class="field">
+              <label for="ageInput">العمر</label>
+              <input class="input" id="ageInput" type="number" min="2" max="100" placeholder="مثال: 18" />
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="weightInput">الوزن (كجم)</label>
+              <input class="input" id="weightInput" type="number" min="10" max="250" placeholder="مثال: 70" />
+            </div>
+
+            <div class="field">
+              <label for="tddInput">إجمالي الإنسولين اليومي TDD (اختياري)</label>
+              <input class="input" id="tddInput" type="number" min="1" max="300" step="0.5" placeholder="مثال: 40" />
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="activityInput">النشاط اليومي</label>
+              <select class="select" id="activityInput">
+                <option value="low">خفيف</option>
+                <option value="moderate">متوسط</option>
+                <option value="high">عالٍ</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="targetInput">القراءة المستهدفة</label>
+              <input class="input" id="targetInput" type="number" min="80" max="200" placeholder="مثال: 140" value="140" />
+            </div>
+          </div>
+
+          <div class="mini-actions">
+            <button class="btn btn-secondary" id="saveProfileBtn" type="button">💾 حفظ البيانات</button>
+          </div>
+          <div class="helper">إذا كنت تعرف TDD فهو أدق من التقدير المبني على الوزن. وإذا ما تعرفه، يظل التقدير أوليًا ويتحسن مع التجارب.</div>
+        </section>
+
+        <!-- 2. التقدير الأولي -->
+        <section class="surface panel">
+          <div class="block-tag">2) افهم نقطة البداية</div>
+
+          <div class="section-head">
+            <div class="section-title" id="estimateSectionTitle">التقدير الأولي</div>
+            <div class="section-note">بداية فقط وليست حكمًا نهائيًا</div>
+          </div>
+
+          <div class="callout info" id="startingEstimateBox">
+            <div class="callout-title" id="startingEstimateTitle">التقدير الأولي</div>
+            <div class="callout-text" id="startingEstimateText">أكمل بياناتك الأساسية حتى نولد لك نقطة بداية أقرب.</div>
+          </div>
+        </section>
+
+        <!-- 3. إدخال التجربة -->
+        <section class="surface panel">
+          <div class="block-tag">3) سجل تجربتك الحالية</div>
+
+          <div class="section-head">
+            <div class="section-title" id="experimentSectionTitle">أدخل التجربة</div>
+            <div class="section-note" id="experimentSectionNote">كل مسار له حقوله الخاصة</div>
+          </div>
+
+          <div id="icrFields">
+            <div class="grid-2">
+              <div class="field">
+                <label for="carbsInput">كمية الكارب (غرام)</label>
+                <input class="input" id="carbsInput" type="number" min="1" max="300" placeholder="مثال: 45" />
+              </div>
+              <div class="field">
+                <label for="mealBolusInput">جرعة الوجبة فقط (وحدة)</label>
+                <input class="input" id="mealBolusInput" type="number" min="0.5" max="50" step="0.5" placeholder="مثال: 3" />
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="icrBeforeInput">قبل الأكل</label>
+                <input class="input" id="icrBeforeInput" type="number" min="40" max="500" placeholder="مثال: 118" />
+              </div>
+              <div class="field">
+                <label for="icrAfterInput">بعد الأكل بساعتين إلى ثلاث</label>
+                <input class="input" id="icrAfterInput" type="number" min="40" max="500" placeholder="مثال: 154" />
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="mealPeriodInput">وقت الوجبة</label>
+                <select class="select" id="mealPeriodInput">
+                  <option value="breakfast">فطور</option>
+                  <option value="lunch">غداء</option>
+                  <option value="dinner">عشاء</option>
+                  <option value="snack">سناك</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="icrCleanlinessInput">نظافة التجربة</label>
+                <select class="select" id="icrCleanlinessInput">
+                  <option value="clean">نظيفة وواضحة</option>
+                  <option value="mixed">فيها تشويش بسيط</option>
+                  <option value="disturbed">متأثرة بعامل واضح</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>كيف كانت الوجبة أو التوقيت؟</label>
+              <div class="segmented" id="icrFeelingOptions">
+                <button class="segment active" type="button" data-group="icrFeeling" data-value="stable">مستقرة</button>
+                <button class="segment" type="button" data-group="icrFeeling" data-value="high">ارتفعت أكثر</button>
+                <button class="segment" type="button" data-group="icrFeeling" data-value="low">انخفضت أكثر</button>
+              </div>
+              <div class="helper">هذا الإدخال يدعم التفسير، لكنه ما يتفوق على القراءة الفعلية.</div>
+            </div>
+
+            <div class="mini-actions">
+              <button class="btn btn-secondary" id="useLastMealBtn" type="button">🍽️ استخدم آخر وجبة</button>
+            </div>
+          </div>
+
+          <div id="isfFields" class="hidden">
+            <div class="grid-2">
+              <div class="field">
+                <label for="isfBeforeInput">القراءة قبل التصحيح</label>
+                <input class="input" id="isfBeforeInput" type="number" min="40" max="500" placeholder="مثال: 240" />
+              </div>
+              <div class="field">
+                <label for="isfAfterInput">القراءة بعد 3-4 ساعات</label>
+                <input class="input" id="isfAfterInput" type="number" min="40" max="500" placeholder="مثال: 178" />
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="correctionDoseInput">جرعة التصحيح فقط (وحدة)</label>
+                <input class="input" id="correctionDoseInput" type="number" min="0.5" max="30" step="0.5" placeholder="مثال: 2" />
+              </div>
+              <div class="field">
+                <label for="isfCleanlinessInput">نظافة التجربة</label>
+                <select class="select" id="isfCleanlinessInput">
+                  <option value="clean">نظيفة وواضحة</option>
+                  <option value="mixed">فيها تشويش بسيط</option>
+                  <option value="disturbed">متأثرة بعامل واضح</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>هل كان فيه إنسولين نشط أو وجبة قريبة؟</label>
+              <div class="segmented" id="isfConditionOptions">
+                <button class="segment active" type="button" data-group="isfCondition" data-value="clean">لا، التجربة نظيفة</button>
+                <button class="segment" type="button" data-group="isfCondition" data-value="meal-near">فيه وجبة قريبة</button>
+                <button class="segment" type="button" data-group="isfCondition" data-value="active-insulin">فيه إنسولين نشط</button>
+              </div>
+              <div class="helper">كلما كانت التجربة أنظف، كانت النتيجة أقرب للواقع.</div>
+            </div>
+          </div>
+
+          <button class="cta" id="primaryActionBtn" type="button">⚡ سجل تجربة الوجبة</button>
+          <div class="helper" id="primaryActionHelper">النتيجة هنا تقديرية تعليمية، وتصبح أقوى مع تكرار التجارب المشابهة.</div>
+        </section>
+
+        <!-- 4. النتيجة -->
+        <section class="surface result-card" id="resultCard">
+          <div class="block-tag">4) نتيجتك الحالية</div>
+
+          <div class="result-hero">
+            <div class="result-badge" id="resultBadge">نتيجتك الحالية</div>
+            <div class="result-number" id="resultNumber">1:--</div>
+            <div class="result-label" id="resultLabel">بانتظار أول تجربة</div>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-value" id="statPrimary">--</div>
+              <div class="stat-label" id="statPrimaryLabel">المعامل الحالي</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value" id="statCount">0</div>
+              <div class="stat-label">عدد التجارب</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value" id="statStd">--</div>
+              <div class="stat-label">مستوى التباين</div>
+            </div>
+          </div>
+
+          <div class="callout success" id="insightBox">
+            <div class="callout-title">توصية SugarMind</div>
+            <div class="callout-text" id="insightText">سجل أول تجربة حتى نبدأ نفهم نمطك.</div>
+          </div>
+
+          <div class="confidence-box">
+            <div class="confidence-head">
+              <div class="confidence-title">درجة الثقة الحالية</div>
+              <div class="confidence-badge" id="confidenceBadge">أولية</div>
+            </div>
+            <div class="confidence-bar"><div class="confidence-fill" id="confidenceFill"></div></div>
+            <div class="confidence-text" id="confidenceText">كل تجربة نظيفة ومتقاربة ترفع الثقة في النتيجة.</div>
+          </div>
+
+          <div class="button-row">
+            <button class="btn btn-primary" id="saveSummaryBtn" type="button">💾 حفظ النتيجة</button>
+            <button class="btn btn-secondary" id="clearModeBtn" type="button">🧹 مسح هذا المسار</button>
+            <button class="btn btn-danger" id="resetEverythingBtn" type="button">↺ إعادة الكل</button>
+          </div>
+        </section>
+
+        <!-- 5. سجل التعلم -->
+        <section class="surface chart-card" id="chartCard">
+          <div class="block-tag">5) اتجاهك الأخير</div>
+
+          <div class="section-head">
+            <div class="section-title">اتجاهك الأخير</div>
+            <div class="section-note">يتضح أكثر مع التكرار</div>
+          </div>
+          <div class="chart-wrap"><canvas id="ratioChart"></canvas></div>
+        </section>
+
+        <section class="surface history-card" id="historyCard">
+          <div class="section-head">
+            <div class="section-title">التجارب المحفوظة</div>
+            <div class="section-note">الأحدث أولًا</div>
+          </div>
+          <div class="history-list" id="historyList"></div>
+        </section>
       </div>
-
-      <div id="isfFields" class="hidden">
-        <div class="grid-2">
-          <div class="field">
-            <label for="isfBeforeInput">القراءة قبل التصحيح</label>
-            <input class="input" id="isfBeforeInput" type="number" min="40" max="500" placeholder="مثال: 240" />
-          </div>
-          <div class="field">
-            <label for="isfAfterInput">القراءة بعد 3-4 ساعات</label>
-            <input class="input" id="isfAfterInput" type="number" min="40" max="500" placeholder="مثال: 178" />
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="field">
-            <label for="correctionDoseInput">جرعة التصحيح فقط (وحدة)</label>
-            <input class="input" id="correctionDoseInput" type="number" min="0.5" max="30" step="0.5" placeholder="مثال: 2" />
-          </div>
-          <div class="field">
-            <label for="isfCleanlinessInput">نظافة التجربة</label>
-            <select class="select" id="isfCleanlinessInput">
-              <option value="clean">نظيفة وواضحة</option>
-              <option value="mixed">فيها تشويش بسيط</option>
-              <option value="disturbed">متأثرة بعامل واضح</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>هل كان فيه إنسولين نشط أو وجبة قريبة؟</label>
-          <div class="segmented" id="isfConditionOptions">
-            <button class="segment active" type="button" data-group="isfCondition" data-value="clean">لا، التجربة نظيفة</button>
-            <button class="segment" type="button" data-group="isfCondition" data-value="meal-near">فيه وجبة قريبة</button>
-            <button class="segment" type="button" data-group="isfCondition" data-value="active-insulin">فيه إنسولين نشط</button>
-          </div>
-          <div class="helper">كلما كانت التجربة أنظف، كانت النتيجة أقرب للواقع.</div>
-        </div>
-      </div>
-
-      <button class="cta" id="primaryActionBtn" type="button">⚡ سجل التجربة واحسب المعامل</button>
-      <div class="helper" id="primaryActionHelper">النتيجة هنا تقديرية تعليمية، وتصبح أقوى مع تكرار التجارب المشابهة.</div>
-    </section>
-
-    <section class="section result-card" id="resultCard">
-      <div class="result-hero">
-        <div class="result-badge" id="resultBadge">نتيجتك الحالية</div>
-        <div class="result-number" id="resultNumber">1:--</div>
-        <div class="result-label" id="resultLabel">بانتظار أول تجربة</div>
-      </div>
-
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-value" id="statPrimary">--</div>
-          <div class="stat-label" id="statPrimaryLabel">المعامل الحالي</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value" id="statCount">0</div>
-          <div class="stat-label">عدد التجارب</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value" id="statStd">--</div>
-          <div class="stat-label">مستوى التباين</div>
-        </div>
-      </div>
-
-      <div class="callout success" id="insightBox">
-        <div class="callout-title">توصية SugarMind</div>
-        <div class="callout-text" id="insightText">سجل أول تجربة حتى نبدأ نفهم نمطك.</div>
-      </div>
-
-      <div class="confidence-box">
-        <div class="confidence-head">
-          <div class="confidence-title">درجة الثقة الحالية</div>
-          <div class="confidence-badge" id="confidenceBadge">أولية</div>
-        </div>
-        <div class="confidence-bar"><div class="confidence-fill" id="confidenceFill"></div></div>
-        <div class="confidence-text" id="confidenceText">كل تجربة نظيفة ومتقاربة ترفع الثقة في النتيجة.</div>
-      </div>
-
-      <div class="button-row">
-        <button class="btn btn-primary" id="saveSummaryBtn" type="button">💾 حفظ النتيجة</button>
-        <button class="btn btn-secondary" id="clearModeBtn" type="button">🧹 مسح هذا المسار</button>
-        <button class="btn btn-danger" id="resetEverythingBtn" type="button">↺ إعادة الكل</button>
-      </div>
-    </section>
-
-    <section class="section chart-card" id="chartCard">
-      <div class="section-head">
-        <div class="section-title">اتجاهك الأخير</div>
-        <div class="section-note">يتضح أكثر مع التكرار</div>
-      </div>
-      <div class="chart-wrap"><canvas id="ratioChart"></canvas></div>
-    </section>
-
-    <section class="section history-card" id="historyCard">
-      <div class="section-head">
-        <div class="section-title">التجارب المحفوظة</div>
-        <div class="section-note">الأحدث أولًا</div>
-      </div>
-      <div class="history-list" id="historyList"></div>
     </section>
   </main>
 
@@ -533,14 +662,14 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const STORAGE_KEY = 'sugarmind_ratio_lab_v2';
+    const STORAGE_KEY = 'sugarmind_ratio_lab_v3';
     const ICR_RESULT_KEY = 'sugarmind_icr_result_v2';
     const ISF_RESULT_KEY = 'sugarmind_correction_result_v1';
     const MEAL_RESULT_KEY = 'sugarmind_meal_result_v1';
     const MEAL_LIST_KEY = 'sugarmind_meals';
 
     const state = {
-      mode: 'icr',
+      mode: null,
       profile: {
         gender: 'male',
         age: '',
@@ -560,9 +689,16 @@
     let ratioChart = null;
 
     const els = {
+      modeGateway: document.getElementById('modeGateway'),
+      workspaceShell: document.getElementById('workspaceShell'),
       modeIcr: document.getElementById('modeIcr'),
       modeIsf: document.getElementById('modeIsf'),
       openLastMealBtn: document.getElementById('openLastMealBtn'),
+      changeModeBtn: document.getElementById('changeModeBtn'),
+
+      crumbCurrent: document.getElementById('crumbCurrent'),
+      flowTitle: document.getElementById('flowTitle'),
+      flowCopy: document.getElementById('flowCopy'),
 
       genderInput: document.getElementById('genderInput'),
       ageInput: document.getElementById('ageInput'),
@@ -572,8 +708,9 @@
       tddInput: document.getElementById('tddInput'),
       saveProfileBtn: document.getElementById('saveProfileBtn'),
 
-      workspaceTitle: document.getElementById('workspaceTitle'),
-      workspaceNote: document.getElementById('workspaceNote'),
+      estimateSectionTitle: document.getElementById('estimateSectionTitle'),
+      experimentSectionTitle: document.getElementById('experimentSectionTitle'),
+      experimentSectionNote: document.getElementById('experimentSectionNote'),
       startingEstimateTitle: document.getElementById('startingEstimateTitle'),
       startingEstimateText: document.getElementById('startingEstimateText'),
       primaryActionBtn: document.getElementById('primaryActionBtn'),
@@ -581,6 +718,7 @@
 
       icrFields: document.getElementById('icrFields'),
       isfFields: document.getElementById('isfFields'),
+
       carbsInput: document.getElementById('carbsInput'),
       mealBolusInput: document.getElementById('mealBolusInput'),
       icrBeforeInput: document.getElementById('icrBeforeInput'),
@@ -669,7 +807,7 @@
       const saved = readJSON(STORAGE_KEY);
       if(!saved) return;
 
-      state.mode = saved.mode || 'icr';
+      state.mode = saved.mode || null;
       state.profile = { ...state.profile, ...(saved.profile || {}) };
       state.inputs = { ...state.inputs, ...(saved.inputs || {}) };
       state.icrExperiments = Array.isArray(saved.icrExperiments) ? saved.icrExperiments : [];
@@ -724,17 +862,19 @@
     function updateStartingEstimateBox(){
       if (state.mode === 'icr') {
         const estimate = startingIcrEstimate();
-        els.startingEstimateTitle.textContent = 'التقدير الأولي لمعامل الكارب';
+        els.estimateSectionTitle.textContent = 'التقدير الأولي لمعامل الكارب';
+        els.startingEstimateTitle.textContent = 'نقطة البداية قبل التعلم';
         if (estimate) {
-          els.startingEstimateText.textContent = `تقدير البداية عندك الآن قريب من 1:${Math.round(estimate)}. هذا ليس رقمًا نهائيًا، لكنه نقطة انطلاق جيدة قبل ما نتعلم من التجارب.`;
+          els.startingEstimateText.textContent = `تقدير البداية عندك الآن قريب من 1:${Math.round(estimate)}. هذا مجرد خط بداية، وبعد كل تجربة نظيفة نقرّب النتيجة أكثر من واقعك.`;
         } else {
           els.startingEstimateText.textContent = 'أدخل الوزن أو إجمالي الإنسولين اليومي TDD حتى نولد لك نقطة بداية أقرب، ثم نرفع الدقة من التجارب.';
         }
       } else {
         const estimate = startingIsfEstimate();
-        els.startingEstimateTitle.textContent = 'التقدير الأولي لمعامل التصحيح';
+        els.estimateSectionTitle.textContent = 'التقدير الأولي لمعامل التصحيح';
+        els.startingEstimateTitle.textContent = 'نقطة البداية قبل التعلم';
         if (estimate) {
-          els.startingEstimateText.textContent = `تقدير البداية عندك الآن قريب من 1 وحدة ≈ ${Math.round(estimate)} mg/dL. هذا تقدير أولي فقط، ويتعدل مع التجارب النظيفة.`;
+          els.startingEstimateText.textContent = `تقدير البداية عندك الآن قريب من 1 وحدة ≈ ${Math.round(estimate)} mg/dL. هذه بداية فقط، وتتحسن مع كل تصحيح نظيف وواضح.`;
         } else {
           els.startingEstimateText.textContent = 'أدخل الوزن أو إجمالي الإنسولين اليومي TDD حتى نولد لك نقطة بداية لمعامل التصحيح قبل التعلّم من التجارب.';
         }
@@ -763,22 +903,39 @@
       });
     }
 
-    function switchMode(mode){
+    function showGateway(){
+      state.mode = null;
+      els.modeGateway.style.display = 'block';
+      els.workspaceShell.classList.remove('show');
+      saveState();
+    }
+
+    function enterMode(mode){
       state.mode = mode;
       els.modeIcr.classList.toggle('active', mode === 'icr');
       els.modeIsf.classList.toggle('active', mode === 'isf');
+
+      els.modeGateway.style.display = 'none';
+      els.workspaceShell.classList.add('show');
+
       els.icrFields.classList.toggle('hidden', mode !== 'icr');
       els.isfFields.classList.toggle('hidden', mode !== 'isf');
 
       if (mode === 'icr') {
-        els.workspaceTitle.textContent = 'تجربة معامل الكارب';
-        els.workspaceNote.textContent = 'سجل وجبة واضحة قدر الإمكان';
-        els.primaryActionBtn.innerHTML = '⚡ سجل التجربة واحسب معامل الكارب';
+        els.crumbCurrent.textContent = 'معامل الكارب';
+        els.flowTitle.textContent = 'مسار معامل الكارب';
+        els.flowCopy.textContent = 'هذا المسار يركز على تغطية الكارب في الوجبة، ويعطيك نتيجة تتطور مع التجارب المتشابهة.';
+        els.experimentSectionTitle.textContent = 'سجل تجربة الوجبة';
+        els.experimentSectionNote.textContent = 'هذا مسار الوجبة والكارب فقط';
+        els.primaryActionBtn.innerHTML = '⚡ سجل تجربة الوجبة';
         els.primaryActionHelper.textContent = 'كل وجبة نظيفة ومتقاربة ترفع الثقة في معامل الكارب عندك.';
       } else {
-        els.workspaceTitle.textContent = 'تجربة معامل التصحيح';
-        els.workspaceNote.textContent = 'سجل تصحيحًا نظيفًا وواضحًا';
-        els.primaryActionBtn.innerHTML = '⚡ سجل التجربة واحسب معامل التصحيح';
+        els.crumbCurrent.textContent = 'معامل التصحيح';
+        els.flowTitle.textContent = 'مسار معامل التصحيح';
+        els.flowCopy.textContent = 'هذا المسار يركز على أثر جرعة التصحيح، ويعطيك نتيجة أقرب كلما كانت التجارب أنظف.';
+        els.experimentSectionTitle.textContent = 'سجل تجربة التصحيح';
+        els.experimentSectionNote.textContent = 'هذا مسار تصحيح الارتفاع فقط';
+        els.primaryActionBtn.innerHTML = '⚡ سجل تجربة التصحيح';
         els.primaryActionHelper.textContent = 'كل تصحيح نظيف بدون تشويش يرفع الثقة في معامل التصحيح عندك.';
       }
 
@@ -816,7 +973,10 @@
         return;
       }
 
-      switchMode('icr');
+      if (state.mode !== 'icr') {
+        enterMode('icr');
+      }
+
       els.carbsInput.value = lastMeal.carbs;
       showToast(`تم تعبئة آخر وجبة: ${lastMeal.mealName}`);
     }
@@ -864,10 +1024,6 @@
       if (!before || !after || !correctionDose || correctionDose <= 0) {
         showToast('أكمل حقول تجربة التصحيح أولًا');
         return null;
-      }
-
-      if (before < (safeNumber(state.profile.target) || 140) + 15) {
-        showToast('يفضل أن تكون تجربة التصحيح من قراءة أعلى من الهدف بوضوح');
       }
 
       return {
@@ -937,11 +1093,12 @@
 
     function singleIsfValue(exp){
       const rawDrop = (exp.before - exp.after) / exp.correctionDose;
-      const target = safeNumber(state.profile.target) || 140;
       let adjusted = rawDrop;
 
+      const target = safeNumber(state.profile.target) || 140;
       if (exp.after > target + 25) adjusted *= 0.92;
       if (exp.after < target - 20) adjusted *= 1.06;
+
       if (exp.condition === 'active-insulin') adjusted *= 0.92;
       if (exp.condition === 'meal-near') adjusted *= 0.94;
 
@@ -1074,7 +1231,7 @@
       }
 
       if (summary.mode === 'icr') {
-        lines.push('لا تعتمد على النتيجة وحدها للجرعة النهائية؛ استخدمها كمرشد ذكي يتقوى مع التكرار.');
+        lines.push('استخدم النتيجة كمرشد ذكي يتقوى مع التكرار، لا كحكم منفصل عن فهم حالتك.');
       } else {
         lines.push('تأكد أن تجارب التصحيح ما فيها وجبة قريبة أو إنسولين نشط حتى تكون النتيجة أصدق.');
       }
@@ -1086,11 +1243,11 @@
       if (ratioChart) ratioChart.destroy();
 
       if (!summary || !summary.values.length) {
-        els.chartCard.classList.add('hidden');
+        els.chartCard.classList.remove('show');
         return;
       }
 
-      els.chartCard.classList.remove('hidden');
+      els.chartCard.classList.add('show');
       const ctx = els.ratioChart.getContext('2d');
       ratioChart = new Chart(ctx, {
         type: 'line',
@@ -1130,12 +1287,12 @@
       const list = state.mode === 'icr' ? state.icrExperiments : state.isfExperiments;
 
       if (!list.length) {
-        els.historyCard.classList.add('hidden');
+        els.historyCard.classList.remove('show');
         els.historyList.innerHTML = '<div class="history-empty">ما فيه تجارب محفوظة بعد في هذا المسار.</div>';
         return;
       }
 
-      els.historyCard.classList.remove('hidden');
+      els.historyCard.classList.add('show');
       const reversed = list.slice().reverse();
       els.historyList.innerHTML = reversed.map(exp => {
         if (state.mode === 'icr') {
@@ -1196,8 +1353,8 @@
 
       if (!summary) {
         els.resultCard.classList.remove('show');
-        els.chartCard.classList.add('hidden');
-        els.historyCard.classList.add('hidden');
+        els.chartCard.classList.remove('show');
+        els.historyCard.classList.remove('show');
         return;
       }
 
@@ -1253,12 +1410,12 @@
         const experiment = buildIcrExperiment();
         if (!experiment) return;
         state.icrExperiments.push(experiment);
-        showToast('تم تسجيل تجربة معامل الكارب');
+        showToast('تم تسجيل تجربة الوجبة');
       } else {
         const experiment = buildIsfExperiment();
         if (!experiment) return;
         state.isfExperiments.push(experiment);
-        showToast('تم تسجيل تجربة معامل التصحيح');
+        showToast('تم تسجيل تجربة التصحيح');
       }
 
       saveState();
@@ -1267,6 +1424,8 @@
     }
 
     function clearCurrentMode(){
+      if (!state.mode) return;
+
       const message = state.mode === 'icr'
         ? 'هل أنت متأكد من مسح جميع تجارب معامل الكارب؟'
         : 'هل أنت متأكد من مسح جميع تجارب معامل التصحيح؟';
@@ -1293,7 +1452,7 @@
       localStorage.removeItem(ICR_RESULT_KEY);
       localStorage.removeItem(ISF_RESULT_KEY);
 
-      state.mode = 'icr';
+      state.mode = null;
       state.profile = { gender:'male', age:'', weight:'', activity:'moderate', target:140, tdd:'' };
       state.inputs = { icrFeeling:'stable', isfCondition:'clean' };
       state.icrExperiments = [];
@@ -1302,7 +1461,7 @@
       syncProfileInputs();
       applySegmentState();
       clearExperimentInputs();
-      switchMode('icr');
+      showGateway();
       saveState();
       renderResults();
       showToast('تمت إعادة التعيين بالكامل');
@@ -1323,8 +1482,10 @@
     }
 
     function bindEvents(){
-      els.modeIcr.addEventListener('click', () => switchMode('icr'));
-      els.modeIsf.addEventListener('click', () => switchMode('isf'));
+      els.modeIcr.addEventListener('click', () => enterMode('icr'));
+      els.modeIsf.addEventListener('click', () => enterMode('isf'));
+      els.changeModeBtn.addEventListener('click', showGateway);
+
       els.primaryActionBtn.addEventListener('click', addCurrentExperiment);
       els.saveProfileBtn.addEventListener('click', saveProfileOnly);
       els.saveSummaryBtn.addEventListener('click', saveCurrentSummary);
@@ -1348,7 +1509,13 @@
       setupSegments();
       applySegmentState();
       bindEvents();
-      switchMode(state.mode || 'icr');
+
+      if (state.mode === 'icr' || state.mode === 'isf') {
+        enterMode(state.mode);
+      } else {
+        showGateway();
+      }
+
       renderResults();
     }
 
