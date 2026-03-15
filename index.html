@@ -17,6 +17,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
+    /* الأنماط كما هي تماماً بدون أي تغيير */
     :root{
       --bg:#F6F3EE;
       --bg-2:#EFEAE3;
@@ -291,6 +292,14 @@
       min-height:50px; border-radius:16px; padding:0 16px;
       background:transparent; border:1px solid var(--line); color:var(--ink); font-size:14px; font-weight:900;
     }
+    .btn-danger{
+      background:rgba(218,114,109,.12);
+      color:var(--danger);
+      border:1px solid rgba(218,114,109,.3);
+    }
+    .btn-danger:hover{
+      background:rgba(218,114,109,.2);
+    }
 
     .scan-card,.decision-card,.quick-block,.summary-block{
       border-radius:var(--radius-xl);
@@ -437,7 +446,7 @@
     .field label{display:block; font-size:13px; color:var(--ink-2); font-weight:900; margin-bottom:8px}
     .inline-fields{display:grid; grid-template-columns:1fr 1fr; gap:10px}
     .helper{font-size:12px; color:var(--ink-3); line-height:1.8; margin:6px 2px 14px}
-    .sheet-actions{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .sheet-actions{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;}
 
     .install-steps{display:grid; gap:10px; margin:8px 0 16px}
     .install-step{
@@ -516,7 +525,7 @@
     <section class="greeting">
       <div class="time-chip" id="timeChip">🌤️ <span id="timeText">بداية يوم هادئ</span></div>
       <h1 class="greeting-title" id="greetingTitle">حياك الله في SugarMind</h1>
-      <p class="greeting-sub" id="greetingSub">ابدأ من بطاقتك، وبعدها خذ أقرب خطوة مناسبة لك داخل التطبيق.</p>
+      <p class="greeting-sub" id="greetingSub">رحلة السكر الخاصة بك تبدأ هنا.</p>
     </section>
 
     <section class="section">
@@ -629,7 +638,7 @@
         <div class="decision-head">
           <div>
             <div class="decision-title" id="decisionTitle">ابدأ من بطاقتك</div>
-            <div class="decision-copy" id="decisionCopy">إذا سجلت اسمك وآخر قراءة، يصير التطبيق أوضح لك من أول شاشة.</div>
+            <div class="decision-copy" id="decisionCopy">سجل معنا وابني رحلتك.</div>
           </div>
           <div class="decision-icon">✨</div>
         </div>
@@ -725,7 +734,7 @@
       <div class="sheet-head">
         <div>
           <h3 class="sheet-title" id="recorderTitle">تعديل بطاقتك</h3>
-          <p class="sheet-sub">أدخل اسمك وآخر قراءة، وSugarMind يرتب البطاقة لك مباشرة.</p>
+          <p class="sheet-sub">أدخل اسمك وآخر قراءة، وسيتم تسجيل الوقت تلقائياً.</p>
         </div>
         <button class="close-btn" id="closeRecorderBtn" type="button" aria-label="إغلاق">×</button>
       </div>
@@ -735,22 +744,18 @@
         <input class="input" id="nameInput" type="text" placeholder="مثال: خالد" maxlength="30" />
       </div>
 
-      <div class="inline-fields">
-        <div class="field">
-          <label for="readingInput">قراءة السكر</label>
-          <input class="input" id="readingInput" type="number" inputmode="numeric" min="20" max="600" placeholder="120" />
-        </div>
-
-        <div class="field">
-          <label for="timeInput">وقت القراءة</label>
-          <input class="input" id="timeInput" type="time" />
-        </div>
+      <div class="field">
+        <label for="readingInput">قراءة السكر</label>
+        <input class="input" id="readingInput" type="number" inputmode="numeric" min="20" max="600" placeholder="مثال: 120" />
       </div>
 
-      <p class="helper">التخزين محلي على نفس الجهاز فقط، حتى يتعرف عليك الهوم وتظل بطاقتك محدثة داخل التطبيق.</p>
+      <!-- تم إزالة حقل الوقت نهائياً -->
+
+      <p class="helper">التخزين محلي على نفس الجهاز فقط. الوقت يُسجل تلقائياً من جهازك.</p>
 
       <div class="sheet-actions">
-        <button class="btn btn-primary" id="saveReadingBtn" type="button">حفظ البطاقة</button>
+        <button class="btn btn-primary" id="saveReadingBtn" type="button">💾 حفظ البيانات</button>
+        <button class="btn btn-danger" id="deleteDataBtn" type="button">🗑️ حذف البيانات</button>
         <button class="btn btn-ghost" id="cancelRecorderBtn" type="button">إلغاء</button>
       </div>
     </div>
@@ -878,9 +883,10 @@
       closeRecorderBtn: document.getElementById('closeRecorderBtn'),
       cancelRecorderBtn: document.getElementById('cancelRecorderBtn'),
       saveReadingBtn: document.getElementById('saveReadingBtn'),
+      deleteDataBtn: document.getElementById('deleteDataBtn'),  // زر جديد
       nameInput: document.getElementById('nameInput'),
       readingInput: document.getElementById('readingInput'),
-      timeInput: document.getElementById('timeInput'),
+      // تم إزالة timeInput
 
       shareCardBtn: document.getElementById('shareCardBtn'),
       saveCardBtn: document.getElementById('saveCardBtn'),
@@ -964,7 +970,8 @@
           tone:'rgba(255,255,255,.08)',
           color:'#F7F4EF',
           soft:'#FFFFFF',
-          scanMessage:'سجل القراءة حتى تشوف النتيجة هنا.'
+          scanMessage:'سجل القراءة حتى تشوف النتيجة هنا.',
+          achievement: 'ضيفنا الجديد'
         };
       }
 
@@ -980,7 +987,8 @@
           tone:'rgba(218,114,109,.18)',
           color:'#FFB6AE',
           soft:'var(--danger-soft)',
-          scanMessage:'قراءتك منخفضة وتحتاج انتباه الآن.'
+          scanMessage:'قراءتك منخفضة وتحتاج انتباه الآن.',
+          achievement: 'أنت منتبه'
         };
       }
 
@@ -996,7 +1004,8 @@
           tone:'rgba(97,176,127,.18)',
           color:'#C8F0D6',
           soft:'var(--success-soft)',
-          scanMessage:'أمورك مطمّنة، وقراءتك داخل النطاق.'
+          scanMessage:'أمورك مطمّنة، وقراءتك داخل النطاق.',
+          achievement: 'أنت مسيطر'
         };
       }
 
@@ -1012,7 +1021,8 @@
           tone:'rgba(230,184,92,.18)',
           color:'#FFE1A3',
           soft:'var(--warning-soft)',
-          scanMessage:'قراءتك أعلى من المثالي شوي، تابع بهدوء.'
+          scanMessage:'قراءتك أعلى من المثالي شوي، تابع بهدوء.',
+          achievement: 'أنت متمكن'
         };
       }
 
@@ -1028,7 +1038,8 @@
           tone:'rgba(230,184,92,.18)',
           color:'#FFE1A3',
           soft:'var(--warning-soft)',
-          scanMessage:'قراءتك مرتفعة وتحتاج مراجعة أقرب.'
+          scanMessage:'قراءتك مرتفعة وتحتاج مراجعة أقرب.',
+          achievement: 'أنت مستكشف'
         };
       }
 
@@ -1043,7 +1054,8 @@
         tone:'rgba(218,114,109,.18)',
         color:'#FFB6AE',
         soft:'var(--danger-soft)',
-        scanMessage:'القراءة مرتفعة بشكل واضح، انتبه وتابعها بدقة.'
+        scanMessage:'القراءة مرتفعة بشكل واضح، انتبه وتابعها بدقة.',
+        achievement: 'أنت بطل بالتحدي'
       };
     }
 
@@ -1110,14 +1122,17 @@
 
       els.timeChip.innerHTML = `${period.icon} <span>${period.hint}</span>`;
 
+      // رسائل ترحيبية ابتكارية
       if(name){
+        if(Number.isFinite(Number(state.home?.reading))){
+          els.greetingSub.textContent = 'بطاقتك تعكس تقدمك، كل يوم خطوة أقرب لفهم جسمك.';
+        } else {
+          els.greetingSub.textContent = 'أنت على بعد خطوة من إكمال بطاقتك وإطلاق رحلتك.';
+        }
         els.greetingTitle.textContent = `${period.label} يا ${name}`;
-        els.greetingSub.textContent = Number.isFinite(Number(state.home?.reading))
-          ? 'بطاقتك جاهزة الآن بشكل أوضح، ومعها أقرب خطوة مناسبة لك داخل التطبيق.'
-          : 'خلنا نكمل من حيث وقفنا ونضيف القراءة حتى تكتمل بطاقتك.';
-      }else{
+      } else {
         els.greetingTitle.textContent = 'حياك الله في SugarMind';
-        els.greetingSub.textContent = 'ابدأ من بطاقتك، وبعدها خذ أقرب خطوة مناسبة لك داخل التطبيق.';
+        els.greetingSub.textContent = 'رحلة السكر الخاصة بك تبدأ اليوم.';
       }
     }
 
@@ -1191,61 +1206,70 @@
       const hasRatio = !!state.icr?.icr;
 
       let payload = {
-        title:'ابدأ من بطاقتك',
-        copy:'إذا سجلت اسمك وآخر قراءة، يصير التطبيق أوضح لك من أول شاشة.',
-        actionTitle:'أول خطوة',
-        actionCopy:'ابدأ بإعداد بطاقتك حتى تكتمل التجربة من البداية.',
-        actionText:'ابدأ الآن',
-        target:'setup'
+        title: 'ابدأ من بطاقتك',
+        copy: 'سجل معنا وابني رحلتك.',
+        actionTitle: 'أول خطوة',
+        actionCopy: 'سجل اسمك وقراءتك لتنطلق.',
+        actionText: 'سجل الآن',
+        target: 'setup'
       };
 
       if(name && !hasReading){
         payload = {
-          title:'كمّل بطاقتك',
-          copy:'اسمك محفوظ، والجزء المهم الآن هو إضافة القراءة حتى تصير البطاقة أوضح.',
-          actionTitle:'الخطوة الأنسب',
-          actionCopy:'حدّث بطاقتك بآخر قراءة عندك.',
-          actionText:'حدّث البطاقة',
-          target:'setup'
+          title: 'كمّل بياناتك',
+          copy: 'اسمك مسجل، والآن أضف قراءتك لتكتمل بطاقتك.',
+          actionTitle: 'الخطوة الأنسب',
+          actionCopy: 'حدّث بطاقتك بآخر قراءة.',
+          actionText: 'أضف القراءة',
+          target: 'setup'
         };
       } else if(hasReading && !hasRatio){
         payload = {
-          title:'أهم عنصر باقي عندك',
-          copy:'القراءة موجودة، وباقي معامل الكارب حتى تكتمل بطاقتك بشكل أقوى.',
-          actionTitle:'الخطوة الأنسب',
-          actionCopy:'احسب المعامل وخله يظهر داخل البطاقة.',
-          actionText:'احسب المعامل',
-          target:'icr'
+          title: 'اقترب من الاحتراف',
+          copy: 'قراءتك موجودة، أضف معامل الكارب لتصبح خبيراً بجسمك.',
+          actionTitle: 'الخطوة الأنسب',
+          actionCopy: 'احسب المعامل الآن.',
+          actionText: 'احسب المعامل',
+          target: 'icr'
         };
       } else if(hasReading){
         const stateInfo = getReadingState(reading);
 
         if(stateInfo.key === 'low'){
           payload = {
-            title:'انتبه للحالة الحالية',
-            copy:'الأولوية الآن أنك تتابع القراءة وتعيد القياس بعد فترة قصيرة.',
-            actionTitle:'الخطوة الأنسب',
-            actionCopy:'بعد ما تهدأ الحالة، حدّث القراءة داخل البطاقة.',
-            actionText:'حدّث القراءة',
-            target:'setup'
+            title: stateInfo.achievement,
+            copy: 'ننصحك بمتابعة القراءة وإعادة القياس بعد فترة.',
+            actionTitle: 'الأنسب لك',
+            actionCopy: 'حدّث القراءة بعد تحسن الحالة.',
+            actionText: 'تحديث القراءة',
+            target: 'setup'
           };
         } else if(stateInfo.key === 'range'){
           payload = {
-            title:'وضعك مطمّن',
-            copy:'القراءة داخل النطاق، والأنسب الآن أنك تحفظ بطاقتك أو تشاركها.',
-            actionTitle:'الخطوة الأنسب',
-            actionCopy:'شارك بطاقتك أو احتفظ بها كصورة واضحة.',
-            actionText:'شارك بطاقتك',
-            target:'share'
+            title: stateInfo.achievement,
+            copy: 'وضعك ممتاز، شارك بطاقتك مع من تحب.',
+            actionTitle: 'الأنسب لك',
+            actionCopy: 'احفظ بطاقتك كصورة أو شاركها.',
+            actionText: 'شارك البطاقة',
+            target: 'share'
           };
-        } else if(stateInfo.key === 'slightly-high' || stateInfo.key === 'high' || stateInfo.key === 'very-high'){
+        } else if(stateInfo.key === 'slightly-high' || stateInfo.key === 'high'){
           payload = {
-            title:'راجع الخطوة الجاية بهدوء',
-            copy:'الأنسب الآن أنك ترجع لآخر وجبة أو تحسب المعامل قبل القرار التالي.',
-            actionTitle:'الخطوة الأنسب',
-            actionCopy:'اذهب مباشرة لحاسبة المعامل أو راجع وجبتك الأخيرة.',
-            actionText:'احسب المعامل',
-            target:'icr'
+            title: stateInfo.achievement,
+            copy: 'القراءة تحتاج مراجعة، ننصح بحساب المعامل أو مراجعة الوجبة.',
+            actionTitle: 'الأنسب لك',
+            actionCopy: 'اذهب لحاسبة المعامل.',
+            actionText: 'احسب المعامل',
+            target: 'icr'
+          };
+        } else if(stateInfo.key === 'very-high'){
+          payload = {
+            title: stateInfo.achievement,
+            copy: 'القراءة مرتفعة جداً، انتبه وتابع حالتك بدقة.',
+            actionTitle: 'الأنسب لك',
+            actionCopy: 'حدث القراءة بعد قليل.',
+            actionText: 'تحديث القراءة',
+            target: 'setup'
           };
         }
       }
@@ -1288,7 +1312,7 @@
     function fillFormFromState(){
       els.nameInput.value = state.profile?.name || '';
       els.readingInput.value = state.home?.reading ?? '';
-      els.timeInput.value = normalizeTimeValue(state.home?.time);
+      // تم إزالة timeInput
     }
 
     function render(){
@@ -1326,7 +1350,8 @@
     function saveReading(){
       const name = els.nameInput.value.trim();
       const readingValue = Number(els.readingInput.value.trim());
-      const time = els.timeInput.value || currentTimeValue();
+      // يتم أخذ الوقت الحالي تلقائياً
+      const time = currentTimeValue();
 
       if(!name){
         showToast('اكتب اسمك أولًا');
@@ -1357,6 +1382,29 @@
       render();
       showToast('تم تحديث بطاقتك');
       maybePromptInstallAfterValue();
+    }
+
+    // دالة جديدة لحذف جميع بيانات المستخدم
+    function deleteUserData(){
+      if(confirm('هل أنت متأكد من حذف جميع بياناتك؟ لا يمكن التراجع عن هذا الإجراء.')){
+        localStorage.removeItem(KEYS.PROFILE);
+        localStorage.removeItem(KEYS.HOME);
+        localStorage.removeItem(KEYS.USER_LEGACY);
+        localStorage.removeItem(KEYS.GUIDE_LEGACY);
+        // يمكن إبقاء ICR والوجبات إذا أردت، لكن حذفها أيضاً اختياري
+        // سنحذفها لتجربة نظيفة
+        localStorage.removeItem(KEYS.ICR);
+        localStorage.removeItem(KEYS.MEAL);
+        localStorage.removeItem(KEYS.MEALS_LIST);
+        // إعادة تعيين الحالة
+        state.profile = {};
+        state.home = {};
+        state.icr = null;
+        state.meal = null;
+        closeRecorder();
+        render();
+        showToast('تم حذف جميع البيانات');
+      }
     }
 
     async function createCardBlob(){
@@ -1561,6 +1609,7 @@
       els.closeRecorderBtn.addEventListener('click', closeRecorder);
       els.cancelRecorderBtn.addEventListener('click', closeRecorder);
       els.saveReadingBtn.addEventListener('click', saveReading);
+      els.deleteDataBtn.addEventListener('click', deleteUserData);  // ربط زر الحذف
 
       els.shareCardBtn.addEventListener('click', shareCardImage);
       els.saveCardBtn.addEventListener('click', saveCardImage);
