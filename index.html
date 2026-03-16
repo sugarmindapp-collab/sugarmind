@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>SugarMind - سكر مايند</title>
+  <title>SugarMind - رفيقك اليومي</title>
   <meta name="description" content="رفيقك اليومي لفهم القراءة والوجبة ومعامل الكارب بشكل أوضح." />
   <meta name="theme-color" content="#F6F3EE" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -48,7 +48,7 @@
       --success-soft:rgba(97,176,127,.12);
       --warning-soft:rgba(230,184,92,.14);
       --danger-soft:rgba(218,114,109,.14);
-      --shadow-lg:0 24px 60px rgba(30,36,51,.10);
+      --shadow-lg:0 24px 60px rgba(30,36,51,.12);
       --shadow-md:0 16px 32px rgba(30,36,51,.08);
       --shadow-sm:0 10px 18px rgba(30,36,51,.05);
       --shadow-hover:0 20px 30px rgba(30,36,51,.12);
@@ -69,8 +69,8 @@
       min-height:100vh;
       color:var(--ink);
       background:
-        radial-gradient(circle at top left, rgba(123,170,146,.10), transparent 24%),
-        radial-gradient(circle at top right, rgba(125,139,174,.10), transparent 22%),
+        radial-gradient(circle at top left, rgba(123,170,146,.08), transparent 30%),
+        radial-gradient(circle at top right, rgba(125,139,174,.08), transparent 30%),
         linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
       overflow-x:hidden;
       -webkit-font-smoothing:antialiased;
@@ -82,7 +82,7 @@
     img{max-width:100%;display:block}
 
     .bg-noise{
-      position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.03;
+      position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.02;
       background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
     }
 
@@ -121,7 +121,7 @@
 
     .topbar{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
-      margin-bottom:22px;
+      margin-bottom:28px;
     }
     .brand{display:flex; align-items:center; gap:12px; min-width:0}
     .brand-mark{
@@ -145,81 +145,117 @@
     .icon-btn{width:46px; display:flex; align-items:center; justify-content:center; font-size:22px}
     .install-btn{padding:0 14px; display:none; align-items:center; gap:8px; font-size:13px; font-weight:900}
 
-    .greeting{margin-bottom:18px}
+    .greeting{margin-bottom:32px}
     .time-chip{
       display:inline-flex; align-items:center; gap:8px; min-height:34px; padding:0 12px;
       border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.72);
       color:var(--ink-2); font-size:12px; font-weight:900; margin-bottom:16px;
       box-shadow:var(--shadow-sm);
     }
-    .greeting-title{font-size:31px; font-weight:900; line-height:1.24; letter-spacing:-1px; color:var(--ink); margin-bottom:8px}
-    .greeting-sub{font-size:15px; color:var(--ink-2); line-height:1.9}
+    .greeting-title{font-size:32px; font-weight:900; line-height:1.3; letter-spacing:-0.5px; color:var(--ink); margin-bottom:10px}
+    .greeting-sub{font-size:15px; color:var(--ink-2); line-height:1.8; opacity:0.9}
 
     .section{
-      margin-bottom:24px;
+      margin-bottom:32px;
       position:relative;
     }
     .section:not(:first-of-type)::before{
       content:'';
       position:absolute;
-      top:-12px;
+      top:-16px;
       left:50%;
       transform:translateX(-50%);
-      width:60px;
+      width:40px;
       height:1px;
       background:var(--line);
-      opacity:0.6;
+      opacity:0.4;
     }
     .section-head{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:14px;
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:18px;
     }
-    .section-title{font-size:18px; font-weight:900; letter-spacing:-.4px; color:var(--ink)}
-    .section-note{font-size:12px; color:var(--ink-3); font-weight:900}
+    .section-title{font-size:20px; font-weight:900; letter-spacing:-0.3px; color:var(--ink)}
+    .section-note{font-size:12px; color:var(--ink-3); font-weight:700; background:rgba(125,139,174,.08); padding:4px 10px; border-radius:999px}
 
-    /* ===== البطاقة الشخصية ===== */
+    /* ===== البطاقة الشخصية الفاخرة ===== */
     .card-capture-surface {
       position: relative;
       border-radius: var(--radius-xxl);
-      padding: 2px;
-      background: linear-gradient(145deg, rgba(125,139,174,.4), rgba(123,170,146,.3), rgba(255,255,255,.1));
-      box-shadow: 0 30px 60px rgba(24,30,45,.15);
+      padding: 3px;
+      background: linear-gradient(135deg, rgba(255,255,255,.8), rgba(255,255,255,.2));
+      box-shadow: 
+        0 40px 80px rgba(24,30,45,.20),
+        0 0 0 1px rgba(255,255,255,.5) inset;
       overflow: hidden;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      transform: translateZ(0);
     }
 
     .wallet-card {
       position: relative;
-      min-height: 220px;
-      padding: 18px;
-      border-radius: calc(var(--radius-xxl) - 2px);
+      min-height: 260px;
+      padding: 28px;
+      border-radius: calc(var(--radius-xxl) - 3px);
       background: 
-        radial-gradient(circle at 10% 20%, rgba(123,170,146,.15), transparent 30%),
-        radial-gradient(circle at 90% 10%, rgba(125,139,174,.2), transparent 30%),
-        linear-gradient(145deg, var(--hero) 0%, #252B3F 100%);
+        radial-gradient(circle at 0% 0%, rgba(255,255,255,.15) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(123,170,146,.2) 0%, transparent 50%),
+        linear-gradient(165deg, #2A2F45 0%, #1D2433 50%, #252B3F 100%);
       color: #fff;
       overflow: hidden;
-      box-shadow: inset 0 2px 4px rgba(255,255,255,.1), 0 10px 20px rgba(0,0,0,.3);
+      box-shadow: 
+        inset 0 1px 1px rgba(255,255,255,.25),
+        inset 0 -1px 1px rgba(0,0,0,.1),
+        0 20px 40px rgba(0,0,0,.3);
+    }
+
+    /* تأثير الانعكاس اللامع */
+    .wallet-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent 40%,
+        rgba(255,255,255,.08) 45%,
+        rgba(255,255,255,.15) 50%,
+        rgba(255,255,255,.08) 55%,
+        transparent 60%
+      );
+      transform: rotate(30deg) translateX(-100%);
+      animation: sheen 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sheen {
+      0%, 100% { transform: rotate(30deg) translateX(-100%); }
+      50% { transform: rotate(30deg) translateX(100%); }
     }
 
     .wallet-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
     }
 
     .wallet-logo {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 13px;
+      gap: 8px;
+      font-size: 14px;
       font-weight: 800;
       color: rgba(255,255,255,.7);
+      letter-spacing: 0.5px;
     }
 
     .wallet-logo svg {
-      width: 24px;
-      height: 14px;
+      width: 28px;
+      height: 16px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.2));
     }
 
     .wallet-logo svg path {
@@ -229,130 +265,145 @@
     }
 
     .wallet-badge {
-      background: rgba(255,255,255,.1);
-      backdrop-filter: blur(4px);
-      padding: 6px 12px;
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      padding: 8px 16px;
       border-radius: 100px;
       font-size: 11px;
       font-weight: 800;
       color: #fff;
-      border: 1px solid rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,.1);
     }
 
     .wallet-main-row {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 16px;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 2;
     }
 
     .wallet-name-section {
-      flex: 2;
+      flex: 1;
     }
 
     .wallet-name {
-      font-size: clamp(24px, 6vw, 32px);
+      font-size: clamp(28px, 7vw, 36px);
       font-weight: 900;
-      line-height: 1.3;
-      letter-spacing: 0.3px;
+      line-height: 1.2;
+      letter-spacing: 0.5px;
       word-wrap: break-word;
       overflow-wrap: break-word;
       color: #fff;
-      margin-bottom: 4px;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 8px rgba(0,0,0,.3);
     }
 
     .wallet-message {
-      font-size: 12px;
-      color: rgba(255,255,255,.8);
-      line-height: 1.5;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      font-size: 13px;
+      color: rgba(255,255,255,.75);
+      line-height: 1.6;
+      max-width: 200px;
     }
 
     .wallet-reading-section {
-      flex: 1;
       text-align: left;
-      min-width: 100px;
+      min-width: 120px;
     }
 
     .wallet-reading-label {
       font-size: 11px;
       color: rgba(255,255,255,.6);
       font-weight: 700;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .wallet-reading-value {
-      font-size: 48px;
+      font-size: 56px;
       font-weight: 900;
       line-height: 1;
       color: #fff;
       display: flex;
       align-items: baseline;
-      gap: 4px;
+      gap: 6px;
       justify-content: flex-end;
+      text-shadow: 0 4px 12px rgba(0,0,0,.2);
     }
 
     .wallet-reading-unit {
-      font-size: 14px;
+      font-size: 16px;
       color: rgba(255,255,255,.6);
+      font-weight: 700;
     }
 
     .wallet-details {
       display: flex;
       gap: 12px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
     }
 
     .wallet-detail-item {
       flex: 1;
-      min-width: 120px;
-      background: rgba(255,255,255,.05);
-      border-radius: 16px;
-      padding: 10px;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255,255,255,.1);
+      min-width: 100px;
+      background: rgba(255,255,255,.08);
+      border-radius: 20px;
+      padding: 16px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.15);
+      transition: transform 0.3s ease;
+    }
+
+    .wallet-detail-item:hover {
+      transform: translateY(-2px);
     }
 
     .wallet-detail-label {
       font-size: 10px;
       color: rgba(255,255,255,.6);
-      font-weight: 700;
-      margin-bottom: 2px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .wallet-detail-value {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 900;
       color: #fff;
       line-height: 1.2;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .wallet-detail-unit {
-      font-size: 11px;
+      font-size: 12px;
       color: rgba(255,255,255,.5);
-      margin-right: 4px;
+      font-weight: 600;
     }
 
     .wallet-qr-mini {
       position: absolute;
-      bottom: 12px;
-      left: 12px;
-      width: 60px;
-      height: 60px;
-      background: #fff;
-      border-radius: 12px;
-      padding: 4px;
-      box-shadow: 0 4px 8px rgba(0,0,0,.2);
+      bottom: 24px;
+      left: 24px;
+      width: 68px;
+      height: 68px;
+      background: rgba(255,255,255,.95);
+      border-radius: 16px;
+      padding: 6px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 2;
+      border: 2px solid rgba(255,255,255,.5);
     }
 
     .wallet-qr-mini div {
@@ -362,47 +413,65 @@
 
     .card-actions {
       display: flex;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 12px;
+      margin-top: 16px;
       flex-wrap: wrap;
     }
 
     .btn {
-      min-height: 46px;
-      border-radius: 16px;
+      min-height: 52px;
+      border-radius: 18px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      padding: 0 18px;
-      font-size: 14px;
+      gap: 8px;
+      padding: 0 22px;
+      font-size: 15px;
       font-weight: 900;
-      transition: transform .22s var(--ease), box-shadow .22s var(--ease);
+      transition: all .25s var(--ease);
       cursor: pointer;
       border: none;
+      position: relative;
+      overflow: hidden;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
+    .btn:active {
+      transform: scale(0.98);
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--primary), #6E9A81);
+      background: linear-gradient(135deg, var(--primary), #5E9A7A);
       color: #fff;
-      box-shadow: 0 12px 24px rgba(123,170,146,.2);
+      box-shadow: 0 12px 24px rgba(123,170,146,.25), 0 4px 8px rgba(123,170,146,.15);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 32px rgba(123,170,146,.35);
     }
 
     .btn-accent {
-      background: linear-gradient(135deg, var(--hero-2), var(--hero-3));
+      background: linear-gradient(135deg, var(--hero-2), #3E4560);
       color: #fff;
-      box-shadow: 0 12px 24px rgba(69,73,106,.18);
+      box-shadow: 0 12px 24px rgba(69,73,106,.25);
+    }
+
+    .btn-accent:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 32px rgba(69,73,106,.35);
     }
 
     .btn-outline {
       background: var(--surface);
-      border: 1px solid var(--line);
+      border: 1.5px solid var(--line);
       color: var(--ink);
       box-shadow: var(--shadow-sm);
+    }
+
+    .btn-outline:hover {
+      background: var(--surface-2);
+      border-color: var(--hero-3);
+      transform: translateY(-2px);
     }
 
     /* ===== القراءة السريعة ===== */
@@ -410,159 +479,33 @@
       background: var(--surface);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
-      padding: 20px;
+      padding: 24px;
       box-shadow: var(--shadow-md);
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scan-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, rgba(123,170,146,.1) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(30%, -30%);
     }
 
     .scan-head {
       display: flex;
       gap: 16px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
+      position: relative;
     }
 
     .scan-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(123,170,146,.15), rgba(125,139,174,.1));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      color: var(--hero-2);
-      flex-shrink: 0;
-    }
-
-    .scan-title {
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--ink);
-      margin-bottom: 4px;
-    }
-
-    .scan-copy {
-      font-size: 13px;
-      color: var(--ink-2);
-      line-height: 1.7;
-    }
-
-    .scan-form {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-
-    .input {
-      flex: 1;
-      min-width: 150px;
-      height: 52px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: #fff;
-      padding: 0 16px;
-      font-size: 15px;
-      color: var(--ink);
-      outline: none;
-    }
-
-    .input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(123,170,146,.15);
-    }
-
-    .scan-result {
-      background: var(--surface-2);
-      border-radius: 18px;
-      padding: 16px;
-      border: 1px solid var(--line);
-      display: none;
-    }
-
-    .scan-result.show {
-      display: block;
-    }
-
-    .scan-reading {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-      font-size: 32px;
-      font-weight: 900;
-      color: var(--ink);
-      margin-bottom: 8px;
-    }
-
-    .scan-reading span {
-      font-size: 14px;
-      color: var(--ink-2);
-    }
-
-    .scan-status {
-      display: inline-block;
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 900;
-      margin-bottom: 8px;
-    }
-
-    .scan-message {
-      font-size: 13px;
-      color: var(--ink-2);
-      line-height: 1.7;
-      margin-bottom: 12px;
-    }
-
-    .btn-save-reading {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      color: var(--ink);
-      padding: 10px 16px;
-      border-radius: 14px;
-      font-size: 13px;
-      font-weight: 900;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-    }
-
-    .btn-save-reading:hover {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-    }
-
-    /* ===== أدواتك ===== */
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 10px;
-    }
-
-    .quick-card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 18px 12px;
-      box-shadow: var(--shadow-sm);
-      transition: all 0.2s var(--ease);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .quick-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--primary);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .quick-icon {
       width: 52px;
       height: 52px;
       border-radius: 18px;
@@ -572,115 +515,358 @@
       justify-content: center;
       font-size: 26px;
       color: var(--hero-2);
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(123,170,146,.15);
+    }
+
+    .scan-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .scan-copy {
+      font-size: 14px;
+      color: var(--ink-2);
+      line-height: 1.7;
+    }
+
+    .scan-form {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .input {
+      flex: 1;
+      min-width: 150px;
+      height: 56px;
+      border-radius: 18px;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      padding: 0 18px;
+      font-size: 16px;
+      color: var(--ink);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(123,170,146,.12);
+      transform: translateY(-1px);
+    }
+
+    .input::placeholder {
+      color: var(--ink-3);
+    }
+
+    .scan-result {
+      background: linear-gradient(180deg, var(--surface-2) 0%, #fff 100%);
+      border-radius: 22px;
+      padding: 24px;
+      border: 1.5px solid var(--line);
+      display: none;
+      position: relative;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,.02);
+    }
+
+    .scan-result.show {
+      display: block;
+      animation: slideUp 0.4s var(--ease);
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .scan-reading {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--ink);
       margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .scan-reading span {
+      font-size: 16px;
+      color: var(--ink-2);
+      font-weight: 700;
+    }
+
+    .scan-status {
+      display: inline-block;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    }
+
+    .scan-message {
+      font-size: 14px;
+      color: var(--ink-2);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .btn-save-reading {
+      background: #fff;
+      border: 1.5px solid var(--line);
+      color: var(--ink);
+      padding: 12px 20px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-save-reading:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(123,170,146,.25);
+    }
+
+    /* ===== أدواتك ===== */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .quick-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px 16px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s var(--ease);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quick-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--hero-3));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .quick-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .quick-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .quick-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(123,170,146,.15), rgba(125,139,174,.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--hero-2);
+      margin-bottom: 14px;
+      transition: transform 0.3s ease;
+    }
+
+    .quick-card:hover .quick-icon {
+      transform: scale(1.1) rotate(-5deg);
     }
 
     .quick-card strong {
       font-size: 15px;
       font-weight: 900;
       color: var(--ink);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .quick-card span {
       font-size: 12px;
       color: var(--ink-2);
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
-    /* ===== البطاقة الترويجية ===== */
+    /* ===== البطاقة الترويجية المحسّنة ===== */
     .promo-card {
-      background: var(--surface);
+      background: linear-gradient(180deg, #FFFFFF 0%, #F8F6F2 100%);
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
-      padding: 24px 20px;
-      box-shadow: var(--shadow-lg);
+      padding: 32px 28px;
+      box-shadow: 
+        0 24px 60px rgba(30,36,51,.10),
+        0 0 0 1px rgba(255,255,255,.8) inset;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* دائرة زخرفية */
+    .promo-card::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(123,170,146,.15) 0%, transparent 70%);
+      border-radius: 50%;
     }
 
     .promo-header {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
+      position: relative;
     }
 
     .promo-logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
+      width: 56px;
+      height: 56px;
+      border-radius: 20px;
       background: linear-gradient(145deg, var(--hero), var(--hero-2));
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 900;
+      box-shadow: 0 8px 20px rgba(42,47,69,.25);
+      position: relative;
+    }
+
+    /* شارة "مجاني" */
+    .promo-badge {
+      position: absolute;
+      bottom: -6px;
+      left: -6px;
+      background: var(--success);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 8px rgba(0,0,0,.1);
     }
 
     .promo-title {
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 900;
       color: var(--ink);
-      line-height: 1.3;
+      line-height: 1.4;
+      letter-spacing: -0.5px;
+    }
+
+    .promo-subtitle {
+      font-size: 14px;
+      color: var(--ink-2);
+      margin-top: 4px;
+      font-weight: 500;
     }
 
     .promo-features {
       display: flex;
       flex-direction: column;
       gap: 16px;
+      position: relative;
     }
 
     .promo-feature {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+      padding: 12px;
+      background: rgba(255,255,255,.6);
+      border-radius: 16px;
+      border: 1px solid rgba(230,225,216,.8);
+      transition: transform 0.2s ease;
+    }
+
+    .promo-feature:hover {
+      transform: translateX(-4px);
+      background: rgba(255,255,255,.9);
     }
 
     .promo-feature-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      background: var(--surface-2);
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--surface-2), #fff);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 22px;
       color: var(--primary);
+      box-shadow: 0 4px 8px rgba(0,0,0,.05);
+      flex-shrink: 0;
     }
 
     .promo-feature-text {
-      font-size: 14px;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 800;
       color: var(--ink);
     }
 
     .promo-qr-row {
       display: flex;
       align-items: center;
-      gap: 16px;
-      background: var(--surface-2);
-      border-radius: 18px;
-      padding: 16px;
-      border: 1px solid var(--line);
+      gap: 20px;
+      background: linear-gradient(135deg, var(--surface-2), #fff);
+      border-radius: 24px;
+      padding: 24px;
+      border: 1.5px solid var(--line);
+      box-shadow: 0 8px 24px rgba(0,0,0,.04);
     }
 
     .promo-qr-box {
-      width: 120px;
-      height: 120px;
+      width: 110px;
+      height: 110px;
       background: #fff;
-      border-radius: 16px;
-      padding: 8px;
-      box-shadow: 0 8px 16px rgba(0,0,0,.1);
+      border-radius: 20px;
+      padding: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.08);
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
+      border: 2px solid var(--line);
     }
 
     .promo-qr-box div {
-      width: 104px !important;
-      height: 104px !important;
+      width: 86px !important;
+      height: 86px !important;
     }
 
     .promo-qr-text {
@@ -689,134 +875,188 @@
 
     .promo-qr-text strong {
       display: block;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 900;
       color: var(--ink);
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
 
     .promo-qr-text p {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--ink-2);
-      line-height: 1.5;
+      line-height: 1.7;
+      margin: 0;
     }
 
     .btn-promo-share {
       width: 100%;
-      padding: 16px;
+      padding: 18px;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--hero-2), var(--hero-3));
+      background: linear-gradient(135deg, var(--hero-2), var(--hero));
       color: #fff;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 900;
       border: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+      gap: 10px;
+      transition: all 0.3s var(--ease);
       cursor: pointer;
+      box-shadow: 0 12px 28px rgba(69,73,106,.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-promo-share::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
+      transition: left 0.5s ease;
     }
 
     .btn-promo-share:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 30px rgba(69,73,106,.2);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 36px rgba(69,73,106,.35);
     }
 
-    /* باقي العناصر (شريط التنقل، الشيتات، التوست) كما هي */
+    .btn-promo-share:hover::before {
+      left: 100%;
+    }
+
+    /* باقي العناصر (شريط التنقل، الشيتات، التوست) كما هي مع تحسينات طفيفة */
     .bottom-nav-wrap{
       position:fixed; right:0; left:0; bottom:0; z-index:30; pointer-events:none;
       padding:0 18px calc(14px + var(--safe-bottom));
     }
     .bottom-nav{
       max-width:var(--max-width); margin:0 auto;
-      display:grid; grid-template-columns:repeat(4,1fr); gap:6px;
-      padding:8px;
-      border-radius:24px;
-      background:rgba(255,255,255,.92);
+      display:grid; grid-template-columns:repeat(4,1fr); gap:8px;
+      padding:10px;
+      border-radius:28px;
+      background:rgba(255,255,255,.95);
       border:1px solid var(--line);
-      backdrop-filter:blur(16px);
-      box-shadow:0 12px 30px rgba(24,30,45,.12);
+      backdrop-filter:blur(20px);
+      box-shadow:0 12px 40px rgba(24,30,45,.12);
       pointer-events:auto;
     }
     .nav-item{
-      min-height:56px; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+      min-height:60px; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
       font-size:11px; font-weight:900; color:var(--ink-3);
       transition:all .2s var(--ease);
       cursor:pointer;
+      position: relative;
     }
-    .nav-item span:first-child{font-size:18px; line-height:1; transition:transform 0.15s ease;}
+    .nav-item span:first-child{font-size:20px; line-height:1; transition:transform 0.2s ease;}
     .nav-item.active{
-      background:linear-gradient(135deg, rgba(125,139,174,.2), rgba(123,170,146,.15));
+      background:linear-gradient(135deg, rgba(125,139,174,.15), rgba(123,170,146,.12));
       color:var(--primary);
-      transform:translateY(-2px);
+      transform:translateY(-4px);
     }
     .nav-item.active span:first-child{
-      font-size:22px;
-      transform:scale(1.1);
+      font-size:24px;
+      transform:scale(1.15);
+      filter: drop-shadow(0 4px 8px rgba(123,170,146,.3));
+    }
+
+    /* مؤشر النقطة النشطة */
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: 6px;
+      width: 4px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 50%;
     }
 
     .sheet-overlay{
       position:fixed; inset:0; z-index:50;
-      background:rgba(29,36,51,.28); backdrop-filter:blur(8px);
+      background:rgba(29,36,51,.35); backdrop-filter:blur(12px);
       padding:14px; display:flex; align-items:flex-end; justify-content:center;
-      opacity:0; visibility:hidden; transition:opacity .24s ease, visibility .24s ease;
+      opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease;
     }
     .sheet-overlay.show{opacity:1; visibility:visible}
     .sheet{
       width:min(100%, var(--max-width));
       background:linear-gradient(180deg, #FFFFFF 0%, #F8F6F2 100%);
-      border:1px solid var(--line); border-radius:28px; box-shadow:var(--shadow-lg);
-      padding:14px 14px 16px; transform:translateY(24px); transition:transform .28s var(--ease);
+      border:1px solid var(--line); border-radius:32px; box-shadow:var(--shadow-lg);
+      padding:20px 20px 24px; transform:translateY(30px); transition:transform .3s var(--ease);
     }
     .sheet-overlay.show .sheet{transform:translateY(0)}
-    .sheet-handle{width:48px; height:5px; border-radius:999px; background:#D7D0C7; margin:0 auto 14px}
-    .sheet-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:14px}
-    .sheet-title{font-size:20px; font-weight:900; line-height:1.3; color:var(--ink); letter-spacing:-.5px}
-    .sheet-sub{font-size:12px; color:var(--ink-2); line-height:1.7; margin-top:4px}
+    .sheet-handle{width:40px; height:5px; border-radius:999px; background:var(--line); margin:0 auto 18px}
+    .sheet-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:18px}
+    .sheet-title{font-size:22px; font-weight:900; line-height:1.3; color:var(--ink); letter-spacing:-0.5px}
+    .sheet-sub{font-size:13px; color:var(--ink-2); line-height:1.7; margin-top:6px}
     .close-btn{
-      width:38px; height:38px; border-radius:12px; flex-shrink:0;
-      border:1px solid var(--line); background:#fff; font-size:22px; color:var(--ink);
+      width:42px; height:42px; border-radius:14px; flex-shrink:0;
+      border:1.5px solid var(--line); background:#fff; font-size:24px; color:var(--ink);
       display:flex; align-items:center; justify-content:center;
+      transition: all 0.2s ease;
     }
-    .field{margin-bottom:10px}
-    .field label{display:block; font-size:12px; color:var(--ink-2); font-weight:900; margin-bottom:6px}
-    .inline-fields{display:grid; grid-template-columns:1fr 1fr; gap:10px}
-    .helper{font-size:11px; color:var(--ink-3); line-height:1.7; margin:4px 2px 12px}
-    .sheet-actions{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;}
+    .close-btn:hover {
+      background: var(--surface-2);
+      transform: rotate(90deg);
+    }
+    .field{margin-bottom:14px}
+    .field label{display:block; font-size:13px; color:var(--ink-2); font-weight:900; margin-bottom:8px}
+    .inline-fields{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    .helper{font-size:12px; color:var(--ink-3); line-height:1.7; margin:6px 2px 16px}
+    .sheet-actions{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;}
 
-    .install-steps{display:grid; gap:8px; margin:6px 0 14px}
+    .install-steps{display:grid; gap:10px; margin:8px 0 18px}
     .install-step{
-      display:flex; align-items:flex-start; gap:8px; padding:12px;
-      border-radius:16px; border:1px solid var(--line); background:var(--surface-2);
+      display:flex; align-items:flex-start; gap:10px; padding:14px;
+      border-radius:18px; border:1px solid var(--line); background:var(--surface-2);
     }
     .install-step-index{
-      width:26px; height:26px; border-radius:8px; flex-shrink:0;
+      width:28px; height:28px; border-radius:10px; flex-shrink:0;
       display:flex; align-items:center; justify-content:center;
-      background:rgba(125,139,174,.16); color:var(--hero-2); font-size:12px; font-weight:900;
+      background:rgba(125,139,174,.16); color:var(--hero-2); font-size:13px; font-weight:900;
       margin-top:2px;
     }
-    .install-step strong{display:block; font-size:12px; color:var(--ink); font-weight:900; margin-bottom:3px}
-    .install-step span{display:block; font-size:11px; color:var(--ink-2); line-height:1.6}
+    .install-step strong{display:block; font-size:13px; color:var(--ink); font-weight:900; margin-bottom:4px}
+    .install-step span{display:block; font-size:12px; color:var(--ink-2); line-height:1.6}
     .hidden{display:none !important}
 
     .toast{
-      position:fixed; right:50%; bottom:calc(100px + var(--safe-bottom)); z-index:60;
-      transform:translateX(50%) translateY(18px);
-      min-width:200px; max-width:calc(100vw - 32px);
-      padding:12px 14px; border-radius:14px;
-      border:1px solid var(--line); background:rgba(255,255,255,.96);
-      box-shadow:var(--shadow-md); color:var(--ink); text-align:center; font-size:12px; font-weight:900;
-      opacity:0; visibility:hidden; transition:all .22s ease;
+      position:fixed; right:50%; bottom:calc(110px + var(--safe-bottom)); z-index:60;
+      transform:translateX(50%) translateY(20px);
+      min-width:220px; max-width:calc(100vw - 32px);
+      padding:14px 18px; border-radius:16px;
+      border:1px solid var(--line); background:rgba(255,255,255,.98);
+      box-shadow:var(--shadow-md); color:var(--ink); text-align:center; font-size:13px; font-weight:900;
+      opacity:0; visibility:hidden; transition:all .25s ease;
+      backdrop-filter: blur(10px);
     }
     .toast.show{opacity:1; visibility:visible; transform:translateX(50%) translateY(0)}
 
+    /* حالات القراءة المحسّنة */
+    .status-low { background: linear-gradient(135deg, #FF6B6B, #EE5A6F) !important; color: #fff !important; }
+    .status-range { background: linear-gradient(135deg, #51CF66, #40C057) !important; color: #fff !important; }
+    .status-slightly-high { background: linear-gradient(135deg, #FFD43B, #FCC419) !important; color: var(--ink) !important; }
+    .status-high { background: linear-gradient(135deg, #FF8787, #FA5252) !important; color: #fff !important; }
+    .status-very-high { background: linear-gradient(135deg, #C0392B, #A93226) !important; color: #fff !important; }
+
     @media (max-width:480px){
-      .wallet-main-row{flex-direction:column}
-      .wallet-reading-section{text-align:right; width:100%}
-      .wallet-reading-value{justify-content:flex-start}
+      .wallet-main-row{flex-direction:column; align-items: flex-start}
+      .wallet-reading-section{text-align:right; width:100%; margin-top: 20px}
+      .wallet-reading-value{justify-content:flex-start; font-size: 48px}
       .quick-grid{grid-template-columns:1fr}
-      .promo-qr-row{flex-direction:column; align-items:flex-start}
+      .promo-qr-row{flex-direction:column; align-items:center; text-align: center}
+      .promo-qr-text { text-align: center }
+    }
+
+    /* تأثيرات خاصة للبطاقة عند التصدير */
+    @media print {
+      .wallet-card {
+        box-shadow: none;
+        border: 2px solid #ddd;
+      }
     }
   </style>
 </head>
@@ -865,10 +1105,10 @@
       <p class="greeting-sub" id="greetingSub">رحلة السكر الخاصة بك تبدأ هنا.</p>
     </section>
 
-    <!-- ===== البطاقة الشخصية ===== -->
+    <!-- ===== البطاقة الشخصية الفاخرة ===== -->
     <section class="section">
       <div class="section-head">
-        <div class="section-title">بطاقتك</div>
+        <div class="section-title">بطاقتي الصحية</div>
         <div class="section-note">خاصة بك</div>
       </div>
 
@@ -876,7 +1116,7 @@
         <div class="wallet-card" id="walletCard">
           <div class="wallet-header">
             <div class="wallet-logo">
-              <svg viewBox="0 0 100 40" width="24" height="14">
+              <svg viewBox="0 0 100 40" width="28" height="16">
                 <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
               </svg>
               <span>SugarMind</span>
@@ -890,7 +1130,7 @@
               <div class="wallet-message" id="walletMessage">سجل اسمك وقراءتك لتفعيل البطاقة</div>
             </div>
             <div class="wallet-reading-section">
-              <div class="wallet-reading-label">قراءة السكر</div>
+              <div class="wallet-reading-label">القراءة الحالية</div>
               <div class="wallet-reading-value">
                 <span id="walletReading">--</span>
                 <span class="wallet-reading-unit">mg/dL</span>
@@ -905,20 +1145,25 @@
             </div>
             <div class="wallet-detail-item">
               <div class="wallet-detail-label">معامل الكارب</div>
-              <div class="wallet-detail-value" id="walletRatio">1:--</div>
-              <div class="wallet-detail-unit">ICR</div>
+              <div class="wallet-detail-value" id="walletRatio">1:--<span class="wallet-detail-unit">ICR</span></div>
             </div>
           </div>
 
-          <!-- باركود صغير داخل البطاقة -->
+          <!-- باركود مدمج في تصميم البطاقة -->
           <div class="wallet-qr-mini" id="walletQrMini"></div>
         </div>
       </div>
 
       <div class="card-actions">
-        <button class="btn btn-primary" id="shareCardBtn">شارك بطاقتك</button>
-        <button class="btn btn-accent" id="saveCardBtn">احفظها كصورة</button>
-        <button class="btn btn-outline" id="editCardBtn">تعديل</button>
+        <button class="btn btn-primary" id="shareCardBtn">
+          <span>📤</span> شارك بطاقتك
+        </button>
+        <button class="btn btn-accent" id="saveCardBtn">
+          <span>💾</span> احفظها كصورة
+        </button>
+        <button class="btn btn-outline" id="editCardBtn">
+          <span>✏️</span> تعديل
+        </button>
       </div>
     </section>
 
@@ -933,8 +1178,8 @@
         <div class="scan-head">
           <div class="scan-icon">🩺</div>
           <div>
-            <div class="scan-title">جرّب القراءة بشكل فوري</div>
-            <div class="scan-copy">أدخل رقم السكر، واعرف حالتك مباشرة.</div>
+            <div class="scan-title">فحص سريع للسكر</div>
+            <div class="scan-copy">أدخل قراءة الجلوكوز، واحصل على التحليل الفوري.</div>
           </div>
         </div>
 
@@ -960,8 +1205,8 @@
     <!-- ===== أدواتك ===== -->
     <section class="section">
       <div class="section-head">
-        <div class="section-title">أدواتك</div>
-        <div class="section-note">الأساس اليومي</div>
+        <div class="section-title">أدواتك اليومية</div>
+        <div class="section-note">الأساس</div>
       </div>
 
       <div class="quick-grid">
@@ -973,7 +1218,7 @@
         <a class="quick-card" href="carb-calculator.html">
           <div class="quick-icon">🧮</div>
           <strong>حاسبة المعامل</strong>
-          <span>احسب معامل الكارب والتصحيح</span>
+          <span>احسب الجرعة والتصحيح</span>
         </a>
         <a class="quick-card" href="daily-guide.html">
           <div class="quick-icon">📋</div>
@@ -983,44 +1228,50 @@
       </div>
     </section>
 
-    <!-- ===== البطاقة الترويجية (شارك التطبيق) ===== -->
+    <!-- ===== البطاقة الترويجية (رسالة اهتمام) ===== -->
     <section class="section">
       <div class="section-head">
-        <div class="section-title">شارك SugarMind</div>
+        <div class="section-title">شارك الاهتمام</div>
         <div class="section-note">ادعم غيرك</div>
       </div>
 
       <div class="promo-card" id="promoCard">
         <div class="promo-header">
-          <div class="promo-logo">S</div>
-          <div class="promo-title">SugarMind<br>رفيق السكر اليومي</div>
+          <div class="promo-logo">
+            S
+            <span class="promo-badge">مجاني</span>
+          </div>
+          <div>
+            <div class="promo-title">خلي بالك على صحتك</div>
+            <div class="promo-subtitle">مع SugarMind – رفيق السكر اليومي</div>
+          </div>
         </div>
 
         <div class="promo-features">
           <div class="promo-feature">
             <div class="promo-feature-icon">📊</div>
-            <div class="promo-feature-text">حلل قراءاتك الفورية</div>
+            <div class="promo-feature-text">حلل قراءاتك الفورية بوضوح</div>
           </div>
           <div class="promo-feature">
             <div class="promo-feature-icon">🧮</div>
-            <div class="promo-feature-text">احسب معامل الكارب والتصحيح</div>
+            <div class="promo-feature-text">احسب معامل الكارب بدقة</div>
           </div>
           <div class="promo-feature">
             <div class="promo-feature-icon">🍽️</div>
-            <div class="promo-feature-text">حلل أي وجبة بثواني</div>
+            <div class="promo-feature-text">حلل أي وجبة بثوانٍ معدودة</div>
           </div>
         </div>
 
         <div class="promo-qr-row">
           <div class="promo-qr-box" id="promoQrCode"></div>
           <div class="promo-qr-text">
-            <strong>امسح الباركود وانطلق</strong>
-            <p>افتح التطبيق مباشرة وابدأ رحلتك مع SugarMind.</p>
+            <strong>امسح وابدأ الرحلة</strong>
+            <p>افتح التطبيق مباشرة، وسجل قراءاتك بأمان تام. صحتك تستاهل.</p>
           </div>
         </div>
 
         <button class="btn-promo-share" id="sharePromoBtn">
-          <span>📤</span> شارك البطاقة
+          <span>❤️</span> شارك مع شخص تخاف عليه
         </button>
       </div>
     </section>
@@ -1042,7 +1293,7 @@
       <div class="sheet-head">
         <div>
           <h3 class="sheet-title" id="recorderTitle">تعديل بطاقتك</h3>
-          <p class="sheet-sub">أدخل اسمك وآخر قراءة.</p>
+          <p class="sheet-sub">أدخل اسمك وآخر قراءة سجلتها.</p>
         </div>
         <button class="close-btn" id="closeRecorderBtn" type="button" aria-label="إغلاق">×</button>
       </div>
@@ -1051,10 +1302,10 @@
         <input class="input" id="nameInput" type="text" placeholder="مثال: خالد" maxlength="30" />
       </div>
       <div class="field">
-        <label for="readingInput">قراءة السكر</label>
+        <label for="readingInput">قراءة السكر (mg/dL)</label>
         <input class="input" id="readingInput" type="number" inputmode="numeric" min="20" max="600" placeholder="مثال: 120" />
       </div>
-      <p class="helper">التخزين محلي على جهازك فقط.</p>
+      <p class="helper">💡 البيانات تُحفظ على جهازك فقط، لا تغادر هاتفك.</p>
       <div class="sheet-actions">
         <button class="btn btn-primary" id="saveReadingBtn">💾 حفظ</button>
         <button class="btn btn-outline" id="deleteDataBtn">🗑️ حذف</button>
@@ -1077,11 +1328,11 @@
       <div class="install-steps hidden" id="iosInstallSteps">
         <div class="install-step">
           <div class="install-step-index">1</div>
-          <div><strong>زر المشاركة</strong><span>من أسفل المتصفح.</span></div>
+          <div><strong>اضغط زر المشاركة</strong><span>من أسفل شاشة Safari.</span></div>
         </div>
         <div class="install-step">
           <div class="install-step-index">2</div>
-          <div><strong>إضافة للشاشة الرئيسية</strong><span>ثم أكد.</span></div>
+          <div><strong>اختر "إضافة للشاشة الرئيسية"</strong><span>ثم أكد الإضافة.</span></div>
         </div>
       </div>
       <p class="helper" id="installCopy">أفضل وقت للتثبيت بعد أول استخدام.</p>
@@ -1224,7 +1475,7 @@
       return {label:'مساء الخير', hint:'خلنا نختم يومك بوضوح', icon:'🌙'};
     }
 
-    // حالات القراءة مع ألوان محسنة
+    // حالات القراءة مع ألوان محسّنة
     function getReadingState(reading){
       const value = Number(reading);
       if(!Number.isFinite(value)){
@@ -1234,7 +1485,8 @@
           tag:'جديد',
           message:'سجل اسمك وقراءتك لتفعيل البطاقة',
           colorBg:'#E6E1D8',
-          colorText:'#1D2433'
+          colorText:'#1D2433',
+          statusClass: ''
         };
       }
       if(value < 70){
@@ -1244,7 +1496,8 @@
           tag:'يحتاج انتباه',
           message:'قراءتك منخفضة، تحتاج تدخل سريع.',
           colorBg:'#DA726D',
-          colorText:'#FFFFFF'
+          colorText:'#FFFFFF',
+          statusClass: 'status-low'
         };
       }
       if(value <= 140){
@@ -1254,7 +1507,8 @@
           tag:'مطمئن',
           message:'قراءتك في النطاق المثالي، أحسنت.',
           colorBg:'#61B07F',
-          colorText:'#FFFFFF'
+          colorText:'#FFFFFF',
+          statusClass: 'status-range'
         };
       }
       if(value <= 180){
@@ -1264,7 +1518,8 @@
           tag:'انتبه',
           message:'قراءتك أعلى من المثالي، راقب نفسك.',
           colorBg:'#E6B85C',
-          colorText:'#1D2433'
+          colorText:'#1D2433',
+          statusClass: 'status-slightly-high'
         };
       }
       if(value <= 250){
@@ -1274,7 +1529,8 @@
           tag:'مراجعة',
           message:'قراءتك مرتفعة، راجع وجبتك أو جرعتك.',
           colorBg:'#DA726D',
-          colorText:'#FFFFFF'
+          colorText:'#FFFFFF',
+          statusClass: 'status-high'
         };
       }
       return {
@@ -1283,7 +1539,8 @@
         tag:'خطر',
         message:'قراءتك مرتفعة جداً، تدخل طبي فوري.',
         colorBg:'#B33F3A',
-        colorText:'#FFFFFF'
+        colorText:'#FFFFFF',
+        statusClass: 'status-very-high'
       };
     }
 
@@ -1348,10 +1605,10 @@
       els.timeChip.innerHTML = `${period.icon} <span>${period.hint}</span>`;
       if(name){
         els.greetingTitle.textContent = `${period.label} يا ${name}`;
-        els.greetingSub.textContent = 'بطاقتك تعكس تقدمك اليوم.';
+        els.greetingSub.textContent = 'بطاقتك الصحية جاهزة لمشاركة تقدمك.';
       } else {
         els.greetingTitle.textContent = 'حياك الله في SugarMind';
-        els.greetingSub.textContent = 'ابدأ بتسجيل اسمك وقراءتك.';
+        els.greetingSub.textContent = 'ابدأ رحلتك الصحية بخطوة بسيطة.';
       }
     }
 
@@ -1366,10 +1623,18 @@
       els.walletMessage.textContent = readingState.message;
       els.walletTag.textContent = readingState.tag;
       els.walletReading.textContent = Number.isFinite(reading) ? reading : '--';
-      els.walletRatio.textContent = ratio;
+      els.walletRatio.innerHTML = `${ratio}<span class="wallet-detail-unit">ICR</span>`;
+      
+      // تحديث الحالة مع الـ class المناسب للـ gradient
       els.walletStateChip.textContent = readingState.label;
-      els.walletStateChip.style.background = readingState.colorBg;
-      els.walletStateChip.style.color = readingState.colorText;
+      els.walletStateChip.className = 'wallet-detail-value ' + readingState.statusClass;
+      if(readingState.key === 'empty'){
+        els.walletStateChip.style.background = readingState.colorBg;
+        els.walletStateChip.style.color = readingState.colorText;
+      } else {
+        els.walletStateChip.style.background = '';
+        els.walletStateChip.style.color = '';
+      }
     }
 
     // إنشاء QR صغير داخل البطاقة
@@ -1392,8 +1657,8 @@
       els.promoQrCode.innerHTML = '';
       state.qrPromoInstance = new QRCode(els.promoQrCode, {
         text: targetUrl,
-        width: 104,
-        height: 104,
+        width: 86,
+        height: 86,
         colorDark: '#1D2433',
         colorLight: '#FFFFFF',
         correctLevel: QRCode.CorrectLevel.M
@@ -1405,8 +1670,14 @@
       const readingState = getReadingState(reading);
       els.quickReadingValue.textContent = reading;
       els.quickReadingStatus.textContent = readingState.label;
-      els.quickReadingStatus.style.background = readingState.colorBg;
-      els.quickReadingStatus.style.color = readingState.colorText;
+      els.quickReadingStatus.className = 'scan-status ' + readingState.statusClass;
+      if(readingState.key === 'empty'){
+        els.quickReadingStatus.style.background = readingState.colorBg;
+        els.quickReadingStatus.style.color = readingState.colorText;
+      } else {
+        els.quickReadingStatus.style.background = '';
+        els.quickReadingStatus.style.color = '';
+      }
       els.quickReadingMessage.textContent = readingState.message;
       els.quickReadingResult.classList.add('show');
     }
@@ -1473,7 +1744,7 @@
 
       closeRecorder();
       render();
-      showToast('تم تحديث بطاقتك');
+      showToast('✨ تم تحديث بطاقتك بنجاح');
       maybePromptInstallAfterValue();
     }
 
@@ -1520,7 +1791,7 @@
 
     async function saveCardImage(){
       try{
-        showToast('جاري تجهيز البطاقة...');
+        showToast('جاري تجهيز البطاقة الفاخرة...');
         const blob = await createCardBlob();
         if(!blob){
           showToast('تعذر تجهيز الصورة');
@@ -1533,7 +1804,7 @@
         link.click();
         link.remove();
         setTimeout(() => URL.revokeObjectURL(link.href), 1500);
-        showToast('تم حفظ البطاقة كصورة');
+        showToast('🎉 تم حفظ البطاقة في معرض الصور');
       }catch(_){
         showToast('تعذر حفظ البطاقة الآن');
       }
@@ -1551,8 +1822,8 @@
         if(navigator.share && navigator.canShare && navigator.canShare({ files:[file] })){
           await navigator.share({
             files:[file],
-            title:'SugarMind Card',
-            text:'هذه بطاقتي من SugarMind'
+            title:'بطاقتي الصحية من SugarMind',
+            text:`قراءة ${state.home?.reading || '--'} mg/dL - تابع تقدمي مع SugarMind`
           });
           showToast('تم فتح المشاركة');
           return;
@@ -1589,25 +1860,25 @@
 
     async function sharePromoCard(){
       try{
-        showToast('جاري تجهيز البطاقة الترويجية...');
+        showToast('جاري تجهيز رسالة الاهتمام...');
         const blob = await createPromoBlob();
         if(!blob){
           showToast('تعذر تجهيز الصورة');
           return;
         }
-        const file = new File([blob], 'SugarMind-Promo.png', { type:'image/png' });
+        const file = new File([blob], 'SugarMind-ادعم-صحته.png', { type:'image/png' });
         if(navigator.share && navigator.canShare && navigator.canShare({ files:[file] })){
           await navigator.share({
             files:[file],
-            title:'SugarMind',
-            text:'تعرف على SugarMind – رفيق السكر اليومي'
+            title:'خلي بالك على صحتك',
+            text:'تطبيق SugarMind – رفيقك اليومي لإدارة السكر بذكاء'
           });
-          showToast('تمت المشاركة');
+          showToast('❤️ تمت المشاركة بنجاح');
           return;
         }
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'SugarMind-Promo.png';
+        link.download = 'SugarMind-ادعم-صحته.png';
         link.click();
         showToast('تم حفظ الصورة');
       }catch(error){
@@ -1650,7 +1921,7 @@
       syncLegacyStores();
       localStorage.setItem(KEYS.VALUE_MOMENT, 'true');
       render();
-      showToast('تم حفظ القراءة في البطاقة');
+      showToast('✅ تم حفظ القراءة في بطاقتك');
     }
 
     // دوال التثبيت (كما هي)
