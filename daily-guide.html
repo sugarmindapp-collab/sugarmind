@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>الدليل اليومي - SugarMind</title>
-  <meta name="description" content="ملخص ذكي يختصر لك وضع اليوم: القراءة، المعامل، والخطوة التالية." />
+  <title>اليوم - SugarMind</title>
+  <meta name="description" content="لوحة يومية ذكية تختصر لك القراءة، المعامل، وفهم اليوم والخطوة التالية." />
   <meta name="theme-color" content="#F6F3EE" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ44R4V060"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -21,8 +20,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
     :root{
@@ -31,14 +28,14 @@
       --surface:#FFFFFF;
       --surface-2:#F8F6F2;
       --surface-3:#F0ECE7;
-      --hero:#2A2F45;
+      --hero:#252B3F;
       --hero-2:#45496A;
       --hero-3:#7D8BAE;
       --primary:#7BAA92;
       --primary-2:#A9C9B9;
       --ink:#1D2433;
-      --ink-2:#667085;
-      --ink-3:#8C94A4;
+      --ink-2:#5F6B82;
+      --ink-3:#8B93A4;
       --line:#E6E1D8;
       --line-soft:rgba(69,73,106,.10);
       --success:#61B07F;
@@ -62,222 +59,426 @@
       --ease:cubic-bezier(.2,.8,.2,1);
     }
 
-    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Tajawal',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-    html{background:var(--bg);overflow-x:hidden;scroll-behavior:smooth}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      -webkit-tap-highlight-color:transparent;
+      font-family:'Tajawal',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    }
+
+    html{
+      background:var(--bg);
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
     body{
       min-height:100vh;
       color:var(--ink);
       background:
-        radial-gradient(circle at top left, rgba(123,170,146,.10), transparent 24%),
-        radial-gradient(circle at top right, rgba(125,139,174,.10), transparent 22%),
+        radial-gradient(circle at top left, rgba(123,170,146,.08), transparent 28%),
+        radial-gradient(circle at top right, rgba(125,139,174,.08), transparent 26%),
         linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
       overflow-x:hidden;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
     }
+
     a{text-decoration:none;color:inherit}
     button,input{font:inherit}
     button{border:0;background:none;color:inherit;cursor:pointer}
-    img{max-width:100%;display:block}
 
     .bg-noise{
-      position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.03;
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      opacity:.02;
       background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
     }
 
     .splash{
-      position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center;
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       background:linear-gradient(180deg, #F6F3EE 0%, #EFEAE3 100%);
       transition:opacity .45s ease, visibility .45s ease, transform .45s ease;
     }
-    .splash.hide{opacity:0; visibility:hidden; transform:scale(1.02)}
-    .splash-inner{text-align:center; padding:24px}
+
+    .splash.hide{
+      opacity:0;
+      visibility:hidden;
+      transform:scale(1.02);
+    }
+
+    .splash-inner{text-align:center;padding:24px}
     .splash-mark{
-      width:108px; height:108px; border-radius:30px; margin:0 auto 20px;
-      display:flex; align-items:center; justify-content:center;
+      width:108px;
+      height:108px;
+      border-radius:30px;
+      margin:0 auto 20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 58%, var(--primary) 100%);
       box-shadow:0 20px 50px rgba(69,73,106,.20), inset 0 1px 0 rgba(255,255,255,.18);
     }
-    .splash-mark svg{width:56px; height:34px}
-    .splash-mark path{stroke:#fff; stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
-    .splash-title{font-size:36px; font-weight:900; letter-spacing:-1px; color:var(--ink); margin-bottom:8px}
-    .splash-sub{font-size:15px; color:var(--ink-2); margin-bottom:24px}
-    .splash-bar{width:160px; height:4px; background:rgba(69,73,106,.08); border-radius:999px; overflow:hidden; margin:0 auto}
-    .splash-bar span{
-      display:block; width:100%; height:100%;
-      background:linear-gradient(90deg, var(--primary), var(--hero-3));
-      transform-origin:right; animation:loader 1.1s ease forwards;
+    .splash-mark svg{width:56px;height:34px}
+    .splash-mark path{
+      stroke:#fff;
+      stroke-width:4;
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round;
     }
-    @keyframes loader{from{transform:scaleX(.1)}to{transform:scaleX(1)}}
+    .splash-title{
+      font-size:36px;
+      font-weight:900;
+      letter-spacing:-1px;
+      color:var(--ink);
+      margin-bottom:8px;
+    }
+    .splash-sub{
+      font-size:15px;
+      color:var(--ink-2);
+      margin-bottom:24px;
+    }
+    .splash-bar{
+      width:160px;
+      height:4px;
+      background:rgba(69,73,106,.08);
+      border-radius:999px;
+      overflow:hidden;
+      margin:0 auto;
+    }
+    .splash-bar span{
+      display:block;
+      width:100%;
+      height:100%;
+      background:linear-gradient(90deg, var(--primary), var(--hero-3));
+      transform-origin:right;
+      animation:loader 1.1s ease forwards;
+    }
+    @keyframes loader{
+      from{transform:scaleX(.1)}
+      to{transform:scaleX(1)}
+    }
 
     .app{
       max-width:var(--max-width);
       margin:0 auto;
       min-height:100vh;
-      padding:calc(18px + var(--safe-top)) 18px calc(120px + var(--safe-bottom));
+      padding:calc(14px + var(--safe-top)) 18px calc(122px + var(--safe-bottom));
       position:relative;
     }
 
     .topbar{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      margin-bottom:22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px;
     }
+
     .brand{
-      display:flex; align-items:center; gap:12px; min-width:0;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
     }
+
     .brand-mark{
-      width:52px; height:52px; border-radius:17px; flex-shrink:0;
-      display:flex; align-items:center; justify-content:center;
+      width:52px;
+      height:52px;
+      border-radius:17px;
+      flex-shrink:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 58%, var(--primary) 100%);
       box-shadow:0 14px 28px rgba(69,73,106,.14);
     }
-    .brand-mark svg{width:28px; height:16px}
-    .brand-mark path{stroke:#fff; stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
-    .brand-name{font-size:19px; font-weight:900; color:var(--ink); line-height:1}
-    .brand-sub{font-size:12px; color:var(--ink-2); margin-top:5px}
-    .top-actions{
-      display:flex; align-items:center; gap:10px; flex-shrink:0;
-    }
-    .icon-btn{
-      min-height:46px; border-radius:16px; border:1px solid var(--line);
-      background:rgba(255,255,255,.65); color:var(--ink);
-      box-shadow:var(--shadow-sm);
-      transition:transform .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease);
-      width:46px; display:flex; align-items:center; justify-content:center; font-size:22px;
-    }
-    .icon-btn:hover{transform:translateY(-2px); border-color:rgba(69,73,106,.20)}
 
-    .greeting{margin-bottom:18px}
+    .brand-mark svg{width:28px;height:16px}
+    .brand-mark path{
+      stroke:#fff;
+      stroke-width:4;
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .brand-name{
+      font-size:19px;
+      font-weight:900;
+      color:var(--ink);
+      line-height:1;
+    }
+
+    .brand-sub{
+      font-size:12px;
+      color:#6F7890;
+      margin-top:5px;
+    }
+
+    .top-action{
+      width:46px;
+      height:46px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.72);
+      box-shadow:var(--shadow-sm);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+      color:var(--ink);
+      transition:transform .22s var(--ease), border-color .22s var(--ease);
+      flex-shrink:0;
+    }
+
+    .top-action:hover{
+      transform:translateY(-2px);
+      border-color:rgba(69,73,106,.18);
+    }
+
+    .greeting{
+      margin-bottom:16px;
+    }
+
     .time-chip{
-      display:inline-flex; align-items:center; gap:8px; min-height:34px; padding:0 12px;
-      border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.72);
-      color:var(--ink-2); font-size:12px; font-weight:900; margin-bottom:16px;
-      box-shadow:var(--shadow-sm);
-    }
-    .greeting-title{font-size:28px; font-weight:900; line-height:1.24; letter-spacing:-1px; color:var(--ink); margin-bottom:8px}
-    .greeting-sub{font-size:14px; color:var(--ink-2); line-height:1.8}
-
-    .hero{
-      background:linear-gradient(145deg, rgba(123,170,146,.12), rgba(255,255,255,.02));
-      border:1px solid rgba(123,170,146,.18);
-      border-radius:var(--radius-xxl);
-      padding:22px;
-      margin-bottom:22px;
-      position:relative;
-      overflow:hidden;
-      box-shadow:var(--shadow-md);
-    }
-    .hero::before{
-      content:'';
-      position:absolute;
-      inset:0;
-      background:linear-gradient(120deg, transparent 35%, rgba(255,255,255,.03) 50%, transparent 65%);
-      transform:translateX(-100%);
-      animation:shine 6s linear infinite;
-    }
-    @keyframes shine{
-      0%{transform:translateX(-100%)}
-      30%,100%{transform:translateX(100%)}
-    }
-    .hero-badge{
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding:8px 14px;
+      min-height:32px;
+      padding:0 12px;
       border-radius:999px;
-      background:rgba(123,170,146,.12);
-      color:var(--primary);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.82);
+      color:#6F7890;
       font-size:12px;
-      font-weight:800;
-      margin-bottom:14px;
-      border:1px solid rgba(123,170,146,.2);
-      position:relative;
-      z-index:1;
-    }
-    .hero-title{
-      font-size:26px;
       font-weight:900;
-      line-height:1.5;
-      margin-bottom:10px;
-      position:relative;
-      z-index:1;
+      margin-bottom:12px;
+      box-shadow:var(--shadow-sm);
     }
-    .hero-text{
+
+    .greeting-title{
+      font-size:29px;
+      font-weight:900;
+      line-height:1.2;
+      letter-spacing:-.8px;
+      color:var(--ink);
+      margin-bottom:8px;
+    }
+
+    .greeting-sub{
       font-size:14px;
       color:var(--ink-2);
       line-height:1.9;
-      position:relative;
-      z-index:1;
     }
 
-    .live-card{
+    .section{
+      margin-bottom:18px;
+    }
+
+    .section-card{
       background:var(--surface);
       border:1px solid var(--line);
       border-radius:var(--radius-xl);
       padding:22px;
-      margin-bottom:22px;
       box-shadow:var(--shadow-md);
       position:relative;
       overflow:hidden;
     }
-    .live-glow{
+
+    .section-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:16px;
+    }
+
+    .section-title{
+      font-size:17px;
+      font-weight:900;
+      color:var(--ink);
+      line-height:1.4;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .section-note{
+      font-size:12px;
+      color:#7D8BAE;
+      font-weight:800;
+      background:rgba(125,139,174,.08);
+      padding:5px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    .hero-card{
+      background:
+        radial-gradient(circle at 10% 18%, rgba(255,255,255,.15) 0%, transparent 32%),
+        radial-gradient(circle at 100% 82%, rgba(123,170,146,.20) 0%, transparent 42%),
+        linear-gradient(165deg, #1F2639 0%, #2A3048 50%, #1F2A3B 100%);
+      color:#fff;
+      border-radius:30px;
+      padding:24px 22px;
+      box-shadow:
+        inset 0 1px 2px rgba(255,255,255,.22),
+        inset 0 -2px 4px rgba(0,0,0,.16),
+        0 22px 42px rgba(0,0,0,.16);
+      position:relative;
+      overflow:hidden;
+      margin-bottom:18px;
+    }
+
+    .hero-card::before{
+      content:'';
+      position:absolute;
+      top:-50%;
+      left:-50%;
+      width:200%;
+      height:200%;
+      background:linear-gradient(
+        45deg,
+        transparent 40%,
+        rgba(255,255,255,.06) 45%,
+        rgba(255,255,255,.16) 50%,
+        rgba(255,255,255,.06) 55%,
+        transparent 60%
+      );
+      transform:rotate(30deg) translateX(-100%);
+      animation:sheen 8s ease-in-out infinite;
+      pointer-events:none;
+      opacity:.60;
+    }
+
+    @keyframes sheen{
+      0%,100%{transform:rotate(30deg) translateX(-100%)}
+      50%{transform:rotate(30deg) translateX(100%)}
+    }
+
+    .hero-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:32px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.10);
+      color:rgba(255,255,255,.88);
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:14px;
+      position:relative;
+      z-index:1;
+    }
+
+    .hero-title{
+      font-size:27px;
+      font-weight:900;
+      line-height:1.35;
+      margin-bottom:8px;
+      position:relative;
+      z-index:1;
+    }
+
+    .hero-text{
+      font-size:14px;
+      line-height:1.9;
+      color:rgba(255,255,255,.82);
+      position:relative;
+      z-index:1;
+    }
+
+    .today-card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      padding:22px;
+      box-shadow:var(--shadow-md);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .today-glow{
       position:absolute;
       top:0;
       left:0;
       right:0;
       height:3px;
       background:linear-gradient(90deg, var(--primary), var(--primary-2));
-      box-shadow:0 0 25px rgba(123,170,146,.3);
+      box-shadow:0 0 24px rgba(123,170,146,.26);
     }
-    .live-head{
+
+    .today-head{
       display:flex;
       justify-content:space-between;
       align-items:flex-start;
-      gap:14px;
+      gap:12px;
       margin-bottom:18px;
     }
-    .live-title{
+
+    .today-title{
       font-size:18px;
       font-weight:900;
-      margin-bottom:4px;
       color:var(--ink);
+      margin-bottom:4px;
     }
-    .live-sub{
+
+    .today-sub{
       font-size:13px;
       color:var(--ink-2);
+      line-height:1.7;
     }
+
     .status-badge{
-      padding:8px 14px;
+      min-height:34px;
+      padding:0 14px;
       border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
       font-size:12px;
       font-weight:900;
-      background:rgba(123,170,146,.14);
-      color:var(--primary);
-      border:1px solid rgba(123,170,146,.24);
       white-space:nowrap;
+      border:1px solid transparent;
     }
 
     .reading-box{
       text-align:center;
       padding:20px;
-      border-radius:var(--radius-lg);
-      background:linear-gradient(145deg, rgba(123,170,146,.12), rgba(123,170,146,.02));
+      border-radius:22px;
+      background:linear-gradient(145deg, rgba(123,170,146,.10), rgba(123,170,146,.02));
       border:1px solid rgba(123,170,146,.14);
-      margin-bottom:18px;
+      margin-bottom:16px;
     }
+
     .reading-value{
       font-size:58px;
       font-weight:900;
       line-height:1;
       color:var(--ink);
       margin-bottom:8px;
+      letter-spacing:-1px;
     }
+
     .reading-unit{
       font-size:14px;
       color:var(--ink-2);
       font-weight:700;
-      margin-bottom:10px;
+      margin-bottom:12px;
     }
+
     .reading-meta{
       display:flex;
       align-items:center;
@@ -285,361 +486,483 @@
       gap:8px;
       flex-wrap:wrap;
     }
+
     .chip{
-      padding:7px 12px;
+      min-height:32px;
+      padding:0 12px;
       border-radius:999px;
       background:var(--surface-2);
       border:1px solid var(--line);
       font-size:12px;
       font-weight:800;
       color:var(--ink-2);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
 
-    .mini-grid{
+    .today-grid{
       display:grid;
       grid-template-columns:repeat(2,1fr);
       gap:12px;
     }
-    .mini-card{
+
+    .today-mini{
       background:var(--surface-2);
       border:1px solid var(--line);
       border-radius:18px;
-      padding:18px;
+      padding:16px;
       text-align:center;
     }
-    .mini-icon{
-      font-size:24px;
+
+    .today-mini-icon{
+      font-size:22px;
       margin-bottom:8px;
     }
-    .mini-value{
+
+    .today-mini-value{
       font-size:24px;
       font-weight:900;
       color:var(--ink);
       line-height:1.2;
     }
-    .mini-label{
-      font-size:11px;
+
+    .today-mini-label{
+      font-size:12px;
       color:var(--ink-2);
       margin-top:6px;
-      line-height:1.6;
+      line-height:1.7;
     }
 
-    .section{
+    .mind-box{
+      background:linear-gradient(145deg, rgba(125,139,174,.08), rgba(255,255,255,.02));
+      border:1px solid rgba(125,139,174,.18);
+      border-radius:22px;
+      padding:18px;
+    }
+
+    .mind-title{
+      font-size:15px;
+      font-weight:900;
+      color:var(--hero-2);
+      margin-bottom:10px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .mind-text{
+      font-size:14px;
+      color:var(--ink-2);
+      line-height:1.95;
+      white-space:pre-line;
+    }
+
+    .activity-shell{
       background:var(--surface);
       border:1px solid var(--line);
       border-radius:var(--radius-xl);
       padding:22px;
-      margin-bottom:22px;
       box-shadow:var(--shadow-md);
     }
-    .section-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
+
+    .bars-wrap{
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      gap:10px;
+      align-items:end;
+      height:160px;
       margin-bottom:16px;
-    }
-    .section-title{
-      font-size:17px;
-      font-weight:900;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      color:var(--ink);
-    }
-    .section-note{
-      font-size:12px;
-      color:var(--ink-3);
-      font-weight:700;
+      padding-top:10px;
     }
 
-    /* الرسم البياني */
-    .chart-container{
+    .bar-col{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-end;
+      gap:8px;
+      min-width:0;
+    }
+
+    .bar-track{
+      width:100%;
+      max-width:34px;
+      height:120px;
+      border-radius:999px;
       background:var(--surface-2);
       border:1px solid var(--line);
-      border-radius:var(--radius-lg);
-      padding:16px;
-      margin-bottom:20px;
-      height:180px;
+      display:flex;
+      align-items:flex-end;
+      overflow:hidden;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.4);
     }
 
-    /* البطاقة الجديدة */
-    .achievement-card{
-      background:linear-gradient(145deg, var(--hero), #252B3F);
-      border:1px solid rgba(255,255,255,0.2);
-      border-radius:var(--radius-xl);
-      padding:22px;
-      margin-bottom:22px;
-      box-shadow:var(--shadow-lg);
-      position:relative;
-      overflow:hidden;
-      color:#fff;
-    }
-    .achievement-header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:16px;
-    }
-    .achievement-logo{
-      font-size:24px;
-      font-weight:900;
-      background:rgba(255,255,255,0.1);
-      padding:8px 14px;
+    .bar-fill{
+      width:100%;
       border-radius:999px;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
+      background:linear-gradient(180deg, var(--primary-2), var(--primary));
+      box-shadow:0 10px 16px rgba(123,170,146,.20);
+      min-height:8px;
+      transition:height .35s var(--ease);
     }
-    .achievement-date{
-      font-size:12px;
-      color:rgba(255,255,255,0.6);
+
+    .bar-label{
+      font-size:11px;
+      color:var(--ink-3);
+      font-weight:800;
+      line-height:1;
+      white-space:nowrap;
     }
-    .achievement-name{
-      font-size:28px;
-      font-weight:900;
-      margin-bottom:12px;
-    }
-    .achievement-reading{
-      display:flex;
-      align-items:baseline;
-      gap:8px;
-      margin-bottom:16px;
-    }
-    .achievement-reading-value{
-      font-size:52px;
+
+    .bar-value{
+      font-size:11px;
+      color:var(--ink-2);
       font-weight:900;
       line-height:1;
     }
-    .achievement-reading-unit{
-      font-size:18px;
-      color:rgba(255,255,255,0.7);
-    }
-    .achievement-reading-state{
-      display:inline-block;
-      padding:6px 14px;
-      border-radius:999px;
-      font-size:14px;
-      font-weight:900;
-      margin-bottom:16px;
-    }
-    .achievement-details{
+
+    .activity-summary{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:repeat(3,1fr);
       gap:12px;
-      margin-bottom:16px;
+      margin-top:4px;
     }
-    .achievement-detail-item{
-      background:rgba(255,255,255,0.08);
+
+    .activity-mini{
+      background:var(--surface-2);
+      border:1px solid var(--line);
       border-radius:18px;
       padding:14px;
       text-align:center;
     }
-    .achievement-detail-label{
-      font-size:11px;
-      color:rgba(255,255,255,0.6);
-      margin-bottom:4px;
-    }
-    .achievement-detail-value{
+
+    .activity-mini strong{
+      display:block;
       font-size:22px;
       font-weight:900;
-    }
-    .achievement-quote{
-      font-size:14px;
-      color:rgba(255,255,255,0.9);
-      background:rgba(255,255,255,0.05);
-      border-radius:999px;
-      padding:12px 18px;
-      margin-bottom:16px;
-      text-align:center;
-      border:1px solid rgba(255,255,255,0.1);
-    }
-    .achievement-qr{
-      display:flex;
-      justify-content:center;
-      margin-bottom:16px;
-    }
-    .qr-box{
-      width:80px;
-      height:80px;
-      background:#fff;
-      border-radius:18px;
-      padding:6px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .qr-box div{width:68px; height:68px;}
-    .achievement-share{
-      width:100%;
-      padding:16px;
-      border-radius:999px;
-      background:linear-gradient(135deg, var(--primary), #6E9A81);
-      color:#fff;
-      font-size:18px;
-      font-weight:900;
-      border:none;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      transition:transform 0.2s var(--ease);
-    }
-    .achievement-share:hover{
-      transform:translateY(-2px);
+      color:var(--ink);
+      line-height:1.2;
+      margin-bottom:4px;
     }
 
-    /* الخطوات */
+    .activity-mini span{
+      display:block;
+      font-size:12px;
+      color:var(--ink-2);
+      line-height:1.7;
+    }
+
+    .care-box{
+      background:
+        radial-gradient(circle at 100% 0%, rgba(123,170,146,.12), transparent 38%),
+        linear-gradient(145deg, var(--surface), var(--surface-2));
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      padding:22px;
+      box-shadow:var(--shadow-md);
+    }
+
+    .care-level{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(123,170,146,.10);
+      color:var(--primary);
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:12px;
+      border:1px solid rgba(123,170,146,.18);
+    }
+
+    .care-title{
+      font-size:21px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:8px;
+      line-height:1.45;
+    }
+
+    .care-text{
+      font-size:14px;
+      color:var(--ink-2);
+      line-height:1.95;
+      margin-bottom:16px;
+    }
+
+    .care-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+
+    .care-mini{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      text-align:center;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .care-mini strong{
+      display:block;
+      font-size:20px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:4px;
+      line-height:1.2;
+    }
+
+    .care-mini span{
+      display:block;
+      font-size:11px;
+      color:var(--ink-2);
+      line-height:1.7;
+    }
+
     .steps-grid{
       display:grid;
       gap:12px;
-      margin-bottom:20px;
     }
+
     .step-item{
       display:flex;
       align-items:flex-start;
       gap:14px;
       padding:16px;
-      border-radius:var(--radius-lg);
+      border-radius:20px;
       background:var(--surface-2);
       border:1px solid var(--line);
-      transition:transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+      transition:transform .2s var(--ease), box-shadow .2s var(--ease);
     }
+
     .step-item:hover{
       transform:translateY(-2px);
       box-shadow:var(--shadow-hover);
     }
+
     .step-icon{
       width:44px;
       height:44px;
       border-radius:16px;
-      background:linear-gradient(135deg, rgba(123,170,146,.2), rgba(123,170,146,.1));
+      background:linear-gradient(135deg, rgba(123,170,146,.20), rgba(123,170,146,.08));
       display:flex;
       align-items:center;
       justify-content:center;
       font-size:22px;
-      font-weight:900;
       color:var(--primary);
       flex-shrink:0;
     }
+
     .step-content h4{
       font-size:15px;
       font-weight:900;
-      margin-bottom:6px;
       color:var(--ink);
+      margin-bottom:6px;
+      line-height:1.5;
     }
+
     .step-content p{
       font-size:13px;
       color:var(--ink-2);
-      line-height:1.7;
+      line-height:1.8;
     }
 
-    /* زر AI */
-    .ai-button{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-      width:100%;
-      padding:18px;
-      border-radius:var(--radius-lg);
-      background:linear-gradient(135deg, var(--hero-2), var(--hero-3));
+    .ai-card{
+      background:
+        radial-gradient(circle at 0% 20%, rgba(255,255,255,.12), transparent 36%),
+        radial-gradient(circle at 100% 80%, rgba(123,170,146,.18), transparent 40%),
+        linear-gradient(160deg, #232A3D 0%, #323856 54%, #20283B 100%);
+      border-radius:28px;
+      padding:22px;
+      box-shadow:0 24px 42px rgba(36,42,61,.18);
       color:#fff;
-      font-size:18px;
-      font-weight:900;
-      border:none;
-      cursor:pointer;
-      transition:transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
-      box-shadow:0 16px 30px rgba(69,73,106,.18);
-      margin-bottom:12px;
-    }
-    .ai-button:hover{
-      transform:translateY(-3px);
-      box-shadow:0 20px 35px rgba(69,73,106,.25);
-    }
-    .ai-button span:first-child{font-size:24px;}
-
-    .health-permission{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:14px;
-      border-radius:var(--radius-md);
-      background:var(--surface-2);
-      border:1px solid var(--line);
-      margin-bottom:20px;
-    }
-    .health-text{
-      font-size:12px;
-      color:var(--ink-2);
-      line-height:1.7;
-    }
-    .health-btn{
-      padding:10px 16px;
-      border-radius:999px;
-      background:var(--primary);
-      color:#fff;
-      font-size:12px;
-      font-weight:900;
-      border:none;
-      cursor:pointer;
-      white-space:nowrap;
+      position:relative;
+      overflow:hidden;
     }
 
-    .footer-actions{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-      margin-top:8px;
-    }
-    .btn{
-      padding:16px;
-      border-radius:var(--radius-md);
-      border:none;
-      font-size:14px;
-      font-weight:900;
-      cursor:pointer;
-      display:flex;
+    .ai-badge{
+      display:inline-flex;
       align-items:center;
-      justify-content:center;
       gap:8px;
-      transition:all 0.2s var(--ease);
+      min-height:32px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      color:rgba(255,255,255,.86);
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:14px;
     }
-    .btn:hover{transform:translateY(-2px);}
-    .btn-primary{
+
+    .ai-title{
+      font-size:24px;
+      font-weight:900;
+      line-height:1.45;
+      margin-bottom:8px;
+    }
+
+    .ai-text{
+      font-size:14px;
+      color:rgba(255,255,255,.80);
+      line-height:1.9;
+      margin-bottom:16px;
+    }
+
+    .ai-points{
+      display:grid;
+      gap:10px;
+      margin-bottom:18px;
+    }
+
+    .ai-point{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:13px;
+      color:rgba(255,255,255,.88);
+      line-height:1.8;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      padding:12px 14px;
+    }
+
+    .ai-cta{
+      width:100%;
+      min-height:58px;
+      border-radius:20px;
       background:linear-gradient(135deg, var(--primary), #6E9A81);
       color:#fff;
-      box-shadow:0 12px 24px rgba(123,170,146,.2);
+      box-shadow:0 16px 28px rgba(123,170,146,.22);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      font-size:17px;
+      font-weight:900;
+      transition:transform .22s var(--ease), box-shadow .22s var(--ease);
     }
-    .btn-secondary{
-      background:var(--surface-2);
-      color:var(--ink);
-      border:1px solid var(--line);
+
+    .ai-cta:hover{
+      transform:translateY(-2px);
+      box-shadow:0 20px 32px rgba(123,170,146,.28);
     }
 
     .toast{
       position:fixed;
-      right:50%; bottom:calc(100px + var(--safe-bottom)); z-index:60;
+      right:50%;
+      bottom:calc(110px + var(--safe-bottom));
+      z-index:60;
       transform:translateX(50%) translateY(18px);
-      min-width:200px; max-width:calc(100vw - 32px);
-      padding:12px 14px; border-radius:14px;
-      border:1px solid var(--line); background:rgba(255,255,255,.96);
-      box-shadow:var(--shadow-md); color:var(--ink); text-align:center; font-size:12px; font-weight:900;
-      opacity:0; visibility:hidden; transition:all .22s ease;
+      min-width:210px;
+      max-width:calc(100vw - 32px);
+      padding:13px 16px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.97);
+      box-shadow:var(--shadow-md);
+      color:var(--ink);
+      text-align:center;
+      font-size:12px;
+      font-weight:900;
+      opacity:0;
+      visibility:hidden;
+      transition:all .22s ease;
+      backdrop-filter:blur(10px);
     }
-    .toast.show{opacity:1; visibility:visible; transform:translateX(50%) translateY(0)}
+
+    .toast.show{
+      opacity:1;
+      visibility:visible;
+      transform:translateX(50%) translateY(0);
+    }
+
+    .bottom-nav-wrap{
+      position:fixed;
+      right:0;
+      left:0;
+      bottom:0;
+      z-index:30;
+      pointer-events:none;
+      padding:0 18px calc(14px + var(--safe-bottom));
+    }
+
+    .bottom-nav{
+      max-width:var(--max-width);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      padding:10px;
+      border-radius:28px;
+      background:rgba(255,255,255,.95);
+      border:1px solid var(--line);
+      backdrop-filter:blur(20px);
+      box-shadow:0 12px 40px rgba(24,30,45,.12);
+      pointer-events:auto;
+    }
+
+    .nav-item{
+      min-height:60px;
+      border-radius:18px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      font-size:11px;
+      font-weight:900;
+      color:var(--ink-3);
+      transition:all .2s var(--ease);
+      position:relative;
+    }
+
+    .nav-item span:first-child{
+      font-size:20px;
+      line-height:1;
+      transition:transform .2s ease;
+    }
+
+    .nav-item.active{
+      background:linear-gradient(135deg, rgba(125,139,174,.15), rgba(123,170,146,.12));
+      color:var(--primary);
+      transform:translateY(-4px);
+    }
+
+    .nav-item.active span:first-child{
+      font-size:24px;
+      transform:scale(1.15);
+      filter:drop-shadow(0 4px 8px rgba(123,170,146,.3));
+    }
+
+    .nav-item.active::after{
+      content:'';
+      position:absolute;
+      bottom:6px;
+      width:4px;
+      height:4px;
+      background:var(--primary);
+      border-radius:50%;
+    }
 
     @media (max-width:430px){
-      .reading-value{font-size:48px;}
-      .mini-grid,
-      .footer-actions{grid-template-columns:1fr;}
-      .live-head{flex-direction:column; align-items:flex-start;}
-      .achievement-details{grid-template-columns:1fr;}
+      .reading-value{font-size:48px}
+      .today-grid,
+      .activity-summary,
+      .care-grid{
+        grid-template-columns:1fr;
+      }
+      .hero-title{font-size:24px}
+      .ai-title{font-size:22px}
+      .today-head{flex-direction:column;align-items:flex-start}
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <div class="bg-noise"></div>
@@ -652,7 +975,7 @@
         </svg>
       </div>
       <div class="splash-title">SugarMind</div>
-      <div class="splash-sub">الدليل اليومي</div>
+      <div class="splash-sub">لوحة يومك</div>
       <div class="splash-bar"><span></span></div>
     </div>
   </div>
@@ -667,353 +990,586 @@
         </div>
         <div>
           <div class="brand-name">SugarMind</div>
-          <div class="brand-sub">الدليل اليومي</div>
+          <div class="brand-sub">اليوم</div>
         </div>
       </div>
 
-      <div class="top-actions">
-        <a href="index.html" class="icon-btn" aria-label="الرئيسية">🏠</a>
-        <button class="icon-btn" id="refreshBtn" type="button" aria-label="تحديث">↻</button>
-      </div>
+      <a href="index.html" class="top-action" aria-label="العودة للرئيسية">🏠</a>
     </header>
 
     <section class="greeting">
       <div class="time-chip" id="timeChip">🌤️ <span id="timeText">بداية يوم هادئ</span></div>
       <h1 class="greeting-title" id="greetingTitle">دليلك اليومي</h1>
-      <p class="greeting-sub" id="greetingSub">ملخص ذكي يختصر لك وضع اليوم: القراءة، المعامل، والخطوة التالية.</p>
+      <p class="greeting-sub" id="greetingSub">صفحة واحدة تلخّص لك أين أنت الآن، وماذا نفهم من يومك، وما الخطوة التالية.</p>
     </section>
 
-    <div class="hero">
-      <div class="hero-badge">📋 لوحة اليوم الذكية</div>
-      <div class="hero-title">خلّ يومك أوضح…<br>بدل ما يكون متعب ومشتت</div>
-      <div class="hero-text">
-        هذا الدليل يجمع لك أهم ما يهمك الآن في مكان واحد، حتى تعرف بسرعة: أين أنت اليوم، وما الذي يحتاج انتباهك، وما الخطوة التالية.
-      </div>
-    </div>
+    <section class="hero-card">
+      <div class="hero-chip">📋 لوحة اليوم الذكية</div>
+      <div class="hero-title">خلّ يومك أوضح… بدل ما يكون مشتت ومتعب</div>
+      <div class="hero-text">هنا نختصر لك أهم ما يهمك الآن: القراءة الحالية، معنى يومك إلى الآن، وحضورك داخل التطبيق، ثم نوصلك للخطوة الأهم بشكل واضح.</div>
+    </section>
 
-    <div class="live-card">
-      <div class="live-glow"></div>
+    <section class="section">
+      <div class="today-card">
+        <div class="today-glow"></div>
 
-      <div class="live-head">
-        <div>
-          <div class="live-title">حالة اليوم الآن</div>
-          <div class="live-sub" id="liveSubtitle">آخر تحديث قبل لحظات</div>
+        <div class="today-head">
+          <div>
+            <div class="today-title">وضعك الآن</div>
+            <div class="today-sub" id="liveSubtitle">آخر تحديث قبل لحظات</div>
+          </div>
+          <div class="status-badge" id="statusBadge">مستقر</div>
         </div>
-        <div class="status-badge" id="statusBadge">مستقر</div>
-      </div>
 
-      <div class="reading-box" id="readingBox">
-        <div class="reading-value" id="readingValue">128</div>
-        <div class="reading-unit">mg/dL</div>
-        <div class="reading-meta">
-          <div class="chip" id="readingTime">٩:٣٠ ص</div>
-          <div class="chip" id="readingStateChip">في النطاق</div>
+        <div class="reading-box" id="readingBox">
+          <div class="reading-value" id="readingValue">--</div>
+          <div class="reading-unit">mg/dL</div>
+          <div class="reading-meta">
+            <div class="chip" id="readingTime">الآن</div>
+            <div class="chip" id="readingStateChip">بانتظار القراءة</div>
+          </div>
         </div>
-      </div>
 
-      <div class="mini-grid">
-        <div class="mini-card">
-          <div class="mini-icon">🧠</div>
-          <div class="mini-value" id="icrValue">1:11</div>
-          <div class="mini-label">معامل الكارب الحالي</div>
-        </div>
-        <div class="mini-card">
-          <div class="mini-icon">📊</div>
-          <div class="mini-value" id="confidenceValue">جيدة</div>
-          <div class="mini-label">مستوى الثقة</div>
-        </div>
-      </div>
-    </div>
+        <div class="today-grid">
+          <div class="today-mini">
+            <div class="today-mini-icon">🧠</div>
+            <div class="today-mini-value" id="icrValue">1:--</div>
+            <div class="today-mini-label">معامل الكارب الحالي</div>
+          </div>
 
-    <!-- الرسم البياني لآخر 7 قراءات -->
-    <div class="section">
-      <div class="section-head">
-        <div class="section-title">📈 آخر 7 قراءات</div>
-        <div class="section-note">اتجاهات يومك</div>
-      </div>
-      <div class="chart-container">
-        <canvas id="readingsChart"></canvas>
-      </div>
-    </div>
-
-    <!-- بطاقة الإنجاز الجديدة -->
-    <div class="achievement-card" id="achievementCard">
-      <div class="achievement-header">
-        <span class="achievement-logo">🏷️ SugarMind</span>
-        <span class="achievement-date" id="achievementDate"></span>
-      </div>
-      <div class="achievement-name" id="achievementName">ضيفنا الجديد</div>
-      <div class="achievement-reading">
-        <span class="achievement-reading-value" id="achievementReading">--</span>
-        <span class="achievement-reading-unit">mg/dL</span>
-      </div>
-      <div class="achievement-reading-state" id="achievementReadingState">في النطاق</div>
-      <div class="achievement-details">
-        <div class="achievement-detail-item">
-          <div class="achievement-detail-label">معامل الكارب</div>
-          <div class="achievement-detail-value" id="achievementIcr">1:--</div>
-        </div>
-        <div class="achievement-detail-item">
-          <div class="achievement-detail-label">الثقة</div>
-          <div class="achievement-detail-value" id="achievementConfidence">--</div>
+          <div class="today-mini">
+            <div class="today-mini-icon">📊</div>
+            <div class="today-mini-value" id="confidenceValue">أولية</div>
+            <div class="today-mini-label">مستوى الثقة</div>
+          </div>
         </div>
       </div>
-      <div class="achievement-quote" id="achievementQuote">✨ أنت مسيطر اليوم ✨</div>
-      <div class="achievement-qr">
-        <div class="qr-box" id="qrCodeAchievement"></div>
-      </div>
-      <button class="achievement-share" id="shareAchievementBtn">
-        <span>📤</span> شارك إنجازك
-      </button>
-    </div>
+    </section>
 
-    <div class="section">
-      <div class="section-head">
-        <div class="section-title">✨ قراءة SugarMind</div>
-        <div class="section-note">ملخص ذكي</div>
-      </div>
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="section-title">🪄 نفهم يومك الآن</div>
+          <div class="section-note">قراءة أوضح</div>
+        </div>
 
-      <div class="mind-box">
-        <div class="mind-title">🪄 ماذا نفهم من يومك إلى الآن؟</div>
-        <div class="mind-text" id="mindText">
-          يومك يبدو متزنًا إلى الآن. آخر قراءة ضمن نطاق جيد، ومعامل الكارب الحالي مناسب كبداية متابعة. إذا كانت آخر وجبة مشابهة لوجباتك المعتادة، فأنت قريب من نمط واضح يمكن البناء عليه.
+        <div class="mind-box">
+          <div class="mind-title">ماذا نفهم من يومك إلى الآن؟</div>
+          <div class="mind-text" id="mindText">
+            ننتظر قراءة أوضح وبعض الاستخدامات داخل التطبيق حتى نعطيك فهمًا أدق ليومك.
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="section">
-      <div class="section-head">
-        <div class="section-title">📌 خطواتك التالية</div>
-        <div class="section-note">مصممة خصيصاً لك</div>
-      </div>
-
-      <div class="steps-grid" id="stepsGrid">
-        <!-- سيتم ملؤها بالجافاسكريبت -->
-      </div>
-
-      <!-- زر الصلاحية للصحة -->
-      <div class="health-permission" id="healthPermission">
-        <div class="health-text">
-          <strong>🔗 تواصل مع تطبيق الصحة</strong><br>
-          اسمح لـ SugarMind بقراءة بيانات النشاط والنوم من تطبيق الصحة لتحليلات أذكى.
+    <section class="section">
+      <div class="activity-shell">
+        <div class="section-head">
+          <div class="section-title">📈 حضورك هذا الأسبوع</div>
+          <div class="section-note">نشاطك معنا</div>
         </div>
-        <button class="health-btn" id="requestHealthKit">السماح</button>
-      </div>
 
-      <!-- زر التحليلات بالذكاء الاصطناعي -->
-      <button class="ai-button" id="aiInsightsBtn">
-        <span>🤖</span>
-        <span>تحليلاتك بالذكاء الاصطناعي AI</span>
-        <span>✨</span>
-      </button>
+        <div class="bars-wrap" id="barsWrap"></div>
 
-      <div class="footer-actions">
-        <button class="btn btn-primary" id="refreshGuideBtn">
-          <span>↻</span>
-          <span>تحديث الدليل</span>
-        </button>
-        <button class="btn btn-secondary" id="goToCalculatorBtn">
-          <span>🧮</span>
-          <span>عدّل معاملك</span>
-        </button>
+        <div class="activity-summary">
+          <div class="activity-mini">
+            <strong id="activeDaysValue">0</strong>
+            <span>أيام حضرت فيها</span>
+          </div>
+          <div class="activity-mini">
+            <strong id="mealsSavedValue">0</strong>
+            <span>وجبات محفوظة</span>
+          </div>
+          <div class="activity-mini">
+            <strong id="shareCountValue">0</strong>
+            <span>مشاركات منك</span>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section class="section">
+      <div class="care-box">
+        <div class="care-level" id="careLevel">🌱 حضورك معنا: بداية طيبة</div>
+        <div class="care-title" id="careTitle">أنت مو داخل تطبيق جامد… إحنا نشوف حضورك</div>
+        <div class="care-text" id="careText">كل مرة تسجل قراءة، تحفظ وجبة، أو ترجع للتطبيق، أنت تبني صورة أوضح ليومك. وهذا بالضبط اللي يخلي SugarMind أقرب لك مع الوقت.</div>
+
+        <div class="care-grid">
+          <div class="care-mini">
+            <strong id="touchesValue">0</strong>
+            <span>لمسات داخل التطبيق</span>
+          </div>
+          <div class="care-mini">
+            <strong id="currentStreakValue">0</strong>
+            <span>أيام متتالية</span>
+          </div>
+          <div class="care-mini">
+            <strong id="userRankValue">قريب</strong>
+            <span>مستوى حضورك</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="section-title">📌 خطوتك الآن</div>
+          <div class="section-note">واضحة ومباشرة</div>
+        </div>
+
+        <div class="steps-grid" id="stepsGrid"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="ai-card">
+        <div class="ai-badge">🤖 تحليلات أعمق</div>
+        <div class="ai-title">افتح تحليلاتك بالذكاء الاصطناعي</div>
+        <div class="ai-text">إذا تبي قراءة أعمق لحالتك، وربطًا أذكى بين يومك ومعاملك والوجبات والاتجاهات المحتملة، فهذا هو المسار المخصص لك.</div>
+
+        <div class="ai-points">
+          <div class="ai-point">✨ قراءة أشمل من الملخص اليومي المعتاد</div>
+          <div class="ai-point">🧠 فهم أهدأ للمعامل، الوجبات، والاتجاهات</div>
+          <div class="ai-point">📍 مدخل واضح للطبقة المدفوعة من المنتج</div>
+        </div>
+
+        <a href="ai-insights.html" class="ai-cta" id="aiInsightsBtn">
+          <span>افتح التحليلات الآن</span>
+          <span>↗</span>
+        </a>
+      </div>
+    </section>
   </main>
+
+  <div class="bottom-nav-wrap">
+    <nav class="bottom-nav" aria-label="التنقل السفلي">
+      <a class="nav-item" href="index.html"><span>🏠</span><span>الرئيسية</span></a>
+      <a class="nav-item" href="meal-analyzer.html"><span>🍽️</span><span>الوجبات</span></a>
+      <a class="nav-item" href="carb-calculator.html"><span>🧮</span><span>الحساب</span></a>
+      <a class="nav-item active" href="daily-guide.html"><span>📋</span><span>اليوم</span></a>
+    </nav>
+  </div>
 
   <div class="toast" id="toast"></div>
 
   <script>
-    (function() {
-      // ========================
-      // STORAGE KEYS
-      // ========================
-      const HOME_KEY = 'sugarmind_home_v1';
-      const ICR_KEY = 'sugarmind_icr_result_v2';
-      const PROFILE_KEY = 'sugarmind_profile_v1';
-      const READINGS_KEY = 'sugarmind_readings';
+    (function(){
+      const KEYS = {
+        HOME_V2: 'sugarmind_home_v2',
+        HOME_V1: 'sugarmind_home_v1',
+        PROFILE_V2: 'sugarmind_profile_v2',
+        PROFILE_V1: 'sugarmind_profile_v1',
+        ICR: 'sugarmind_icr_result_v2',
+        MEAL: 'sugarmind_meal_result_v1',
+        MEALS_LIST: 'sugarmind_meals',
+        SHARE_COUNT: 'sugarmind_share_count_v1',
+        ACTIVITY_LOG: 'sugarmind_activity_log_v1'
+      };
 
-      // ========================
-      // HELPERS
-      // ========================
-      function showToast(msg){
-        const toast = document.getElementById('toast');
-        toast.textContent = msg;
-        toast.classList.add('show');
-        clearTimeout(window.toastTimer);
-        window.toastTimer = setTimeout(() => {
-          toast.classList.remove('show');
-        }, 2400);
-      }
+      const els = {
+        splash: document.getElementById('splashScreen'),
+        timeChip: document.getElementById('timeChip'),
+        timeText: document.getElementById('timeText'),
+        greetingTitle: document.getElementById('greetingTitle'),
+        greetingSub: document.getElementById('greetingSub'),
+        liveSubtitle: document.getElementById('liveSubtitle'),
+        statusBadge: document.getElementById('statusBadge'),
+        readingBox: document.getElementById('readingBox'),
+        readingValue: document.getElementById('readingValue'),
+        readingTime: document.getElementById('readingTime'),
+        readingStateChip: document.getElementById('readingStateChip'),
+        icrValue: document.getElementById('icrValue'),
+        confidenceValue: document.getElementById('confidenceValue'),
+        mindText: document.getElementById('mindText'),
+        barsWrap: document.getElementById('barsWrap'),
+        activeDaysValue: document.getElementById('activeDaysValue'),
+        mealsSavedValue: document.getElementById('mealsSavedValue'),
+        shareCountValue: document.getElementById('shareCountValue'),
+        careLevel: document.getElementById('careLevel'),
+        careTitle: document.getElementById('careTitle'),
+        careText: document.getElementById('careText'),
+        touchesValue: document.getElementById('touchesValue'),
+        currentStreakValue: document.getElementById('currentStreakValue'),
+        userRankValue: document.getElementById('userRankValue'),
+        stepsGrid: document.getElementById('stepsGrid'),
+        aiInsightsBtn: document.getElementById('aiInsightsBtn'),
+        toast: document.getElementById('toast')
+      };
 
       function readJSON(key){
         try{
           const raw = localStorage.getItem(key);
           return raw ? JSON.parse(raw) : null;
-        }catch(e){
+        }catch(_){
           return null;
         }
       }
 
-      function formatTime(iso){
-        try{
-          if(!iso) return 'الآن';
-          const d = new Date(iso);
-          if(isNaN(d.getTime())) return 'الآن';
-          return d.toLocaleTimeString('ar-SA', { hour:'2-digit', minute:'2-digit' });
-        }catch(e){
-          return 'الآن';
-        }
+      function writeJSON(key, value){
+        localStorage.setItem(key, JSON.stringify(value));
       }
 
-      function formatDate(){
-        const d = new Date();
-        return d.toLocaleDateString('ar-SA', { day:'numeric', month:'long' });
+      function showToast(message){
+        els.toast.textContent = message;
+        els.toast.classList.add('show');
+        clearTimeout(showToast.timer);
+        showToast.timer = setTimeout(() => {
+          els.toast.classList.remove('show');
+        }, 2400);
+      }
+
+      function getHomeData(){
+        return readJSON(KEYS.HOME_V2) || readJSON(KEYS.HOME_V1) || {};
+      }
+
+      function getProfileData(){
+        return readJSON(KEYS.PROFILE_V2) || readJSON(KEYS.PROFILE_V1) || {};
       }
 
       function getPeriod(){
         const hour = new Date().getHours();
-        if(hour < 12) return {label:'صباح الخير', hint:'بداية يوم هادئ', icon:'🌤️'};
-        if(hour < 18) return {label:'مساء الخير', hint:'نكمل يومك بهدوء', icon:'☀️'};
-        return {label:'مساء الخير', hint:'خلنا نختم يومك بوضوح', icon:'🌙'};
+        if(hour < 12){
+          return {
+            icon:'☀️',
+            hint:'بداية يوم هادئ',
+            title:'دليلك اليومي',
+            sub:'نعطيك الآن أوضح صورة سريعة عن وضعك، ثم نوصلك للخطوة التالية بدون تشتيت.'
+          };
+        }
+        if(hour < 18){
+          return {
+            icon:'🌤️',
+            hint:'منتصف يوم مرتب',
+            title:'دليلك اليومي',
+            sub:'نرتب لك ما حدث إلى الآن، ونطلع لك معنى يومك بشكل أوضح وأهدأ.'
+          };
+        }
+        return {
+          icon:'🌙',
+          hint:'ختام يوم أوضح',
+          title:'دليلك اليومي',
+          sub:'قبل ما ينتهي يومك، هذه خلاصة مختصرة تساعدك تفهم أين أنت الآن.'
+        };
+      }
+
+      function formatTimeFromValue(value){
+        if(!value) return 'الآن';
+        if(/^\d{1,2}:\d{2}$/.test(String(value))) return value;
+        try{
+          const d = new Date(value);
+          if(isNaN(d.getTime())) return 'الآن';
+          return d.toLocaleTimeString('ar-SA', { hour:'2-digit', minute:'2-digit' });
+        }catch(_){
+          return 'الآن';
+        }
       }
 
       function getReadingState(reading){
-        const value = parseFloat(reading);
-        if(!Number.isFinite(value)) return {
-          label:'غير واضح',
-          short:'بانتظار قراءة',
-          badgeBg:'rgba(230,184,92,0.14)',
-          badgeColor:'#E6B85C',
-          boxBorder:'rgba(230,184,92,0.18)',
-          chipText: 'غير واضح',
-          quote: '✨ سجل قراءتك اليوم ✨',
-          icon: '❓'
-        };
-        if(value < 70) return {
-          label:'منخفض',
-          short:'يحتاج انتباه',
-          badgeBg:'rgba(218,114,109,0.14)',
-          badgeColor:'#DA726D',
-          boxBorder:'rgba(218,114,109,0.18)',
-          chipText: 'منخفض',
-          quote: '⚠️ انتبه لنفسك',
-          icon: '⚠️'
-        };
-        if(value <= 140) return {
-          label:'في النطاق',
-          short:'مستقر',
-          badgeBg:'rgba(123,170,146,0.14)',
-          badgeColor:'#7BAA92',
-          boxBorder:'rgba(123,170,146,0.18)',
-          chipText: 'في النطاق',
-          quote: '😊 أنت مسيطر اليوم',
-          icon: '😊'
-        };
-        if(value <= 180) return {
-          label:'مرتفع قليلًا',
-          short:'جيد',
-          badgeBg:'rgba(230,184,92,0.14)',
-          badgeColor:'#E6B85C',
-          boxBorder:'rgba(230,184,92,0.18)',
-          chipText: 'مرتفع قليلاً',
-          quote: '👍 حافظ على الزخم',
-          icon: '👍'
-        };
+        const value = Number(reading);
+
+        if(!Number.isFinite(value)){
+          return {
+            label:'بانتظار القراءة',
+            short:'غير مكتمل',
+            badgeBg:'rgba(230,184,92,.14)',
+            badgeColor:'#B98622',
+            badgeBorder:'rgba(230,184,92,.22)',
+            boxBorder:'rgba(230,184,92,.16)',
+            summary:'ما زلنا نحتاج قراءة أوضح حتى تصبح لوحة اليوم أدق.',
+            quote:'ابدأ أول قراءة اليوم',
+            rankHint:'بداية طيبة'
+          };
+        }
+
+        if(value < 70){
+          return {
+            label:'منخفض',
+            short:'يحتاج انتباه',
+            badgeBg:'rgba(218,114,109,.14)',
+            badgeColor:'#C65C55',
+            badgeBorder:'rgba(218,114,109,.24)',
+            boxBorder:'rgba(218,114,109,.18)',
+            summary:'القراءة الحالية منخفضة، والأولوية الآن للانتباه للحالة قبل أي شيء آخر.',
+            quote:'خلك قريب من نفسك',
+            rankHint:'متابع بانتباه'
+          };
+        }
+
+        if(value <= 140){
+          return {
+            label:'في النطاق',
+            short:'مطمئن',
+            badgeBg:'rgba(97,176,127,.14)',
+            badgeColor:'#4F9A69',
+            badgeBorder:'rgba(97,176,127,.24)',
+            boxBorder:'rgba(97,176,127,.16)',
+            summary:'الوضع الحالي مطمئن، وهذا يعطي انطباعًا جيدًا أن يومك إلى الآن متزن.',
+            quote:'أنت مسيطر اليوم',
+            rankHint:'حضور ممتاز'
+          };
+        }
+
+        if(value <= 180){
+          return {
+            label:'مرتفع قليلًا',
+            short:'انتبه',
+            badgeBg:'rgba(230,184,92,.14)',
+            badgeColor:'#B98622',
+            badgeBorder:'rgba(230,184,92,.24)',
+            boxBorder:'rgba(230,184,92,.18)',
+            summary:'القراءة أعلى قليلًا من المثالي، لكنها ما تزال قابلة للفهم والمتابعة بهدوء.',
+            quote:'شدها شوي',
+            rankHint:'قريب من الاتزان'
+          };
+        }
+
         return {
           label:'مرتفع',
-          short:'مراجعة',
-          badgeBg:'rgba(218,114,109,0.14)',
-          badgeColor:'#DA726D',
-          boxBorder:'rgba(218,114,109,0.18)',
-          chipText: 'مرتفع',
-          quote: '🔥 تحتاج مراجعة',
-          icon: '🔥'
+          short:'يحتاج مراجعة',
+          badgeBg:'rgba(218,114,109,.14)',
+          badgeColor:'#C65C55',
+          badgeBorder:'rgba(218,114,109,.24)',
+          boxBorder:'rgba(218,114,109,.18)',
+          summary:'القراءة الحالية مرتفعة نسبيًا، ويستحسن مراجعة ما حدث في آخر وجبة أو توقيتها.',
+          quote:'راجع يومك بهدوء',
+          rankHint:'متابع بوعي'
         };
       }
 
-      // بناء النص التحليلي
       function buildMindText(homeData, icrData, mealData){
-        const reading = parseFloat(homeData?.reading);
+        const reading = Number(homeData?.reading);
+        const state = getReadingState(reading);
         const icr = icrData?.icr ? `1:${icrData.icr}` : 'غير محدد';
         const confidence = icrData?.confidenceLabel || 'أولية';
 
-        let line1 = '';
-        if(!Number.isFinite(reading)){
-          line1 = 'ما زلنا نحتاج قراءة سكر أوضح حتى يصبح هذا الدليل أكثر فائدة لك خلال اليوم.';
-        } else if(reading < 70){
-          line1 = 'آخر قراءة منخفضة، لذلك الأولوية الآن تكون للانتباه للحالة الحالية قبل أي تحليل إضافي لليوم.';
-        } else if(reading <= 140){
-          line1 = 'يومك يبدو متزنًا إلى الآن، وآخر قراءة تعطي انطباعًا جيدًا أن الوضع الحالي قريب من النطاق المناسب.';
-        } else if(reading <= 180){
-          line1 = 'آخر قراءة أعلى قليلًا من المثالي، لكنها ما زالت مفهومة داخل يوم المتابعة وتحتاج فقط انتباهًا بسيطًا.';
-        } else {
-          line1 = 'آخر قراءة مرتفعة نسبيًا، وهذا يعني أن اليوم يحتاج قراءة أهدأ ومراجعة لما حدث في آخر وجبة أو توقيتها.';
+        let mealText = 'ولا يوجد حتى الآن تحليل وجبة محفوظ مؤخرًا، وإضافته لاحقًا سيجعل فهم اليوم أذكى.';
+        if(mealData?.carbs){
+          mealText = `وآخر وجبة محفوظة عندك كانت تقريبًا ${mealData.carbs} جم كارب، وهذا يعطينا سياقًا أفضل لفهم يومك.`;
         }
 
-        let line2 = `معامل الكارب الحالي عندك ${icr} بمستوى ثقة ${confidence}.`;
-        let line3 = mealData?.carbs
-          ? `آخر وجبة مسجلة كانت تقريبًا ${mealData.carbs} جرام كارب، وهذا يعطينا سياقًا أفضل لفهم يومك.`
-          : 'لا يوجد حتى الآن تحليل وجبة محفوظ، وإضافته لاحقًا سيجعل الدليل أذكى.';
+        return `${state.summary}
 
-        return `${line1}\n\n${line2}\n\n${line3}`;
+معامل الكارب الحالي عندك ${icr} بمستوى ثقة ${confidence}، ${mealText}`;
       }
 
-      // بناء الخطوات المخصصة
+      function getTodayISO(date = new Date()){
+        return date.toISOString().slice(0, 10);
+      }
+
+      function getActivityLog(){
+        const raw = readJSON(KEYS.ACTIVITY_LOG);
+        return raw && typeof raw === 'object' ? raw : {};
+      }
+
+      function saveActivityLog(log){
+        writeJSON(KEYS.ACTIVITY_LOG, log);
+      }
+
+      function bumpActivity(type){
+        const log = getActivityLog();
+        const day = getTodayISO();
+        if(!log[day]){
+          log[day] = { visits:0, refreshes:0, aiClicks:0, calculator:0, meals:0, reads:0, shares:0 };
+        }
+        if(!log[day][type]) log[day][type] = 0;
+        log[day][type] += 1;
+        saveActivityLog(log);
+      }
+
+      function derivePassiveSignals(){
+        const log = getActivityLog();
+        const day = getTodayISO();
+        if(!log[day]){
+          log[day] = { visits:0, refreshes:0, aiClicks:0, calculator:0, meals:0, reads:0, shares:0 };
+        }
+
+        const homeData = getHomeData();
+        const meals = readJSON(KEYS.MEALS_LIST) || [];
+        const shareCount = Number(localStorage.getItem(KEYS.SHARE_COUNT) || 0);
+
+        if(homeData?.savedAt){
+          const savedDay = getTodayISO(new Date(homeData.savedAt));
+          if(savedDay === day){
+            log[day].reads = Math.max(log[day].reads || 0, 1);
+          }
+        }
+
+        if(Array.isArray(meals) && meals.length){
+          const todayMeals = meals.filter(item => item.savedAt && getTodayISO(new Date(item.savedAt)) === day).length;
+          if(todayMeals > 0){
+            log[day].meals = Math.max(log[day].meals || 0, todayMeals);
+          }
+        }
+
+        log[day].shares = Math.max(log[day].shares || 0, shareCount > 0 ? 1 : 0);
+        saveActivityLog(log);
+      }
+
+      function getLast7DaysData(){
+        const log = getActivityLog();
+        const labels = [];
+        const data = [];
+
+        for(let i = 6; i >= 0; i--){
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          const key = getTodayISO(d);
+          const item = log[key] || { visits:0, refreshes:0, aiClicks:0, calculator:0, meals:0, reads:0, shares:0 };
+          const score = (item.visits || 0) + (item.refreshes || 0) + ((item.meals || 0) * 2) + ((item.reads || 0) * 2) + ((item.aiClicks || 0) * 2) + ((item.shares || 0) * 3) + (item.calculator || 0);
+          labels.push(i === 0 ? 'اليوم' : i === 1 ? 'أمس' : `-${i}`);
+          data.push({ key, score, raw:item });
+        }
+
+        return { labels, data };
+      }
+
+      function renderBars(){
+        const { labels, data } = getLast7DaysData();
+        const maxScore = Math.max(...data.map(d => d.score), 1);
+
+        els.barsWrap.innerHTML = data.map((item, index) => {
+          const h = Math.max(8, Math.round((item.score / maxScore) * 120));
+          return `
+            <div class="bar-col">
+              <div class="bar-value">${item.score}</div>
+              <div class="bar-track">
+                <div class="bar-fill" style="height:${h}px"></div>
+              </div>
+              <div class="bar-label">${labels[index]}</div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      function buildStats(){
+        const log = getActivityLog();
+        const days = Object.keys(log);
+
+        let activeDays = 0;
+        let totalTouches = 0;
+        let currentStreak = 0;
+
+        const today = new Date();
+
+        for(const key of days){
+          const item = log[key];
+          const score = (item.visits || 0) + (item.refreshes || 0) + (item.meals || 0) + (item.reads || 0) + (item.aiClicks || 0) + (item.shares || 0) + (item.calculator || 0);
+          if(score > 0) activeDays += 1;
+          totalTouches += score;
+        }
+
+        for(let i = 0; i < 30; i++){
+          const d = new Date(today);
+          d.setDate(today.getDate() - i);
+          const key = getTodayISO(d);
+          const item = log[key];
+          const score = item ? ((item.visits || 0) + (item.refreshes || 0) + (item.meals || 0) + (item.reads || 0) + (item.aiClicks || 0) + (item.shares || 0) + (item.calculator || 0)) : 0;
+          if(score > 0){
+            currentStreak += 1;
+          }else{
+            break;
+          }
+        }
+
+        const meals = readJSON(KEYS.MEALS_LIST) || [];
+        const shareCount = Number(localStorage.getItem(KEYS.SHARE_COUNT) || 0);
+
+        els.activeDaysValue.textContent = activeDays;
+        els.mealsSavedValue.textContent = Array.isArray(meals) ? meals.length : 0;
+        els.shareCountValue.textContent = shareCount;
+        els.touchesValue.textContent = totalTouches;
+        els.currentStreakValue.textContent = currentStreak;
+
+        let rank = 'قريب';
+        let level = '🌱 حضورك معنا: بداية طيبة';
+        let title = 'أنت تبني حضورًا جميلًا معنا';
+        let text = 'كل مرة ترجع فيها للتطبيق أو تسجل قراءة أو تحفظ وجبة، أنت تخلي SugarMind أقرب لفهمك ويومك.';
+
+        if(totalTouches >= 25){
+          rank = 'مستمر';
+          level = '✨ حضورك معنا: مستمر بوعي';
+          title = 'واضح أنك قريب من التطبيق بشكل جميل';
+          text = 'استمرارك في المتابعة والحفظ والتحليل يخلّي تجربتك أذكى، ويعطينا فرصة نفهم نمط يومك بشكل أوضح.';
+        }
+
+        if(totalTouches >= 50){
+          rank = 'مميز';
+          level = '🤍 حضورك معنا: مميز';
+          title = 'أنت من الناس اللي فعلاً يعطون التطبيق معنى';
+          text = 'مو بس تستخدم التطبيق، أنت تبني معه علاقة واضحة. كثرة لمساتك وعودتك المستمرة تعني أن عندك حضور حقيقي داخل المنتج.';
+        }
+
+        els.userRankValue.textContent = rank;
+        els.careLevel.textContent = level;
+        els.careTitle.textContent = title;
+        els.careText.textContent = text;
+      }
+
       function buildSteps(homeData, icrData, mealData){
-        const reading = parseFloat(homeData?.reading);
+        const reading = Number(homeData?.reading);
         const steps = [];
 
-        if(Number.isFinite(reading) && reading < 70){
+        if(!Number.isFinite(reading)){
+          steps.push({
+            icon:'🩺',
+            title:'ابدأ بتسجيل قراءة واضحة',
+            desc:'بدون قراءة حالية، يظل فهم اليوم ناقص. سجل القراءة أولًا حتى تصير اللوحة أذكى.'
+          });
+        } else if(reading < 70){
           steps.push({
             icon:'⚠️',
-            title:'انتبه للوضع الحالي',
-            desc:'القراءة منخفضة، ركز على علاج الهبوط أولاً ثم عاود القياس.'
+            title:'ركز على الهبوط أولًا',
+            desc:'إذا كانت القراءة منخفضة، أعط الأولوية للتعامل مع الحالة الحالية ثم ارجع للمتابعة.'
           });
-        } else if(Number.isFinite(reading) && reading > 180){
+        } else if(reading > 180){
           steps.push({
             icon:'📈',
-            title:'راجع آخر وجبة',
-            desc:'الارتفاع قد يكون بسبب الوجبة، راجع الكارب أو جرعة الأنسولين.'
+            title:'راجع آخر وجبة أو توقيتها',
+            desc:'الارتفاع الحالي غالبًا يحتاج نظرة هادئة على ما سبق: كارب الوجبة أو توقيت الجرعة.'
           });
         } else {
           steps.push({
-            icon:'🍽️',
-            title:'ثبّت وجبات متشابهة',
-            desc:'كلما كررت وجبات متقاربة الكارب، زادت دقة معامل الكارب.'
+            icon:'✅',
+            title:'حافظ على هذا الاتزان',
+            desc:'الوضع الحالي مطمئن، وأفضل شيء الآن هو الاستمرار على نفس الوضوح والمتابعة.'
           });
         }
-
-        steps.push({
-          icon:'👁️',
-          title:'راقب القراءة القادمة',
-          desc:'القراءة التالية ستؤكد اتجاه اليوم وتساعد في تحسين القرارات.'
-        });
 
         if(icrData?.icr){
           steps.push({
-            icon:'📊',
-            title:'ابحث في تحليلات AI',
-            desc:'اضغط على الزر أعلاه لتحصل على تحليل شامل ومتقدم.'
+            icon:'🧮',
+            title:'ثبت معاملك إذا لزم',
+            desc:'معاملك الحالي موجود، وإذا حسيت أن يومك تغيّر فراجع الحاسبة وعدّل المعطيات.'
           });
         } else {
           steps.push({
-            icon:'🧮',
-            title:'احسب معامل الكارب',
-            desc:'توجه لصفحة الحاسبة وأضف معاملك لتظهر تحليلات أعمق.'
+            icon:'🧠',
+            title:'أكمل حساب المعامل',
+            desc:'وجود معامل كارب محفوظ يرفع قيمة الدليل اليومي ويجعل فهمه أذكى بكثير.'
           });
         }
 
-        return steps;
+        if(mealData?.carbs){
+          steps.push({
+            icon:'🍽️',
+            title:'قارن آخر وجبة مع قراءتك',
+            desc:'ربط آخر وجبة محفوظة مع القراءة الحالية يعطيك فهمًا أوضح ليش يومك ماشي بهذا الشكل.'
+          });
+        } else {
+          steps.push({
+            icon:'📚',
+            title:'حلل أول وجبة اليوم',
+            desc:'إضافة وجبة محفوظة واحدة على الأقل تجعل صورة اليوم أوضح من مجرد قراءة منفردة.'
+          });
+        }
+
+        return steps.slice(0, 3);
       }
 
-      // تحديث الخطوات في DOM
-      function renderSteps(){
-        const homeData = readJSON(HOME_KEY);
-        const icrData = readJSON(ICR_KEY);
-        const mealData = readJSON(MEAL_KEY);
+      function renderSteps(homeData, icrData, mealData){
         const steps = buildSteps(homeData, icrData, mealData);
-        const grid = document.getElementById('stepsGrid');
-        grid.innerHTML = steps.map((step, index) => `
+        els.stepsGrid.innerHTML = steps.map(step => `
           <div class="step-item">
             <div class="step-icon">${step.icon}</div>
             <div class="step-content">
@@ -1024,186 +1580,62 @@
         `).join('');
       }
 
-      // تحديث الرسم البياني
-      let chart = null;
-      function renderChart(){
-        const ctx = document.getElementById('readingsChart').getContext('2d');
-        // محاكاة قراءات آخر 7 أيام (يمكن جلبها من localStorage)
-        const readings = [120, 135, 142, 118, 160, 145, 128]; // مثال
-        const labels = ['اليوم 7', 'اليوم 6', 'اليوم 5', 'اليوم 4', 'اليوم 3', 'أمس', 'اليوم'];
-
-        if(chart) chart.destroy();
-        chart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: 'قراءة السكر',
-              data: readings,
-              borderColor: '#7BAA92',
-              backgroundColor: 'rgba(123,170,146,0.1)',
-              tension: 0.2,
-              pointBackgroundColor: '#7BAA92',
-              fill: true,
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { display: false }
-            },
-            scales: {
-              y: {
-                min: 50,
-                max: 250,
-                grid: { color: 'rgba(0,0,0,0.05)' },
-                ticks: { color: '#667085' }
-              },
-              x: {
-                grid: { display: false },
-                ticks: { color: '#667085' }
-              }
-            }
-          }
-        });
-      }
-
-      // تحديث بطاقة الإنجاز
-      function updateAchievementCard(){
-        const profile = readJSON(PROFILE_KEY) || {};
-        const homeData = readJSON(HOME_KEY) || {};
-        const icrData = readJSON(ICR_KEY) || {};
-
-        const name = profile.name || 'ضيفنا الجديد';
-        const reading = homeData.reading ? parseFloat(homeData.reading) : null;
-        const state = reading !== null ? getReadingState(reading) : getReadingState(null);
-        const icr = icrData.icr ? `1:${icrData.icr}` : '1:--';
-        const confidence = icrData.confidenceLabel || 'أولية';
-
-        document.getElementById('achievementName').textContent = name;
-        document.getElementById('achievementDate').textContent = formatDate();
-        document.getElementById('achievementReading').textContent = reading !== null ? reading : '--';
-        document.getElementById('achievementReadingState').textContent = state.label;
-        document.getElementById('achievementReadingState').style.background = state.badgeBg;
-        document.getElementById('achievementReadingState').style.color = state.badgeColor;
-        document.getElementById('achievementIcr').textContent = icr;
-        document.getElementById('achievementConfidence').textContent = confidence;
-        document.getElementById('achievementQuote').textContent = state.quote;
-
-        // تحديث QR code
-        const qrDiv = document.getElementById('qrCodeAchievement');
-        qrDiv.innerHTML = '';
-        new QRCode(qrDiv, {
-          text: window.location.origin,
-          width: 68,
-          height: 68,
-          colorDark: '#1D2433',
-          colorLight: '#FFFFFF',
-          correctLevel: QRCode.CorrectLevel.M
-        });
-      }
-
-      // مشاركة البطاقة كصورة
-      async function shareAchievement(){
-        const card = document.getElementById('achievementCard');
-        if (!card) return;
-        try {
-          showToast('جاري تجهيز الصورة...');
-          const canvas = await html2canvas(card, {
-            scale: 2,
-            backgroundColor: '#2A2F45',
-            allowTaint: false,
-            useCORS: true
-          });
-          const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-          const file = new File([blob], 'SugarMind-Achievement.png', { type: 'image/png' });
-          
-          if (navigator.share && navigator.canShare({ files: [file] })) {
-            await navigator.share({
-              files: [file],
-              title: 'إنجازي في SugarMind',
-              text: 'هذه بطاقة إنجازي اليومية من SugarMind'
-            });
-            showToast('تمت المشاركة بنجاح');
-          } else {
-            // إذا لم تكن المشاركة مدعومة، نحفظ الصورة
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'SugarMind-Achievement.png';
-            link.click();
-            showToast('تم حفظ الصورة');
-          }
-        } catch (e) {
-          showToast('تعذرت المشاركة');
-        }
-      }
-
-      // تحديث جميع العناصر
-      function refreshGuide(){
+      function renderMain(){
         const period = getPeriod();
-        document.getElementById('timeChip').innerHTML = `${period.icon} <span>${period.hint}</span>`;
-        document.getElementById('greetingTitle').textContent = 'دليلك اليومي';
-        document.getElementById('greetingSub').textContent = 'ملخص ذكي يختصر لك وضع اليوم.';
+        els.timeChip.innerHTML = `${period.icon} <span>${period.hint}</span>`;
+        els.greetingTitle.textContent = period.title;
+        els.greetingSub.textContent = period.sub;
 
-        const homeData = readJSON(HOME_KEY);
-        const icrData = readJSON(ICR_KEY);
-        const mealData = readJSON(MEAL_KEY);
-
-        const reading = homeData?.reading ?? 128;
-        const readingTime = homeData?.time ? formatTime(homeData.time) : 'الآن';
+        const homeData = getHomeData();
+        const profileData = getProfileData();
+        const icrData = readJSON(KEYS.ICR) || {};
+        const mealData = readJSON(KEYS.MEAL) || {};
+        const reading = Number(homeData?.reading);
         const state = getReadingState(reading);
 
-        document.getElementById('readingValue').textContent = Number.isFinite(parseFloat(reading)) ? reading : '--';
-        document.getElementById('readingTime').textContent = readingTime;
-        document.getElementById('readingStateChip').textContent = state.chipText;
-        document.getElementById('statusBadge').textContent = state.short;
-        document.getElementById('statusBadge').style.background = state.badgeBg;
-        document.getElementById('statusBadge').style.color = state.badgeColor;
-        document.getElementById('statusBadge').style.borderColor = state.badgeColor + '33';
-        document.getElementById('readingBox').style.borderColor = state.boxBorder;
+        els.liveSubtitle.textContent = homeData?.savedAt
+          ? `آخر تحديث ${formatTimeFromValue(homeData.savedAt)}`
+          : 'آخر تحديث قبل لحظات';
 
-        document.getElementById('liveSubtitle').textContent = homeData?.savedAt ? `آخر تحديث ${formatTime(homeData.savedAt)}` : 'آخر تحديث قبل لحظات';
+        els.statusBadge.textContent = state.short;
+        els.statusBadge.style.background = state.badgeBg;
+        els.statusBadge.style.color = state.badgeColor;
+        els.statusBadge.style.borderColor = state.badgeBorder;
 
-        document.getElementById('icrValue').textContent = icrData?.icr ? `1:${icrData.icr}` : '--';
-        document.getElementById('confidenceValue').textContent = icrData?.confidenceLabel || 'أولية';
+        els.readingBox.style.borderColor = state.boxBorder;
+        els.readingValue.textContent = Number.isFinite(reading) ? reading : '--';
+        els.readingTime.textContent = homeData?.time ? formatTimeFromValue(homeData.time) : 'الآن';
+        els.readingStateChip.textContent = state.label;
+        els.icrValue.textContent = icrData?.icr ? `1:${icrData.icr}` : '1:--';
+        els.confidenceValue.textContent = icrData?.confidenceLabel || 'أولية';
 
-        document.getElementById('mindText').textContent = buildMindText(homeData, icrData, mealData);
+        const userName = profileData?.name ? `يا ${profileData.name}` : '';
+        const introText = buildMindText(homeData, icrData, mealData);
+        els.mindText.textContent = userName ? `${userName}،\n\n${introText}` : introText;
 
-        renderSteps();
-        renderChart();
-        updateAchievementCard();
-        showToast('تم تحديث الدليل');
+        renderSteps(homeData, icrData, mealData);
+        renderBars();
+        buildStats();
       }
 
-      // ========================
-      // HEALTH KIT (تجريبي)
-      // ========================
-      function requestHealthPermission(){
-        showToast('محاكاة طلب الإذن (تجريبي)');
-      }
-
-      // ========================
-      // الأحداث
-      // ========================
-      document.addEventListener('DOMContentLoaded', () => {
-        // إخفاء splash
+      function hideSplash(){
         setTimeout(() => {
-          document.getElementById('splashScreen').classList.add('hide');
-        }, 1000);
+          els.splash.classList.add('hide');
+        }, 950);
+      }
 
-        refreshGuide();
+      function bindEvents(){
+        els.aiInsightsBtn.addEventListener('click', () => {
+          bumpActivity('aiClicks');
+        });
+      }
 
-        document.getElementById('refreshBtn').addEventListener('click', refreshGuide);
-        document.getElementById('refreshGuideBtn').addEventListener('click', refreshGuide);
-        document.getElementById('goToCalculatorBtn').addEventListener('click', () => {
-          window.location.href = 'carb-calculator.html';
-        });
-        document.getElementById('aiInsightsBtn').addEventListener('click', () => {
-          window.location.href = 'ai-insights.html';
-        });
-        document.getElementById('requestHealthKit').addEventListener('click', requestHealthPermission);
-        document.getElementById('shareAchievementBtn').addEventListener('click', shareAchievement);
+      document.addEventListener('DOMContentLoaded', () => {
+        bumpActivity('visits');
+        derivePassiveSignals();
+        bindEvents();
+        renderMain();
+        hideSplash();
       });
     })();
   </script>
