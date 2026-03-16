@@ -1256,7 +1256,7 @@
     <section class="hero-card">
       <div class="hero-chip">🍽️ محلل الوجبة</div>
       <h1 class="hero-title">ابحث، وزن، واحفظ بطريقتك</h1>
-      <p class="hero-sub">مكتبة عامة + مكتبتك الخاصة. اختر الصنف، أدخل الوزن، وخذ الكارب بشكل أوضح مع مستوى ثقة مفهوم.</p>
+      <p class="hero-sub">مكتبة عامة واسعة + مكتبتك الخاصة. اختر الصنف، أدخل الوزن، وخذ الكارب بشكل أوضح مع مستوى ثقة مفهوم.</p>
     </section>
 
     <section class="journey" aria-label="خطوات الرحلة">
@@ -1497,23 +1497,34 @@
       CUSTOM_FOODS: 'sugarmind_custom_foods_v1'
     };
 
-    // المكتبة العامة الأساسية:
-    // - نتائج دقيقة لكل 100g
-    // - نتائج شبه دقيقة
-    // - نتائج تقديرية منزلية
+    // modes:
+    // per100g = لكل 100 جرام
+    // serving = للحصة / القطعة / الساندويتش
+    // estimated_ratio = تقديري منزلي حسب الوزن
     const BASE_LIBRARY = [
-      // ===== أطعمة يومية =====
+      // ===== فواكه =====
       { id:'apple', name_ar:'تفاح', name_en:'Apple', aliases:['تفاحة','apple'], category:'فواكه', icon:'🍎', mode:'per100g', carbs:14.0, protein:0.3, fat:0.2, calories:52, source:'USDA', confidence:'high', notes:'حجم التفاحة يختلف، لذلك الوزن بالجرام أدق.' },
       { id:'banana', name_ar:'موز', name_en:'Banana', aliases:['موزه','banana'], category:'فواكه', icon:'🍌', mode:'per100g', carbs:22.8, protein:1.1, fat:0.3, calories:89, source:'USDA', confidence:'high', notes:'الموزة الصغيرة تختلف عن الكبيرة، الوزن أفضل من التقدير البصري.' },
       { id:'orange', name_ar:'برتقال', name_en:'Orange', aliases:['برتقالة','orange'], category:'فواكه', icon:'🍊', mode:'per100g', carbs:11.8, protein:0.9, fat:0.1, calories:47, source:'USDA', confidence:'high', notes:'الوزن يرفع الدقة أكثر من الاعتماد على عدد الحبات.' },
       { id:'green-grapes', name_ar:'عنب أخضر', name_en:'Green Grapes', aliases:['عنب','green grapes','grapes'], category:'فواكه', icon:'🍇', mode:'per100g', carbs:17.2, protein:0.7, fat:0.4, calories:69, source:'USDA', confidence:'high', notes:'يختلف الحجم والماء بين أنواع العنب.' },
+      { id:'strawberry', name_ar:'فراولة', name_en:'Strawberry', aliases:['فراوله','strawberry','strawberries'], category:'فواكه', icon:'🍓', mode:'per100g', carbs:7.7, protein:0.7, fat:0.3, calories:32, source:'USDA', confidence:'high', notes:'الفراولة منخفضة الكارب نسبيًا.' },
+      { id:'blueberries', name_ar:'توت أزرق', name_en:'Blueberries', aliases:['بلوبيري','blueberries','blueberry'], category:'فواكه', icon:'🫐', mode:'per100g', carbs:14.5, protein:0.7, fat:0.3, calories:57, source:'USDA', confidence:'high', notes:'القيم تقريبية للفاكهة الطازجة.' },
+      { id:'watermelon', name_ar:'بطيخ', name_en:'Watermelon', aliases:['حبحب','watermelon'], category:'فواكه', icon:'🍉', mode:'per100g', carbs:7.6, protein:0.6, fat:0.2, calories:30, source:'USDA', confidence:'high', notes:'نسبة الماء عالية لذلك الكارب أقل لكل 100 جرام.' },
+      { id:'melon', name_ar:'شمام', name_en:'Melon', aliases:['كنتالوب','melon','cantaloupe'], category:'فواكه', icon:'🍈', mode:'per100g', carbs:8.2, protein:0.8, fat:0.2, calories:34, source:'USDA', confidence:'high', notes:'نتيجة مناسبة للشمام الطازج.' },
+      { id:'pineapple', name_ar:'أناناس', name_en:'Pineapple', aliases:['اناناس','pineapple'], category:'فواكه', icon:'🍍', mode:'per100g', carbs:13.1, protein:0.5, fat:0.1, calories:50, source:'USDA', confidence:'high', notes:'العصير يختلف عن الثمرة الكاملة.' },
+      { id:'mango', name_ar:'مانجو', name_en:'Mango', aliases:['منقا','mango'], category:'فواكه', icon:'🥭', mode:'per100g', carbs:15.0, protein:0.8, fat:0.4, calories:60, source:'USDA', confidence:'high', notes:'المانجو الناضجة أعلى سكرًا من بعض الفواكه الأخرى.' },
+      { id:'pear', name_ar:'كمثرى', name_en:'Pear', aliases:['إجاص','pear'], category:'فواكه', icon:'🍐', mode:'per100g', carbs:15.2, protein:0.4, fat:0.1, calories:57, source:'USDA', confidence:'high', notes:'الوزن أدق من عدد الحبات.' },
+      { id:'peach', name_ar:'خوخ', name_en:'Peach', aliases:['peach'], category:'فواكه', icon:'🍑', mode:'per100g', carbs:9.5, protein:0.9, fat:0.3, calories:39, source:'USDA', confidence:'high', notes:'القيمة تقريبية للخوخ الطازج.' },
+      { id:'kiwi', name_ar:'كيوي', name_en:'Kiwi', aliases:['kiwi'], category:'فواكه', icon:'🥝', mode:'per100g', carbs:14.7, protein:1.1, fat:0.5, calories:61, source:'USDA', confidence:'high', notes:'يفضل الوزن في حال كانت الثمار مختلفة الحجم.' },
+      { id:'pomegranate', name_ar:'رمان', name_en:'Pomegranate', aliases:['pomegranate'], category:'فواكه', icon:'🍎', mode:'per100g', carbs:18.7, protein:1.7, fat:1.2, calories:83, source:'USDA', confidence:'high', notes:'القيمة للحبوب الصالحة للأكل.' },
 
-      // ===== تمر =====
-      { id:'date-ajwa', name_ar:'تمر عجوة', name_en:'Dates Ajwa', aliases:['تمرة عجوة','عجوة','dates ajwa'], category:'تمور', icon:'🌴', mode:'per100g', carbs:75.0, protein:2.0, fat:0.5, calories:282, source:'Saudi / USDA', confidence:'high', notes:'أنواع التمر وأحجامها تختلف، لذلك الوزن أدق من العدّ.' },
-      { id:'date-sagai', name_ar:'تمر صقعي', name_en:'Dates Sagai', aliases:['صقعي','sagai dates'], category:'تمور', icon:'🌴', mode:'per100g', carbs:73.0, protein:2.0, fat:0.4, calories:277, source:'Saudi', confidence:'high', notes:'يختلف حسب الجفاف والحجم.' },
+      // ===== تمور =====
+      { id:'date-ajwa', name_ar:'تمر عجوة', name_en:'Ajwa Dates', aliases:['تمرة عجوة','عجوة','dates ajwa'], category:'تمور', icon:'🌴', mode:'per100g', carbs:75.0, protein:2.0, fat:0.5, calories:282, source:'Saudi / USDA', confidence:'high', notes:'أنواع التمر وأحجامها تختلف، لذلك الوزن أدق من العدّ.' },
+      { id:'date-sagai', name_ar:'تمر صقعي', name_en:'Sagai Dates', aliases:['صقعي','sagai dates'], category:'تمور', icon:'🌴', mode:'per100g', carbs:73.0, protein:2.0, fat:0.4, calories:277, source:'Saudi', confidence:'high', notes:'يختلف حسب الجفاف والحجم.' },
       { id:'date-medjool', name_ar:'تمر مجدول', name_en:'Medjool Dates', aliases:['مجدول','medjool','medjool dates'], category:'تمور', icon:'🌴', mode:'per100g', carbs:66.5, protein:1.8, fat:0.2, calories:277, source:'USDA', confidence:'high', notes:'عادةً أكبر حجمًا من بعض الأنواع الأخرى.' },
       { id:'date-khalas', name_ar:'تمر خلاص', name_en:'Khalas Dates', aliases:['خلاص','khalas'], category:'تمور', icon:'🌴', mode:'per100g', carbs:74.0, protein:2.0, fat:0.4, calories:282, source:'Saudi', confidence:'high', notes:'الرطب يختلف عن التمر المجفف في القيم.' },
       { id:'date-rutab', name_ar:'تمر رطب', name_en:'Rutab Dates', aliases:['رطب','rutab'], category:'تمور', icon:'🌴', mode:'per100g', carbs:65.0, protein:1.8, fat:0.3, calories:260, source:'Saudi', confidence:'medium', notes:'نسبة الماء أعلى من التمر الجاف، لذلك القيم تختلف قليلًا.' },
+      { id:'date-sukkari', name_ar:'تمر سكري', name_en:'Sukkari Dates', aliases:['سكري','sukkari'], category:'تمور', icon:'🌴', mode:'per100g', carbs:74.0, protein:2.0, fat:0.3, calories:285, source:'Saudi', confidence:'high', notes:'نوع شائع جدًا في السعودية، والوزن أدق من عدّ الحبات.' },
       { id:'generic-date', name_ar:'تمرة', name_en:'Date', aliases:['تمر','تمرة','date','dates'], category:'تمور', icon:'🌴', mode:'per100g', carbs:75.0, protein:1.8, fat:0.2, calories:282, source:'USDA / عام', confidence:'high', notes:'إذا ما عرفت النوع، استخدم هذه كمرجع عام.' },
 
       // ===== حبوب ونشويات =====
@@ -1523,13 +1534,46 @@
       { id:'instant-oats', name_ar:'شوفان سريع التحضير', name_en:'Instant Oats', aliases:['instant oats'], category:'حبوب', icon:'🥣', mode:'per100g', carbs:68.0, protein:13.0, fat:7.0, calories:380, source:'USDA', confidence:'high', notes:'قد تختلف القيمة قليلًا حسب الإضافات التجارية.' },
       { id:'oat-flour', name_ar:'دقيق الشوفان', name_en:'Oat Flour', aliases:['oat flour'], category:'حبوب', icon:'🌾', mode:'per100g', carbs:65.0, protein:13.0, fat:6.0, calories:400, source:'USDA', confidence:'high', notes:'مناسب للخلطات والخبز.' },
       { id:'white-rice', name_ar:'أرز أبيض مطبوخ', name_en:'White Rice', aliases:['رز','أرز','white rice','rice'], category:'نشويات', icon:'🍚', mode:'per100g', carbs:28.0, protein:2.7, fat:0.3, calories:130, source:'USDA', confidence:'high', notes:'يختلف قليلًا حسب نوع الرز وكمية الماء.' },
+      { id:'brown-rice', name_ar:'أرز بني مطبوخ', name_en:'Brown Rice', aliases:['brown rice','رز بني'], category:'نشويات', icon:'🍚', mode:'per100g', carbs:23.0, protein:2.6, fat:0.9, calories:111, source:'USDA', confidence:'high', notes:'أقل سعرات قليلًا من بعض أنواع الأرز الأبيض المطبوخ.' },
       { id:'freekeh-cooked', name_ar:'فريكة مطبوخة', name_en:'Cooked Freekeh', aliases:['فريكة','freekeh'], category:'حبوب', icon:'🌾', mode:'per100g', carbs:18.0, protein:5.0, fat:1.5, calories:110, source:'Middle Eastern', confidence:'medium', notes:'قيمة شبه دقيقة ومناسبة كبداية.' },
       { id:'jareesh', name_ar:'جريش', name_en:'Jareesh', aliases:['جرش','جريش','jareesh'], category:'حبوب', icon:'🥣', mode:'per100g', carbs:30.0, protein:8.0, fat:1.6, calories:160, source:'Arabian / Saudi', confidence:'medium', notes:'تحضير الجريش يختلف بين البيوت.' },
       { id:'barley', name_ar:'شعير', name_en:'Barley', aliases:['barley'], category:'حبوب', icon:'🌾', mode:'per100g', carbs:28.0, protein:2.3, fat:0.8, calories:123, source:'USDA', confidence:'high', notes:'للمطبوخ تقريبًا.' },
       { id:'quinoa', name_ar:'كينوا', name_en:'Quinoa', aliases:['quinoa'], category:'حبوب', icon:'🌾', mode:'per100g', carbs:21.0, protein:4.4, fat:1.9, calories:120, source:'USDA', confidence:'high', notes:'تقريبًا للمطبوخ.' },
+      { id:'red-quinoa', name_ar:'كينوا حمراء', name_en:'Red Quinoa', aliases:['red quinoa'], category:'حبوب', icon:'🌾', mode:'per100g', carbs:21.0, protein:4.3, fat:1.9, calories:121, source:'USDA', confidence:'medium', notes:'القيمة قريبة من الكينوا البيضاء.' },
+      { id:'white-quinoa', name_ar:'كينوا بيضاء', name_en:'White Quinoa', aliases:['white quinoa'], category:'حبوب', icon:'🌾', mode:'per100g', carbs:21.0, protein:4.4, fat:1.9, calories:120, source:'USDA', confidence:'high', notes:'للمطبوخ تقريبًا.' },
+      { id:'black-quinoa', name_ar:'كينوا سوداء', name_en:'Black Quinoa', aliases:['black quinoa'], category:'حبوب', icon:'🌾', mode:'per100g', carbs:21.0, protein:4.4, fat:2.0, calories:120, source:'USDA', confidence:'medium', notes:'فرق بسيط جدًا عن الأنواع الأخرى.' },
       { id:'couscous', name_ar:'كسكسي', name_en:'Couscous', aliases:['كسكس','couscous'], category:'حبوب', icon:'🥣', mode:'per100g', carbs:23.0, protein:3.8, fat:0.2, calories:112, source:'USDA', confidence:'high', notes:'للمطبوخ.' },
       { id:'corn', name_ar:'ذرة', name_en:'Corn', aliases:['corn','maize'], category:'حبوب', icon:'🌽', mode:'per100g', carbs:19.0, protein:3.2, fat:1.2, calories:86, source:'USDA', confidence:'high', notes:'تختلف الإضافات إذا كانت مشوية بالزبدة أو الصوص.' },
       { id:'polenta', name_ar:'بولينتا', name_en:'Polenta', aliases:['polenta'], category:'حبوب', icon:'🌽', mode:'per100g', carbs:15.0, protein:2.0, fat:0.5, calories:70, source:'Italian', confidence:'medium', notes:'للمطبوخ تقريبًا.' },
+      { id:'bulgur', name_ar:'برغل مطبوخ', name_en:'Bulgur', aliases:['برغل','bulgur'], category:'حبوب', icon:'🌾', mode:'per100g', carbs:18.6, protein:3.1, fat:0.2, calories:83, source:'USDA', confidence:'high', notes:'للمطبوخ.' },
+      { id:'pasta-cooked', name_ar:'مكرونة مطبوخة', name_en:'Cooked Pasta', aliases:['معكرونة','pasta','مكرونه'], category:'مكرونات', icon:'🍝', mode:'per100g', carbs:31.0, protein:5.8, fat:1.1, calories:158, source:'USDA', confidence:'high', notes:'القيمة لباستا مطبوخة عامة دون صوص.' },
+      { id:'spaghetti-cooked', name_ar:'سباغيتي مطبوخة', name_en:'Cooked Spaghetti', aliases:['سباغيتي مطبوخة','spaghetti cooked'], category:'مكرونات', icon:'🍝', mode:'per100g', carbs:30.9, protein:5.8, fat:0.9, calories:158, source:'USDA', confidence:'high', notes:'هذه القيمة للمعكرونة فقط بدون صوص.' },
+      { id:'fettuccine-cooked', name_ar:'فوتشيني مطبوخة', name_en:'Cooked Fettuccine', aliases:['فوتشيني مطبوخة','fettuccine cooked'], category:'مكرونات', icon:'🍝', mode:'per100g', carbs:31.0, protein:5.7, fat:1.0, calories:158, source:'USDA', confidence:'high', notes:'بدون صوص.' },
+      { id:'linguine-cooked', name_ar:'لينجويني مطبوخة', name_en:'Cooked Linguine', aliases:['لينجويني','linguine'], category:'مكرونات', icon:'🍝', mode:'per100g', carbs:31.0, protein:5.8, fat:1.0, calories:158, source:'USDA', confidence:'medium', notes:'قيمة تقريبية قريبة من باقي المكرونات المطبوخة.' },
+      { id:'lasagna-sheets-cooked', name_ar:'شرائح لازانيا مطبوخة', name_en:'Cooked Lasagna Sheets', aliases:['شرائح لازانيا','lasagna sheets'], category:'مكرونات', icon:'🍝', mode:'per100g', carbs:30.0, protein:5.5, fat:1.0, calories:155, source:'USDA', confidence:'medium', notes:'للعجينة فقط بدون الحشوة.' },
+
+      // ===== خبز ومخبوزات =====
+      { id:'white-bread', name_ar:'خبز أبيض', name_en:'White Bread', aliases:['توست أبيض','white bread','toast'], category:'خبز', icon:'🍞', mode:'per100g', carbs:49.0, protein:9.0, fat:3.2, calories:265, source:'USDA', confidence:'high', notes:'إذا كان عندك وزن الشريحة، فالنتيجة تكون أدق.' },
+      { id:'brown-bread', name_ar:'خبز أسمر', name_en:'Brown Bread', aliases:['خبز بر','brown bread','whole wheat bread'], category:'خبز', icon:'🍞', mode:'per100g', carbs:43.0, protein:12.0, fat:4.2, calories:247, source:'USDA', confidence:'high', notes:'القيمة تقريبية لخبز القمح الكامل.' },
+      { id:'sliced-toast', name_ar:'توست', name_en:'Toast Bread', aliases:['توست','toast bread'], category:'خبز', icon:'🍞', mode:'per100g', carbs:49.0, protein:9.0, fat:3.2, calories:265, source:'USDA', confidence:'high', notes:'يفضل وزن الشرائح إذا كانت سميكة أو صغيرة.' },
+      { id:'tortilla', name_ar:'تورتيلا', name_en:'Tortilla', aliases:['tortilla','خبز تورتيلا'], category:'خبز', icon:'🌯', mode:'per100g', carbs:47.0, protein:8.0, fat:7.0, calories:297, source:'USDA', confidence:'high', notes:'يوجد فرق بين تورتيلا القمح والذرة.' },
+      { id:'pita-bread', name_ar:'خبز عربي', name_en:'Pita Bread', aliases:['خبز عربي','pita'], category:'خبز', icon:'🥙', mode:'per100g', carbs:55.0, protein:9.0, fat:1.2, calories:275, source:'USDA', confidence:'high', notes:'القيمة تقريبية للخبز العربي العادي.' },
+      { id:'croissant', name_ar:'كرواسون', name_en:'Croissant', aliases:['croissant'], category:'مخبوزات', icon:'🥐', mode:'per100g', carbs:45.0, protein:8.2, fat:21.0, calories:406, source:'USDA', confidence:'high', notes:'الحشوات ترفع الكارب والسعرات.' },
+      { id:'bagel', name_ar:'بيقل', name_en:'Bagel', aliases:['bagel'], category:'مخبوزات', icon:'🥯', mode:'per100g', carbs:53.0, protein:10.0, fat:1.7, calories:278, source:'USDA', confidence:'high', notes:'إذا كان محشو أو مغطى يختلف الرقم.' },
+      { id:'muffin', name_ar:'مافن', name_en:'Muffin', aliases:['muffin'], category:'مخبوزات', icon:'🧁', mode:'per100g', carbs:51.0, protein:5.8, fat:16.0, calories:377, source:'USDA', confidence:'medium', notes:'يوجد فرق كبير بين الأنواع.' },
+      { id:'pancake', name_ar:'بان كيك', name_en:'Pancake', aliases:['بانكيك','pancake'], category:'مخبوزات', icon:'🥞', mode:'per100g', carbs:28.0, protein:6.0, fat:7.0, calories:227, source:'USDA', confidence:'high', notes:'بدون شراب أو إضافات.' },
+      { id:'waffle', name_ar:'وافل', name_en:'Waffle', aliases:['waffle'], category:'مخبوزات', icon:'🧇', mode:'per100g', carbs:33.0, protein:7.0, fat:12.0, calories:291, source:'USDA', confidence:'high', notes:'بدون صوص أو شوكولاتة.' },
+
+      // ===== ألبان ومشروبات =====
+      { id:'whole-milk', name_ar:'حليب كامل الدسم', name_en:'Whole Milk', aliases:['حليب كامل','whole milk'], category:'ألبان', icon:'🥛', mode:'per100g', carbs:4.8, protein:3.2, fat:3.3, calories:61, source:'USDA', confidence:'high', notes:'القيمة قريبة أيضًا لكل 100 مل.' },
+      { id:'lowfat-milk', name_ar:'حليب قليل الدسم', name_en:'Low Fat Milk', aliases:['حليب قليل الدسم','low fat milk'], category:'ألبان', icon:'🥛', mode:'per100g', carbs:5.0, protein:3.4, fat:1.0, calories:42, source:'USDA', confidence:'high', notes:'القيمة تقريبية لكل 100 مل.' },
+      { id:'laban', name_ar:'لبن', name_en:'Laban', aliases:['لبن سائل','laban'], category:'ألبان', icon:'🥛', mode:'per100g', carbs:5.0, protein:3.0, fat:2.0, calories:50, source:'محلي / عام', confidence:'medium', notes:'الأنواع تختلف بين كامل وقليل الدسم.' },
+      { id:'plain-yogurt', name_ar:'زبادي', name_en:'Plain Yogurt', aliases:['زبادي ساده','plain yogurt'], category:'ألبان', icon:'🥣', mode:'per100g', carbs:4.7, protein:3.5, fat:3.3, calories:61, source:'USDA', confidence:'high', notes:'الزبادي المحلى يختلف كثيرًا.' },
+      { id:'greek-yogurt', name_ar:'زبادي يوناني', name_en:'Greek Yogurt', aliases:['greek yogurt'], category:'ألبان', icon:'🥣', mode:'per100g', carbs:3.8, protein:10.0, fat:5.0, calories:97, source:'USDA', confidence:'high', notes:'حسب نوع الدسم والعلامة التجارية.' },
+      { id:'chocolate-milk', name_ar:'حليب شوكولاتة', name_en:'Chocolate Milk', aliases:['chocolate milk'], category:'مشروبات', icon:'🥛', mode:'per100g', carbs:10.0, protein:3.3, fat:1.0, calories:77, source:'USDA', confidence:'medium', notes:'العلامات التجارية تختلف.' },
+      { id:'orange-juice', name_ar:'عصير برتقال', name_en:'Orange Juice', aliases:['عصير برتقال','orange juice'], category:'مشروبات', icon:'🧃', mode:'per100g', carbs:10.4, protein:0.7, fat:0.2, calories:45, source:'USDA', confidence:'high', notes:'القيمة للعصير الصافي تقريبًا.' },
+      { id:'apple-juice', name_ar:'عصير تفاح', name_en:'Apple Juice', aliases:['apple juice'], category:'مشروبات', icon:'🧃', mode:'per100g', carbs:11.3, protein:0.1, fat:0.1, calories:46, source:'USDA', confidence:'high', notes:'العصير أعلى سكرًا من الفاكهة الكاملة عادة.' },
+      { id:'cola', name_ar:'مشروب غازي', name_en:'Cola', aliases:['بيبسي','كوكاكولا','cola','soda'], category:'مشروبات', icon:'🥤', mode:'per100g', carbs:10.6, protein:0.0, fat:0.0, calories:42, source:'عام', confidence:'medium', notes:'القيمة تقريبية للمشروبات الغازية العادية غير الدايت.' },
 
       // ===== بقوليات =====
       { id:'foul', name_ar:'فول', name_en:'Foul', aliases:['فول مدمس','foul','fava beans'], category:'بقوليات', icon:'🧆', mode:'per100g', carbs:20.0, protein:8.0, fat:1.0, calories:110, source:'USDA / محلي', confidence:'high', notes:'إضافة الزيت أو الطحينة ترفع السعرات.' },
@@ -1537,33 +1581,86 @@
       { id:'black-eyed-peas', name_ar:'فول عيني', name_en:'Black Eyed Peas', aliases:['فول عين','black eyed peas'], category:'بقوليات', icon:'🫘', mode:'per100g', carbs:21.0, protein:8.0, fat:0.5, calories:115, source:'USDA', confidence:'high', notes:'نتيجة جيدة للاستخدام اليومي.' },
       { id:'kidney-beans', name_ar:'فول أحمر', name_en:'Kidney Beans', aliases:['kidney beans'], category:'بقوليات', icon:'🫘', mode:'per100g', carbs:23.0, protein:9.0, fat:0.5, calories:127, source:'USDA', confidence:'high', notes:'للمطبوخ.' },
       { id:'white-beans', name_ar:'فول أبيض', name_en:'White Beans', aliases:['white beans'], category:'بقوليات', icon:'🫘', mode:'per100g', carbs:25.0, protein:9.0, fat:0.5, calories:140, source:'USDA', confidence:'high', notes:'للمطبوخ.' },
+      { id:'lentils', name_ar:'عدس', name_en:'Lentils', aliases:['lentils'], category:'بقوليات', icon:'🫘', mode:'per100g', carbs:20.0, protein:9.0, fat:0.4, calories:116, source:'USDA', confidence:'high', notes:'للمطبوخ.' },
+      { id:'split-peas', name_ar:'بزاليا مجروشة', name_en:'Split Peas', aliases:['split peas'], category:'بقوليات', icon:'🫘', mode:'per100g', carbs:21.0, protein:8.0, fat:0.4, calories:118, source:'USDA', confidence:'medium', notes:'قيمة تقريبية للمطبوخ.' },
+
+      // ===== خضار =====
+      { id:'potato-boiled', name_ar:'بطاطس مسلوقة', name_en:'Boiled Potato', aliases:['بطاطس مسلوقه','boiled potato'], category:'خضار', icon:'🥔', mode:'per100g', carbs:20.0, protein:1.9, fat:0.1, calories:87, source:'USDA', confidence:'high', notes:'القيمة للبطاطس المسلوقة بدون إضافات.' },
+      { id:'sweet-potato', name_ar:'بطاطا حلوة', name_en:'Sweet Potato', aliases:['بطاطا','sweet potato'], category:'خضار', icon:'🍠', mode:'per100g', carbs:20.1, protein:1.6, fat:0.1, calories:86, source:'USDA', confidence:'high', notes:'القيمة تقريبية للمسلوقة أو المشوية بدون إضافات كثيرة.' },
+      { id:'carrot', name_ar:'جزر', name_en:'Carrot', aliases:['carrot'], category:'خضار', icon:'🥕', mode:'per100g', carbs:9.6, protein:0.9, fat:0.2, calories:41, source:'USDA', confidence:'high', notes:'القيمة للجزر الخام تقريبًا.' },
+      { id:'cucumber', name_ar:'خيار', name_en:'Cucumber', aliases:['cucumber'], category:'خضار', icon:'🥒', mode:'per100g', carbs:3.6, protein:0.7, fat:0.1, calories:15, source:'USDA', confidence:'high', notes:'منخفض الكارب نسبيًا.' },
+      { id:'tomato', name_ar:'طماطم', name_en:'Tomato', aliases:['tomato'], category:'خضار', icon:'🍅', mode:'per100g', carbs:3.9, protein:0.9, fat:0.2, calories:18, source:'USDA', confidence:'high', notes:'القيمة للطماطم الطازجة.' },
+      { id:'broccoli', name_ar:'بروكلي', name_en:'Broccoli', aliases:['broccoli'], category:'خضار', icon:'🥦', mode:'per100g', carbs:6.6, protein:2.8, fat:0.4, calories:34, source:'USDA', confidence:'high', notes:'القيمة للخضار الطازج أو المطهو بخفة.' },
+      { id:'cauliflower', name_ar:'قرنبيط', name_en:'Cauliflower', aliases:['زهرة','cauliflower'], category:'خضار', icon:'🥦', mode:'per100g', carbs:5.0, protein:1.9, fat:0.3, calories:25, source:'USDA', confidence:'high', notes:'منخفض الكارب نسبيًا.' },
+      { id:'peas', name_ar:'بازلاء', name_en:'Peas', aliases:['peas','بزاليا'], category:'خضار', icon:'🟢', mode:'per100g', carbs:14.0, protein:5.4, fat:0.4, calories:84, source:'USDA', confidence:'high', notes:'أعلى كارب من بعض الخضار الأخرى.' },
+      { id:'spinach', name_ar:'سبانخ', name_en:'Spinach', aliases:['spinach'], category:'خضار', icon:'🥬', mode:'per100g', carbs:3.6, protein:2.9, fat:0.4, calories:23, source:'USDA', confidence:'high', notes:'منخفضة الكارب.' },
+
+      // ===== لحوم ودجاج =====
+      { id:'chicken-breast-grilled', name_ar:'صدر دجاج مشوي', name_en:'Grilled Chicken Breast', aliases:['chicken breast','صدر دجاج'], category:'لحوم', icon:'🍗', mode:'per100g', carbs:0.0, protein:31.0, fat:3.6, calories:165, source:'USDA', confidence:'high', notes:'بدون تتبيلة سكرية أو تغليفة.' },
+      { id:'chicken-thigh', name_ar:'فخذ دجاج مطبوخ', name_en:'Chicken Thigh', aliases:['chicken thigh'], category:'لحوم', icon:'🍗', mode:'per100g', carbs:0.0, protein:26.0, fat:10.0, calories:209, source:'USDA', confidence:'high', notes:'القيمة بدون تغليفة.' },
+      { id:'fried-chicken', name_ar:'دجاج مقلي', name_en:'Fried Chicken', aliases:['fried chicken'], category:'وجبات سريعة', icon:'🍗', mode:'per100g', carbs:8.0, protein:23.0, fat:19.0, calories:290, source:'Fast Food', confidence:'medium', notes:'التغليفة ترفع الكارب.' },
+      { id:'beef-cooked', name_ar:'لحم بقري مطبوخ', name_en:'Cooked Beef', aliases:['beef','لحم بقري'], category:'لحوم', icon:'🥩', mode:'per100g', carbs:0.0, protein:26.0, fat:15.0, calories:250, source:'USDA', confidence:'high', notes:'القيمة تختلف حسب الدهن والقطعة.' },
+      { id:'lamb-cooked', name_ar:'لحم غنم مطبوخ', name_en:'Cooked Lamb', aliases:['lamb','لحم غنم'], category:'لحوم', icon:'🍖', mode:'per100g', carbs:0.0, protein:25.0, fat:21.0, calories:294, source:'USDA', confidence:'high', notes:'يختلف حسب الدهن وطريقة الطبخ.' },
+      { id:'fish-grilled', name_ar:'سمك مشوي', name_en:'Grilled Fish', aliases:['fish grilled','سمك'], category:'بحري', icon:'🐟', mode:'per100g', carbs:0.0, protein:22.0, fat:4.0, calories:128, source:'USDA / عام', confidence:'high', notes:'بدون تغليفة أو صوص.' },
+      { id:'salmon', name_ar:'سلمون', name_en:'Salmon', aliases:['salmon'], category:'بحري', icon:'🐟', mode:'per100g', carbs:0.0, protein:20.0, fat:13.0, calories:208, source:'USDA', confidence:'high', notes:'الطريقة تختلف بين مشوي ومقلي.' },
+      { id:'shrimp', name_ar:'روبيان', name_en:'Shrimp', aliases:['shrimp','جمبري'], category:'بحري', icon:'🦐', mode:'per100g', carbs:0.2, protein:24.0, fat:0.3, calories:99, source:'USDA', confidence:'high', notes:'بدون تغليفة أو صوص.' },
+      { id:'egg', name_ar:'بيض', name_en:'Egg', aliases:['egg','بيضه','بيض'], category:'بروتين', icon:'🥚', mode:'per100g', carbs:1.1, protein:12.6, fat:10.6, calories:143, source:'USDA', confidence:'high', notes:'القيمة لكل 100 جرام، وليس للبيضة الواحدة مباشرة.' },
 
       // ===== أطباق سعودية / خليجية =====
-      { id:'kabsa', name_ar:'كبسة دجاج', name_en:'Chicken Kabsa', aliases:['كبسة','رز كبسة','kabsa'], category:'أطباق رئيسية', icon:'🍗', mode:'per100g', carbs:28.0, protein:12.0, fat:8.0, calories:250, source:'مكتبة محلية', confidence:'medium', notes:'تختلف بحسب كمية الرز والدهن والدجاج.' },
-      { id:'shawarma', name_ar:'شاورما', name_en:'Shawarma', aliases:['شاورما عربي','shawarma'], category:'أطباق رئيسية', icon:'🥙', mode:'per100g', carbs:35.0, protein:20.0, fat:15.0, calories:400, source:'مكتبة محلية', confidence:'medium', notes:'الخبز والصلصات تغيّر القيم كثيرًا.' },
-      { id:'harees', name_ar:'هريس', name_en:'Harees', aliases:['هريس','harees wheat'], category:'أطباق خليجية', icon:'🥣', mode:'per100g', carbs:30.0, protein:6.0, fat:2.0, calories:170, source:'Arabian', confidence:'medium', notes:'نوع اللحم والسمن يرفع الدهون.' },
+      { id:'kabsa-chicken', name_ar:'كبسة دجاج', name_en:'Chicken Kabsa', aliases:['كبسة','رز كبسة','kabsa'], category:'أطباق رئيسية', icon:'🍗', mode:'per100g', carbs:28.0, protein:12.0, fat:8.0, calories:250, source:'مكتبة محلية', confidence:'medium', notes:'تختلف بحسب كمية الرز والدهن والدجاج.' },
+      { id:'kabsa-meat', name_ar:'كبسة لحم', name_en:'Meat Kabsa', aliases:['كبسة لحم','meat kabsa'], category:'أطباق رئيسية', icon:'🍖', mode:'per100g', carbs:27.0, protein:11.0, fat:10.0, calories:255, source:'مكتبة محلية', confidence:'medium', notes:'نوع اللحم والدهن يرفع السعرات.' },
+      { id:'mandi-chicken', name_ar:'مندي دجاج', name_en:'Chicken Mandi', aliases:['مندي','mandi'], category:'أطباق رئيسية', icon:'🍗', mode:'per100g', carbs:26.0, protein:12.0, fat:7.0, calories:235, source:'Saudi / Gulf', confidence:'medium', notes:'النتيجة تختلف حسب الرز والدهن.' },
+      { id:'madghoot', name_ar:'مضغوط دجاج', name_en:'Chicken Madghoot', aliases:['مضغوط','madghoot'], category:'أطباق رئيسية', icon:'🍗', mode:'per100g', carbs:27.0, protein:12.0, fat:8.0, calories:245, source:'Saudi / Gulf', confidence:'medium', notes:'الرز والتتبيلة يغيّران الرقم.' },
+      { id:'haneeth', name_ar:'حنيذ', name_en:'Haneeth', aliases:['حنيذ','haneeth'], category:'أطباق رئيسية', icon:'🍖', mode:'per100g', carbs:24.0, protein:14.0, fat:10.0, calories:240, source:'Saudi / Gulf', confidence:'medium', notes:'يختلف حسب كمية الرز واللحم.' },
+      { id:'saleeg', name_ar:'سليق', name_en:'Saleeg', aliases:['سليق','saleeg'], category:'أطباق سعودية', icon:'🥣', mode:'per100g', carbs:18.0, protein:4.0, fat:5.0, calories:135, source:'Saudi', confidence:'medium', notes:'الحليب والسمن يرفعان السعرات.' },
+      { id:'jareesh-dish', name_ar:'جريش مطبوخ', name_en:'Jareesh Dish', aliases:['جريش طبخ'], category:'أطباق سعودية', icon:'🥣', mode:'per100g', carbs:25.0, protein:7.0, fat:3.0, calories:150, source:'Saudi', confidence:'medium', notes:'التحضير يختلف بين البيوت.' },
+      { id:'harees', name_ar:'هريس', name_en:'Harees', aliases:['هريس','harees'], category:'أطباق خليجية', icon:'🥣', mode:'per100g', carbs:30.0, protein:6.0, fat:2.0, calories:170, source:'Arabian', confidence:'medium', notes:'نوع اللحم والسمن يرفع الدهون.' },
+      { id:'thareed', name_ar:'ثريد', name_en:'Thareed', aliases:['ثريد','thareed'], category:'أطباق خليجية', icon:'🥘', mode:'per100g', carbs:18.0, protein:4.0, fat:3.0, calories:120, source:'Arabian', confidence:'medium', notes:'الخبز والمرق يغيّران النتيجة كثيرًا.' },
+      { id:'marqooq', name_ar:'مرقوق', name_en:'Marqooq', aliases:['مرقوق','marqooq'], category:'أطباق خليجية', icon:'🥘', mode:'per100g', carbs:20.0, protein:4.0, fat:3.0, calories:125, source:'Saudi', confidence:'medium', notes:'يعتمد على كمية العجين والخضار واللحم.' },
+      { id:'maqshush', name_ar:'معصوب', name_en:'Masoub', aliases:['معصوب','masoub'], category:'أطباق شعبية', icon:'🍌', mode:'per100g', carbs:36.0, protein:4.0, fat:6.0, calories:210, source:'Saudi', confidence:'medium', notes:'الموز والخبز والعسل يرفعون الكارب كثيرًا.' },
+      { id:'sayadiyah', name_ar:'صيادية', name_en:'Sayadiyah', aliases:['صياديه','sayadiyah'], category:'أطباق بحرية', icon:'🐟', mode:'per100g', carbs:25.0, protein:11.0, fat:5.0, calories:185, source:'Arabian', confidence:'medium', notes:'الأرز والبصل يغيّران الكارب والسعرات.' },
+      { id:'qursan', name_ar:'قرصان', name_en:'Qursan', aliases:['قرصان','qursan'], category:'أطباق شعبية', icon:'🥘', mode:'per100g', carbs:22.0, protein:4.0, fat:3.0, calories:130, source:'Saudi', confidence:'medium', notes:'يعتمد على كمية العجين والمرق.' },
+      { id:'shakshuka', name_ar:'شكشوكة', name_en:'Shakshuka', aliases:['شكشوكه','shakshuka'], category:'فطور', icon:'🍳', mode:'per100g', carbs:4.0, protein:6.0, fat:8.0, calories:110, source:'Middle Eastern', confidence:'medium', notes:'الخبز المرافق ليس داخل القيمة.' },
 
-      // ===== وجبات سريعة / عامة =====
+      // ===== ساندويتشات ووجبات سريعة عامة =====
       { id:'burger', name_ar:'برجر', name_en:'Burger', aliases:['برغر','burger','cheeseburger'], category:'وجبات سريعة', icon:'🍔', mode:'per100g', carbs:40.0, protein:28.0, fat:35.0, calories:580, source:'مطاعم / تقدير', confidence:'medium', notes:'الجبن والصلصات وحجم الخبز يغيّر النتيجة.' },
       { id:'broast', name_ar:'بروست', name_en:'Broast', aliases:['بروستد','broast','fried chicken'], category:'وجبات سريعة', icon:'🍗', mode:'per100g', carbs:15.0, protein:22.0, fat:18.0, calories:310, source:'مطاعم / تقدير', confidence:'medium', notes:'نوع التغليفة وحجم القطعة يفرّق كثير.' },
       { id:'pizza', name_ar:'بيتزا', name_en:'Pizza', aliases:['pizza','بيتزا جبن','بيتزا خضار','بيتزا بيبروني'], category:'وجبات سريعة', icon:'🍕', mode:'per100g', carbs:60.0, protein:20.0, fat:25.0, calories:550, source:'مطاعم / تقدير', confidence:'medium', notes:'نوع العجينة والحشوة يغيّر النتيجة.' },
       { id:'fries', name_ar:'بطاطس مقلية', name_en:'French Fries', aliases:['بطاطس','فرنش فرايز','fries','french fries'], category:'وجبات سريعة', icon:'🍟', mode:'per100g', carbs:41.0, protein:3.4, fat:15.0, calories:312, source:'مطاعم / USDA', confidence:'medium', notes:'الزيت والسماكة وطريقة القلي تؤثر على النتيجة.' },
-      { id:'kfc-chicken', name_ar:'دجاج كنتاكي', name_en:'KFC Chicken', aliases:['kfc chicken','كنتاكي','دجاج كنتاكي'], category:'وجبات سريعة', icon:'🍗', mode:'per100g', carbs:15.0, protein:20.0, fat:25.0, calories:380, source:'Fast Food', confidence:'medium', notes:'يعتمد على نوع القطعة والتغليفة.' },
-      { id:'chicken-nuggets', name_ar:'دجاج ناجتس', name_en:'Chicken Nuggets', aliases:['ناجتس','nuggets','chicken nuggets'], category:'وجبات سريعة', icon:'🍗', mode:'per100g', carbs:16.0, protein:15.0, fat:20.0, calories:300, source:'Fast Food', confidence:'medium', notes:'البراند والحجم وطريقة القلي تغيّر القيم.' },
-      { id:'chicken-strips', name_ar:'دجاج ستربس', name_en:'Chicken Strips', aliases:['strips','chicken strips','ستربس'], category:'وجبات سريعة', icon:'🍗', mode:'per100g', carbs:15.0, protein:18.0, fat:15.0, calories:280, source:'Fast Food', confidence:'medium', notes:'تقريب مناسب إذا ما عرفت المنتج بالضبط.' },
+      { id:'shawarma', name_ar:'شاورما', name_en:'Shawarma', aliases:['شاورما عربي','shawarma'], category:'أطباق رئيسية', icon:'🥙', mode:'per100g', carbs:35.0, protein:20.0, fat:15.0, calories:400, source:'مكتبة محلية', confidence:'medium', notes:'الخبز والصلصات تغيّر القيم كثيرًا.' },
+      { id:'falafel-sandwich', name_ar:'ساندويتش فلافل', name_en:'Falafel Sandwich', aliases:['فلافل','falafel sandwich'], category:'ساندويتشات', icon:'🥙', mode:'per100g', carbs:32.0, protein:8.0, fat:9.0, calories:240, source:'Middle Eastern', confidence:'medium', notes:'الخبز والصلصات تحدث فرقًا.' },
+      { id:'hotdog', name_ar:'هوت دوغ', name_en:'Hot Dog', aliases:['hotdog','هوت دوج'], category:'وجبات سريعة', icon:'🌭', mode:'per100g', carbs:18.0, protein:11.0, fat:17.0, calories:250, source:'Fast Food', confidence:'medium', notes:'القيمة تقريبية مع الخبز.' },
+      { id:'sandwich-tuna', name_ar:'ساندويتش تونة', name_en:'Tuna Sandwich', aliases:['تونة ساندويتش','tuna sandwich'], category:'ساندويتشات', icon:'🥪', mode:'per100g', carbs:24.0, protein:14.0, fat:8.0, calories:220, source:'عام', confidence:'medium', notes:'المايونيز والخبز يغيّران الرقم.' },
+      { id:'club-sandwich', name_ar:'كلوب ساندويتش', name_en:'Club Sandwich', aliases:['club sandwich'], category:'ساندويتشات', icon:'🥪', mode:'per100g', carbs:23.0, protein:13.0, fat:11.0, calories:235, source:'عام', confidence:'medium', notes:'القيم تقريبية.' },
 
-      // ===== تقديري منزلي =====
+      // ===== كنتاكي / براندات =====
+      { id:'kfc-original-piece', name_ar:'كنتاكي - قطعة دجاج أصلية', name_en:'KFC Original Recipe Piece', aliases:['kfc original','قطعة كنتاكي','original recipe'], category:'براندات / كنتاكي', icon:'🍗', mode:'serving', carbs:5.0, protein:18.0, fat:12.0, calories:170, source:'KFC', confidence:'medium', notes:'قيمة تقريبية للقطعة الواحدة.' },
+      { id:'kfc-zinger-fillet', name_ar:'كنتاكي - زينجر فيليه', name_en:'KFC Zinger Fillet', aliases:['زينجر فيليه','zinger fillet'], category:'براندات / كنتاكي', icon:'🍗', mode:'serving', carbs:16.0, protein:17.0, fat:16.0, calories:270, source:'KFC', confidence:'medium', notes:'للقطعة/الفيلية تقريبًا.' },
+      { id:'kfc-or-fillet', name_ar:'كنتاكي - أورجينال فيليه', name_en:'KFC Original Fillet', aliases:['اورجينال فيليه','or fillet'], category:'براندات / كنتاكي', icon:'🍗', mode:'serving', carbs:14.0, protein:16.0, fat:14.0, calories:245, source:'KFC', confidence:'medium', notes:'القيمة تقريبية للحصة.' },
+      { id:'kfc-zinger-supreme', name_ar:'كنتاكي - زينجر سوبريم', name_en:'KFC Zinger Supreme', aliases:['زينجر سوبريم','zinger supreme'], category:'براندات / كنتاكي', icon:'🍔', mode:'serving', carbs:58.0, protein:27.0, fat:27.0, calories:685, source:'KFC', confidence:'medium', notes:'ساندويتش بالحصة.' },
+      { id:'kfc-original-supreme', name_ar:'كنتاكي - أورجينال سوبريم', name_en:'KFC Original Supreme', aliases:['اورجينال سوبريم','or supreme'], category:'براندات / كنتاكي', icon:'🍔', mode:'serving', carbs:54.0, protein:25.0, fat:24.0, calories:640, source:'KFC', confidence:'medium', notes:'ساندويتش بالحصة.' },
+      { id:'kfc-zinger-twister', name_ar:'كنتاكي - زينجر تويستر', name_en:'KFC Zinger Twister', aliases:['زينجر تويستر','zinger twister'], category:'براندات / كنتاكي', icon:'🌯', mode:'serving', carbs:49.0, protein:20.0, fat:22.0, calories:560, source:'KFC', confidence:'medium', notes:'لفافة بالحصة.' },
+      { id:'kfc-original-twister', name_ar:'كنتاكي - أورجينال تويستر', name_en:'KFC Original Twister', aliases:['اورجينال تويستر','or twister'], category:'براندات / كنتاكي', icon:'🌯', mode:'serving', carbs:46.0, protein:19.0, fat:20.0, calories:525, source:'KFC', confidence:'medium', notes:'لفافة بالحصة.' },
+      { id:'kfc-popcorn', name_ar:'كنتاكي - بوب كورن دجاج', name_en:'KFC Chicken Popcorn', aliases:['بوب كورن دجاج','chicken popcorn'], category:'براندات / كنتاكي', icon:'🍗', mode:'serving', carbs:17.0, protein:15.0, fat:16.0, calories:260, source:'KFC', confidence:'medium', notes:'قيمة تقريبية للحصة.' },
+      { id:'kfc-nuggets', name_ar:'كنتاكي - ناجتس', name_en:'KFC Nuggets', aliases:['ناجتس كنتاكي','kfc nuggets'], category:'براندات / كنتاكي', icon:'🍗', mode:'serving', carbs:14.0, protein:11.0, fat:14.0, calories:220, source:'KFC', confidence:'medium', notes:'للحصة التقريبية.' },
+      { id:'kfc-fries', name_ar:'كنتاكي - بطاطس', name_en:'KFC Fries', aliases:['بطاطس كنتاكي','kfc fries'], category:'براندات / كنتاكي', icon:'🍟', mode:'serving', carbs:35.0, protein:4.0, fat:14.0, calories:280, source:'KFC', confidence:'medium', notes:'للحصة.' },
+      { id:'kfc-coleslaw', name_ar:'كنتاكي - كولسلو', name_en:'KFC Coleslaw', aliases:['coleslaw','كولسلو'], category:'براندات / كنتاكي', icon:'🥗', mode:'serving', carbs:10.0, protein:1.0, fat:9.0, calories:130, source:'KFC', confidence:'medium', notes:'للحصة التقريبية.' },
+
+      // ===== أكلات منزلية تقديرية =====
       { id:'pasta-red', name_ar:'مكرونة حمراء منزلية', name_en:'Red Sauce Pasta', aliases:['مكرونة حمراء','معكرونة حمراء','red pasta'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.04, fat_ratio:0.03, calorie_ratio:1.35, source:'تقدير منزلي', confidence:'estimate', notes:'هذه نتيجة تقديرية حسب الوزن. الصوص والإضافات تغيّر القيم.' },
       { id:'pasta-red-veg', name_ar:'مكرونة حمراء مع خضار', name_en:'Vegetable Red Pasta', aliases:['مكرونة خضار','vegetable pasta'], category:'منزلي تقديري', icon:'🥗', mode:'estimated_ratio', carb_ratio:0.15, protein_ratio:0.03, fat_ratio:0.02, calorie_ratio:1.05, source:'تقدير منزلي', confidence:'estimate', notes:'كلما زادت الخضار وقلت المعكرونة نزل الكارب.' },
-      { id:'fettuccine', name_ar:'مكرونة بيضاء - فوتشيني', name_en:'Fettuccine', aliases:['فوتشيني','fettuccine'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.05, fat_ratio:0.05, calorie_ratio:1.60, source:'تقدير منزلي', confidence:'estimate', notes:'يختلف حسب الكريمة والجبن.' },
+      { id:'fettuccine-home', name_ar:'مكرونة بيضاء - فوتشيني', name_en:'Fettuccine', aliases:['فوتشيني','fettuccine'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.05, fat_ratio:0.05, calorie_ratio:1.60, source:'تقدير منزلي', confidence:'estimate', notes:'يختلف حسب الكريمة والجبن.' },
       { id:'bechamel-more-meat', name_ar:'مكرونة بشاميل (اللحم أكثر)', name_en:'Bechamel Pasta High Meat', aliases:['بشاميل لحم أكثر'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.07, fat_ratio:0.08, calorie_ratio:1.95, source:'تقدير منزلي', confidence:'estimate', notes:'التركيبة تختلف بين بيت وبيت.' },
       { id:'bechamel-more-pasta', name_ar:'مكرونة بشاميل (المكرونة أكثر)', name_en:'Bechamel Pasta High Pasta', aliases:['بشاميل مكرونة أكثر'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.25, protein_ratio:0.06, fat_ratio:0.07, calorie_ratio:2.00, source:'تقدير منزلي', confidence:'estimate', notes:'إذا كانت المكرونة أكثر فالكارب أعلى غالبًا.' },
       { id:'lasagna', name_ar:'لازانيا', name_en:'Lasagna', aliases:['لازانيا','lasagna'], category:'منزلي تقديري', icon:'🧀', mode:'estimated_ratio', carb_ratio:0.15, protein_ratio:0.06, fat_ratio:0.07, calorie_ratio:1.85, source:'تقدير منزلي', confidence:'estimate', notes:'البشاميل والجبن واللحم يرفعون الدهون والسعرات.' },
       { id:'pink-sauce-pasta', name_ar:'مكرونة بنك صوص', name_en:'Pink Sauce Pasta', aliases:['بنك صوص','pink sauce pasta'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.05, fat_ratio:0.05, calorie_ratio:1.60, source:'تقدير منزلي', confidence:'estimate', notes:'نتيجة تقريبية حسب الوزن.' },
-      { id:'spaghetti', name_ar:'مكرونة سباغيتي', name_en:'Spaghetti', aliases:['سباغيتي','spaghetti'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.04, fat_ratio:0.03, calorie_ratio:1.35, source:'تقدير منزلي', confidence:'estimate', notes:'تختلف حسب الصوص والإضافات.' },
+      { id:'spaghetti-home', name_ar:'مكرونة سباغيتي', name_en:'Spaghetti', aliases:['سباغيتي','spaghetti'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.04, fat_ratio:0.03, calorie_ratio:1.35, source:'تقدير منزلي', confidence:'estimate', notes:'تختلف حسب الصوص والإضافات.' },
       { id:'pesto-pasta', name_ar:'مكرونة بصوص البيستو', name_en:'Pesto Pasta', aliases:['بيستو','pesto pasta'], category:'منزلي تقديري', icon:'🌿', mode:'estimated_ratio', carb_ratio:0.17, protein_ratio:0.04, fat_ratio:0.07, calorie_ratio:1.80, source:'تقدير منزلي', confidence:'estimate', notes:'البيستو يرفع الدهون عادة.' },
       { id:'spinach-pasta', name_ar:'مكرونة سبانخ', name_en:'Spinach Pasta', aliases:['سبانخ pasta','spinach pasta'], category:'منزلي تقديري', icon:'🥬', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.04, fat_ratio:0.03, calorie_ratio:1.30, source:'تقدير منزلي', confidence:'estimate', notes:'تقريب مناسب إذا ما كان عندك وصفة أدق.' },
-      { id:'mac-cheese', name_ar:'ماك اند تشيز', name_en:'Mac and Cheese', aliases:['مكرونة أجبان','mac and cheese'], category:'منزلي تقديري', icon:'🧀', mode:'estimated_ratio', carb_ratio:0.17, protein_ratio:0.05, fat_ratio:0.07, calorie_ratio:1.90, source:'تقدير منزلي', confidence:'estimate', notes:'الجبن والزبدة يغيّرون السعرات بشكل واضح.' }
+      { id:'mac-cheese', name_ar:'ماك اند تشيز', name_en:'Mac and Cheese', aliases:['مكرونة أجبان','mac and cheese'], category:'منزلي تقديري', icon:'🧀', mode:'estimated_ratio', carb_ratio:0.17, protein_ratio:0.05, fat_ratio:0.07, calorie_ratio:1.90, source:'تقدير منزلي', confidence:'estimate', notes:'الجبن والزبدة يغيّرون السعرات بشكل واضح.' },
+      { id:'rice-pudding', name_ar:'رز بحليب', name_en:'Rice Pudding', aliases:['رز بالحليب','rice pudding'], category:'منزلي تقديري', icon:'🍚', mode:'estimated_ratio', carb_ratio:0.22, protein_ratio:0.03, fat_ratio:0.03, calorie_ratio:1.35, source:'تقدير منزلي', confidence:'estimate', notes:'الحليب والسكر يغيّران النتيجة حسب الوصفة.' },
+      { id:'bread-pudding', name_ar:'بودينغ خبز', name_en:'Bread Pudding', aliases:['bread pudding'], category:'منزلي تقديري', icon:'🍞', mode:'estimated_ratio', carb_ratio:0.28, protein_ratio:0.05, fat_ratio:0.08, calorie_ratio:2.20, source:'تقدير منزلي', confidence:'estimate', notes:'وصفة عالية الكارب نسبيًا.' },
+      { id:'porridge-oats-home', name_ar:'شوفان بالحليب منزلي', name_en:'Homemade Oat Porridge', aliases:['شوفان بالحليب','oat porridge'], category:'منزلي تقديري', icon:'🥣', mode:'estimated_ratio', carb_ratio:0.14, protein_ratio:0.04, fat_ratio:0.03, calorie_ratio:1.05, source:'تقدير منزلي', confidence:'estimate', notes:'إذا كان فيه عسل أو فواكه يرتفع الكارب.' }
     ];
 
     let selectedMeal = null;
@@ -1717,13 +1814,13 @@
 
           return a.name_ar.localeCompare(b.name_ar, 'ar');
         })
-        .slice(0, 12);
+        .slice(0, 16);
     }
 
     function buildSuggestionItem(item){
       const carbsLabel = item.mode === 'estimated_ratio'
         ? `${Math.round(item.carb_ratio * 100)}g/100g تقديري`
-        : `${Number(item.carbs).toFixed( item.carbs % 1 ? 1 : 0 )}g${item.mode === 'per100g' ? '/100g' : ''}`;
+        : `${Number(item.carbs).toFixed(item.carbs % 1 ? 1 : 0)}g${item.mode === 'per100g' ? '/100g' : ''}`;
 
       return `
         <div class="suggestion-item" onclick="selectMeal('${item.id}')">
@@ -1925,8 +2022,8 @@
         return `التمر يختلف كثيرًا بالحجم والنوع، لذلك وزن ${weight}g يعطيك نتيجة أوثق من عدّ الحبات فقط.`;
       }
 
-      if(item.category === 'وجبات سريعة'){
-        return `الوجبات السريعة يتغير فيها الكارب حسب الخبز أو التغليفة أو الصوص. النتيجة هنا مناسبة كبداية، لكن قد تختلف قليلًا بين مكان ومكان.`;
+      if(item.category === 'وجبات سريعة' || item.category.includes('كنتاكي') || item.category.includes('براندات')){
+        return `الوجبات السريعة والبراندات تختلف حسب الحجم النهائي والوصفة والفرع أحيانًا. النتيجة هنا مناسبة كبداية ومقارنة عملية.`;
       }
 
       if(item.userCreated){
@@ -1979,8 +2076,18 @@
         notes: selectedMeal.notes,
         userCreated: !!selectedMeal.userCreated,
         basePer100: selectedMeal.mode === 'estimated_ratio'
-          ? { carbs: safeRound((selectedMeal.carb_ratio || 0) * 100, 1), protein: safeRound((selectedMeal.protein_ratio || 0) * 100, 1), fat: safeRound((selectedMeal.fat_ratio || 0) * 100, 1), calories: safeRound((selectedMeal.calorie_ratio || 0) * 100, 0) }
-          : { carbs: selectedMeal.carbs || 0, protein: selectedMeal.protein || 0, fat: selectedMeal.fat || 0, calories: selectedMeal.calories || 0 },
+          ? {
+              carbs: safeRound((selectedMeal.carb_ratio || 0) * 100, 1),
+              protein: safeRound((selectedMeal.protein_ratio || 0) * 100, 1),
+              fat: safeRound((selectedMeal.fat_ratio || 0) * 100, 1),
+              calories: safeRound((selectedMeal.calorie_ratio || 0) * 100, 0)
+            }
+          : {
+              carbs: selectedMeal.carbs || 0,
+              protein: selectedMeal.protein || 0,
+              fat: selectedMeal.fat || 0,
+              calories: selectedMeal.calories || 0
+            },
         savedAt: new Date().toISOString()
       };
 
@@ -2059,9 +2166,7 @@
       }
 
       const proposedName = prompt('وش الاسم اللي تبي تحفظ فيه الصنف داخل مكتبتك؟', lastResult.name);
-      if(!proposedName || !proposedName.trim()){
-        return;
-      }
+      if(!proposedName || !proposedName.trim()) return;
 
       const name = proposedName.trim();
       const customFoods = getCustomFoods();
@@ -2071,7 +2176,7 @@
         name_ar: name,
         name_en: lastResult.name_en || '',
         aliases: [name],
-        category: `من مكتبتي`,
+        category: 'من مكتبتي',
         icon: lastResult.icon || '📚',
         mode: 'per100g',
         carbs: safeRound((lastResult.carbs / lastResult.weight) * 100, 1),
