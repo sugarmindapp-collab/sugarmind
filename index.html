@@ -4,11 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>SugarMind - رفيقك اليومي</title>
-  <meta name="description" content="رفيقك اليومي لفهم القراءة والوجبة ومعامل الكارب بشكل أوضح." />
+  <meta name="description" content="واجهة يومية أوضح لحالتك، تساعدك في القراءة، الوجبة، والمعامل بشكل أقرب وأسهل." />
   <meta name="theme-color" content="#F6F3EE" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
+  <!-- Google tag -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ44R4V060"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -30,30 +31,30 @@
       --surface:#FFFFFF;
       --surface-2:#F8F6F2;
       --surface-3:#F0ECE7;
-      --hero:#252B3F;
-      --hero-2:#45496A;
-      --hero-3:#7D8BAE;
+      --hero:#21283B;
+      --hero-2:#343C59;
+      --hero-3:#7E8DB1;
       --primary:#7BAA92;
-      --primary-2:#A9C9B9;
+      --primary-2:#9FC5B1;
       --ink:#1D2433;
       --ink-2:#667085;
       --ink-3:#8C94A4;
       --line:#E6E1D8;
-      --success:#61B07F;
+      --success:#56D46F;
       --warning:#E6B85C;
-      --danger:#DA726D;
-      --shadow-lg:0 24px 60px rgba(30,36,51,.12);
+      --danger:#D66560;
+      --shadow-lg:0 26px 60px rgba(30,36,51,.12);
       --shadow-md:0 16px 32px rgba(30,36,51,.08);
       --shadow-sm:0 10px 18px rgba(30,36,51,.05);
       --shadow-hover:0 20px 30px rgba(30,36,51,.12);
-      --radius-xxl:32px;
-      --radius-xl:26px;
+      --radius-xxl:34px;
+      --radius-xl:28px;
       --radius-lg:22px;
       --radius-md:18px;
       --radius-sm:14px;
       --safe-top:env(safe-area-inset-top);
       --safe-bottom:env(safe-area-inset-bottom);
-      --max-width:500px;
+      --max-width:520px;
       --ease:cubic-bezier(.2,.8,.2,1);
     }
 
@@ -75,8 +76,8 @@
       min-height:100vh;
       color:var(--ink);
       background:
-        radial-gradient(circle at top left, rgba(123,170,146,.08), transparent 30%),
-        radial-gradient(circle at top right, rgba(125,139,174,.08), transparent 30%),
+        radial-gradient(circle at top left, rgba(123,170,146,.07), transparent 28%),
+        radial-gradient(circle at top right, rgba(126,141,177,.08), transparent 30%),
         linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
       overflow-x:hidden;
       -webkit-font-smoothing:antialiased;
@@ -97,6 +98,7 @@
       background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
     }
 
+    /* Splash */
     .splash{
       position:fixed;
       inset:0;
@@ -120,15 +122,15 @@
     }
 
     .splash-mark{
-      width:108px;
-      height:108px;
-      border-radius:30px;
+      width:110px;
+      height:110px;
+      border-radius:32px;
       margin:0 auto 20px;
       display:flex;
       align-items:center;
       justify-content:center;
-      background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 58%, var(--primary) 100%);
-      box-shadow:0 20px 50px rgba(69,73,106,.20), inset 0 1px 0 rgba(255,255,255,.18);
+      background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 56%, var(--primary) 100%);
+      box-shadow:0 22px 54px rgba(69,73,106,.20), inset 0 1px 0 rgba(255,255,255,.18);
     }
 
     .splash-mark svg{width:56px;height:34px}
@@ -181,10 +183,11 @@
       max-width:var(--max-width);
       margin:0 auto;
       min-height:100vh;
-      padding:calc(12px + var(--safe-top)) 18px calc(120px + var(--safe-bottom));
+      padding:calc(12px + var(--safe-top)) 18px calc(124px + var(--safe-bottom));
       position:relative;
     }
 
+    /* Top */
     .topbar{
       display:flex;
       align-items:center;
@@ -201,9 +204,9 @@
     }
 
     .brand-mark{
-      width:52px;
-      height:52px;
-      border-radius:17px;
+      width:54px;
+      height:54px;
+      border-radius:18px;
       flex-shrink:0;
       display:flex;
       align-items:center;
@@ -222,7 +225,7 @@
     }
 
     .brand-name{
-      font-size:18px;
+      font-size:19px;
       font-weight:900;
       color:var(--ink);
       line-height:1;
@@ -245,10 +248,10 @@
       min-height:46px;
       border-radius:16px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.65);
+      background:rgba(255,255,255,.7);
       color:var(--ink);
       box-shadow:var(--shadow-sm);
-      transition:transform .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease);
+      transition:transform .22s var(--ease), border-color .22s var(--ease);
       padding:0 14px;
       display:none;
       align-items:center;
@@ -262,7 +265,10 @@
       border-color:rgba(69,73,106,.20);
     }
 
-    .greeting{margin-bottom:18px}
+    /* Greeting */
+    .greeting{
+      margin-bottom:18px;
+    }
 
     .time-chip{
       display:inline-flex;
@@ -272,7 +278,7 @@
       padding:0 12px;
       border-radius:999px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.84);
+      background:rgba(255,255,255,.86);
       color:#6F7890;
       font-size:12px;
       font-weight:900;
@@ -295,6 +301,7 @@
       line-height:1.7;
     }
 
+    /* Sections */
     .section{
       margin-bottom:26px;
       position:relative;
@@ -336,12 +343,12 @@
       border-radius:999px;
     }
 
-    /* البطاقة اليومية */
+    /* Daily card */
     .card-shell{
       position:relative;
       border-radius:28px;
       padding:4px;
-      background:linear-gradient(135deg, rgba(255,255,255,.94), rgba(255,255,255,.36));
+      background:linear-gradient(135deg, rgba(255,255,255,.94), rgba(255,255,255,.38));
       box-shadow:
         0 40px 80px rgba(24,30,45,.20),
         0 0 0 1px rgba(255,255,255,.6) inset;
@@ -352,13 +359,13 @@
 
     .wallet-card{
       position:relative;
-      min-height:252px;
+      min-height:256px;
       padding:24px 22px 20px;
       border-radius:24px;
       background:
-        radial-gradient(circle at 0% 20%, rgba(255,255,255,.15) 0%, transparent 40%),
-        radial-gradient(circle at 100% 80%, rgba(123,170,146,.25) 0%, transparent 50%),
-        linear-gradient(165deg, #1E2639 0%, #2A2F45 50%, #1F2A3A 100%);
+        radial-gradient(circle at 10% 18%, rgba(255,255,255,.16) 0%, transparent 34%),
+        radial-gradient(circle at 100% 82%, rgba(123,170,146,.24) 0%, transparent 40%),
+        linear-gradient(165deg, #1E2639 0%, #28304A 48%, #1E2738 100%);
       color:#fff;
       overflow:hidden;
       box-shadow:
@@ -377,9 +384,9 @@
       background:linear-gradient(
         45deg,
         transparent 40%,
-        rgba(255,255,255,.1) 45%,
+        rgba(255,255,255,.08) 45%,
         rgba(255,255,255,.22) 50%,
-        rgba(255,255,255,.1) 55%,
+        rgba(255,255,255,.08) 55%,
         transparent 60%
       );
       transform:rotate(30deg) translateX(-100%);
@@ -447,7 +454,10 @@
       z-index:2;
     }
 
-    .wallet-name-wrap{flex:1;min-width:0}
+    .wallet-name-wrap{
+      flex:1;
+      min-width:0;
+    }
 
     .wallet-name{
       font-size:clamp(36px, 8vw, 48px);
@@ -468,7 +478,7 @@
     }
 
     .wallet-reading-wrap{
-      min-width:128px;
+      min-width:132px;
       text-align:left;
       flex-shrink:0;
     }
@@ -552,7 +562,7 @@
       box-shadow:0 10px 20px rgba(0,0,0,.18);
     }
 
-    /* أزرار البطاقة */
+    /* Card actions */
     .card-actions{
       display:grid;
       grid-template-columns:1fr 1fr 1fr;
@@ -570,7 +580,6 @@
       padding:0 16px;
       font-size:14px;
       font-weight:800;
-      letter-spacing:0;
       transition:all .25s var(--ease);
       cursor:pointer;
       position:relative;
@@ -580,7 +589,7 @@
       line-height:1;
     }
 
-    .btn span.icon{
+    .btn .icon{
       font-size:16px;
       line-height:1;
       flex-shrink:0;
@@ -630,7 +639,7 @@
       transform:translateY(-2px);
     }
 
-    /* القراءة السريعة */
+    /* Scan */
     .scan-card{
       background:var(--surface);
       border:1px solid var(--line);
@@ -714,7 +723,9 @@
       transform:translateY(-1px);
     }
 
-    .input::placeholder{color:var(--ink-3)}
+    .input::placeholder{
+      color:var(--ink-3);
+    }
 
     .scan-result{
       background:linear-gradient(180deg, var(--surface-2) 0%, #fff 100%);
@@ -792,7 +803,7 @@
       box-shadow:0 8px 16px rgba(123,170,146,.25);
     }
 
-    /* الأدوات */
+    /* Tools */
     .quick-grid{
       display:grid;
       grid-template-columns:repeat(3, 1fr);
@@ -866,10 +877,14 @@
       line-height:1.6;
     }
 
-    /* شارك الاهتمام */
-    .share-cta-section{margin-top:4px}
+    /* Share CTA */
+    .share-cta-section{
+      margin-top:4px;
+    }
 
-    .share-cta-copy{margin-bottom:12px}
+    .share-cta-copy{
+      margin-bottom:12px;
+    }
 
     .share-cta-eyebrow{
       display:inline-flex;
@@ -919,7 +934,7 @@
       box-shadow:0 22px 34px rgba(42,47,69,.22);
     }
 
-    /* التنقل */
+    /* Bottom nav */
     .bottom-nav-wrap{
       position:fixed;
       right:0;
@@ -988,7 +1003,7 @@
       border-radius:50%;
     }
 
-    /* الشيت */
+    /* Sheets */
     .sheet-overlay{
       position:fixed;
       inset:0;
@@ -1020,7 +1035,9 @@
       transition:transform .3s var(--ease);
     }
 
-    .sheet-overlay.show .sheet{transform:translateY(0)}
+    .sheet-overlay.show .sheet{
+      transform:translateY(0);
+    }
 
     .sheet-handle{
       width:40px;
@@ -1073,7 +1090,9 @@
       transform:rotate(90deg);
     }
 
-    .field{margin-bottom:14px}
+    .field{
+      margin-bottom:14px;
+    }
 
     .field label{
       display:block;
@@ -1144,6 +1163,7 @@
 
     .hidden{display:none !important}
 
+    /* Toast */
     .toast{
       position:fixed;
       right:50%;
@@ -1505,8 +1525,8 @@
 
   <script>
     const KEYS = {
-      PROFILE: 'sugarmind_profile_v2',
-      HOME: 'sugarmind_home_v2',
+      PROFILE: 'sugarmind_profile_v3',
+      HOME: 'sugarmind_home_v3',
       USER_LEGACY: 'sugarmind_user',
       GUIDE_LEGACY: 'sugarmind_v5',
       ICR: 'sugarmind_icr_result_v2',
@@ -1670,9 +1690,9 @@
 
       return {
         key:'very-high',
-        label:'مرتفع جداً',
+        label:'مرتفع جدًا',
         tag:'خطر',
-        message:'قراءتك مرتفعة جداً، تحتاج انتباه أعلى.',
+        message:'قراءتك مرتفعة جدًا، تحتاج انتباه أعلى.',
         className:'status-very-high'
       };
     }
@@ -1716,7 +1736,9 @@
     function setGreeting(){
       const period = getPeriod();
       const name = state.profile?.name?.trim();
+
       els.timeChip.innerHTML = `${period.icon} <span>${period.hint}</span>`;
+
       if(name){
         els.greetingTitle.textContent = `${period.label} يا ${name}`;
         els.greetingSub.textContent = period.subWithName;
@@ -1795,7 +1817,6 @@
     function saveReading(){
       const name = els.nameInput.value.trim();
       const readingValue = Number(els.readingInput.value.trim());
-      const time = currentTimeValue();
 
       if(!name){
         showToast('اكتب اسمك أولًا');
@@ -1812,7 +1833,7 @@
       state.profile = { name };
       state.home = {
         reading: readingValue,
-        time,
+        time: currentTimeValue(),
         savedAt: new Date().toISOString()
       };
 
@@ -1845,16 +1866,19 @@
 
     function handleQuickReading(){
       const value = Number(els.quickReadingInput.value.trim());
+
       if(!Number.isFinite(value) || value < 20 || value > 600){
         showToast('أدخل قراءة واضحة بين 20 و 600');
         els.quickReadingInput.focus();
         return;
       }
+
       setQuickReadingResult(value);
     }
 
     function saveQuickReadingToCard(){
       const value = Number(els.quickReadingValue.textContent);
+
       if(!Number.isFinite(value) || value < 20 || value > 600){
         showToast('لا توجد قراءة صالحة للحفظ');
         return;
@@ -1898,8 +1922,7 @@
         tag: stateInfo.tag,
         message: stateInfo.message,
         status: stateInfo.label,
-        ratio,
-        app: 'SugarMind'
+        ratio
       };
     }
 
@@ -1908,20 +1931,26 @@
 
       if(sharerName){
         return {
-          kicker:`${sharerName} يهمه أمرك`,
-          title:`${sharerName} شارك لك SugarMind لأنه قد يخفف عليك لخبطة السكر اليومية`,
-          sub:'تطبيق يفهم تعب كارب الوجبة، المعامل، والتصحيح بشكل أقرب وأوضح.',
+          eyebrow:'مشاركة باهتمام',
+          fromLine:`${sharerName} يهمه أمرك`,
+          title1:`${sharerName} شارك لك هذا`,
+          title2:'لأنه قد يخفف عليك',
+          title3:'لخبطة السكر اليومية',
+          sub:'أداة أقرب لفهم الوجبة، المعامل، والتصحيح.',
           messageTitle:'رسالة باهتمام',
-          messageCopy:`${sharerName} حاب يوصلك شيء ممكن يساعدك فعلًا، لأن يوم السكر مو دائمًا سهل، ووجود أداة أوضح يفرق كثير.`
+          messageCopy:`${sharerName} حب يوصل لك شيء ممكن يفيدك فعلًا، لأن يوم السكر مو دائمًا سهل، ووجود أداة أوضح يفرق كثير.`
         };
       }
 
       return {
-        kicker:'فيه أحد يهمه أمرك',
-        title:'أحد قريب منك شارك لك SugarMind لأنه قد يخفف عليك لخبطة السكر اليومية',
-        sub:'تطبيق يفهم تعب كارب الوجبة، المعامل، والتصحيح بشكل أقرب وأوضح.',
+        eyebrow:'مشاركة باهتمام',
+        fromLine:'فيه أحد يهمه أمرك',
+        title1:'تمت مشاركة هذا معك',
+        title2:'لأنه قد يخفف عليك',
+        title3:'لخبطة السكر اليومية',
+        sub:'أداة أقرب لفهم الوجبة، المعامل، والتصحيح.',
         messageTitle:'رسالة باهتمام',
-        messageCopy:'أحد قريب منك شارك لك هذا التطبيق لأنه يعرف أن يوم السكر أحيانًا يتعب، وودّه يوصلك شيء يسهّل عليك أكثر.'
+        messageCopy:'أحد قريب منك شارك لك هذا لأنه يعرف أن يوم السكر أحيانًا يتعب، وودّه يوصلك شيء يسهّل عليك أكثر.'
       };
     }
 
@@ -1936,7 +1965,6 @@
 
     async function generateQrCanvas(url, size = 220){
       const box = document.createElement('div');
-      box.innerHTML = '';
       els.qrStage.appendChild(box);
 
       new QRCode(box, {
@@ -1948,7 +1976,7 @@
         correctLevel: QRCode.CorrectLevel.M
       });
 
-      await new Promise(resolve => setTimeout(resolve, 60));
+      await new Promise(resolve => setTimeout(resolve, 70));
 
       const qrCanvas = box.querySelector('canvas');
       if(qrCanvas){
@@ -1962,13 +1990,14 @@
           if(img.complete) resolve();
           else img.onload = resolve;
         });
+
         const c = document.createElement('canvas');
         c.width = size;
         c.height = size;
-        const ctx = c.getContext('2d');
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(0,0,size,size);
-        ctx.drawImage(img, 0, 0, size, size);
+        const cctx = c.getContext('2d');
+        cctx.fillStyle = '#fff';
+        cctx.fillRect(0,0,size,size);
+        cctx.drawImage(img, 0, 0, size, size);
         els.qrStage.removeChild(box);
         return c;
       }
@@ -2005,6 +2034,19 @@
       ctx.restore();
     }
 
+    function setupText(ctx, font, color, align = 'right'){
+      ctx.save();
+      ctx.font = font;
+      ctx.fillStyle = color;
+      ctx.textAlign = align;
+      ctx.textBaseline = 'alphabetic';
+      if('direction' in ctx) ctx.direction = 'rtl';
+    }
+
+    function endText(ctx){
+      ctx.restore();
+    }
+
     function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 10){
       const words = String(text).split(' ');
       let line = '';
@@ -2027,19 +2069,6 @@
       });
 
       return finalLines.length;
-    }
-
-    function setupText(ctx, font, color, align = 'right'){
-      ctx.save();
-      ctx.font = font;
-      ctx.fillStyle = color;
-      ctx.textAlign = align;
-      ctx.textBaseline = 'alphabetic';
-      if('direction' in ctx) ctx.direction = 'rtl';
-    }
-
-    function endText(ctx){
-      ctx.restore();
     }
 
     function drawBrandMark(ctx, x, y, size){
@@ -2075,33 +2104,33 @@
     function drawPremiumBackground(ctx, width, height){
       const g = ctx.createLinearGradient(0, 0, width, height);
       g.addColorStop(0, '#20273A');
-      g.addColorStop(.48, '#2D3350');
-      g.addColorStop(1, '#1F2A3A');
+      g.addColorStop(.46, '#2C3450');
+      g.addColorStop(1, '#1D2638');
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, width, height);
 
-      const r1 = ctx.createRadialGradient(140, 250, 20, 140, 250, 360);
-      r1.addColorStop(0, 'rgba(255,255,255,.12)');
+      const r1 = ctx.createRadialGradient(150, 260, 20, 150, 260, 360);
+      r1.addColorStop(0, 'rgba(255,255,255,.13)');
       r1.addColorStop(1, 'rgba(255,255,255,0)');
       ctx.fillStyle = r1;
       ctx.fillRect(0,0,width,height);
 
-      const r2 = ctx.createRadialGradient(width - 130, height - 180, 20, width - 130, height - 180, 320);
+      const r2 = ctx.createRadialGradient(width - 130, height - 180, 20, width - 130, height - 180, 340);
       r2.addColorStop(0, 'rgba(123,170,146,.20)');
       r2.addColorStop(1, 'rgba(123,170,146,0)');
       ctx.fillStyle = r2;
       ctx.fillRect(0,0,width,height);
 
       ctx.save();
-      ctx.globalAlpha = .18;
+      ctx.globalAlpha = .15;
       const sheen = ctx.createLinearGradient(0, 0, width, height);
-      sheen.addColorStop(.25, 'rgba(255,255,255,0)');
-      sheen.addColorStop(.50, 'rgba(255,255,255,.10)');
-      sheen.addColorStop(.75, 'rgba(255,255,255,0)');
+      sheen.addColorStop(.22, 'rgba(255,255,255,0)');
+      sheen.addColorStop(.50, 'rgba(255,255,255,.12)');
+      sheen.addColorStop(.78, 'rgba(255,255,255,0)');
       ctx.fillStyle = sheen;
-      ctx.translate(width * .15, 0);
-      ctx.rotate(-0.25);
-      ctx.fillRect(-100, -80, width * .45, height + 160);
+      ctx.translate(width * .2, -40);
+      ctx.rotate(-0.24);
+      ctx.fillRect(-90, -120, width * .35, height + 220);
       ctx.restore();
     }
 
@@ -2111,17 +2140,16 @@
       const data = getUserExportData();
       const canvas = createBaseCanvas(1080, 1350);
       const ctx = canvas.getContext('2d');
-      const qrCanvas = await generateQrCanvas(buildAppUrl(), 210);
+      const qrCanvas = await generateQrCanvas(buildAppUrl(), 220);
 
       drawPremiumBackground(ctx, canvas.width, canvas.height);
 
-      fillRoundRect(ctx, 36, 36, 1008, 1278, 40, 'rgba(255,255,255,.04)');
-      strokeRoundRect(ctx, 36, 36, 1008, 1278, 40, 'rgba(255,255,255,.08)', 2);
+      fillRoundRect(ctx, 36, 36, 1008, 1278, 42, 'rgba(255,255,255,.04)');
+      strokeRoundRect(ctx, 36, 36, 1008, 1278, 42, 'rgba(255,255,255,.08)', 2);
 
       fillRoundRect(ctx, 54, 54, 220, 66, 33, 'rgba(255,255,255,.10)');
       strokeRoundRect(ctx, 54, 54, 220, 66, 33, 'rgba(255,255,255,.14)', 2);
       setupText(ctx, '900 34px Tajawal', '#FFFFFF', 'center');
-      if('direction' in ctx) ctx.direction = 'rtl';
       ctx.fillText(data.tag, 164, 97);
       endText(ctx);
 
@@ -2130,71 +2158,81 @@
       ctx.fillText('SugarMind', 880, 102);
       endText(ctx);
 
-      setupText(ctx, '900 98px Tajawal', '#FFFFFF');
-      ctx.shadowColor = 'rgba(0,0,0,.30)';
-      ctx.shadowBlur = 20;
-      ctx.fillText(data.name, 960, 250);
+      setupText(ctx, '900 102px Tajawal', '#FFFFFF');
+      ctx.shadowColor = 'rgba(0,0,0,.28)';
+      ctx.shadowBlur = 22;
+      ctx.fillText(data.name, 960, 255);
       endText(ctx);
 
       setupText(ctx, '500 48px Tajawal', 'rgba(255,255,255,.84)');
-      drawWrappedText(ctx, data.message, 960, 332, 720, 62, 2);
+      drawWrappedText(ctx, data.message, 960, 340, 740, 62, 2);
       endText(ctx);
 
-      setupText(ctx, '700 34px Tajawal', 'rgba(255,255,255,.68)');
-      ctx.fillText('القراءة الحالية', 960, 505);
+      setupText(ctx, '700 34px Tajawal', 'rgba(255,255,255,.66)');
+      ctx.fillText('القراءة الحالية', 960, 500);
       endText(ctx);
 
-      setupText(ctx, '900 150px Tajawal', '#FFFFFF');
-      ctx.shadowColor = 'rgba(0,0,0,.28)';
-      ctx.shadowBlur = 22;
-      ctx.fillText(data.reading, 960, 660);
+      setupText(ctx, '900 158px Tajawal', '#FFFFFF');
+      ctx.shadowColor = 'rgba(0,0,0,.25)';
+      ctx.shadowBlur = 24;
+      ctx.fillText(data.reading, 960, 664);
       endText(ctx);
 
       setupText(ctx, '800 56px Tajawal', 'rgba(255,255,255,.78)');
-      ctx.fillText(data.unit, 700, 655);
+      ctx.fillText(data.unit, 690, 658);
       endText(ctx);
 
-      fillRoundRect(ctx, 54, 805, 448, 250, 32, 'rgba(255,255,255,.09)');
-      strokeRoundRect(ctx, 54, 805, 448, 250, 32, 'rgba(255,255,255,.12)', 2);
+      fillRoundRect(ctx, 54, 806, 448, 248, 32, 'rgba(255,255,255,.09)');
+      strokeRoundRect(ctx, 54, 806, 448, 248, 32, 'rgba(255,255,255,.12)', 2);
 
-      setupText(ctx, '800 30px Tajawal', 'rgba(255,255,255,.68)');
+      setupText(ctx, '800 30px Tajawal', 'rgba(255,255,255,.66)');
       ctx.fillText('معامل الكارب', 454, 868);
       endText(ctx);
 
-      setupText(ctx, '900 82px Tajawal', '#FFFFFF');
+      setupText(ctx, '900 86px Tajawal', '#FFFFFF');
       ctx.fillText(data.ratio, 454, 970);
       endText(ctx);
 
-      fillRoundRect(ctx, 540, 805, 450, 250, 32, 'rgba(255,255,255,.09)');
-      strokeRoundRect(ctx, 540, 805, 450, 250, 32, 'rgba(255,255,255,.12)', 2);
+      fillRoundRect(ctx, 540, 806, 450, 248, 32, 'rgba(255,255,255,.09)');
+      strokeRoundRect(ctx, 540, 806, 450, 248, 32, 'rgba(255,255,255,.12)', 2);
 
-      setupText(ctx, '800 30px Tajawal', 'rgba(255,255,255,.68)');
+      setupText(ctx, '800 30px Tajawal', 'rgba(255,255,255,.66)');
       ctx.fillText('الحالة', 942, 868);
       endText(ctx);
 
-      fillRoundRect(ctx, 602, 915, 326, 98, 49, '#56D46F');
-      setupText(ctx, '900 66px Tajawal', '#FFFFFF', 'center');
-      if('direction' in ctx) ctx.direction = 'rtl';
-      ctx.fillText(data.status, 765, 982);
+      let statusColor = '#56D46F';
+      if(data.status === 'منخفض') statusColor = '#D66560';
+      if(data.status === 'مرتفع') statusColor = '#E6906F';
+      if(data.status === 'مرتفع قليلاً') statusColor = '#D3B158';
+      if(data.status === 'مرتفع جدًا') statusColor = '#D66560';
+      if(data.status === 'بانتظار القراءة') statusColor = '#98A2B3';
+
+      fillRoundRect(ctx, 598, 918, 330, 98, 49, statusColor);
+      setupText(ctx, '900 62px Tajawal', '#FFFFFF', 'center');
+      ctx.fillText(data.status, 763, 982);
       endText(ctx);
 
-      fillRoundRect(ctx, 54, 1092, 280, 204, 28, '#FFFFFF');
-      ctx.drawImage(qrCanvas, 89, 1122, 210, 210);
+      fillRoundRect(ctx, 54, 1090, 304, 206, 30, '#FFFFFF');
+      ctx.drawImage(qrCanvas, 96, 1128, 220, 220);
 
-      fillRoundRect(ctx, 382, 1092, 608, 204, 28, 'rgba(255,255,255,.08)');
-      strokeRoundRect(ctx, 382, 1092, 608, 204, 28, 'rgba(255,255,255,.10)', 2);
+      fillRoundRect(ctx, 390, 1090, 600, 206, 30, 'rgba(255,255,255,.08)');
+      strokeRoundRect(ctx, 390, 1090, 600, 206, 30, 'rgba(255,255,255,.10)', 2);
 
-      setupText(ctx, '900 54px Tajawal', '#FFFFFF');
-      ctx.fillText('بطاقتي من SugarMind', 942, 1168);
+      setupText(ctx, '900 58px Tajawal', '#FFFFFF');
+      ctx.fillText('بطاقتي', 942, 1166);
+      endText(ctx);
+
+      setupText(ctx, '800 44px Tajawal', 'rgba(255,255,255,.92)');
+      ctx.fillText('SugarMind', 710, 1166);
       endText(ctx);
 
       setupText(ctx, '500 34px Tajawal', 'rgba(255,255,255,.82)');
-      drawWrappedText(ctx, 'واجهة يومية أوضح لحالتك. امسح الكود وافتح التطبيق مباشرة.', 942, 1240, 520, 44, 2);
+      drawWrappedText(ctx, 'واجهة يومية أوضح لحالتك. امسح الكود وافتح التطبيق مباشرة.', 942, 1242, 520, 44, 2);
       endText(ctx);
 
-      fillRoundRect(ctx, 54, 1220, 280, 78, 39, 'rgba(123,170,146,1)');
-      setupText(ctx, '900 42px Tajawal', '#FFFFFF', 'center');
-      ctx.fillText('افتح بطاقتك', 194, 1271);
+      fillRoundRect(ctx, 54, 1218, 304, 76, 38, 'rgba(123,170,146,1)');
+      setupText(ctx, '900 40px Tajawal', '#FFFFFF', 'center');
+      ctx.fillText('افتح بطاقتك', 206, 1268);
       endText(ctx);
 
       return await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1));
@@ -2204,15 +2242,18 @@
       await waitForFontsReady();
 
       const data = getPromoExportData();
-      const canvas = createBaseCanvas(1080, 1500);
+      const canvas = createBaseCanvas(1080, 1350);
       const ctx = canvas.getContext('2d');
-      const qrCanvas = await generateQrCanvas(buildAppUrl(), 210);
+      const qrCanvas = await generateQrCanvas(buildAppUrl(), 220);
 
       drawPremiumBackground(ctx, canvas.width, canvas.height);
 
+      fillRoundRect(ctx, 36, 36, 1008, 1278, 42, 'rgba(255,255,255,.04)');
+      strokeRoundRect(ctx, 36, 36, 1008, 1278, 42, 'rgba(255,255,255,.08)', 2);
+
       fillRoundRect(ctx, 54, 54, 220, 66, 33, 'rgba(255,255,255,.10)');
       setupText(ctx, '900 34px Tajawal', '#FFFFFF', 'center');
-      ctx.fillText('مشاركة باهتمام', 164, 97);
+      ctx.fillText(data.eyebrow, 164, 97);
       endText(ctx);
 
       drawBrandMark(ctx, 910, 54, 80);
@@ -2221,70 +2262,69 @@
       endText(ctx);
 
       setupText(ctx, '800 38px Tajawal', 'rgba(255,255,255,.86)');
-      ctx.fillText(data.kicker, 960, 220);
+      ctx.fillText(data.fromLine, 960, 212);
       endText(ctx);
 
-      setupText(ctx, '900 86px Tajawal', '#FFFFFF');
-      drawWrappedText(ctx, data.title, 960, 330, 830, 104, 4);
+      setupText(ctx, '900 88px Tajawal', '#FFFFFF');
+      ctx.fillText(data.title1, 960, 330);
+      ctx.fillText(data.title2, 960, 450);
+      ctx.fillText(data.title3, 960, 570);
       endText(ctx);
 
       setupText(ctx, '500 42px Tajawal', 'rgba(255,255,255,.84)');
-      drawWrappedText(ctx, data.sub, 960, 700, 860, 58, 2);
+      drawWrappedText(ctx, data.sub, 960, 665, 820, 56, 2);
       endText(ctx);
 
       const cards = [
-        { x: 54,  title:'التصحيح والقراءة', sub:'صورة يومية أهدأ وأوضح للحالة.', icon:'📉' },
+        { x: 54, title:'التصحيح والقراءة', sub:'صورة يومية أهدأ وأوضح للحالة.', icon:'📉' },
         { x: 364, title:'حساب المعامل', sub:'بطريقة أقرب للفهم والثقة.', icon:'🧮' },
         { x: 674, title:'فهم كارب الوجبة', sub:'أوضح وأسرع بدون تعقيد زائد.', icon:'🍽️' }
       ];
 
       cards.forEach(card => {
-        fillRoundRect(ctx, card.x, 828, 256, 240, 28, 'rgba(255,255,255,.08)');
-        strokeRoundRect(ctx, card.x, 828, 256, 240, 28, 'rgba(255,255,255,.10)', 2);
-        fillRoundRect(ctx, card.x + 182, 850, 52, 52, 16, 'rgba(169,201,185,.18)');
+        fillRoundRect(ctx, card.x, 780, 256, 228, 28, 'rgba(255,255,255,.08)');
+        strokeRoundRect(ctx, card.x, 780, 256, 228, 28, 'rgba(255,255,255,.10)', 2);
 
-        setupText(ctx, '900 26px Tajawal', '#FFFFFF', 'center');
-        ctx.fillText(card.icon, card.x + 208, 886);
+        fillRoundRect(ctx, card.x + 178, 800, 56, 56, 18, 'rgba(169,201,185,.16)');
+
+        setupText(ctx, '900 28px Tajawal', '#FFFFFF', 'center');
+        ctx.fillText(card.icon, card.x + 206, 838);
         endText(ctx);
 
         setupText(ctx, '900 28px Tajawal', '#FFFFFF');
-        drawWrappedText(ctx, card.title, card.x + 222, 952, 180, 36, 2);
+        drawWrappedText(ctx, card.title, card.x + 220, 920, 186, 36, 2);
         endText(ctx);
 
-        setupText(ctx, '500 18px Tajawal', 'rgba(255,255,255,.75)');
-        drawWrappedText(ctx, card.sub, card.x + 222, 1028, 190, 28, 2);
+        setupText(ctx, '500 18px Tajawal', 'rgba(255,255,255,.76)');
+        drawWrappedText(ctx, card.sub, card.x + 220, 992, 192, 28, 2);
         endText(ctx);
       });
 
-      fillRoundRect(ctx, 54, 1116, 360, 280, 28, '#FFFFFF');
-      ctx.drawImage(qrCanvas, 129, 1154, 210, 210);
+      fillRoundRect(ctx, 54, 1046, 360, 250, 30, '#FFFFFF');
+      ctx.drawImage(qrCanvas, 124, 1085, 220, 220);
 
       setupText(ctx, '900 42px Tajawal', '#1D2433', 'center');
-      ctx.fillText('امسح وابدأ', 234, 1348);
+      ctx.fillText('امسح وابدأ', 234, 1295);
       endText(ctx);
 
-      setupText(ctx, '500 22px Tajawal', '#667085', 'center');
-      drawWrappedText(ctx, 'افتح التطبيق مباشرة وابدأ بطاقتك اليومية.', 234, 1388, 250, 28, 2);
-      endText(ctx);
+      fillRoundRect(ctx, 434, 1046, 556, 250, 30, 'rgba(255,255,255,.08)');
+      strokeRoundRect(ctx, 434, 1046, 556, 250, 30, 'rgba(255,255,255,.10)', 2);
 
-      fillRoundRect(ctx, 434, 1116, 556, 280, 28, 'rgba(255,255,255,.08)');
-      strokeRoundRect(ctx, 434, 1116, 556, 280, 28, 'rgba(255,255,255,.10)', 2);
-
-      setupText(ctx, '900 54px Tajawal', '#FFFFFF');
-      ctx.fillText(data.messageTitle, 942, 1218);
+      setupText(ctx, '900 56px Tajawal', '#FFFFFF');
+      ctx.fillText(data.messageTitle, 942, 1134);
       endText(ctx);
 
       setupText(ctx, '500 34px Tajawal', 'rgba(255,255,255,.82)');
-      drawWrappedText(ctx, data.messageCopy, 942, 1300, 470, 46, 3);
+      drawWrappedText(ctx, data.messageCopy, 942, 1220, 476, 46, 3);
       endText(ctx);
 
-      fillRoundRect(ctx, 54, 1418, 280, 68, 34, 'rgba(123,170,146,1)');
-      setupText(ctx, '900 38px Tajawal', '#FFFFFF', 'center');
-      ctx.fillText('ابدأ مع SugarMind', 194, 1461);
+      fillRoundRect(ctx, 54, 1208, 304, 76, 38, 'rgba(123,170,146,1)');
+      setupText(ctx, '900 40px Tajawal', '#FFFFFF', 'center');
+      ctx.fillText('ابدأ مع SugarMind', 206, 1258);
       endText(ctx);
 
       setupText(ctx, '500 30px Tajawal', 'rgba(255,255,255,.70)');
-      ctx.fillText('واجهة يومية أوضح لحالتك', 942, 1463);
+      ctx.fillText('واجهة يومية أوضح لحالتك', 942, 1272);
       endText(ctx);
 
       return await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1));
@@ -2322,6 +2362,7 @@
       try{
         showToast('جاري تجهيز بطاقتك...');
         const blob = await createUserCardBlob();
+
         if(!blob){
           showToast('تعذر تجهيز البطاقة');
           return;
@@ -2349,10 +2390,12 @@
       try{
         showToast('جاري تجهيز البطاقة...');
         const blob = await createUserCardBlob();
+
         if(!blob){
           showToast('تعذر تجهيز الصورة');
           return;
         }
+
         await saveBlob(blob, buildCardFileName());
         showToast('تم حفظ البطاقة');
       }catch(_){
@@ -2364,6 +2407,7 @@
       try{
         showToast('جاري تجهيز بطاقة المشاركة...');
         const blob = await createPromoCardBlob();
+
         if(!blob){
           showToast('تعذر تجهيز البطاقة');
           return;
@@ -2375,8 +2419,8 @@
           : 'SugarMind-شارك-باهتمام.png';
 
         const shareText = sharerName
-          ? `${sharerName} شارك لك SugarMind لأنه يهتم لأمرك`
-          : 'تمت مشاركة SugarMind باهتمام';
+          ? `${sharerName} شارك لك هذا لأنه يهتم لأمرك`
+          : 'تمت مشاركة هذه البطاقة باهتمام';
 
         const shared = await shareBlob(
           blob,
@@ -2546,7 +2590,7 @@
       });
     }
 
-    document.addEventListener('DOMContentLoaded', async () => {
+    document.addEventListener('DOMContentLoaded', () => {
       bindEvents();
       setupInstallEvents();
       render();
