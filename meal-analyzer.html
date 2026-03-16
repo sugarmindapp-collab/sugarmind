@@ -9,7 +9,6 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-  <!-- Google tag -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ44R4V060"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -396,7 +395,7 @@
 
     .mode-tabs{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:1fr 1fr 1fr;
       gap:10px;
       margin-bottom:16px;
     }
@@ -426,6 +425,11 @@
     .mode-panel.active{
       display:block;
       animation:slideUp .22s var(--ease);
+    }
+
+    @keyframes slideUp{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
     }
 
     .search-wrap{
@@ -504,16 +508,24 @@
       border-radius:22px;
       box-shadow:var(--shadow-lg);
       overflow:hidden;
+      max-height:420px;
+      overflow-y:auto;
     }
 
     .suggestions.show{
       display:block;
-      animation:slideUp .22s var(--ease);
     }
 
-    @keyframes slideUp{
-      from{opacity:0;transform:translateY(10px)}
-      to{opacity:1;transform:translateY(0)}
+    .suggestion-group-title{
+      padding:10px 16px;
+      font-size:12px;
+      font-weight:900;
+      color:var(--hero-2);
+      background:var(--surface-2);
+      border-bottom:1px solid var(--line-soft);
+      position:sticky;
+      top:0;
+      z-index:2;
     }
 
     .suggestion-item{
@@ -680,8 +692,19 @@
       line-height:1.6;
     }
 
+    .library-empty{
+      text-align:center;
+      padding:20px 16px;
+      color:var(--ink-2);
+      line-height:1.8;
+      font-size:14px;
+      border:1px dashed var(--line);
+      border-radius:18px;
+      background:var(--surface-2);
+    }
+
     .weight-card{
-      transition:opacity .22s ease, transform .22s ease;
+      transition:opacity .22s ease;
     }
 
     .weight-card.locked{
@@ -689,20 +712,28 @@
     }
 
     .weight-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:center;
+      background:#fff;
+      border:2px solid var(--line);
+      border-radius:24px;
+      padding:10px 10px 10px 16px;
+      margin:18px 0 12px;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .weight-input-wrap{
       display:flex;
       align-items:center;
       gap:12px;
-      background:#fff;
-      border:2px solid var(--line);
-      border-radius:999px;
-      padding:6px 6px 6px 20px;
-      margin:18px 0;
-      box-shadow:var(--shadow-sm);
+      min-width:0;
     }
 
     .weight-input{
       flex:1;
-      min-height:60px;
+      min-height:54px;
       border:none;
       background:transparent;
       outline:none;
@@ -710,6 +741,7 @@
       font-weight:900;
       color:var(--ink);
       text-align:center;
+      min-width:0;
     }
 
     .weight-unit{
@@ -727,13 +759,41 @@
       white-space:nowrap;
     }
 
+    .inline-preview{
+      margin-top:4px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .inline-preview-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:32px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(123,170,146,.10);
+      color:var(--hero);
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .inline-preview-note{
+      font-size:12px;
+      color:var(--ink-3);
+      line-height:1.7;
+    }
+
     .weight-presets{
       display:flex;
       gap:10px;
       overflow-x:auto;
       padding-bottom:4px;
       scrollbar-width:none;
-      margin-top:10px;
+      margin-top:14px;
     }
 
     .weight-presets::-webkit-scrollbar{
@@ -988,20 +1048,22 @@
 
     .actions-grid{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:1fr 1fr 1fr;
       gap:12px;
     }
 
     .action-btn{
       min-height:54px;
       border-radius:18px;
-      font-size:15px;
+      font-size:14px;
       font-weight:800;
       display:flex;
       align-items:center;
       justify-content:center;
       gap:8px;
       transition:all .2s ease;
+      text-align:center;
+      padding:0 10px;
     }
 
     .action-btn.primary{
@@ -1022,6 +1084,16 @@
 
     .action-btn.secondary:hover{
       background:var(--surface-3);
+    }
+
+    .action-btn.dark{
+      background:linear-gradient(135deg, var(--hero-2), #3E4560);
+      color:#fff;
+      box-shadow:0 10px 20px rgba(69,73,106,.18);
+    }
+
+    .action-btn.dark:hover{
+      transform:translateY(-2px);
     }
 
     .suggest-area{
@@ -1146,16 +1218,20 @@
       transform:translateX(50%) translateY(0);
     }
 
-    @media (max-width:420px){
-      .hero-title{font-size:27px}
-      .hero-result .value{font-size:74px}
+    @media (max-width:480px){
+      .mode-tabs,
       .weight-help,
       .macros-grid,
       .result-summary,
-      .actions-grid,
-      .mode-tabs{
+      .actions-grid{
         grid-template-columns:1fr;
       }
+
+      .hero-title{font-size:27px}
+      .hero-result .value{font-size:74px}
+      .weight-row{grid-template-columns:1fr}
+      .weight-unit{width:100%}
+      .action-btn{min-height:50px}
     }
   </style>
 </head>
@@ -1179,8 +1255,8 @@
 
     <section class="hero-card">
       <div class="hero-chip">🍽️ محلل الوجبة</div>
-      <h1 class="hero-title">افهم وجبتك بسرعة وراحة</h1>
-      <p class="hero-sub">ابحث عن الصنف، أو استخدم الوزن مباشرة، وخذ الكارب والسعرات والبروتين والدهون بشكل واضح ومطمئن.</p>
+      <h1 class="hero-title">ابحث، وزن، واحفظ بطريقتك</h1>
+      <p class="hero-sub">مكتبة عامة + مكتبتك الخاصة. اختر الصنف، أدخل الوزن، وخذ الكارب بشكل أوضح مع مستوى ثقة مفهوم.</p>
     </section>
 
     <section class="journey" aria-label="خطوات الرحلة">
@@ -1206,8 +1282,9 @@
 
       <div class="card">
         <div class="mode-tabs">
-          <button class="mode-tab active" id="tabSearch" type="button">ابحث عن وجبة</button>
-          <button class="mode-tab" id="tabWeight" type="button">احسب بالوزن</button>
+          <button class="mode-tab active" id="tabSearch" type="button">ابحث</button>
+          <button class="mode-tab" id="tabLibrary" type="button">مكتبتي</button>
+          <button class="mode-tab" id="tabWeight" type="button">بالوزن</button>
         </div>
 
         <div class="mode-panel active" id="panelSearch">
@@ -1215,30 +1292,42 @@
             <div class="card-icon">🔎</div>
             <div>
               <div class="card-title">ابحث باسم الوجبة</div>
-              <div class="card-sub">تقدر تبحث بالعربي أو الإنجليزي، ونطلع لك أقرب النتائج مباشرة.</div>
+              <div class="card-sub">نتائج عامة + أصنافك الخاصة. اكتب بالعربي أو الإنجليزي.</div>
             </div>
           </div>
 
           <div class="search-wrap">
-            <input type="text" class="search-input" id="mealSearch" placeholder="مثال: كبسة، تمرة، بروست، Burger..." autocomplete="off" />
+            <input type="text" class="search-input" id="mealSearch" placeholder="مثال: شوفان، تمرة، بروست، Oats..." autocomplete="off" />
             <div class="search-icon">🔍</div>
           </div>
 
           <div class="search-state">
-            <div class="search-hint">اكتب حرفين على الأقل عشان تبدأ النتائج تظهر لك</div>
+            <div class="search-hint">اكتب حرفين على الأقل، والنتائج الأقرب تظهر لك مباشرة</div>
             <div class="search-state-pill" id="searchStatePill">جاهز للبحث</div>
           </div>
 
           <div class="suggestions" id="suggestionsList"></div>
 
           <div class="chips">
+            <button class="chip" type="button" onclick="quickSearch('شوفان')">🥣 شوفان</button>
+            <button class="chip" type="button" onclick="quickSearch('تمرة')">🌴 تمرة</button>
             <button class="chip" type="button" onclick="quickSearch('كبسة')">🍗 كبسة</button>
-            <button class="chip" type="button" onclick="quickSearch('شاورما')">🥙 شاورما</button>
-            <button class="chip" type="button" onclick="quickSearch('برجر')">🍔 برجر</button>
             <button class="chip" type="button" onclick="quickSearch('بروست')">🍗 بروست</button>
             <button class="chip" type="button" onclick="quickSearch('بيتزا')">🍕 بيتزا</button>
-            <button class="chip" type="button" onclick="quickSearch('تمرة')">🌴 تمرة</button>
+            <button class="chip" type="button" onclick="quickSearch('فول')">🧆 فول</button>
           </div>
+        </div>
+
+        <div class="mode-panel" id="panelLibrary">
+          <div class="card-header">
+            <div class="card-icon">📚</div>
+            <div>
+              <div class="card-title">مكتبتي الخاصة</div>
+              <div class="card-sub">كل صنف تحفظه هنا يطلع لك أولًا في البحث ويصير جاهز للاستخدام لاحقًا.</div>
+            </div>
+          </div>
+
+          <div id="customLibraryList"></div>
         </div>
 
         <div class="mode-panel" id="panelWeight">
@@ -1246,22 +1335,29 @@
             <div class="card-icon">⚖️</div>
             <div>
               <div class="card-title">احسب بالوزن</div>
-              <div class="card-sub">اختر الصنف أولًا، ثم صفّر الميزان وحط الوجبة وأدخل الوزن.</div>
+              <div class="card-sub">اختر الصنف أولًا، ثم أدخل الوزن. المعاينة تظهر بهدوء بدون تحريك الشاشة.</div>
             </div>
           </div>
 
           <div class="selected-summary" id="selectedSummary">
             <div class="emoji" id="selectedEmoji">🍽️</div>
             <div>
-              <div class="title" id="selectedTitle">لم يتم اختيار وجبة بعد</div>
-              <div class="meta" id="selectedMeta">اختر وجبة من البحث أولًا للانتقال للحساب بالوزن.</div>
+              <div class="title" id="selectedTitle">لم يتم اختيار صنف بعد</div>
+              <div class="meta" id="selectedMeta">اختر صنف من البحث أو من مكتبتك الخاصة.</div>
             </div>
           </div>
 
           <div class="weight-card locked" id="weightCard">
             <div class="weight-row">
-              <input type="number" class="weight-input" id="mealWeight" value="100" min="1" max="5000" step="1" />
+              <div class="weight-input-wrap">
+                <input type="number" class="weight-input" id="mealWeight" value="100" min="1" max="5000" step="1" />
+              </div>
               <div class="weight-unit">جرام</div>
+            </div>
+
+            <div class="inline-preview">
+              <div class="inline-preview-pill" id="inlineCarbPreview">≈ -- جم كارب</div>
+              <div class="inline-preview-note" id="inlinePreviewNote">أدخل الوزن ثم اضغط احسب</div>
             </div>
 
             <div class="weight-presets">
@@ -1287,7 +1383,7 @@
               <div class="weight-step">
                 <div class="num">٣</div>
                 <strong>احسب النتيجة</strong>
-                <p>نحسب لك الكارب والقيم الغذائية فورًا.</p>
+                <p>نحسب لك الكارب والمغذيات بدون تشويش.</p>
               </div>
             </div>
 
@@ -1309,7 +1405,7 @@
     <section class="section">
       <div class="section-head">
         <div class="section-title">النتيجة</div>
-        <div class="section-note">تحليل سريع</div>
+        <div class="section-note">تحليل واضح</div>
       </div>
 
       <div class="card result-card" id="resultCard">
@@ -1355,13 +1451,17 @@
             <span>💡</span>
             <span>تنبيه ذكي</span>
           </div>
-          <div class="insight-text" id="insightText">اختر وجبة ووزنها حتى تظهر لك الملاحظة المناسبة.</div>
+          <div class="insight-text" id="insightText">اختر صنف ووزنه حتى تظهر لك الملاحظة المناسبة.</div>
         </div>
 
         <div class="actions-grid">
-          <button class="action-btn primary" type="button" onclick="saveMeal()">
+          <button class="action-btn primary" type="button" onclick="saveMealResult()">
             <span>💾</span>
-            <span>احفظ وجبتي</span>
+            <span>احفظ الوجبة</span>
+          </button>
+          <button class="action-btn dark" type="button" onclick="saveToMyLibrary()">
+            <span>📚</span>
+            <span>أضف لمكتبتي</span>
           </button>
           <button class="action-btn secondary" type="button" onclick="shareMeal()">
             <span>📤</span>
@@ -1393,255 +1493,77 @@
   <script>
     const STORAGE_KEYS = {
       LAST_MEAL: 'sugarmind_meal_result_v1',
-      MEALS_LIST: 'sugarmind_meals'
+      MEALS_LIST: 'sugarmind_meals',
+      CUSTOM_FOODS: 'sugarmind_custom_foods_v1'
     };
 
-    // قاعدة بيانات أولية مرتبة وقابلة للتوسعة
-    // modes:
-    // per100g = لكل 100 جرام
-    // serving = للحصة / القطعة
-    // estimated_ratio = تقديري منزلي بالنسبة للوزن
-    const FOOD_LIBRARY = [
-      {
-        id: 'kabsa-chicken',
-        name_ar: 'كبسة دجاج',
-        name_en: 'Chicken Kabsa',
-        aliases: ['كبسة', 'رز كبسة', 'chicken kabsa', 'kabsa'],
-        category: 'أطباق رئيسية',
-        icon: '🍗',
-        mode: 'per100g',
-        carbs: 28,
-        protein: 12,
-        fat: 8,
-        calories: 250,
-        source: 'مكتبة محلية',
-        confidence: 'medium',
-        notes: 'قد تختلف النتيجة حسب كمية الرز والدهن والدجاج.'
-      },
-      {
-        id: 'shawarma-wrap',
-        name_ar: 'شاورما',
-        name_en: 'Shawarma',
-        aliases: ['شاورما عربي', 'shawarma', 'shawerma'],
-        category: 'أطباق رئيسية',
-        icon: '🥙',
-        mode: 'per100g',
-        carbs: 35,
-        protein: 20,
-        fat: 15,
-        calories: 400,
-        source: 'مكتبة محلية',
-        confidence: 'medium',
-        notes: 'الصلصات والخبز قد تغيّر القيم قليلًا.'
-      },
-      {
-        id: 'burger',
-        name_ar: 'برجر',
-        name_en: 'Burger',
-        aliases: ['برغر', 'burger', 'cheeseburger'],
-        category: 'وجبات سريعة',
-        icon: '🍔',
-        mode: 'per100g',
-        carbs: 40,
-        protein: 28,
-        fat: 35,
-        calories: 580,
-        source: 'مطاعم / تقدير',
-        confidence: 'medium',
-        notes: 'الجبن والصلصات وحجم الخبز يغيّر النتيجة.'
-      },
-      {
-        id: 'broast',
-        name_ar: 'بروست',
-        name_en: 'Broast',
-        aliases: ['بروستد', 'broast', 'fried chicken'],
-        category: 'وجبات سريعة',
-        icon: '🍗',
-        mode: 'per100g',
-        carbs: 15,
-        protein: 22,
-        fat: 18,
-        calories: 310,
-        source: 'مطاعم / تقدير',
-        confidence: 'medium',
-        notes: 'نوع التغليفة وحجم القطعة يفرق كثير.'
-      },
-      {
-        id: 'pizza',
-        name_ar: 'بيتزا',
-        name_en: 'Pizza',
-        aliases: ['pizza', 'بيتزا جبن', 'بيتزا خضار', 'بيتزا بيبروني'],
-        category: 'وجبات سريعة',
-        icon: '🍕',
-        mode: 'per100g',
-        carbs: 60,
-        protein: 20,
-        fat: 25,
-        calories: 550,
-        source: 'مطاعم / تقدير',
-        confidence: 'medium',
-        notes: 'نوع العجينة والحشوة يغيّر الكارب والسعرات.'
-      },
-      {
-        id: 'foul',
-        name_ar: 'فول',
-        name_en: 'Foul',
-        aliases: ['فول مدمس', 'foul', 'fava beans'],
-        category: 'بقوليات',
-        icon: '🧆',
-        mode: 'per100g',
-        carbs: 20,
-        protein: 8,
-        fat: 1,
-        calories: 110,
-        source: 'USDA / محلي',
-        confidence: 'high',
-        notes: 'إضافة الزيت أو الطحينة ترفع السعرات.'
-      },
-      {
-        id: 'apple',
-        name_ar: 'تفاح',
-        name_en: 'Apple',
-        aliases: ['apple', 'تفاحة'],
-        category: 'فواكه',
-        icon: '🍎',
-        mode: 'per100g',
-        carbs: 14,
-        protein: 0.3,
-        fat: 0.2,
-        calories: 52,
-        source: 'USDA',
-        confidence: 'high',
-        notes: 'حجم الحبة يختلف، لذلك الأفضل الوزن بالجرام.'
-      },
-      {
-        id: 'banana',
-        name_ar: 'موز',
-        name_en: 'Banana',
-        aliases: ['banana', 'موزه'],
-        category: 'فواكه',
-        icon: '🍌',
-        mode: 'per100g',
-        carbs: 23,
-        protein: 1.1,
-        fat: 0.3,
-        calories: 89,
-        source: 'USDA',
-        confidence: 'high',
-        notes: 'الموزة الصغيرة غير الكبيرة، الوزن أدق دائمًا.'
-      },
-      {
-        id: 'dates',
-        name_ar: 'تمرة',
-        name_en: 'Date',
-        aliases: ['تمر', 'تمرة', 'date', 'dates', 'مدجول', 'سكري', 'خلاص'],
-        category: 'تمور',
-        icon: '🌴',
-        mode: 'per100g',
-        carbs: 75,
-        protein: 1.8,
-        fat: 0.2,
-        calories: 282,
-        source: 'USDA / محلي',
-        confidence: 'high',
-        notes: 'أنواع التمر وأحجامها تختلف، لذلك الوزن أفضل من العدّ.'
-      },
-      {
-        id: 'white-rice',
-        name_ar: 'أرز أبيض مطبوخ',
-        name_en: 'White Rice',
-        aliases: ['رز', 'أرز', 'white rice', 'rice'],
-        category: 'نشويات',
-        icon: '🍚',
-        mode: 'per100g',
-        carbs: 28,
-        protein: 2.7,
-        fat: 0.3,
-        calories: 130,
-        source: 'USDA',
-        confidence: 'high',
-        notes: 'يختلف قليلًا حسب نوع الرز وكمية الماء.'
-      },
-      {
-        id: 'fries',
-        name_ar: 'بطاطس مقلية',
-        name_en: 'French Fries',
-        aliases: ['بطاطس', 'فرنش فرايز', 'fries', 'french fries'],
-        category: 'وجبات سريعة',
-        icon: '🍟',
-        mode: 'per100g',
-        carbs: 41,
-        protein: 3.4,
-        fat: 15,
-        calories: 312,
-        source: 'مطاعم / USDA',
-        confidence: 'medium',
-        notes: 'الزيت والسماكة وطريقة القلي تؤثر على النتيجة.'
-      },
-      {
-        id: 'pasta-red-sauce',
-        name_ar: 'مكرونة حمراء منزلية',
-        name_en: 'Red Sauce Pasta',
-        aliases: ['مكرونة حمراء', 'معكرونة حمراء', 'pasta red', 'red pasta'],
-        category: 'منزلي تقديري',
-        icon: '🍝',
-        mode: 'estimated_ratio',
-        carb_ratio: 0.20,
-        protein_ratio: 0.04,
-        fat_ratio: 0.03,
-        calorie_ratio: 1.35,
-        source: 'تقدير منزلي',
-        confidence: 'estimate',
-        notes: 'الحساب تقديري حسب الوزن. الصوص والخضار يغيّرون النتيجة.'
-      },
-      {
-        id: 'pasta-red-veg',
-        name_ar: 'مكرونة حمراء بالخضار',
-        name_en: 'Vegetable Red Pasta',
-        aliases: ['مكرونة خضار', 'معكرونة خضار', 'vegetable pasta'],
-        category: 'منزلي تقديري',
-        icon: '🥗',
-        mode: 'estimated_ratio',
-        carb_ratio: 0.15,
-        protein_ratio: 0.03,
-        fat_ratio: 0.02,
-        calorie_ratio: 1.05,
-        source: 'تقدير منزلي',
-        confidence: 'estimate',
-        notes: 'كلما زادت الخضار وقلّت المعكرونة نزل الكارب.'
-      },
-      {
-        id: 'lasagna',
-        name_ar: 'لازانيا منزلية',
-        name_en: 'Lasagna',
-        aliases: ['لازانيا', 'lasagna'],
-        category: 'منزلي تقديري',
-        icon: '🧀',
-        mode: 'estimated_ratio',
-        carb_ratio: 0.15,
-        protein_ratio: 0.06,
-        fat_ratio: 0.07,
-        calorie_ratio: 1.85,
-        source: 'تقدير منزلي',
-        confidence: 'estimate',
-        notes: 'البشاميل والجبن واللحم يرفعون السعرات والدهون.'
-      },
-      {
-        id: 'mac-cheese',
-        name_ar: 'ماك اند تشيز',
-        name_en: 'Mac and Cheese',
-        aliases: ['mac and cheese', 'ماك اند تشيز', 'مكرونة جبن'],
-        category: 'منزلي تقديري',
-        icon: '🧀',
-        mode: 'estimated_ratio',
-        carb_ratio: 0.17,
-        protein_ratio: 0.05,
-        fat_ratio: 0.07,
-        calorie_ratio: 1.90,
-        source: 'تقدير منزلي',
-        confidence: 'estimate',
-        notes: 'وصفة الجبن والزبدة تغيّر النتيجة بشكل واضح.'
-      }
+    // المكتبة العامة الأساسية:
+    // - نتائج دقيقة لكل 100g
+    // - نتائج شبه دقيقة
+    // - نتائج تقديرية منزلية
+    const BASE_LIBRARY = [
+      // ===== أطعمة يومية =====
+      { id:'apple', name_ar:'تفاح', name_en:'Apple', aliases:['تفاحة','apple'], category:'فواكه', icon:'🍎', mode:'per100g', carbs:14.0, protein:0.3, fat:0.2, calories:52, source:'USDA', confidence:'high', notes:'حجم التفاحة يختلف، لذلك الوزن بالجرام أدق.' },
+      { id:'banana', name_ar:'موز', name_en:'Banana', aliases:['موزه','banana'], category:'فواكه', icon:'🍌', mode:'per100g', carbs:22.8, protein:1.1, fat:0.3, calories:89, source:'USDA', confidence:'high', notes:'الموزة الصغيرة تختلف عن الكبيرة، الوزن أفضل من التقدير البصري.' },
+      { id:'orange', name_ar:'برتقال', name_en:'Orange', aliases:['برتقالة','orange'], category:'فواكه', icon:'🍊', mode:'per100g', carbs:11.8, protein:0.9, fat:0.1, calories:47, source:'USDA', confidence:'high', notes:'الوزن يرفع الدقة أكثر من الاعتماد على عدد الحبات.' },
+      { id:'green-grapes', name_ar:'عنب أخضر', name_en:'Green Grapes', aliases:['عنب','green grapes','grapes'], category:'فواكه', icon:'🍇', mode:'per100g', carbs:17.2, protein:0.7, fat:0.4, calories:69, source:'USDA', confidence:'high', notes:'يختلف الحجم والماء بين أنواع العنب.' },
+
+      // ===== تمر =====
+      { id:'date-ajwa', name_ar:'تمر عجوة', name_en:'Dates Ajwa', aliases:['تمرة عجوة','عجوة','dates ajwa'], category:'تمور', icon:'🌴', mode:'per100g', carbs:75.0, protein:2.0, fat:0.5, calories:282, source:'Saudi / USDA', confidence:'high', notes:'أنواع التمر وأحجامها تختلف، لذلك الوزن أدق من العدّ.' },
+      { id:'date-sagai', name_ar:'تمر صقعي', name_en:'Dates Sagai', aliases:['صقعي','sagai dates'], category:'تمور', icon:'🌴', mode:'per100g', carbs:73.0, protein:2.0, fat:0.4, calories:277, source:'Saudi', confidence:'high', notes:'يختلف حسب الجفاف والحجم.' },
+      { id:'date-medjool', name_ar:'تمر مجدول', name_en:'Medjool Dates', aliases:['مجدول','medjool','medjool dates'], category:'تمور', icon:'🌴', mode:'per100g', carbs:66.5, protein:1.8, fat:0.2, calories:277, source:'USDA', confidence:'high', notes:'عادةً أكبر حجمًا من بعض الأنواع الأخرى.' },
+      { id:'date-khalas', name_ar:'تمر خلاص', name_en:'Khalas Dates', aliases:['خلاص','khalas'], category:'تمور', icon:'🌴', mode:'per100g', carbs:74.0, protein:2.0, fat:0.4, calories:282, source:'Saudi', confidence:'high', notes:'الرطب يختلف عن التمر المجفف في القيم.' },
+      { id:'date-rutab', name_ar:'تمر رطب', name_en:'Rutab Dates', aliases:['رطب','rutab'], category:'تمور', icon:'🌴', mode:'per100g', carbs:65.0, protein:1.8, fat:0.3, calories:260, source:'Saudi', confidence:'medium', notes:'نسبة الماء أعلى من التمر الجاف، لذلك القيم تختلف قليلًا.' },
+      { id:'generic-date', name_ar:'تمرة', name_en:'Date', aliases:['تمر','تمرة','date','dates'], category:'تمور', icon:'🌴', mode:'per100g', carbs:75.0, protein:1.8, fat:0.2, calories:282, source:'USDA / عام', confidence:'high', notes:'إذا ما عرفت النوع، استخدم هذه كمرجع عام.' },
+
+      // ===== حبوب ونشويات =====
+      { id:'oats-cooked', name_ar:'شوفان', name_en:'Oats', aliases:['شوفان مطبوخ','oats','oatmeal'], category:'حبوب', icon:'🥣', mode:'per100g', carbs:12.0, protein:2.5, fat:1.5, calories:70, source:'USDA', confidence:'high', notes:'هذا للشوفان المطبوخ تقريبًا، وليس الجاف.' },
+      { id:'oats-raw', name_ar:'شوفان جاف', name_en:'Raw Oats', aliases:['شوفان خام','raw oats'], category:'حبوب', icon:'🥣', mode:'per100g', carbs:66.0, protein:13.0, fat:7.0, calories:390, source:'USDA', confidence:'high', notes:'الشوفان الجاف يختلف كثيرًا عن الشوفان بعد الطبخ.' },
+      { id:'oat-flakes', name_ar:'رقائق الشوفان', name_en:'Oat Flakes', aliases:['oat flakes'], category:'حبوب', icon:'🥣', mode:'per100g', carbs:70.0, protein:13.0, fat:7.0, calories:380, source:'USDA', confidence:'high', notes:'قريب جدًا من الشوفان الجاف.' },
+      { id:'instant-oats', name_ar:'شوفان سريع التحضير', name_en:'Instant Oats', aliases:['instant oats'], category:'حبوب', icon:'🥣', mode:'per100g', carbs:68.0, protein:13.0, fat:7.0, calories:380, source:'USDA', confidence:'high', notes:'قد تختلف القيمة قليلًا حسب الإضافات التجارية.' },
+      { id:'oat-flour', name_ar:'دقيق الشوفان', name_en:'Oat Flour', aliases:['oat flour'], category:'حبوب', icon:'🌾', mode:'per100g', carbs:65.0, protein:13.0, fat:6.0, calories:400, source:'USDA', confidence:'high', notes:'مناسب للخلطات والخبز.' },
+      { id:'white-rice', name_ar:'أرز أبيض مطبوخ', name_en:'White Rice', aliases:['رز','أرز','white rice','rice'], category:'نشويات', icon:'🍚', mode:'per100g', carbs:28.0, protein:2.7, fat:0.3, calories:130, source:'USDA', confidence:'high', notes:'يختلف قليلًا حسب نوع الرز وكمية الماء.' },
+      { id:'freekeh-cooked', name_ar:'فريكة مطبوخة', name_en:'Cooked Freekeh', aliases:['فريكة','freekeh'], category:'حبوب', icon:'🌾', mode:'per100g', carbs:18.0, protein:5.0, fat:1.5, calories:110, source:'Middle Eastern', confidence:'medium', notes:'قيمة شبه دقيقة ومناسبة كبداية.' },
+      { id:'jareesh', name_ar:'جريش', name_en:'Jareesh', aliases:['جرش','جريش','jareesh'], category:'حبوب', icon:'🥣', mode:'per100g', carbs:30.0, protein:8.0, fat:1.6, calories:160, source:'Arabian / Saudi', confidence:'medium', notes:'تحضير الجريش يختلف بين البيوت.' },
+      { id:'barley', name_ar:'شعير', name_en:'Barley', aliases:['barley'], category:'حبوب', icon:'🌾', mode:'per100g', carbs:28.0, protein:2.3, fat:0.8, calories:123, source:'USDA', confidence:'high', notes:'للمطبوخ تقريبًا.' },
+      { id:'quinoa', name_ar:'كينوا', name_en:'Quinoa', aliases:['quinoa'], category:'حبوب', icon:'🌾', mode:'per100g', carbs:21.0, protein:4.4, fat:1.9, calories:120, source:'USDA', confidence:'high', notes:'تقريبًا للمطبوخ.' },
+      { id:'couscous', name_ar:'كسكسي', name_en:'Couscous', aliases:['كسكس','couscous'], category:'حبوب', icon:'🥣', mode:'per100g', carbs:23.0, protein:3.8, fat:0.2, calories:112, source:'USDA', confidence:'high', notes:'للمطبوخ.' },
+      { id:'corn', name_ar:'ذرة', name_en:'Corn', aliases:['corn','maize'], category:'حبوب', icon:'🌽', mode:'per100g', carbs:19.0, protein:3.2, fat:1.2, calories:86, source:'USDA', confidence:'high', notes:'تختلف الإضافات إذا كانت مشوية بالزبدة أو الصوص.' },
+      { id:'polenta', name_ar:'بولينتا', name_en:'Polenta', aliases:['polenta'], category:'حبوب', icon:'🌽', mode:'per100g', carbs:15.0, protein:2.0, fat:0.5, calories:70, source:'Italian', confidence:'medium', notes:'للمطبوخ تقريبًا.' },
+
+      // ===== بقوليات =====
+      { id:'foul', name_ar:'فول', name_en:'Foul', aliases:['فول مدمس','foul','fava beans'], category:'بقوليات', icon:'🧆', mode:'per100g', carbs:20.0, protein:8.0, fat:1.0, calories:110, source:'USDA / محلي', confidence:'high', notes:'إضافة الزيت أو الطحينة ترفع السعرات.' },
+      { id:'chickpeas', name_ar:'حمص', name_en:'Chickpeas', aliases:['chickpeas','حمص حب'], category:'بقوليات', icon:'🫘', mode:'per100g', carbs:27.0, protein:9.0, fat:3.0, calories:164, source:'USDA', confidence:'high', notes:'للمطبوخ.' },
+      { id:'black-eyed-peas', name_ar:'فول عيني', name_en:'Black Eyed Peas', aliases:['فول عين','black eyed peas'], category:'بقوليات', icon:'🫘', mode:'per100g', carbs:21.0, protein:8.0, fat:0.5, calories:115, source:'USDA', confidence:'high', notes:'نتيجة جيدة للاستخدام اليومي.' },
+      { id:'kidney-beans', name_ar:'فول أحمر', name_en:'Kidney Beans', aliases:['kidney beans'], category:'بقوليات', icon:'🫘', mode:'per100g', carbs:23.0, protein:9.0, fat:0.5, calories:127, source:'USDA', confidence:'high', notes:'للمطبوخ.' },
+      { id:'white-beans', name_ar:'فول أبيض', name_en:'White Beans', aliases:['white beans'], category:'بقوليات', icon:'🫘', mode:'per100g', carbs:25.0, protein:9.0, fat:0.5, calories:140, source:'USDA', confidence:'high', notes:'للمطبوخ.' },
+
+      // ===== أطباق سعودية / خليجية =====
+      { id:'kabsa', name_ar:'كبسة دجاج', name_en:'Chicken Kabsa', aliases:['كبسة','رز كبسة','kabsa'], category:'أطباق رئيسية', icon:'🍗', mode:'per100g', carbs:28.0, protein:12.0, fat:8.0, calories:250, source:'مكتبة محلية', confidence:'medium', notes:'تختلف بحسب كمية الرز والدهن والدجاج.' },
+      { id:'shawarma', name_ar:'شاورما', name_en:'Shawarma', aliases:['شاورما عربي','shawarma'], category:'أطباق رئيسية', icon:'🥙', mode:'per100g', carbs:35.0, protein:20.0, fat:15.0, calories:400, source:'مكتبة محلية', confidence:'medium', notes:'الخبز والصلصات تغيّر القيم كثيرًا.' },
+      { id:'harees', name_ar:'هريس', name_en:'Harees', aliases:['هريس','harees wheat'], category:'أطباق خليجية', icon:'🥣', mode:'per100g', carbs:30.0, protein:6.0, fat:2.0, calories:170, source:'Arabian', confidence:'medium', notes:'نوع اللحم والسمن يرفع الدهون.' },
+
+      // ===== وجبات سريعة / عامة =====
+      { id:'burger', name_ar:'برجر', name_en:'Burger', aliases:['برغر','burger','cheeseburger'], category:'وجبات سريعة', icon:'🍔', mode:'per100g', carbs:40.0, protein:28.0, fat:35.0, calories:580, source:'مطاعم / تقدير', confidence:'medium', notes:'الجبن والصلصات وحجم الخبز يغيّر النتيجة.' },
+      { id:'broast', name_ar:'بروست', name_en:'Broast', aliases:['بروستد','broast','fried chicken'], category:'وجبات سريعة', icon:'🍗', mode:'per100g', carbs:15.0, protein:22.0, fat:18.0, calories:310, source:'مطاعم / تقدير', confidence:'medium', notes:'نوع التغليفة وحجم القطعة يفرّق كثير.' },
+      { id:'pizza', name_ar:'بيتزا', name_en:'Pizza', aliases:['pizza','بيتزا جبن','بيتزا خضار','بيتزا بيبروني'], category:'وجبات سريعة', icon:'🍕', mode:'per100g', carbs:60.0, protein:20.0, fat:25.0, calories:550, source:'مطاعم / تقدير', confidence:'medium', notes:'نوع العجينة والحشوة يغيّر النتيجة.' },
+      { id:'fries', name_ar:'بطاطس مقلية', name_en:'French Fries', aliases:['بطاطس','فرنش فرايز','fries','french fries'], category:'وجبات سريعة', icon:'🍟', mode:'per100g', carbs:41.0, protein:3.4, fat:15.0, calories:312, source:'مطاعم / USDA', confidence:'medium', notes:'الزيت والسماكة وطريقة القلي تؤثر على النتيجة.' },
+      { id:'kfc-chicken', name_ar:'دجاج كنتاكي', name_en:'KFC Chicken', aliases:['kfc chicken','كنتاكي','دجاج كنتاكي'], category:'وجبات سريعة', icon:'🍗', mode:'per100g', carbs:15.0, protein:20.0, fat:25.0, calories:380, source:'Fast Food', confidence:'medium', notes:'يعتمد على نوع القطعة والتغليفة.' },
+      { id:'chicken-nuggets', name_ar:'دجاج ناجتس', name_en:'Chicken Nuggets', aliases:['ناجتس','nuggets','chicken nuggets'], category:'وجبات سريعة', icon:'🍗', mode:'per100g', carbs:16.0, protein:15.0, fat:20.0, calories:300, source:'Fast Food', confidence:'medium', notes:'البراند والحجم وطريقة القلي تغيّر القيم.' },
+      { id:'chicken-strips', name_ar:'دجاج ستربس', name_en:'Chicken Strips', aliases:['strips','chicken strips','ستربس'], category:'وجبات سريعة', icon:'🍗', mode:'per100g', carbs:15.0, protein:18.0, fat:15.0, calories:280, source:'Fast Food', confidence:'medium', notes:'تقريب مناسب إذا ما عرفت المنتج بالضبط.' },
+
+      // ===== تقديري منزلي =====
+      { id:'pasta-red', name_ar:'مكرونة حمراء منزلية', name_en:'Red Sauce Pasta', aliases:['مكرونة حمراء','معكرونة حمراء','red pasta'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.04, fat_ratio:0.03, calorie_ratio:1.35, source:'تقدير منزلي', confidence:'estimate', notes:'هذه نتيجة تقديرية حسب الوزن. الصوص والإضافات تغيّر القيم.' },
+      { id:'pasta-red-veg', name_ar:'مكرونة حمراء مع خضار', name_en:'Vegetable Red Pasta', aliases:['مكرونة خضار','vegetable pasta'], category:'منزلي تقديري', icon:'🥗', mode:'estimated_ratio', carb_ratio:0.15, protein_ratio:0.03, fat_ratio:0.02, calorie_ratio:1.05, source:'تقدير منزلي', confidence:'estimate', notes:'كلما زادت الخضار وقلت المعكرونة نزل الكارب.' },
+      { id:'fettuccine', name_ar:'مكرونة بيضاء - فوتشيني', name_en:'Fettuccine', aliases:['فوتشيني','fettuccine'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.05, fat_ratio:0.05, calorie_ratio:1.60, source:'تقدير منزلي', confidence:'estimate', notes:'يختلف حسب الكريمة والجبن.' },
+      { id:'bechamel-more-meat', name_ar:'مكرونة بشاميل (اللحم أكثر)', name_en:'Bechamel Pasta High Meat', aliases:['بشاميل لحم أكثر'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.07, fat_ratio:0.08, calorie_ratio:1.95, source:'تقدير منزلي', confidence:'estimate', notes:'التركيبة تختلف بين بيت وبيت.' },
+      { id:'bechamel-more-pasta', name_ar:'مكرونة بشاميل (المكرونة أكثر)', name_en:'Bechamel Pasta High Pasta', aliases:['بشاميل مكرونة أكثر'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.25, protein_ratio:0.06, fat_ratio:0.07, calorie_ratio:2.00, source:'تقدير منزلي', confidence:'estimate', notes:'إذا كانت المكرونة أكثر فالكارب أعلى غالبًا.' },
+      { id:'lasagna', name_ar:'لازانيا', name_en:'Lasagna', aliases:['لازانيا','lasagna'], category:'منزلي تقديري', icon:'🧀', mode:'estimated_ratio', carb_ratio:0.15, protein_ratio:0.06, fat_ratio:0.07, calorie_ratio:1.85, source:'تقدير منزلي', confidence:'estimate', notes:'البشاميل والجبن واللحم يرفعون الدهون والسعرات.' },
+      { id:'pink-sauce-pasta', name_ar:'مكرونة بنك صوص', name_en:'Pink Sauce Pasta', aliases:['بنك صوص','pink sauce pasta'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.05, fat_ratio:0.05, calorie_ratio:1.60, source:'تقدير منزلي', confidence:'estimate', notes:'نتيجة تقريبية حسب الوزن.' },
+      { id:'spaghetti', name_ar:'مكرونة سباغيتي', name_en:'Spaghetti', aliases:['سباغيتي','spaghetti'], category:'منزلي تقديري', icon:'🍝', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.04, fat_ratio:0.03, calorie_ratio:1.35, source:'تقدير منزلي', confidence:'estimate', notes:'تختلف حسب الصوص والإضافات.' },
+      { id:'pesto-pasta', name_ar:'مكرونة بصوص البيستو', name_en:'Pesto Pasta', aliases:['بيستو','pesto pasta'], category:'منزلي تقديري', icon:'🌿', mode:'estimated_ratio', carb_ratio:0.17, protein_ratio:0.04, fat_ratio:0.07, calorie_ratio:1.80, source:'تقدير منزلي', confidence:'estimate', notes:'البيستو يرفع الدهون عادة.' },
+      { id:'spinach-pasta', name_ar:'مكرونة سبانخ', name_en:'Spinach Pasta', aliases:['سبانخ pasta','spinach pasta'], category:'منزلي تقديري', icon:'🥬', mode:'estimated_ratio', carb_ratio:0.20, protein_ratio:0.04, fat_ratio:0.03, calorie_ratio:1.30, source:'تقدير منزلي', confidence:'estimate', notes:'تقريب مناسب إذا ما كان عندك وصفة أدق.' },
+      { id:'mac-cheese', name_ar:'ماك اند تشيز', name_en:'Mac and Cheese', aliases:['مكرونة أجبان','mac and cheese'], category:'منزلي تقديري', icon:'🧀', mode:'estimated_ratio', carb_ratio:0.17, protein_ratio:0.05, fat_ratio:0.07, calorie_ratio:1.90, source:'تقدير منزلي', confidence:'estimate', notes:'الجبن والزبدة يغيّرون السعرات بشكل واضح.' }
     ];
 
     let selectedMeal = null;
@@ -1650,12 +1572,15 @@
 
     const els = {
       tabSearch: document.getElementById('tabSearch'),
+      tabLibrary: document.getElementById('tabLibrary'),
       tabWeight: document.getElementById('tabWeight'),
       panelSearch: document.getElementById('panelSearch'),
+      panelLibrary: document.getElementById('panelLibrary'),
       panelWeight: document.getElementById('panelWeight'),
       mealSearch: document.getElementById('mealSearch'),
       suggestionsList: document.getElementById('suggestionsList'),
       searchStatePill: document.getElementById('searchStatePill'),
+      customLibraryList: document.getElementById('customLibraryList'),
       selectedSummary: document.getElementById('selectedSummary'),
       selectedEmoji: document.getElementById('selectedEmoji'),
       selectedTitle: document.getElementById('selectedTitle'),
@@ -1663,6 +1588,8 @@
       weightCard: document.getElementById('weightCard'),
       mealWeight: document.getElementById('mealWeight'),
       estimateNote: document.getElementById('estimateNote'),
+      inlineCarbPreview: document.getElementById('inlineCarbPreview'),
+      inlinePreviewNote: document.getElementById('inlinePreviewNote'),
       analyzeBtn: document.getElementById('analyzeBtn'),
       resultCard: document.getElementById('resultCard'),
       resultSource: document.getElementById('resultSource'),
@@ -1702,6 +1629,20 @@
       localStorage.setItem(key, JSON.stringify(value));
     }
 
+    function getCustomFoods(){
+      const items = readJSON(STORAGE_KEYS.CUSTOM_FOODS);
+      return Array.isArray(items) ? items : [];
+    }
+
+    function setCustomFoods(items){
+      writeJSON(STORAGE_KEYS.CUSTOM_FOODS, items);
+    }
+
+    function getMergedLibrary(){
+      const customFoods = getCustomFoods();
+      return [...customFoods, ...BASE_LIBRARY];
+    }
+
     function updateJourney(step){
       els.stepSearch.classList.toggle('active', step === 1);
       els.stepWeight.classList.toggle('active', step === 2);
@@ -1709,15 +1650,25 @@
     }
 
     function setMode(mode){
-      const searchMode = mode === 'search';
-      els.tabSearch.classList.toggle('active', searchMode);
-      els.tabWeight.classList.toggle('active', !searchMode);
-      els.panelSearch.classList.toggle('active', searchMode);
-      els.panelWeight.classList.toggle('active', !searchMode);
+      const isSearch = mode === 'search';
+      const isLibrary = mode === 'library';
+      const isWeight = mode === 'weight';
 
-      if(searchMode){
+      els.tabSearch.classList.toggle('active', isSearch);
+      els.tabLibrary.classList.toggle('active', isLibrary);
+      els.tabWeight.classList.toggle('active', isWeight);
+
+      els.panelSearch.classList.toggle('active', isSearch);
+      els.panelLibrary.classList.toggle('active', isLibrary);
+      els.panelWeight.classList.toggle('active', isWeight);
+
+      if(isLibrary){
+        renderCustomLibrary();
+      }
+
+      if(isSearch){
         updateJourney(selectedMeal ? 2 : 1);
-      }else{
+      } else if(isWeight){
         updateJourney(lastResult ? 3 : (selectedMeal ? 2 : 1));
       }
     }
@@ -1734,11 +1685,17 @@
       return 'confidence-estimate';
     }
 
+    function typeLabel(item){
+      if(item.mode === 'estimated_ratio') return 'تقديري';
+      if(item.mode === 'serving') return 'بالحصة';
+      return 'لكل 100g';
+    }
+
     function searchMeals(query){
       if(query.length < 2) return [];
       const q = query.toLowerCase().trim();
 
-      return FOOD_LIBRARY
+      return getMergedLibrary()
         .filter(item => {
           const inAr = item.name_ar.toLowerCase().includes(q);
           const inEn = item.name_en.toLowerCase().includes(q);
@@ -1746,15 +1703,45 @@
           return inAr || inEn || inAliases;
         })
         .sort((a, b) => {
+          const aCustom = a.userCreated ? 1 : 0;
+          const bCustom = b.userCreated ? 1 : 0;
+          if(aCustom !== bCustom) return bCustom - aCustom;
+
           const aStarts = a.name_ar.toLowerCase().startsWith(q) || a.name_en.toLowerCase().startsWith(q);
           const bStarts = b.name_ar.toLowerCase().startsWith(q) || b.name_en.toLowerCase().startsWith(q);
           if(aStarts && !bStarts) return -1;
           if(!aStarts && bStarts) return 1;
+
           if(a.confidence === 'high' && b.confidence !== 'high') return -1;
           if(a.confidence !== 'high' && b.confidence === 'high') return 1;
+
           return a.name_ar.localeCompare(b.name_ar, 'ar');
         })
-        .slice(0, 8);
+        .slice(0, 12);
+    }
+
+    function buildSuggestionItem(item){
+      const carbsLabel = item.mode === 'estimated_ratio'
+        ? `${Math.round(item.carb_ratio * 100)}g/100g تقديري`
+        : `${Number(item.carbs).toFixed( item.carbs % 1 ? 1 : 0 )}g${item.mode === 'per100g' ? '/100g' : ''}`;
+
+      return `
+        <div class="suggestion-item" onclick="selectMeal('${item.id}')">
+          <div class="suggestion-icon">${item.icon || '🍽️'}</div>
+          <div class="suggestion-body">
+            <div class="suggestion-name">
+              ${item.name_ar}
+              <small>${item.name_en || ''}</small>
+            </div>
+            <div class="suggestion-meta">
+              <span class="suggestion-badge">${carbsLabel}</span>
+              <span>${item.category}</span>
+              <span>${typeLabel(item)}</span>
+              <span class="confidence-badge ${confidenceClass(item.confidence)}">${confidenceLabel(item.confidence)}</span>
+            </div>
+          </div>
+        </div>
+      `;
     }
 
     function renderSuggestions(results){
@@ -1763,7 +1750,7 @@
           <div class="suggestion-item" style="cursor:default">
             <div class="suggestion-body">
               <div class="suggestion-name">ما لقينا نتيجة قريبة</div>
-              <div class="suggestion-meta">جرّب كلمة ثانية أو استخدم زر اقتراح الإضافة.</div>
+              <div class="suggestion-meta">جرّب كلمة ثانية أو احفظ الصنف لاحقًا في مكتبتك الخاصة.</div>
             </div>
           </div>
         `;
@@ -1771,30 +1758,51 @@
         return;
       }
 
-      els.suggestionsList.innerHTML = results.map(item => {
-        const measureLabel = item.mode === 'serving' ? 'للحصة' : (item.mode === 'estimated_ratio' ? 'تقديري' : 'لكل 100g');
-        const carbsLabel = item.mode === 'estimated_ratio'
-          ? `${Math.round(item.carb_ratio * 100)}g/100g تقديري`
-          : `${item.carbs}g ${measureLabel === 'لكل 100g' ? '/100g' : ''}`;
-        return `
-          <div class="suggestion-item" onclick="selectMeal('${item.id}')">
-            <div class="suggestion-icon">${item.icon}</div>
-            <div class="suggestion-body">
-              <div class="suggestion-name">
-                ${item.name_ar}
-                <small>${item.name_en}</small>
-              </div>
-              <div class="suggestion-meta">
-                <span class="suggestion-badge">${carbsLabel}</span>
-                <span>${item.category}</span>
-                <span class="confidence-badge ${confidenceClass(item.confidence)}">${confidenceLabel(item.confidence)}</span>
-              </div>
-            </div>
+      const customResults = results.filter(item => item.userCreated);
+      const baseResults = results.filter(item => !item.userCreated);
+
+      let html = '';
+
+      if(customResults.length){
+        html += `<div class="suggestion-group-title">من مكتبتك الخاصة</div>`;
+        html += customResults.map(buildSuggestionItem).join('');
+      }
+
+      if(baseResults.length){
+        html += `<div class="suggestion-group-title">من المكتبة العامة</div>`;
+        html += baseResults.map(buildSuggestionItem).join('');
+      }
+
+      els.suggestionsList.innerHTML = html;
+      els.suggestionsList.classList.add('show');
+    }
+
+    function renderCustomLibrary(){
+      const customFoods = getCustomFoods();
+
+      if(!customFoods.length){
+        els.customLibraryList.innerHTML = `
+          <div class="library-empty">
+            ما عندك أصناف محفوظة إلى الآن.<br>
+            بعد ما تحسب أي وجبة تقدر تضغط <strong>أضف لمكتبتي</strong> وتطلع لك هنا مباشرة.
           </div>
         `;
-      }).join('');
+        return;
+      }
 
-      els.suggestionsList.classList.add('show');
+      els.customLibraryList.innerHTML = customFoods.map(item => `
+        <div class="suggestion-item" onclick="selectMeal('${item.id}')">
+          <div class="suggestion-icon">${item.icon || '📚'}</div>
+          <div class="suggestion-body">
+            <div class="suggestion-name">${item.name_ar}<small>${item.name_en || ''}</small></div>
+            <div class="suggestion-meta">
+              <span class="suggestion-badge">${Number(item.carbs).toFixed(item.carbs % 1 ? 1 : 0)}g/100g</span>
+              <span>${item.category || 'مخصص'}</span>
+              <span class="confidence-badge confidence-high">من مكتبتي</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
     }
 
     function updateSelectedSummary(){
@@ -1802,22 +1810,25 @@
         els.selectedSummary.classList.remove('show');
         els.weightCard.classList.add('locked');
         els.analyzeBtn.disabled = true;
-        els.estimateNote.textContent = 'اختر وجبة أولًا، وبعدها نقدر نحسب لك بالوزن بشكل أوضح.';
+        els.estimateNote.textContent = 'اختر صنف أولًا، وبعدها نحسب لك بالوزن بشكل أوضح.';
+        els.inlineCarbPreview.textContent = '≈ -- جم كارب';
+        els.inlinePreviewNote.textContent = 'أدخل الوزن ثم اضغط احسب';
         return;
       }
 
       els.selectedSummary.classList.add('show');
       els.selectedEmoji.textContent = selectedMeal.icon || '🍽️';
       els.selectedTitle.textContent = selectedMeal.name_ar;
-      els.selectedMeta.textContent = `${selectedMeal.category} • ${confidenceLabel(selectedMeal.confidence)} • ${selectedMeal.mode === 'estimated_ratio' ? 'نتيجة تقديرية حسب الوزن' : (selectedMeal.mode === 'serving' ? 'نتيجة بالحصة' : 'نتيجة لكل 100 جرام')}`;
+      els.selectedMeta.textContent = `${selectedMeal.category} • ${confidenceLabel(selectedMeal.confidence)} • ${typeLabel(selectedMeal)}`;
 
       els.weightCard.classList.remove('locked');
       els.analyzeBtn.disabled = false;
       els.estimateNote.textContent = selectedMeal.notes || 'قد تختلف النتيجة قليلًا حسب الحجم وطريقة التحضير.';
+      updateInlinePreview();
     }
 
     function selectMeal(id){
-      selectedMeal = FOOD_LIBRARY.find(item => item.id === id) || null;
+      selectedMeal = getMergedLibrary().find(item => item.id === id) || null;
       if(!selectedMeal) return;
 
       els.mealSearch.value = selectedMeal.name_ar;
@@ -1827,10 +1838,6 @@
       updateSelectedSummary();
       updateJourney(2);
       setMode('weight');
-
-      if(els.mealWeight.value){
-        analyzeMeal();
-      }
     }
 
     function quickSearch(term){
@@ -1845,18 +1852,69 @@
 
     function setWeightPreset(value){
       els.mealWeight.value = value;
-      if(selectedMeal){
-        analyzeMeal();
-      }
+      updateInlinePreview();
     }
 
     function safeRound(value, digits = 1){
       return Number.isFinite(value) ? Number(value.toFixed(digits)) : 0;
     }
 
-    function buildInsight(item, carbs, weight){
+    function computeFromItem(item, weight){
+      let carbs = 0;
+      let protein = 0;
+      let fat = 0;
+      let calories = 0;
+
+      if(item.mode === 'estimated_ratio'){
+        carbs = weight * (item.carb_ratio || 0);
+        protein = weight * (item.protein_ratio || 0);
+        fat = weight * (item.fat_ratio || 0);
+        calories = weight * (item.calorie_ratio || 0);
+      } else if(item.mode === 'serving'){
+        carbs = item.carbs || 0;
+        protein = item.protein || 0;
+        fat = item.fat || 0;
+        calories = item.calories || 0;
+      } else {
+        const factor = weight / 100;
+        carbs = (item.carbs || 0) * factor;
+        protein = (item.protein || 0) * factor;
+        fat = (item.fat || 0) * factor;
+        calories = (item.calories || 0) * factor;
+      }
+
+      return {
+        carbs: safeRound(carbs, 1),
+        protein: safeRound(protein, 1),
+        fat: safeRound(fat, 1),
+        calories: safeRound(calories, 0)
+      };
+    }
+
+    function updateInlinePreview(){
+      if(!selectedMeal){
+        els.inlineCarbPreview.textContent = '≈ -- جم كارب';
+        els.inlinePreviewNote.textContent = 'أدخل الوزن ثم اضغط احسب';
+        return;
+      }
+
+      const weight = Number(els.mealWeight.value);
+      if(!Number.isFinite(weight) || weight <= 0){
+        els.inlineCarbPreview.textContent = '≈ -- جم كارب';
+        els.inlinePreviewNote.textContent = 'أدخل وزن صحيح';
+        return;
+      }
+
+      const calc = computeFromItem(selectedMeal, weight);
+      els.inlineCarbPreview.textContent = `≈ ${calc.carbs.toFixed(1)} جم كارب`;
+      els.inlinePreviewNote.textContent = selectedMeal.mode === 'estimated_ratio'
+        ? 'هذه معاينة تقديرية، والنتيجة الرسمية تظهر بعد الضغط على احسب'
+        : 'هذه معاينة سريعة، والنتيجة الرسمية تظهر بعد الضغط على احسب';
+    }
+
+    function buildInsight(item, weight){
       if(item.confidence === 'estimate'){
-        return `هذه نتيجة تقديرية مبنية على الوزن (${weight}g) ومعامل تقريبي لهذا النوع من الوجبات. لو كانت الوصفة دهنية أكثر أو فيها صوص أكثر، قد يرتفع الرقم قليلًا.`;
+        return `هذه نتيجة تقديرية مبنية على الوزن (${weight}g) ومعامل تقريبي لهذا النوع من الوجبات. إذا كانت الوصفة أدسم أو فيها صوص أكثر، قد يرتفع الرقم قليلًا.`;
       }
 
       if(item.category === 'فواكه'){
@@ -1871,12 +1929,26 @@
         return `الوجبات السريعة يتغير فيها الكارب حسب الخبز أو التغليفة أو الصوص. النتيجة هنا مناسبة كبداية، لكن قد تختلف قليلًا بين مكان ومكان.`;
       }
 
+      if(item.userCreated){
+        return `هذا الصنف من مكتبتك الخاصة، لذلك النتيجة تعتمد على القيم اللي حفظتها سابقًا لكل 100 جرام.`;
+      }
+
       return `تم حساب ${item.name_ar} على وزن ${weight}g. كلما كان الوزن أدق، كانت النتيجة أقرب للواقع.`;
+    }
+
+    function confidenceBadgeStyle(confidence){
+      if(confidence === 'high'){
+        return { bg:'var(--success-soft)', color:'var(--success)' };
+      }
+      if(confidence === 'medium'){
+        return { bg:'var(--warning-soft)', color:'#A87912' };
+      }
+      return { bg:'rgba(125,139,174,.12)', color:'var(--hero-2)' };
     }
 
     function analyzeMeal(){
       if(!selectedMeal){
-        showToast('اختر وجبة أولًا');
+        showToast('اختر صنف أولًا');
         return;
       }
 
@@ -1887,62 +1959,39 @@
         return;
       }
 
-      let carbs = 0;
-      let protein = 0;
-      let fat = 0;
-      let calories = 0;
-      const factor = weight / 100;
-
-      if(selectedMeal.mode === 'estimated_ratio'){
-        carbs = weight * selectedMeal.carb_ratio;
-        protein = weight * (selectedMeal.protein_ratio || 0);
-        fat = weight * (selectedMeal.fat_ratio || 0);
-        calories = weight * (selectedMeal.calorie_ratio || 0);
-      } else if(selectedMeal.mode === 'serving'){
-        carbs = selectedMeal.carbs;
-        protein = selectedMeal.protein || 0;
-        fat = selectedMeal.fat || 0;
-        calories = selectedMeal.calories || 0;
-      } else {
-        carbs = selectedMeal.carbs * factor;
-        protein = (selectedMeal.protein || 0) * factor;
-        fat = (selectedMeal.fat || 0) * factor;
-        calories = (selectedMeal.calories || 0) * factor;
-      }
-
-      carbs = safeRound(carbs, 1);
-      protein = safeRound(protein, 1);
-      fat = safeRound(fat, 1);
-      calories = safeRound(calories, 0);
+      const calc = computeFromItem(selectedMeal, weight);
 
       lastResult = {
         id: selectedMeal.id,
         name: selectedMeal.name_ar,
         name_en: selectedMeal.name_en,
-        c: carbs,
-        carbs,
-        protein,
-        fat,
-        calories,
+        c: calc.carbs,
+        carbs: calc.carbs,
+        protein: calc.protein,
+        fat: calc.fat,
+        calories: calc.calories,
         weight,
         mode: selectedMeal.mode,
         source: selectedMeal.source,
         confidence: selectedMeal.confidence,
         icon: selectedMeal.icon,
         category: selectedMeal.category,
+        notes: selectedMeal.notes,
+        userCreated: !!selectedMeal.userCreated,
+        basePer100: selectedMeal.mode === 'estimated_ratio'
+          ? { carbs: safeRound((selectedMeal.carb_ratio || 0) * 100, 1), protein: safeRound((selectedMeal.protein_ratio || 0) * 100, 1), fat: safeRound((selectedMeal.fat_ratio || 0) * 100, 1), calories: safeRound((selectedMeal.calorie_ratio || 0) * 100, 0) }
+          : { carbs: selectedMeal.carbs || 0, protein: selectedMeal.protein || 0, fat: selectedMeal.fat || 0, calories: selectedMeal.calories || 0 },
         savedAt: new Date().toISOString()
       };
 
       renderResult();
       updateJourney(3);
-      setMode('weight');
-      setTimeout(() => {
-        els.resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 60);
     }
 
     function renderResult(){
       if(!lastResult) return;
+
+      const badgeStyle = confidenceBadgeStyle(lastResult.confidence);
 
       els.resultCard.classList.add('show');
       els.resultCarbs.textContent = lastResult.carbs.toFixed(1);
@@ -1951,36 +2000,21 @@
       els.resultCal.textContent = `${Math.round(lastResult.calories)}`;
       els.resultMealName.textContent = `${lastResult.icon || '🍽️'} ${lastResult.name}`;
       els.resultWeightSummary.textContent = `${lastResult.weight}g`;
-      els.resultPer100.textContent = lastResult.mode === 'estimated_ratio'
-        ? 'تقديري'
-        : `${selectedMeal.carbs}g كارب`;
+      els.resultPer100.textContent = `${Number(lastResult.basePer100.carbs).toFixed(lastResult.basePer100.carbs % 1 ? 1 : 0)}g كارب`;
 
-      const confidenceText = confidenceLabel(lastResult.confidence);
-      const sourceText = lastResult.source || 'المكتبة';
+      els.resultSource.style.background = badgeStyle.bg;
+      els.resultSource.style.color = badgeStyle.color;
+      els.resultSource.innerHTML = `<span>📚</span><span>${lastResult.source || 'المكتبة'} • ${confidenceLabel(lastResult.confidence)}</span>`;
 
-      els.resultSource.className = 'result-badge';
-      if(lastResult.confidence === 'high'){
-        els.resultSource.style.background = 'var(--success-soft)';
-        els.resultSource.style.color = 'var(--success)';
-      } else if(lastResult.confidence === 'medium'){
-        els.resultSource.style.background = 'var(--warning-soft)';
-        els.resultSource.style.color = '#A87912';
-      } else {
-        els.resultSource.style.background = 'rgba(125,139,174,.12)';
-        els.resultSource.style.color = 'var(--hero-2)';
-      }
-
-      els.resultSource.innerHTML = `<span>📚</span><span>${sourceText} • ${confidenceText}</span>`;
-      els.insightText.textContent = buildInsight(selectedMeal, lastResult.carbs, lastResult.weight);
+      els.insightText.textContent = buildInsight(selectedMeal, lastResult.weight);
     }
 
-    function saveMeal(){
+    function saveMealResult(){
       if(!lastResult){
         showToast('احسب وجبتك أولًا');
         return;
       }
 
-      // حفظ آخر وجبة للاستخدام في الهوم والصفحات الأخرى
       writeJSON(STORAGE_KEYS.LAST_MEAL, {
         mealName: lastResult.name,
         carbs: lastResult.carbs,
@@ -1995,7 +2029,6 @@
         savedAt: lastResult.savedAt
       });
 
-      // حفظ في قائمة الوجبات
       const meals = readJSON(STORAGE_KEYS.MEALS_LIST) || [];
       meals.push({
         id: lastResult.id,
@@ -2017,6 +2050,45 @@
       writeJSON(STORAGE_KEYS.MEALS_LIST, meals);
 
       showToast('✅ تم حفظ الوجبة وربطها بباقي الصفحات');
+    }
+
+    function saveToMyLibrary(){
+      if(!lastResult){
+        showToast('احسب وجبتك أولًا');
+        return;
+      }
+
+      const proposedName = prompt('وش الاسم اللي تبي تحفظ فيه الصنف داخل مكتبتك؟', lastResult.name);
+      if(!proposedName || !proposedName.trim()){
+        return;
+      }
+
+      const name = proposedName.trim();
+      const customFoods = getCustomFoods();
+
+      const normalized = {
+        id: `custom-${Date.now()}`,
+        name_ar: name,
+        name_en: lastResult.name_en || '',
+        aliases: [name],
+        category: `من مكتبتي`,
+        icon: lastResult.icon || '📚',
+        mode: 'per100g',
+        carbs: safeRound((lastResult.carbs / lastResult.weight) * 100, 1),
+        protein: safeRound((lastResult.protein / lastResult.weight) * 100, 1),
+        fat: safeRound((lastResult.fat / lastResult.weight) * 100, 1),
+        calories: safeRound((lastResult.calories / lastResult.weight) * 100, 0),
+        source: 'مكتبتي الخاصة',
+        confidence: 'high',
+        notes: 'تم حفظ هذا الصنف من استخدامك السابق على جهازك.',
+        userCreated: true,
+        createdAt: new Date().toISOString()
+      };
+
+      customFoods.unshift(normalized);
+      setCustomFoods(customFoods);
+      renderCustomLibrary();
+      showToast('📚 تم حفظ الصنف في مكتبتك الخاصة');
     }
 
     async function shareMeal(){
@@ -2055,12 +2127,13 @@
     function suggestMeal(){
       const meal = prompt('اكتب اسم الوجبة اللي ما لقيتها:');
       if(meal && meal.trim()){
-        showToast('وصلنا اقتراحك مبدئيًا، ونقدر نضيفه لاحقًا للمكتبة');
+        showToast('وصلنا اقتراحك مبدئيًا، ونضيفه لاحقًا للمكتبة');
       }
     }
 
     function bindEvents(){
       els.tabSearch.addEventListener('click', () => setMode('search'));
+      els.tabLibrary.addEventListener('click', () => setMode('library'));
       els.tabWeight.addEventListener('click', () => setMode('weight'));
 
       els.mealSearch.addEventListener('input', function(){
@@ -2096,11 +2169,7 @@
         }
       });
 
-      els.mealWeight.addEventListener('input', function(){
-        if(selectedMeal && this.value){
-          analyzeMeal();
-        }
-      });
+      els.mealWeight.addEventListener('input', updateInlinePreview);
 
       document.addEventListener('keydown', (e) => {
         if(e.key === 'Enter' && document.activeElement === els.mealSearch){
@@ -2116,6 +2185,7 @@
       bindEvents();
       updateJourney(1);
       setMode('search');
+      renderCustomLibrary();
       updateSelectedSummary();
     }
 
@@ -2123,7 +2193,8 @@
     window.selectMeal = selectMeal;
     window.setWeightPreset = setWeightPreset;
     window.analyzeMeal = analyzeMeal;
-    window.saveMeal = saveMeal;
+    window.saveMealResult = saveMealResult;
+    window.saveToMyLibrary = saveToMyLibrary;
     window.shareMeal = shareMeal;
     window.suggestMeal = suggestMeal;
 
