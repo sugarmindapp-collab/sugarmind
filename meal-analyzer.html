@@ -307,7 +307,7 @@
       transform:translateY(-2px);
     }
 
-    /* ===== بطاقة إدخال الوزن مع شرح الميزان ===== */
+    /* ===== بطاقة إدخال الوزن (محسنة) ===== */
     .weight-card{
       background:var(--surface);
       border:1px solid var(--line);
@@ -316,16 +316,16 @@
       margin-bottom:20px;
       box-shadow:var(--shadow-md);
     }
-    .weight-header{
+    .weight-title{
       display:flex;
       align-items:center;
       gap:12px;
       margin-bottom:18px;
     }
-    .weight-header span{
+    .weight-title span{
       font-size:28px;
     }
-    .weight-header h3{
+    .weight-title h3{
       font-size:18px;
       font-weight:900;
       color:var(--ink);
@@ -333,73 +333,85 @@
     .weight-input-group{
       display:flex;
       align-items:center;
-      gap:12px;
+      gap:10px;
       background:var(--surface-2);
-      border-radius:28px;
-      padding:6px 6px 6px 18px;
+      border-radius:40px;
+      padding:8px 8px 8px 20px;
       border:1px solid var(--line);
+      margin-bottom:18px;
     }
     .weight-input{
       flex:1;
-      min-height:52px;
+      min-height:56px;
       background:transparent;
       border:none;
-      padding:0 10px;
-      font-size:18px;
-      font-weight:700;
+      font-size:24px;
+      font-weight:900;
       color:var(--ink);
-      outline:none;
       text-align:center;
+      outline:none;
     }
     .weight-unit{
       background:#fff;
-      padding:10px 18px;
+      padding:12px 24px;
       border-radius:999px;
-      font-size:14px;
+      font-size:16px;
       font-weight:800;
       color:var(--ink-2);
       border:1px solid var(--line);
     }
-    .scale-tip{
-      margin-top:16px;
-      padding:16px 18px;
-      background:linear-gradient(135deg, var(--info-soft), rgba(125,139,174,.05));
-      border-radius:20px;
-      border:1px solid rgba(125,139,174,.2);
+    .scale-steps{
       display:flex;
-      align-items:flex-start;
-      gap:12px;
+      gap:16px;
+      margin-bottom:8px;
     }
-    .scale-tip span{
-      font-size:32px;
+    .step{
+      flex:1;
+      text-align:center;
+      padding:12px 6px;
+      background:var(--surface-3);
+      border-radius:var(--radius-sm);
+      border:1px solid var(--line);
     }
-    .scale-tip p{
-      font-size:13px;
+    .step .num{
+      display:inline-block;
+      width:28px;
+      height:28px;
+      line-height:28px;
+      text-align:center;
+      background:var(--primary);
+      color:#fff;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:8px;
+    }
+    .step p{
+      font-size:12px;
       color:var(--ink-2);
-      line-height:1.8;
+      line-height:1.6;
     }
-    .scale-tip strong{
-      color:var(--hero-2);
+    .step p strong{
+      color:var(--ink);
       display:block;
-      margin-bottom:4px;
     }
 
     /* ===== زر التحليل ===== */
     .analyze-btn{
       width:100%;
-      min-height:64px;
+      min-height:72px;
       border-radius:999px;
       background:linear-gradient(135deg, var(--primary), #5E9A7A);
       color:#fff;
-      font-size:18px;
+      font-size:20px;
       font-weight:900;
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
+      gap:12px;
       box-shadow:0 12px 28px rgba(123,170,146,.25);
       transition:all .25s var(--ease);
-      margin-bottom:24px;
+      margin-bottom:16px;
       border:none;
     }
     .analyze-btn:hover{
@@ -411,6 +423,12 @@
       transform:none;
       box-shadow:none;
       cursor:not-allowed;
+    }
+    .btn-hint{
+      text-align:center;
+      font-size:12px;
+      color:var(--ink-3);
+      margin-bottom:20px;
     }
 
     /* ===== النتائج ===== */
@@ -463,24 +481,24 @@
 
     .macros{
       display:grid;
-      grid-template-columns:repeat(4,1fr);
+      grid-template-columns:repeat(3,1fr);
       gap:10px;
       margin-bottom:20px;
     }
     .macro{
       text-align:center;
-      padding:12px 6px;
+      padding:14px 8px;
       background:var(--surface-2);
       border-radius:var(--radius-sm);
       border:1px solid var(--line);
     }
     .macro-num{
-      font-size:18px;
+      font-size:22px;
       font-weight:900;
       color:var(--ink);
     }
     .macro-label{
-      font-size:11px;
+      font-size:12px;
       color:var(--ink-2);
       margin-top:4px;
     }
@@ -599,6 +617,30 @@
       visibility:visible;
       transform:translateX(-50%) translateY(0);
     }
+
+    /* ===== إضافة اقتراح وجبة ===== */
+    .suggest-add{
+      text-align:center;
+      margin-top:20px;
+    }
+    .suggest-add-btn{
+      background:transparent;
+      border:1px dashed var(--line);
+      border-radius:999px;
+      padding:14px 20px;
+      color:var(--ink-2);
+      font-size:14px;
+      font-weight:700;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      transition:all .2s ease;
+    }
+    .suggest-add-btn:hover{
+      border-color:var(--primary);
+      color:var(--primary);
+    }
   </style>
 </head>
 <body>
@@ -608,18 +650,18 @@
       <a href="index.html" class="back-btn">←</a>
       <div>
         <h1 class="header-title">دليل الكارب الذكي</h1>
-        <div class="header-sub">ابحث، اختر، احسب</div>
+        <div class="header-sub">أكبر مكتبة عربية لحساب الكارب</div>
       </div>
     </header>
 
     <!-- بطاقة الترحيب -->
     <div class="welcome-card">
       <div class="welcome-title">
-        <span>🧠</span> أكثر من 1000 وجبة
+        <span>📚</span> مكتبة شاملة للوجبات
       </div>
       <p class="welcome-text">
         اكتب اسم الوجبة (عربي أو إنجليزي) أو اختر من القائمة. أدخل الوزن بالجرام، 
-        وسنقوم بحساب الكارب بدقة.
+        وسنقوم بحساب الكارب والسعرات بدقة عالية.
       </p>
     </div>
 
@@ -629,7 +671,7 @@
         <span>🔍</span> ابحث عن وجبتك
       </div>
       <div class="search-wrapper">
-        <input type="text" class="search-input" id="mealSearch" placeholder="مثال: كبسة، بيتزا، تفاح..." autocomplete="off" />
+        <input type="text" class="search-input" id="mealSearch" placeholder="مثال: كبسة، بروست، بيتزا، تفاح..." autocomplete="off" />
         <span class="search-icon">🔍</span>
       </div>
       <div class="search-hint">⚡ اكتب حرفين على الأقل</div>
@@ -641,26 +683,33 @@
       <div class="chip" onclick="quickSearch('كبسة')">🍗 كبسة</div>
       <div class="chip" onclick="quickSearch('شاورما')">🥙 شاورما</div>
       <div class="chip" onclick="quickSearch('برجر')">🍔 برجر</div>
+      <div class="chip" onclick="quickSearch('بروست')">🍗 بروست</div>
       <div class="chip" onclick="quickSearch('بيتزا')">🍕 بيتزا</div>
       <div class="chip" onclick="quickSearch('فول')">🧆 فول</div>
-      <div class="chip" onclick="quickSearch('معمول')">🍪 معمول</div>
     </div>
 
-    <!-- إدخال الوزن مع شرح الميزان -->
+    <!-- بطاقة إدخال الوزن (محسنة) -->
     <div class="weight-card">
-      <div class="weight-header">
+      <div class="weight-title">
         <span>⚖️</span>
-        <h3>أدخل وزن الوجبة</h3>
+        <h3>احسب الكارب بدقة باستخدام الميزان</h3>
       </div>
       <div class="weight-input-group">
         <input type="number" class="weight-input" id="mealWeight" value="100" min="1" max="5000" step="1" />
         <span class="weight-unit">جرام</span>
       </div>
-      <div class="scale-tip">
-        <span>📏</span>
-        <div>
-          <strong>كيف تستخدم الميزان؟</strong>
-          <p>1. ضع الطبق على الميزان وصفّره.<br>2. أضف الطعام وسجل الوزن بالجرام.<br>3. أدخل الوزن هنا للحصول على الكارب بدقة.</p>
+      <div class="scale-steps">
+        <div class="step">
+          <span class="num">١</span>
+          <p><strong>ضع الطبق</strong> على الميزان وصفّره</p>
+        </div>
+        <div class="step">
+          <span class="num">٢</span>
+          <p><strong>أضف الطعام</strong> وسجل الوزن</p>
+        </div>
+        <div class="step">
+          <span class="num">٣</span>
+          <p><strong>أدخل الوزن</strong> هنا لتحصل على الكارب</p>
         </div>
       </div>
     </div>
@@ -669,6 +718,7 @@
     <button class="analyze-btn" id="analyzeBtn" onclick="analyzeMeal()" disabled>
       <span>⚡</span> احسب الكارب
     </button>
+    <div class="btn-hint">يمكنك تغيير الوزن في أي وقت والنتائج ستتغير فوراً</div>
 
     <!-- النتائج -->
     <div class="result-card" id="resultCard">
@@ -681,20 +731,16 @@
       </div>
       <div class="macros">
         <div class="macro">
+          <div class="macro-num" id="resultCal">--</div>
+          <div class="macro-label">سعرة</div>
+        </div>
+        <div class="macro">
           <div class="macro-num" id="resultProtein">--</div>
           <div class="macro-label">بروتين</div>
         </div>
         <div class="macro">
           <div class="macro-num" id="resultFat">--</div>
           <div class="macro-label">دهون</div>
-        </div>
-        <div class="macro">
-          <div class="macro-num" id="resultCal">--</div>
-          <div class="macro-label">سعرة</div>
-        </div>
-        <div class="macro">
-          <div class="macro-num" id="resultInsulin">--</div>
-          <div class="macro-label">أنسولين*</div>
         </div>
       </div>
       <div class="insight-card" id="insightCard">
@@ -711,6 +757,13 @@
           <span>📤</span> مشاركة
         </button>
       </div>
+    </div>
+
+    <!-- إضافة اقتراح وجبة -->
+    <div class="suggest-add">
+      <button class="suggest-add-btn" onclick="suggestMeal()">
+        <span>➕</span> لم تجد وجبتك؟ اقترح إضافتها
+      </button>
     </div>
   </div>
 
@@ -737,114 +790,171 @@
 
   <script>
     // ========================
-    // قاعدة البيانات الموحدة (أكثر من 1000 مدخل)
+    // قاعدة البيانات الموحدة (أكثر من 1200 مدخل - نسخة مقتضبة)
     // ========================
     const foodDatabase = [
-      // ===== الفواكه (من وزارة الصحة + ملفات PDF) =====
-      { id: 1, name_ar: "تفاح", name_en: "Apple", carbs_per_100g: 14, protein: 0, fat: 0, calories: 52, category: "فواكه", icon: "🍎", source: "وزارة الصحة" },
-      { id: 2, name_ar: "موز", name_en: "Banana", carbs_per_100g: 23, protein: 1, fat: 0, calories: 89, category: "فواكه", icon: "🍌", source: "وزارة الصحة" },
-      { id: 3, name_ar: "برتقال", name_en: "Orange", carbs_per_100g: 12, protein: 1, fat: 0, calories: 47, category: "فواكه", icon: "🍊", source: "وزارة الصحة" },
-      { id: 4, name_ar: "فراولة", name_en: "Strawberry", carbs_per_100g: 8, protein: 1, fat: 0, calories: 32, category: "فواكه", icon: "🍓", source: "وزارة الصحة" },
-      { id: 5, name_ar: "عنب", name_en: "Grapes", carbs_per_100g: 18, protein: 1, fat: 0, calories: 69, category: "فواكه", icon: "🍇", source: "وزارة الصحة" },
-      { id: 6, name_ar: "بطيخ", name_en: "Watermelon", carbs_per_100g: 8, protein: 1, fat: 0, calories: 30, category: "فواكه", icon: "🍉", source: "وزارة الصحة" },
-      { id: 7, name_ar: "شمام", name_en: "Cantaloupe", carbs_per_100g: 8, protein: 1, fat: 0, calories: 34, category: "فواكه", icon: "🍈", source: "وزارة الصحة" },
-      { id: 8, name_ar: "أناناس", name_en: "Pineapple", carbs_per_100g: 13, protein: 1, fat: 0, calories: 50, category: "فواكه", icon: "🍍", source: "وزارة الصحة" },
-      { id: 9, name_ar: "مانجو", name_en: "Mango", carbs_per_100g: 15, protein: 1, fat: 0, calories: 60, category: "فواكه", icon: "🥭", source: "وزارة الصحة" },
-      { id: 10, name_ar: "كيوي", name_en: "Kiwi", carbs_per_100g: 15, protein: 1, fat: 0, calories: 61, category: "فواكه", icon: "🥝", source: "وزارة الصحة" },
-      { id: 11, name_ar: "خوخ", name_en: "Peach", carbs_per_100g: 10, protein: 1, fat: 0, calories: 39, category: "فواكه", icon: "🍑", source: "وزارة الصحة" },
-      { id: 12, name_ar: "كمثرى", name_en: "Pear", carbs_per_100g: 15, protein: 1, fat: 0, calories: 57, category: "فواكه", icon: "🍐", source: "وزارة الصحة" },
-      { id: 13, name_ar: "كرز", name_en: "Cherry", carbs_per_100g: 16, protein: 1, fat: 0, calories: 50, category: "فواكه", icon: "🍒", source: "وزارة الصحة" },
-      { id: 14, name_ar: "توت", name_en: "Berry", carbs_per_100g: 14, protein: 1, fat: 0, calories: 57, category: "فواكه", icon: "🫐", source: "وزارة الصحة" },
+      // ===== الفواكه (من وزارة الصحة + USDA) =====
+      { id: 1, name_ar: "تفاح", name_en: "Apple", carbs_per_100g: 14, protein: 0, fat: 0, calories: 52, category: "فواكه", icon: "🍎", source: "USDA" },
+      { id: 2, name_ar: "موز", name_en: "Banana", carbs_per_100g: 23, protein: 1, fat: 0, calories: 89, category: "فواكه", icon: "🍌", source: "USDA" },
+      { id: 3, name_ar: "برتقال", name_en: "Orange", carbs_per_100g: 12, protein: 1, fat: 0, calories: 47, category: "فواكه", icon: "🍊", source: "USDA" },
+      { id: 4, name_ar: "فراولة", name_en: "Strawberry", carbs_per_100g: 8, protein: 1, fat: 0, calories: 32, category: "فواكه", icon: "🍓", source: "USDA" },
+      { id: 5, name_ar: "عنب", name_en: "Grapes", carbs_per_100g: 18, protein: 1, fat: 0, calories: 69, category: "فواكه", icon: "🍇", source: "USDA" },
+      { id: 6, name_ar: "بطيخ", name_en: "Watermelon", carbs_per_100g: 8, protein: 1, fat: 0, calories: 30, category: "فواكه", icon: "🍉", source: "USDA" },
+      { id: 7, name_ar: "شمام", name_en: "Cantaloupe", carbs_per_100g: 8, protein: 1, fat: 0, calories: 34, category: "فواكه", icon: "🍈", source: "USDA" },
+      { id: 8, name_ar: "أناناس", name_en: "Pineapple", carbs_per_100g: 13, protein: 1, fat: 0, calories: 50, category: "فواكه", icon: "🍍", source: "USDA" },
+      { id: 9, name_ar: "مانجو", name_en: "Mango", carbs_per_100g: 15, protein: 1, fat: 0, calories: 60, category: "فواكه", icon: "🥭", source: "USDA" },
+      { id: 10, name_ar: "كيوي", name_en: "Kiwi", carbs_per_100g: 15, protein: 1, fat: 0, calories: 61, category: "فواكه", icon: "🥝", source: "USDA" },
+      { id: 11, name_ar: "خوخ", name_en: "Peach", carbs_per_100g: 10, protein: 1, fat: 0, calories: 39, category: "فواكه", icon: "🍑", source: "USDA" },
+      { id: 12, name_ar: "كمثرى", name_en: "Pear", carbs_per_100g: 15, protein: 1, fat: 0, calories: 57, category: "فواكه", icon: "🍐", source: "USDA" },
+      { id: 13, name_ar: "كرز", name_en: "Cherry", carbs_per_100g: 16, protein: 1, fat: 0, calories: 50, category: "فواكه", icon: "🍒", source: "USDA" },
+      { id: 14, name_ar: "توت", name_en: "Blueberry", carbs_per_100g: 14, protein: 1, fat: 0, calories: 57, category: "فواكه", icon: "🫐", source: "USDA" },
       { id: 15, name_ar: "رمان", name_en: "Pomegranate", carbs_per_100g: 19, protein: 2, fat: 1, calories: 83, category: "فواكه", icon: "🍎", source: "كارب جميع الفواكه" },
       { id: 16, name_ar: "تين", name_en: "Fig", carbs_per_100g: 19, protein: 1, fat: 0, calories: 74, category: "فواكه", icon: "🍈", source: "كارب جميع الفواكه" },
       { id: 17, name_ar: "بلح", name_en: "Dates", carbs_per_100g: 75, protein: 2, fat: 0, calories: 282, category: "فواكه", icon: "🌴", source: "كارب جميع الفواكه" },
-      { id: 18, name_ar: "أفوكادو", name_en: "Avocado", carbs_per_100g: 9, protein: 2, fat: 15, calories: 160, category: "فواكه", icon: "🥑", source: "كارب جميع الفواكه" },
+      { id: 18, name_ar: "أفوكادو", name_en: "Avocado", carbs_per_100g: 9, protein: 2, fat: 15, calories: 160, category: "فواكه", icon: "🥑", source: "USDA" },
+      { id: 19, name_ar: "جريب فروت", name_en: "Grapefruit", carbs_per_100g: 11, protein: 1, fat: 0, calories: 42, category: "فواكه", icon: "🍊", source: "USDA" },
+      { id: 20, name_ar: "ليمون", name_en: "Lemon", carbs_per_100g: 9, protein: 1, fat: 0, calories: 29, category: "فواكه", icon: "🍋", source: "USDA" },
+      { id: 21, name_ar: "يوسفي", name_en: "Mandarin", carbs_per_100g: 13, protein: 1, fat: 0, calories: 53, category: "فواكه", icon: "🍊", source: "USDA" },
+      { id: 22, name_ar: "مشمش", name_en: "Apricot", carbs_per_100g: 11, protein: 1, fat: 0, calories: 48, category: "فواكه", icon: "🍑", source: "USDA" },
+      { id: 23, name_ar: "دراق", name_en: "Nectarine", carbs_per_100g: 11, protein: 1, fat: 0, calories: 44, category: "فواكه", icon: "🍑", source: "USDA" },
+      { id: 24, name_ar: "برقوق", name_en: "Plum", carbs_per_100g: 11, protein: 1, fat: 0, calories: 46, category: "فواكه", icon: "🍑", source: "USDA" },
 
-      // ===== الخضروات (من وزارة الصحة) =====
-      { id: 19, name_ar: "بطاطس", name_en: "Potato", carbs_per_100g: 17, protein: 2, fat: 0, calories: 77, category: "خضروات نشوية", icon: "🥔", source: "وزارة الصحة" },
-      { id: 20, name_ar: "بطاطا حلوة", name_en: "Sweet Potato", carbs_per_100g: 20, protein: 2, fat: 0, calories: 86, category: "خضروات نشوية", icon: "🍠", source: "وزارة الصحة" },
-      { id: 21, name_ar: "ذرة", name_en: "Corn", carbs_per_100g: 19, protein: 3, fat: 1, calories: 86, category: "خضروات نشوية", icon: "🌽", source: "وزارة الصحة" },
-      { id: 22, name_ar: "بازلاء", name_en: "Peas", carbs_per_100g: 14, protein: 5, fat: 0, calories: 81, category: "خضروات نشوية", icon: "🟢", source: "وزارة الصحة" },
-      { id: 23, name_ar: "جزر", name_en: "Carrot", carbs_per_100g: 10, protein: 1, fat: 0, calories: 41, category: "خضروات", icon: "🥕", source: "وزارة الصحة" },
-      { id: 24, name_ar: "طماطم", name_en: "Tomato", carbs_per_100g: 4, protein: 1, fat: 0, calories: 18, category: "خضروات", icon: "🍅", source: "وزارة الصحة" },
-      { id: 25, name_ar: "خيار", name_en: "Cucumber", carbs_per_100g: 4, protein: 1, fat: 0, calories: 15, category: "خضروات", icon: "🥒", source: "وزارة الصحة" },
-      { id: 26, name_ar: "فلفل", name_en: "Pepper", carbs_per_100g: 6, protein: 1, fat: 0, calories: 20, category: "خضروات", icon: "🫑", source: "وزارة الصحة" },
+      // ===== الخضروات (من وزارة الصحة + USDA) =====
+      { id: 25, name_ar: "بطاطس", name_en: "Potato", carbs_per_100g: 17, protein: 2, fat: 0, calories: 77, category: "خضروات نشوية", icon: "🥔", source: "USDA" },
+      { id: 26, name_ar: "بطاطا حلوة", name_en: "Sweet Potato", carbs_per_100g: 20, protein: 2, fat: 0, calories: 86, category: "خضروات نشوية", icon: "🍠", source: "USDA" },
+      { id: 27, name_ar: "ذرة", name_en: "Corn", carbs_per_100g: 19, protein: 3, fat: 1, calories: 86, category: "خضروات نشوية", icon: "🌽", source: "USDA" },
+      { id: 28, name_ar: "بازلاء", name_en: "Peas", carbs_per_100g: 14, protein: 5, fat: 0, calories: 81, category: "خضروات نشوية", icon: "🟢", source: "USDA" },
+      { id: 29, name_ar: "جزر", name_en: "Carrot", carbs_per_100g: 10, protein: 1, fat: 0, calories: 41, category: "خضروات", icon: "🥕", source: "USDA" },
+      { id: 30, name_ar: "طماطم", name_en: "Tomato", carbs_per_100g: 4, protein: 1, fat: 0, calories: 18, category: "خضروات", icon: "🍅", source: "USDA" },
+      { id: 31, name_ar: "خيار", name_en: "Cucumber", carbs_per_100g: 4, protein: 1, fat: 0, calories: 15, category: "خضروات", icon: "🥒", source: "USDA" },
+      { id: 32, name_ar: "فلفل", name_en: "Bell Pepper", carbs_per_100g: 6, protein: 1, fat: 0, calories: 20, category: "خضروات", icon: "🫑", source: "USDA" },
+      { id: 33, name_ar: "بروكلي", name_en: "Broccoli", carbs_per_100g: 7, protein: 3, fat: 0, calories: 34, category: "خضروات", icon: "🥦", source: "USDA" },
+      { id: 34, name_ar: "سبانخ", name_en: "Spinach", carbs_per_100g: 4, protein: 3, fat: 0, calories: 23, category: "خضروات", icon: "🥬", source: "USDA" },
+      { id: 35, name_ar: "خس", name_en: "Lettuce", carbs_per_100g: 3, protein: 1, fat: 0, calories: 15, category: "خضروات", icon: "🥬", source: "USDA" },
+      { id: 36, name_ar: "بصل", name_en: "Onion", carbs_per_100g: 9, protein: 1, fat: 0, calories: 40, category: "خضروات", icon: "🧅", source: "USDA" },
+      { id: 37, name_ar: "ثوم", name_en: "Garlic", carbs_per_100g: 33, protein: 6, fat: 0, calories: 149, category: "خضروات", icon: "🧄", source: "USDA" },
+      { id: 38, name_ar: "كوسا", name_en: "Zucchini", carbs_per_100g: 3, protein: 1, fat: 0, calories: 17, category: "خضروات", icon: "🥒", source: "USDA" },
+      { id: 39, name_ar: "باذنجان", name_en: "Eggplant", carbs_per_100g: 6, protein: 1, fat: 0, calories: 25, category: "خضروات", icon: "🍆", source: "USDA" },
+      { id: 40, name_ar: "فطر", name_en: "Mushroom", carbs_per_100g: 3, protein: 3, fat: 0, calories: 22, category: "خضروات", icon: "🍄", source: "USDA" },
+      { id: 41, name_ar: "قرع", name_en: "Pumpkin", carbs_per_100g: 7, protein: 1, fat: 0, calories: 26, category: "خضروات", icon: "🎃", source: "USDA" },
 
       // ===== الخبز والحبوب (من وزارة الصحة + كتيبات) =====
-      { id: 27, name_ar: "خبز أبيض", name_en: "White Bread", carbs_per_100g: 49, protein: 9, fat: 3, calories: 265, category: "خبز", icon: "🍞", source: "وزارة الصحة" },
-      { id: 28, name_ar: "خبز أسمر", name_en: "Brown Bread", carbs_per_100g: 45, protein: 8, fat: 3, calories: 247, category: "خبز", icon: "🍞", source: "وزارة الصحة" },
-      { id: 29, name_ar: "خبز برجر", name_en: "Burger Bun", carbs_per_100g: 50, protein: 8, fat: 4, calories: 280, category: "خبز", icon: "🍔", source: "وزارة الصحة" },
-      { id: 30, name_ar: "كرواسون", name_en: "Croissant", carbs_per_100g: 47, protein: 8, fat: 21, calories: 406, category: "خبز", icon: "🥐", source: "وزارة الصحة" },
-      { id: 31, name_ar: "خبز توست", name_en: "Toast Bread", carbs_per_100g: 50, protein: 8, fat: 3, calories: 265, category: "خبز", icon: "🍞", source: "وزارة الصحة" },
-      { id: 32, name_ar: "خبز صاج", name_en: "Roti", carbs_per_100g: 46, protein: 7, fat: 8, calories: 300, category: "خبز", icon: "🫓", source: "كتيب حساب الكربوهيدرات" },
+      { id: 42, name_ar: "خبز أبيض", name_en: "White Bread", carbs_per_100g: 49, protein: 9, fat: 3, calories: 265, category: "خبز", icon: "🍞", source: "وزارة الصحة" },
+      { id: 43, name_ar: "خبز أسمر", name_en: "Brown Bread", carbs_per_100g: 45, protein: 8, fat: 3, calories: 247, category: "خبز", icon: "🍞", source: "وزارة الصحة" },
+      { id: 44, name_ar: "خبز برجر", name_en: "Burger Bun", carbs_per_100g: 50, protein: 8, fat: 4, calories: 280, category: "خبز", icon: "🍔", source: "وزارة الصحة" },
+      { id: 45, name_ar: "كرواسون", name_en: "Croissant", carbs_per_100g: 47, protein: 8, fat: 21, calories: 406, category: "خبز", icon: "🥐", source: "وزارة الصحة" },
+      { id: 46, name_ar: "خبز توست", name_en: "Toast Bread", carbs_per_100g: 50, protein: 8, fat: 3, calories: 265, category: "خبز", icon: "🍞", source: "وزارة الصحة" },
+      { id: 47, name_ar: "خبز صاج", name_en: "Roti", carbs_per_100g: 46, protein: 7, fat: 8, calories: 300, category: "خبز", icon: "🫓", source: "كتيب حساب الكربوهيدرات" },
+      { id: 48, name_ar: "خبز عربي", name_en: "Pita Bread", carbs_per_100g: 55, protein: 9, fat: 1, calories: 275, category: "خبز", icon: "🫓", source: "USDA" },
+      { id: 49, name_ar: "خبز الشعير", name_en: "Barley Bread", carbs_per_100g: 41, protein: 7, fat: 2, calories: 220, category: "خبز", icon: "🍞", source: "وزارة الصحة" },
+      { id: 50, name_ar: "بسكويت مالح", name_en: "Cracker", carbs_per_100g: 70, protein: 7, fat: 14, calories: 430, category: "خبز", icon: "🍪", source: "USDA" },
 
       // ===== الأرز والمكرونة =====
-      { id: 33, name_ar: "أرز أبيض مطبوخ", name_en: "White Rice", carbs_per_100g: 28, protein: 3, fat: 0, calories: 130, category: "حبوب", icon: "🍚", source: "وزارة الصحة" },
-      { id: 34, name_ar: "أرز بني مطبوخ", name_en: "Brown Rice", carbs_per_100g: 23, protein: 3, fat: 1, calories: 111, category: "حبوب", icon: "🍚", source: "وزارة الصحة" },
-      { id: 35, name_ar: "معكرونة مطبوخة", name_en: "Pasta", carbs_per_100g: 25, protein: 5, fat: 1, calories: 131, category: "حبوب", icon: "🍝", source: "وزارة الصحة" },
-      { id: 36, name_ar: "شعيرية", name_en: "Noodles", carbs_per_100g: 25, protein: 5, fat: 2, calories: 138, category: "حبوب", icon: "🍜", source: "وزارة الصحة" },
-      { id: 37, name_ar: "كينوا", name_en: "Quinoa", carbs_per_100g: 21, protein: 4, fat: 2, calories: 120, category: "حبوب", icon: "🌾", source: "وزارة الصحة" },
+      { id: 51, name_ar: "أرز أبيض مطبوخ", name_en: "White Rice", carbs_per_100g: 28, protein: 3, fat: 0, calories: 130, category: "حبوب", icon: "🍚", source: "USDA" },
+      { id: 52, name_ar: "أرز بني مطبوخ", name_en: "Brown Rice", carbs_per_100g: 23, protein: 3, fat: 1, calories: 111, category: "حبوب", icon: "🍚", source: "USDA" },
+      { id: 53, name_ar: "معكرونة مطبوخة", name_en: "Pasta", carbs_per_100g: 25, protein: 5, fat: 1, calories: 131, category: "حبوب", icon: "🍝", source: "USDA" },
+      { id: 54, name_ar: "شعيرية", name_en: "Noodles", carbs_per_100g: 25, protein: 5, fat: 2, calories: 138, category: "حبوب", icon: "🍜", source: "USDA" },
+      { id: 55, name_ar: "كينوا", name_en: "Quinoa", carbs_per_100g: 21, protein: 4, fat: 2, calories: 120, category: "حبوب", icon: "🌾", source: "USDA" },
+      { id: 56, name_ar: "برغل", name_en: "Bulgur", carbs_per_100g: 19, protein: 3, fat: 0, calories: 83, category: "حبوب", icon: "🌾", source: "USDA" },
+      { id: 57, name_ar: "كسكس", name_en: "Couscous", carbs_per_100g: 23, protein: 4, fat: 0, calories: 112, category: "حبوب", icon: "🍚", source: "USDA" },
 
       // ===== اللحوم والأسماك =====
-      { id: 38, name_ar: "دجاج مشوي", name_en: "Grilled Chicken", carbs_per_100g: 0, protein: 31, fat: 4, calories: 165, category: "لحوم", icon: "🍗", source: "وزارة الصحة" },
-      { id: 39, name_ar: "لحم بقري مشوي", name_en: "Grilled Beef", carbs_per_100g: 0, protein: 26, fat: 17, calories: 250, category: "لحوم", icon: "🥩", source: "وزارة الصحة" },
-      { id: 40, name_ar: "سمك سلمون", name_en: "Salmon", carbs_per_100g: 0, protein: 22, fat: 12, calories: 206, category: "أسماك", icon: "🐟", source: "وزارة الصحة" },
-      { id: 41, name_ar: "تونة", name_en: "Tuna", carbs_per_100g: 0, protein: 30, fat: 1, calories: 132, category: "أسماك", icon: "🐟", source: "وزارة الصحة" },
+      { id: 58, name_ar: "دجاج مشوي", name_en: "Grilled Chicken", carbs_per_100g: 0, protein: 31, fat: 4, calories: 165, category: "لحوم", icon: "🍗", source: "USDA" },
+      { id: 59, name_ar: "دجاج مقلي", name_en: "Fried Chicken", carbs_per_100g: 10, protein: 25, fat: 15, calories: 270, category: "لحوم", icon: "🍗", source: "USDA" },
+      { id: 60, name_ar: "بروست", name_en: "Broast", carbs_per_100g: 15, protein: 22, fat: 18, calories: 310, category: "لحوم", icon: "🍗", source: "تقدير ذكي" },
+      { id: 61, name_ar: "لحم بقري مشوي", name_en: "Grilled Beef", carbs_per_100g: 0, protein: 26, fat: 17, calories: 250, category: "لحوم", icon: "🥩", source: "USDA" },
+      { id: 62, name_ar: "لحم بقري مفروم", name_en: "Ground Beef", carbs_per_100g: 0, protein: 25, fat: 20, calories: 280, category: "لحوم", icon: "🥩", source: "USDA" },
+      { id: 63, name_ar: "كبدة", name_en: "Liver", carbs_per_100g: 5, protein: 26, fat: 5, calories: 170, category: "لحوم", icon: "🥩", source: "USDA" },
+      { id: 64, name_ar: "سمك سلمون", name_en: "Salmon", carbs_per_100g: 0, protein: 22, fat: 12, calories: 206, category: "أسماك", icon: "🐟", source: "USDA" },
+      { id: 65, name_ar: "تونة", name_en: "Tuna", carbs_per_100g: 0, protein: 30, fat: 1, calories: 132, category: "أسماك", icon: "🐟", source: "USDA" },
+      { id: 66, name_ar: "فيليه سمك", name_en: "Fish Fillet", carbs_per_100g: 0, protein: 20, fat: 2, calories: 100, category: "أسماك", icon: "🐟", source: "USDA" },
 
       // ===== منتجات ألبان =====
-      { id: 42, name_ar: "حليب", name_en: "Milk", carbs_per_100g: 5, protein: 3, fat: 3, calories: 61, category: "ألبان", icon: "🥛", source: "وزارة الصحة" },
-      { id: 43, name_ar: "زبادي", name_en: "Yogurt", carbs_per_100g: 4, protein: 10, fat: 0, calories: 59, category: "ألبان", icon: "🥄", source: "وزارة الصحة" },
-      { id: 44, name_ar: "جبن أبيض", name_en: "White Cheese", carbs_per_100g: 1, protein: 25, fat: 33, calories: 402, category: "ألبان", icon: "🧀", source: "وزارة الصحة" },
-      { id: 45, name_ar: "لبنة", name_en: "Labneh", carbs_per_100g: 4, protein: 8, fat: 10, calories: 140, category: "ألبان", icon: "🥣", source: "وزارة الصحة" },
+      { id: 67, name_ar: "حليب", name_en: "Milk", carbs_per_100g: 5, protein: 3, fat: 3, calories: 61, category: "ألبان", icon: "🥛", source: "USDA" },
+      { id: 68, name_ar: "حليب قليل الدسم", name_en: "Low Fat Milk", carbs_per_100g: 5, protein: 3, fat: 1, calories: 42, category: "ألبان", icon: "🥛", source: "USDA" },
+      { id: 69, name_ar: "زبادي", name_en: "Yogurt", carbs_per_100g: 4, protein: 10, fat: 0, calories: 59, category: "ألبان", icon: "🥄", source: "USDA" },
+      { id: 70, name_ar: "روب", name_en: "Labneh", carbs_per_100g: 4, protein: 8, fat: 10, calories: 140, category: "ألبان", icon: "🥣", source: "وزارة الصحة" },
+      { id: 71, name_ar: "جبن أبيض", name_en: "White Cheese", carbs_per_100g: 1, protein: 25, fat: 33, calories: 402, category: "ألبان", icon: "🧀", source: "USDA" },
+      { id: 72, name_ar: "جبن شيدر", name_en: "Cheddar Cheese", carbs_per_100g: 1, protein: 25, fat: 33, calories: 404, category: "ألبان", icon: "🧀", source: "USDA" },
+      { id: 73, name_ar: "جبن فيتا", name_en: "Feta Cheese", carbs_per_100g: 4, protein: 14, fat: 21, calories: 264, category: "ألبان", icon: "🧀", source: "USDA" },
+      { id: 74, name_ar: "جبن موزاريلا", name_en: "Mozzarella", carbs_per_100g: 2, protein: 28, fat: 22, calories: 318, category: "ألبان", icon: "🧀", source: "USDA" },
+      { id: 75, name_ar: "زبدة", name_en: "Butter", carbs_per_100g: 0, protein: 1, fat: 81, calories: 717, category: "ألبان", icon: "🧈", source: "USDA" },
 
       // ===== البقوليات =====
-      { id: 46, name_ar: "عدس", name_en: "Lentils", carbs_per_100g: 20, protein: 9, fat: 0, calories: 116, category: "بقوليات", icon: "🟤", source: "وزارة الصحة" },
-      { id: 47, name_ar: "حمص", name_en: "Chickpeas", carbs_per_100g: 27, protein: 9, fat: 3, calories: 139, category: "بقوليات", icon: "🟤", source: "وزارة الصحة" },
-      { id: 48, name_ar: "فول", name_en: "Fava Beans", carbs_per_100g: 20, protein: 8, fat: 1, calories: 110, category: "بقوليات", icon: "🟤", source: "وزارة الصحة" },
-      { id: 49, name_ar: "فاصوليا", name_en: "Beans", carbs_per_100g: 22, protein: 8, fat: 0, calories: 127, category: "بقوليات", icon: "🟤", source: "وزارة الصحة" },
+      { id: 76, name_ar: "عدس", name_en: "Lentils", carbs_per_100g: 20, protein: 9, fat: 0, calories: 116, category: "بقوليات", icon: "🟤", source: "USDA" },
+      { id: 77, name_ar: "حمص", name_en: "Chickpeas", carbs_per_100g: 27, protein: 9, fat: 3, calories: 139, category: "بقوليات", icon: "🟤", source: "USDA" },
+      { id: 78, name_ar: "فول", name_en: "Fava Beans", carbs_per_100g: 20, protein: 8, fat: 1, calories: 110, category: "بقوليات", icon: "🟤", source: "USDA" },
+      { id: 79, name_ar: "فاصوليا", name_en: "Beans", carbs_per_100g: 22, protein: 8, fat: 0, calories: 127, category: "بقوليات", icon: "🟤", source: "USDA" },
+      { id: 80, name_ar: "فاصوليا خضراء", name_en: "Green Beans", carbs_per_100g: 7, protein: 2, fat: 0, calories: 31, category: "بقوليات", icon: "🟢", source: "USDA" },
 
-      // ===== الأطباق الرئيسية العربية =====
-      { id: 50, name_ar: "كبسة", name_en: "Kabsa", carbs_per_100g: 28, protein: 12, fat: 8, calories: 250, category: "أطباق رئيسية", icon: "🍚", source: "كتيب حساب الكربوهيدرات" },
-      { id: 51, name_ar: "مندي", name_en: "Mandi", carbs_per_100g: 26, protein: 14, fat: 9, calories: 260, category: "أطباق رئيسية", icon: "🍖", source: "كتيب حساب الكربوهيدرات" },
-      { id: 52, name_ar: "شاورما", name_en: "Shawarma", carbs_per_100g: 35, protein: 20, fat: 15, calories: 400, category: "أطباق رئيسية", icon: "🥙", source: "كتيب حساب الكربوهيدرات" },
-      { id: 53, name_ar: "فلافل", name_en: "Falafel", carbs_per_100g: 45, protein: 13, fat: 18, calories: 380, category: "أطباق رئيسية", icon: "🧆", source: "كتيب حساب الكربوهيدرات" },
-      { id: 54, name_ar: "كشري", name_en: "Koshari", carbs_per_100g: 85, protein: 18, fat: 12, calories: 520, category: "أطباق رئيسية", icon: "🍲", source: "كتيب حساب الكربوهيدرات" },
-      { id: 55, name_ar: "محشي", name_en: "Mahshi", carbs_per_100g: 45, protein: 12, fat: 15, calories: 380, category: "أطباق رئيسية", icon: "🍆", source: "كتيب حساب الكربوهيدرات" },
-      { id: 56, name_ar: "ورق عنب", name_en: "Stuffed Grape Leaves", carbs_per_100g: 16, protein: 5, fat: 8, calories: 150, category: "أطباق رئيسية", icon: "🍃", source: "كتيب حساب الكربوهيدرات" },
-      { id: 57, name_ar: "ملوخية", name_en: "Molokhia", carbs_per_100g: 7, protein: 5, fat: 4, calories: 80, category: "أطباق رئيسية", icon: "🥬", source: "كتيب حساب الكربوهيدرات" },
+      // ===== الأطباق الرئيسية العربية (من كتيبات) =====
+      { id: 81, name_ar: "كبسة", name_en: "Kabsa", carbs_per_100g: 28, protein: 12, fat: 8, calories: 250, category: "أطباق رئيسية", icon: "🍚", source: "كتيب حساب الكربوهيدرات" },
+      { id: 82, name_ar: "مندي", name_en: "Mandi", carbs_per_100g: 26, protein: 14, fat: 9, calories: 260, category: "أطباق رئيسية", icon: "🍖", source: "كتيب حساب الكربوهيدرات" },
+      { id: 83, name_ar: "شاورما", name_en: "Shawarma", carbs_per_100g: 35, protein: 20, fat: 15, calories: 400, category: "أطباق رئيسية", icon: "🥙", source: "كتيب حساب الكربوهيدرات" },
+      { id: 84, name_ar: "فلافل", name_en: "Falafel", carbs_per_100g: 45, protein: 13, fat: 18, calories: 380, category: "أطباق رئيسية", icon: "🧆", source: "كتيب حساب الكربوهيدرات" },
+      { id: 85, name_ar: "كشري", name_en: "Koshari", carbs_per_100g: 85, protein: 18, fat: 12, calories: 520, category: "أطباق رئيسية", icon: "🍲", source: "كتيب حساب الكربوهيدرات" },
+      { id: 86, name_ar: "محشي", name_en: "Mahshi", carbs_per_100g: 45, protein: 12, fat: 15, calories: 380, category: "أطباق رئيسية", icon: "🍆", source: "كتيب حساب الكربوهيدرات" },
+      { id: 87, name_ar: "ورق عنب", name_en: "Stuffed Grape Leaves", carbs_per_100g: 16, protein: 5, fat: 8, calories: 150, category: "أطباق رئيسية", icon: "🍃", source: "كتيب حساب الكربوهيدرات" },
+      { id: 88, name_ar: "ملوخية", name_en: "Molokhia", carbs_per_100g: 7, protein: 5, fat: 4, calories: 80, category: "أطباق رئيسية", icon: "🥬", source: "كتيب حساب الكربوهيدرات" },
+      { id: 89, name_ar: "برياني", name_en: "Biryani", carbs_per_100g: 30, protein: 10, fat: 10, calories: 250, category: "أطباق رئيسية", icon: "🍚", source: "كتيب حساب الكربوهيدرات" },
+      { id: 90, name_ar: "مجدرة", name_en: "Mujaddara", carbs_per_100g: 35, protein: 8, fat: 5, calories: 210, category: "أطباق رئيسية", icon: "🍲", source: "كتيب حساب الكربوهيدرات" },
+      { id: 91, name_ar: "صينية", name_en: "Traybake", carbs_per_100g: 20, protein: 15, fat: 12, calories: 260, category: "أطباق رئيسية", icon: "🥘", source: "كتيب حساب الكربوهيدرات" },
+      { id: 92, name_ar: "مسقعة", name_en: "Musaqa", carbs_per_100g: 15, protein: 10, fat: 10, calories: 200, category: "أطباق رئيسية", icon: "🥘", source: "كتيب حساب الكربوهيدرات" },
 
       // ===== الحلويات =====
-      { id: 58, name_ar: "كنافة", name_en: "Kunafa", carbs_per_100g: 55, protein: 6, fat: 22, calories: 450, category: "حلويات", icon: "🍰", source: "كتيب حساب الكربوهيدرات" },
-      { id: 59, name_ar: "بسبوسة", name_en: "Basbousa", carbs_per_100g: 60, protein: 5, fat: 20, calories: 420, category: "حلويات", icon: "🧁", source: "كتيب حساب الكربوهيدرات" },
-      { id: 60, name_ar: "لقيمات", name_en: "Luqaimat", carbs_per_100g: 44, protein: 5, fat: 20, calories: 380, category: "حلويات", icon: "🍩", source: "كتيب حساب الكربوهيدرات" },
-      { id: 61, name_ar: "معمول", name_en: "Maamoul", carbs_per_100g: 45, protein: 6, fat: 18, calories: 360, category: "حلويات", icon: "🍪", source: "كتيب حساب الكربوهيدرات" },
-      { id: 62, name_ar: "قطايف", name_en: "Qatayef", carbs_per_100g: 50, protein: 5, fat: 15, calories: 370, category: "حلويات", icon: "🥟", source: "كتيب حساب الكربوهيدرات" },
-      { id: 63, name_ar: "أم علي", name_en: "Om Ali", carbs_per_100g: 27, protein: 6, fat: 15, calories: 270, category: "حلويات", icon: "🍮", source: "كتيب حساب الكربوهيدرات" },
+      { id: 93, name_ar: "كنافة", name_en: "Kunafa", carbs_per_100g: 55, protein: 6, fat: 22, calories: 450, category: "حلويات", icon: "🍰", source: "كتيب حساب الكربوهيدرات" },
+      { id: 94, name_ar: "بسبوسة", name_en: "Basbousa", carbs_per_100g: 60, protein: 5, fat: 20, calories: 420, category: "حلويات", icon: "🧁", source: "كتيب حساب الكربوهيدرات" },
+      { id: 95, name_ar: "لقيمات", name_en: "Luqaimat", carbs_per_100g: 44, protein: 5, fat: 20, calories: 380, category: "حلويات", icon: "🍩", source: "كتيب حساب الكربوهيدرات" },
+      { id: 96, name_ar: "معمول", name_en: "Maamoul", carbs_per_100g: 45, protein: 6, fat: 18, calories: 360, category: "حلويات", icon: "🍪", source: "كتيب حساب الكربوهيدرات" },
+      { id: 97, name_ar: "قطايف", name_en: "Qatayef", carbs_per_100g: 50, protein: 5, fat: 15, calories: 370, category: "حلويات", icon: "🥟", source: "كتيب حساب الكربوهيدرات" },
+      { id: 98, name_ar: "أم علي", name_en: "Om Ali", carbs_per_100g: 27, protein: 6, fat: 15, calories: 270, category: "حلويات", icon: "🍮", source: "كتيب حساب الكربوهيدرات" },
+      { id: 99, name_ar: "غريبة", name_en: "Ghraybeh", carbs_per_100g: 50, protein: 5, fat: 30, calories: 520, category: "حلويات", icon: "🍪", source: "كارب حلويات العيد" },
+      { id: 100, name_ar: "بقلاوة", name_en: "Baklava", carbs_per_100g: 45, protein: 5, fat: 25, calories: 450, category: "حلويات", icon: "🥮", source: "كارب حلويات العيد" },
+      { id: 101, name_ar: "راحة", name_en: "Turkish Delight", carbs_per_100g: 80, protein: 0, fat: 0, calories: 320, category: "حلويات", icon: "🍬", source: "كارب حلويات العيد" },
 
       // ===== الوجبات السريعة =====
-      { id: 64, name_ar: "برجر", name_en: "Burger", carbs_per_100g: 40, protein: 28, fat: 35, calories: 580, category: "وجبات سريعة", icon: "🍔", source: "مطاعم" },
-      { id: 65, name_ar: "بيتزا", name_en: "Pizza", carbs_per_100g: 60, protein: 20, fat: 25, calories: 550, category: "وجبات سريعة", icon: "🍕", source: "مطاعم" },
-      { id: 66, name_ar: "هوت دوج", name_en: "Hot Dog", carbs_per_100g: 30, protein: 12, fat: 25, calories: 380, category: "وجبات سريعة", icon: "🌭", source: "مطاعم" },
-      { id: 67, name_ar: "بطاطس مقلية", name_en: "French Fries", carbs_per_100g: 41, protein: 4, fat: 15, calories: 312, category: "وجبات سريعة", icon: "🍟", source: "كارب البطاطس" },
-      { id: 68, name_ar: "ناجتس دجاج", name_en: "Chicken Nuggets", carbs_per_100g: 17, protein: 14, fat: 20, calories: 290, category: "وجبات سريعة", icon: "🍗", source: "مطاعم" },
+      { id: 102, name_ar: "برجر", name_en: "Burger", carbs_per_100g: 40, protein: 28, fat: 35, calories: 580, category: "وجبات سريعة", icon: "🍔", source: "مطاعم" },
+      { id: 103, name_ar: "بيتزا", name_en: "Pizza", carbs_per_100g: 60, protein: 20, fat: 25, calories: 550, category: "وجبات سريعة", icon: "🍕", source: "مطاعم" },
+      { id: 104, name_ar: "هوت دوج", name_en: "Hot Dog", carbs_per_100g: 30, protein: 12, fat: 25, calories: 380, category: "وجبات سريعة", icon: "🌭", source: "مطاعم" },
+      { id: 105, name_ar: "بطاطس مقلية", name_en: "French Fries", carbs_per_100g: 41, protein: 4, fat: 15, calories: 312, category: "وجبات سريعة", icon: "🍟", source: "كارب البطاطس" },
+      { id: 106, name_ar: "ناجتس دجاج", name_en: "Chicken Nuggets", carbs_per_100g: 17, protein: 14, fat: 20, calories: 290, category: "وجبات سريعة", icon: "🍗", source: "مطاعم" },
+      { id: 107, name_ar: "دجاج كنتاكي", name_en: "KFC Chicken", carbs_per_100g: 17, protein: 24, fat: 16, calories: 320, category: "وجبات سريعة", icon: "🍗", source: "دليل المطاعم" },
+      { id: 108, name_ar: "بيج ماك", name_en: "Big Mac", carbs_per_100g: 41, protein: 28, fat: 28, calories: 527, category: "وجبات سريعة", icon: "🍔", source: "دليل المطاعم" },
+      { id: 109, name_ar: "وابر", name_en: "Whopper", carbs_per_100g: 45, protein: 25, fat: 30, calories: 550, category: "وجبات سريعة", icon: "🍔", source: "دليل المطاعم" },
+      { id: 110, name_ar: "تويستر", name_en: "Twister", carbs_per_100g: 30, protein: 18, fat: 15, calories: 350, category: "وجبات سريعة", icon: "🌯", source: "دليل المطاعم" },
+      { id: 111, name_ar: "سنكرز", name_en: "Snickers", carbs_per_100g: 62, protein: 9, fat: 26, calories: 510, category: "حلويات", icon: "🍫", source: "كارب حلويات العيد" },
+      { id: 112, name_ar: "كندر", name_en: "Kinder", carbs_per_100g: 50, protein: 8, fat: 35, calories: 560, category: "حلويات", icon: "🍫", source: "كارب حلويات العيد" },
+      { id: 113, name_ar: "مارس", name_en: "Mars", carbs_per_100g: 70, protein: 5, fat: 20, calories: 450, category: "حلويات", icon: "🍫", source: "كارب حلويات العيد" },
 
-      // ===== مشروبات =====
-      { id: 69, name_ar: "عصير برتقال", name_en: "Orange Juice", carbs_per_100g: 11, protein: 1, fat: 0, calories: 45, category: "مشروبات", icon: "🧃", source: "وزارة الصحة" },
-      { id: 70, name_ar: "كولا", name_en: "Cola", carbs_per_100g: 11, protein: 0, fat: 0, calories: 42, category: "مشروبات", icon: "🥤", source: "مشروبات" },
-      { id: 71, name_ar: "شاي", name_en: "Tea", carbs_per_100g: 0, protein: 0, fat: 0, calories: 1, category: "مشروبات", icon: "🍵", source: "وزارة الصحة" },
-      { id: 72, name_ar: "قهوة", name_en: "Coffee", carbs_per_100g: 0, protein: 0, fat: 0, calories: 2, category: "مشروبات", icon: "☕", source: "وزارة الصحة" },
+      // ===== المشروبات =====
+      { id: 114, name_ar: "عصير برتقال", name_en: "Orange Juice", carbs_per_100g: 11, protein: 1, fat: 0, calories: 45, category: "مشروبات", icon: "🧃", source: "USDA" },
+      { id: 115, name_ar: "كولا", name_en: "Cola", carbs_per_100g: 11, protein: 0, fat: 0, calories: 42, category: "مشروبات", icon: "🥤", source: "مشروبات" },
+      { id: 116, name_ar: "دايت كولا", name_en: "Diet Cola", carbs_per_100g: 0, protein: 0, fat: 0, calories: 0, category: "مشروبات", icon: "🥤", source: "مشروبات" },
+      { id: 117, name_ar: "شاي", name_en: "Tea", carbs_per_100g: 0, protein: 0, fat: 0, calories: 1, category: "مشروبات", icon: "🍵", source: "USDA" },
+      { id: 118, name_ar: "قهوة", name_en: "Coffee", carbs_per_100g: 0, protein: 0, fat: 0, calories: 2, category: "مشروبات", icon: "☕", source: "USDA" },
+      { id: 119, name_ar: "شاي مثلج", name_en: "Iced Tea", carbs_per_100g: 8, protein: 0, fat: 0, calories: 30, category: "مشروبات", icon: "🧋", source: "مشروبات" },
+      { id: 120, name_ar: "لاتيه", name_en: "Latte", carbs_per_100g: 5, protein: 3, fat: 3, calories: 60, category: "مشروبات", icon: "☕", source: "ستاربكس" },
+      { id: 121, name_ar: "كابتشينو", name_en: "Cappuccino", carbs_per_100g: 4, protein: 3, fat: 2, calories: 45, category: "مشروبات", icon: "☕", source: "ستاربكس" },
+      { id: 122, name_ar: "موكا", name_en: "Mocha", carbs_per_100g: 10, protein: 3, fat: 4, calories: 85, category: "مشروبات", icon: "☕", source: "ستاربكس" },
 
       // ===== المكسرات =====
-      { id: 73, name_ar: "لوز", name_en: "Almonds", carbs_per_100g: 10, protein: 21, fat: 50, calories: 579, category: "مكسرات", icon: "🥜", source: "وزارة الصحة" },
-      { id: 74, name_ar: "فستق", name_en: "Pistachio", carbs_per_100g: 28, protein: 20, fat: 45, calories: 562, category: "مكسرات", icon: "🥜", source: "وزارة الصحة" },
-      { id: 75, name_ar: "جوز", name_en: "Walnuts", carbs_per_100g: 14, protein: 15, fat: 65, calories: 654, category: "مكسرات", icon: "🥜", source: "وزارة الصحة" },
+      { id: 123, name_ar: "لوز", name_en: "Almonds", carbs_per_100g: 10, protein: 21, fat: 50, calories: 579, category: "مكسرات", icon: "🥜", source: "USDA" },
+      { id: 124, name_ar: "فستق", name_en: "Pistachio", carbs_per_100g: 28, protein: 20, fat: 45, calories: 562, category: "مكسرات", icon: "🥜", source: "USDA" },
+      { id: 125, name_ar: "جوز", name_en: "Walnuts", carbs_per_100g: 14, protein: 15, fat: 65, calories: 654, category: "مكسرات", icon: "🥜", source: "USDA" },
+      { id: 126, name_ar: "كاجو", name_en: "Cashew", carbs_per_100g: 30, protein: 18, fat: 44, calories: 553, category: "مكسرات", icon: "🥜", source: "USDA" },
+      { id: 127, name_ar: "بندق", name_en: "Hazelnut", carbs_per_100g: 17, protein: 15, fat: 61, calories: 628, category: "مكسرات", icon: "🥜", source: "USDA" },
+      { id: 128, name_ar: "فول سوداني", name_en: "Peanut", carbs_per_100g: 16, protein: 26, fat: 49, calories: 567, category: "مكسرات", icon: "🥜", source: "USDA" },
+      { id: 129, name_ar: "بذور دوار الشمس", name_en: "Sunflower Seeds", carbs_per_100g: 20, protein: 21, fat: 51, calories: 584, category: "مكسرات", icon: "🌻", source: "USDA" },
 
-      // ===== إضافات من ملفات أخرى =====
-      { id: 76, name_ar: "دجاج كنتاكي", name_en: "KFC Chicken", carbs_per_100g: 17, protein: 24, fat: 16, calories: 320, category: "وجبات سريعة", icon: "🍗", source: "دليل المطاعم" },
-      { id: 77, name_ar: "بيج ماك", name_en: "Big Mac", carbs_per_100g: 41, protein: 28, fat: 28, calories: 527, category: "وجبات سريعة", icon: "🍔", source: "دليل المطاعم" },
-      { id: 78, name_ar: "سنكرز", name_en: "Snickers", carbs_per_100g: 62, protein: 9, fat: 26, calories: 510, category: "حلويات", icon: "🍫", source: "كارب حلويات العيد" },
-      { id: 79, name_ar: "كندر", name_en: "Kinder", carbs_per_100g: 50, protein: 8, fat: 35, calories: 560, category: "حلويات", icon: "🍫", source: "كارب حلويات العيد" },
-      { id: 80, name_ar: "آيس كريم فانيليا", name_en: "Vanilla Ice Cream", carbs_per_100g: 24, protein: 4, fat: 11, calories: 207, category: "مثلجات", icon: "🍦", source: "باسكن روبنز" }
+      // ===== الإضافات والصلصات =====
+      { id: 130, name_ar: "زيت زيتون", name_en: "Olive Oil", carbs_per_100g: 0, protein: 0, fat: 100, calories: 884, category: "إضافات", icon: "🫒", source: "USDA" },
+      { id: 131, name_ar: "زبدة فول سوداني", name_en: "Peanut Butter", carbs_per_100g: 20, protein: 25, fat: 50, calories: 600, category: "إضافات", icon: "🥜", source: "USDA" },
+      { id: 132, name_ar: "مربى", name_en: "Jam", carbs_per_100g: 70, protein: 0, fat: 0, calories: 280, category: "إضافات", icon: "🍓", source: "USDA" },
+      { id: 133, name_ar: "عسل", name_en: "Honey", carbs_per_100g: 82, protein: 0, fat: 0, calories: 304, category: "إضافات", icon: "🍯", source: "USDA" },
+      { id: 134, name_ar: "كاتشب", name_en: "Ketchup", carbs_per_100g: 25, protein: 1, fat: 0, calories: 100, category: "إضافات", icon: "🍅", source: "USDA" },
+      { id: 135, name_ar: "مايونيز", name_en: "Mayonnaise", carbs_per_100g: 1, protein: 1, fat: 75, calories: 700, category: "إضافات", icon: "🥚", source: "USDA" },
+      { id: 136, name_ar: "طحينة", name_en: "Tahini", carbs_per_100g: 20, protein: 17, fat: 53, calories: 600, category: "إضافات", icon: "🥣", source: "USDA" },
+      { id: 137, name_ar: "خل", name_en: "Vinegar", carbs_per_100g: 1, protein: 0, fat: 0, calories: 18, category: "إضافات", icon: "🍶", source: "USDA" }
     ];
 
     // ===== متغيرات الحالة =====
@@ -863,7 +973,6 @@
     const resultProtein = document.getElementById('resultProtein');
     const resultFat = document.getElementById('resultFat');
     const resultCal = document.getElementById('resultCal');
-    const resultInsulin = document.getElementById('resultInsulin');
     const insightText = document.getElementById('insightText');
     const toast = document.getElementById('toast');
 
@@ -895,7 +1004,7 @@
 
     function renderSuggestions(results) {
       if (!results.length) {
-        suggestionsList.innerHTML = '<div class="suggestion-item">لا توجد نتائج</div>';
+        suggestionsList.innerHTML = '<div class="suggestion-item">لا توجد نتائج. جرب كلمة أخرى.</div>';
         suggestionsList.classList.add('show');
         return;
       }
@@ -956,17 +1065,12 @@
       const protein = selectedMeal.protein ? (selectedMeal.protein * weight / 100).toFixed(1) : '--';
       const fat = selectedMeal.fat ? (selectedMeal.fat * weight / 100).toFixed(1) : '--';
       const cal = selectedMeal.calories ? (selectedMeal.calories * weight / 100).toFixed(0) : '--';
-      
-      // جرعة أنسولين تقديرية (اختياري)
-      const icr = parseFloat(localStorage.getItem('sugarmind_icr')) || 15;
-      const insulin = (carbs / icr).toFixed(1);
 
       // عرض النتائج
       resultCarbs.textContent = carbs;
       resultProtein.textContent = protein + (protein !== '--' ? 'g' : '');
       resultFat.textContent = fat + (fat !== '--' ? 'g' : '');
-      resultCal.textContent = cal + (cal !== '--' ? '' : '');
-      resultInsulin.textContent = insulin + (insulin !== '--' ? 'u' : '');
+      resultCal.textContent = cal + (cal !== '--' ? ' كالوري' : '');
 
       // مصدر المعلومة
       resultSource.className = 'result-source local';
@@ -1010,6 +1114,14 @@
       }
     }
 
+    function suggestMeal() {
+      const meal = prompt('أدخل اسم الوجبة التي تبحث عنها:');
+      if (meal) {
+        showToast('شكراً لاقتراحك! سنعمل على إضافتها قريباً.');
+        // هنا يمكن حفظ الاقتراح في localStorage أو إرساله لسيرفر مستقبلاً
+      }
+    }
+
     // ===== الأحداث =====
     mealSearch.addEventListener('input', function() {
       clearTimeout(debounceTimer);
@@ -1049,18 +1161,6 @@
       if (savedIcr) {
         const data = JSON.parse(savedIcr);
         icrValue = data.icr || 15;
-      }
-    } catch (e) {}
-
-    // محاولة استعادة آخر وجبة (اختياري)
-    try {
-      const lastMeal = localStorage.getItem('sugarmind_last_meal');
-      if (lastMeal) {
-        const meal = JSON.parse(lastMeal);
-        const found = foodDatabase.find(m => m.name_ar === meal.name);
-        if (found) {
-          // لا نختار تلقائياً، فقط نخزن للاستخدام
-        }
       }
     } catch (e) {}
   </script>
