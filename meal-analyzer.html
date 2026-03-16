@@ -4,642 +4,623 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>دليل الكارب الذكي - SugarMind</title>
-  <meta name="description" content="ابحث عن أي وجبة بالعربية أو الإنجليزية، أدخل الوزن، واحصل على كمية الكاربوهيدرات بدقة من قاعدة بيانات ضخمة." />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <style>
-    /* ===== المتغيرات والأساسيات ===== */
-    :root{
-      --bg:#F6F3EE;
-      --bg-2:#EFEAE3;
-      --surface:#FFFFFF;
-      --surface-2:#F8F6F2;
-      --surface-3:#F0ECE7;
-      --hero:#2A2F45;
-      --hero-2:#45496A;
-      --hero-3:#7D8BAE;
-      --primary:#7BAA92;
-      --primary-2:#A9C9B9;
-      --ink:#1D2433;
-      --ink-2:#667085;
-      --ink-3:#8C94A4;
-      --line:#E6E1D8;
-      --line-soft:rgba(69,73,106,.10);
-      --success:#61B07F;
-      --warning:#E6B85C;
-      --danger:#DA726D;
-      --success-soft:rgba(97,176,127,.12);
-      --warning-soft:rgba(230,184,92,.14);
-      --danger-soft:rgba(218,114,109,.14);
-      --info-soft:rgba(125,139,174,.14);
-      --shadow-lg:0 24px 60px rgba(30,36,51,.12);
-      --shadow-md:0 16px 32px rgba(30,36,51,.08);
-      --shadow-sm:0 10px 18px rgba(30,36,51,.05);
-      --radius-xxl:32px;
-      --radius-xl:26px;
-      --radius-lg:22px;
-      --radius-md:18px;
-      --radius-sm:14px;
-      --safe-top:env(safe-area-inset-top);
-      --safe-bottom:env(safe-area-inset-bottom);
-      --max-width:500px;
-      --ease:cubic-bezier(.2,.8,.2,1);
+    /* ===== هوية SugarMind (ألوان ثابتة) ===== */
+    :root {
+      --bg: #F6F3EE;
+      --bg-2: #EFEAE3;
+      --surface: #FFFFFF;
+      --surface-2: #F8F6F2;
+      --surface-3: #F0ECE7;
+      --hero: #2A2F45;
+      --hero-2: #45496A;
+      --hero-3: #7D8BAE;
+      --primary: #7BAA92;
+      --primary-2: #A9C9B9;
+      --ink: #1D2433;
+      --ink-2: #667085;
+      --ink-3: #8C94A4;
+      --line: #E6E1D8;
+      --line-soft: rgba(69,73,106,0.1);
+      --success: #61B07F;
+      --shadow-lg: 0 24px 60px rgba(30,36,51,0.12);
+      --shadow-md: 0 16px 32px rgba(30,36,51,0.08);
+      --shadow-sm: 0 10px 18px rgba(30,36,51,0.05);
+      --radius-xxl: 32px;
+      --radius-xl: 26px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+      --max-width: 500px;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Tajawal',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
-    html{background:var(--bg);overflow-x:hidden}
-    body{
-      min-height:100vh;
-      color:var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(123,170,146,.08), transparent 30%),
-        radial-gradient(circle at top right, rgba(125,139,174,.08), transparent 30%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
-      overflow-x:hidden;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    a{text-decoration:none;color:inherit}
-    button,input{font:inherit}
-    button{border:0;background:none;color:inherit;cursor:pointer}
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px 20px 100px;
+    }
 
-    .app{
-      max-width:var(--max-width);
-      margin:0 auto;
-      min-height:100vh;
-      padding:calc(18px + var(--safe-top)) 18px calc(120px + var(--safe-bottom));
-      position:relative;
+    .app {
+      max-width: var(--max-width);
+      width: 100%;
     }
 
     /* ===== الهيدر ===== */
-    .header{
-      display:flex;
-      align-items:center;
-      gap:16px;
-      margin-bottom:24px;
-      padding-top:8px;
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 30px;
     }
-    .back-btn{
-      width:48px;
-      height:48px;
-      border-radius:16px;
-      background:var(--surface);
-      border:1px solid var(--line);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:24px;
-      color:var(--ink);
-      box-shadow:var(--shadow-sm);
-      transition:all .22s var(--ease);
+    .back-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--ink);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.22s var(--ease);
+      text-decoration: none;
     }
-    .back-btn:hover{transform:translateX(-4px); background:var(--surface-2)}
-    .header-title{
-      font-size:26px;
-      font-weight:900;
-      letter-spacing:-0.5px;
-      color:var(--ink);
+    .back-btn:hover { transform: translateX(-4px); }
+    .header-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--ink);
     }
-    .header-sub{
-      font-size:13px;
-      color:var(--ink-2);
-      margin-top:4px;
-    }
-
-    /* ===== بطاقة الترحيب ===== */
-    .welcome-card{
-      background:linear-gradient(145deg, var(--surface), var(--surface-2));
-      border:1px solid var(--line);
-      border-radius:var(--radius-xl);
-      padding:22px 24px;
-      margin-bottom:28px;
-      box-shadow:var(--shadow-md);
-      position:relative;
-      overflow:hidden;
-    }
-    .welcome-card::before{
-      content:'';
-      position:absolute;
-      top:-30px;
-      left:-30px;
-      width:120px;
-      height:120px;
-      background:radial-gradient(circle, rgba(123,170,146,.15), transparent 70%);
-      border-radius:50%;
-    }
-    .welcome-title{
-      font-size:20px;
-      font-weight:900;
-      color:var(--ink);
-      margin-bottom:6px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .welcome-title span{
-      background:var(--primary);
-      color:#fff;
-      padding:4px 12px;
-      border-radius:999px;
-      font-size:12px;
-    }
-    .welcome-text{
-      font-size:14px;
-      color:var(--ink-2);
-      line-height:1.8;
+    .header-sub {
+      font-size: 14px;
+      color: var(--ink-2);
+      margin-top: 4px;
     }
 
-    /* ===== البحث ===== */
-    .search-section{
-      position:relative;
-      margin-bottom:20px;
+    /* ===== خطوات الرحلة ===== */
+    .journey {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
     }
-    .search-label{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      font-size:14px;
-      font-weight:900;
-      color:var(--hero-2);
-      margin-bottom:12px;
+    .journey-step {
+      flex: 1;
+      text-align: center;
+      position: relative;
     }
-    .search-label span{font-size:22px;}
-    .search-wrapper{
-      position:relative;
+    .journey-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: -10px;
+      width: 100%;
+      height: 2px;
+      background: var(--line);
+      opacity: 0.5;
     }
-    .search-input{
-      width:100%;
-      min-height:64px;
-      border-radius:32px;
-      border:2px solid var(--line);
-      background:#fff;
-      padding:0 24px 0 60px;
-      font-size:18px;
-      font-weight:500;
-      color:var(--ink);
-      outline:none;
-      transition:all 0.3s ease;
-      box-shadow:var(--shadow-sm);
+    .journey-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 2px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin: 0 auto 8px;
+      color: var(--ink-2);
     }
-    .search-input:focus{
-      border-color:var(--primary);
-      box-shadow:0 0 0 4px rgba(123,170,146,.15);
+    .journey-step.active .journey-icon {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(123,170,146,0.3);
     }
-    .search-icon{
-      position:absolute;
-      right:24px;
-      top:50%;
-      transform:translateY(-50%);
-      font-size:24px;
-      color:var(--ink-3);
-      pointer-events:none;
+    .journey-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--ink-2);
     }
-    .search-hint{
-      font-size:12px;
-      color:var(--ink-3);
-      margin-top:8px;
-      margin-right:16px;
+    .journey-step.active .journey-label {
+      color: var(--primary);
     }
 
-    /* ===== قائمة الاقتراحات ===== */
-    .suggestions-list{
-      position:absolute;
-      top:calc(100% + 8px);
-      left:0;
-      right:0;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:28px;
-      box-shadow:var(--shadow-lg);
-      max-height:320px;
-      overflow-y:auto;
-      z-index:30;
-      display:none;
-      padding:10px 0;
+    /* ===== البحث (الخطوة 1) ===== */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 24px;
     }
-    .suggestions-list.show{display:block;}
-    .suggestion-item{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      padding:14px 20px;
-      border-bottom:1px solid var(--line-soft);
-      cursor:pointer;
-      transition:background 0.2s ease;
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
     }
-    .suggestion-item:last-child{border-bottom:none;}
-    .suggestion-item:hover{background:var(--surface-2);}
-    .suggestion-icon{
-      width:44px;
-      height:44px;
-      border-radius:18px;
-      background:linear-gradient(135deg, rgba(123,170,146,.15), rgba(125,139,174,.1));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:26px;
-      color:var(--hero-2);
-      flex-shrink:0;
+    .card-header span {
+      font-size: 28px;
     }
-    .suggestion-info{
-      flex:1;
+    .card-header h2 {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--ink);
     }
-    .suggestion-name{
-      font-size:16px;
-      font-weight:900;
-      color:var(--ink);
-      margin-bottom:4px;
-    }
-    .suggestion-name small{
-      font-weight:500;
-      color:var(--ink-3);
-      margin-right:8px;
-      font-size:13px;
-    }
-    .suggestion-meta{
-      display:flex;
-      align-items:center;
-      gap:15px;
-      font-size:13px;
-      color:var(--ink-2);
-    }
-    .suggestion-carbs{
-      background:var(--primary-2);
-      color:var(--hero);
-      padding:4px 12px;
-      border-radius:999px;
-      font-weight:900;
-      font-size:12px;
-    }
-    .suggestion-category{
-      display:flex;
-      align-items:center;
-      gap:4px;
+    .card-header h2 small {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-3);
+      margin-right: 8px;
     }
 
-    /* ===== الأزرار السريعة ===== */
-    .quick-chips{
-      display:flex;
-      gap:10px;
-      overflow-x:auto;
-      margin-bottom:28px;
-      padding-bottom:8px;
-      scrollbar-width:none;
+    /* البحث */
+    .search-wrapper {
+      position: relative;
+      margin-bottom: 16px;
     }
-    .quick-chips::-webkit-scrollbar{display:none;}
-    .chip{
-      flex-shrink:0;
-      padding:12px 24px;
-      background:var(--surface);
-      border:1px solid var(--line);
-      border-radius:999px;
-      font-size:14px;
-      font-weight:800;
-      color:var(--ink-2);
-      box-shadow:var(--shadow-sm);
-      transition:all .2s var(--ease);
-      cursor:pointer;
+    .search-input {
+      width: 100%;
+      min-height: 64px;
+      border-radius: 999px;
+      border: 2px solid var(--line);
+      background: #fff;
+      padding: 0 30px 0 70px;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--ink);
+      outline: none;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
     }
-    .chip:hover{
-      background:var(--primary);
-      color:#fff;
-      border-color:var(--primary);
-      transform:translateY(-2px);
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(123,170,146,0.15);
+    }
+    .search-icon {
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 26px;
+      color: var(--ink-3);
+      pointer-events: none;
+    }
+    .search-hint {
+      font-size: 13px;
+      color: var(--ink-3);
+      margin-right: 16px;
     }
 
-    /* ===== بطاقة إدخال الوزن (محسنة) ===== */
-    .weight-card{
-      background:var(--surface);
-      border:1px solid var(--line);
-      border-radius:var(--radius-xl);
-      padding:22px 20px;
-      margin-bottom:20px;
-      box-shadow:var(--shadow-md);
+    /* اقتراحات */
+    .suggestions-list {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 8px 0;
+      display: none;
     }
-    .weight-title{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-bottom:18px;
+    .suggestions-list.show { display: block; }
+    .suggestion-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--line-soft);
+      cursor: pointer;
+      transition: background 0.2s ease;
     }
-    .weight-title span{
-      font-size:28px;
+    .suggestion-item:last-child { border-bottom: none; }
+    .suggestion-item:hover { background: var(--surface-2); }
+    .suggestion-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(123,170,146,0.15), rgba(125,139,174,0.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--hero-2);
+      flex-shrink: 0;
     }
-    .weight-title h3{
-      font-size:18px;
-      font-weight:900;
-      color:var(--ink);
+    .suggestion-info { flex: 1; }
+    .suggestion-name {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--ink);
+      margin-bottom: 4px;
     }
-    .weight-input-group{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      background:var(--surface-2);
-      border-radius:40px;
-      padding:8px 8px 8px 20px;
-      border:1px solid var(--line);
-      margin-bottom:18px;
+    .suggestion-name small {
+      font-weight: 500;
+      color: var(--ink-3);
+      margin-right: 8px;
     }
-    .weight-input{
-      flex:1;
-      min-height:56px;
-      background:transparent;
-      border:none;
-      font-size:24px;
-      font-weight:900;
-      color:var(--ink);
-      text-align:center;
-      outline:none;
+    .suggestion-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--ink-2);
     }
-    .weight-unit{
-      background:#fff;
-      padding:12px 24px;
-      border-radius:999px;
-      font-size:16px;
-      font-weight:800;
-      color:var(--ink-2);
-      border:1px solid var(--line);
+    .suggestion-carbs {
+      background: var(--primary-2);
+      color: var(--hero);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 12px;
     }
-    .scale-steps{
-      display:flex;
-      gap:16px;
-      margin-bottom:8px;
+    .suggestion-category {
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
-    .step{
-      flex:1;
-      text-align:center;
-      padding:12px 6px;
-      background:var(--surface-3);
-      border-radius:var(--radius-sm);
-      border:1px solid var(--line);
+
+    /* الأزرار السريعة */
+    .quick-chips {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      margin-top: 20px;
+      padding-bottom: 4px;
+      scrollbar-width: none;
     }
-    .step .num{
-      display:inline-block;
-      width:28px;
-      height:28px;
-      line-height:28px;
-      text-align:center;
-      background:var(--primary);
-      color:#fff;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:900;
-      margin-bottom:8px;
+    .quick-chips::-webkit-scrollbar { display: none; }
+    .chip {
+      flex-shrink: 0;
+      padding: 12px 24px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--ink-2);
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
     }
-    .step p{
-      font-size:12px;
-      color:var(--ink-2);
-      line-height:1.6;
+    .chip:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
     }
-    .step p strong{
-      color:var(--ink);
-      display:block;
+
+    /* ===== الوزن (الخطوة 2) ===== */
+    .weight-card {
+      background: linear-gradient(145deg, var(--surface), var(--surface-2));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 24px;
+    }
+    .weight-input-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      border-radius: 999px;
+      padding: 6px 6px 6px 24px;
+      border: 2px solid var(--line);
+      margin: 20px 0;
+    }
+    .weight-input {
+      flex: 1;
+      min-height: 64px;
+      background: transparent;
+      border: none;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--ink);
+      text-align: center;
+      outline: none;
+    }
+    .weight-unit {
+      background: var(--surface-3);
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--ink-2);
+      border: 1px solid var(--line);
+    }
+    .scale-steps {
+      display: flex;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .step {
+      flex: 1;
+      text-align: center;
+      padding: 12px 6px;
+      background: rgba(255,255,255,0.5);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+    }
+    .step .num {
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 900;
+      margin: 0 auto 8px;
+    }
+    .step p {
+      font-size: 12px;
+      color: var(--ink-2);
+      line-height: 1.6;
+    }
+    .step p strong {
+      color: var(--ink);
+      display: block;
     }
 
     /* ===== زر التحليل ===== */
-    .analyze-btn{
-      width:100%;
-      min-height:72px;
-      border-radius:999px;
-      background:linear-gradient(135deg, var(--primary), #5E9A7A);
-      color:#fff;
-      font-size:20px;
-      font-weight:900;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-      box-shadow:0 12px 28px rgba(123,170,146,.25);
-      transition:all .25s var(--ease);
-      margin-bottom:16px;
-      border:none;
+    .analyze-btn {
+      width: 100%;
+      min-height: 80px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), #5E9A7A);
+      color: #fff;
+      font-size: 24px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 16px 32px rgba(123,170,146,0.3);
+      transition: all 0.25s var(--ease);
+      margin-bottom: 20px;
+      border: none;
+      cursor: pointer;
     }
-    .analyze-btn:hover{
-      transform:translateY(-3px);
-      box-shadow:0 18px 36px rgba(123,170,146,.35);
+    .analyze-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 48px rgba(123,170,146,0.4);
     }
-    .analyze-btn:disabled{
-      opacity:0.6;
-      transform:none;
-      box-shadow:none;
-      cursor:not-allowed;
-    }
-    .btn-hint{
-      text-align:center;
-      font-size:12px;
-      color:var(--ink-3);
-      margin-bottom:20px;
+    .analyze-btn:disabled {
+      opacity: 0.5;
+      transform: none;
+      box-shadow: none;
     }
 
-    /* ===== النتائج ===== */
-    .result-card{
-      background:var(--surface);
-      border:1px solid var(--line);
-      border-radius:var(--radius-xl);
-      padding:24px;
-      box-shadow:var(--shadow-md);
-      display:none;
+    /* ===== النتائج (الخطوة 3) ===== */
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: var(--shadow-lg);
+      display: none;
     }
-    .result-card.show{display:block; animation:fadeIn 0.3s ease;}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)}}
-
-    .result-source{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:8px 16px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:800;
-      margin-bottom:16px;
-    }
-    .result-source.local{background:var(--success-soft); color:var(--success);}
-    .result-source.library{background:var(--info-soft); color:var(--hero-2);}
-    .result-source.ai{background:var(--warning-soft); color:var(--warning);}
-
-    .hero-number{
-      text-align:center;
-      padding:28px;
-      background:linear-gradient(145deg, rgba(123,170,146,.1), rgba(123,170,146,.02));
-      border-radius:var(--radius-lg);
-      margin-bottom:20px;
-      border:2px solid rgba(123,170,146,.3);
-    }
-    .hero-value{
-      font-size:72px;
-      font-weight:900;
-      color:var(--primary);
-      line-height:1;
-      text-shadow:0 4px 20px rgba(123,170,146,.3);
-    }
-    .hero-label{
-      font-size:16px;
-      color:var(--ink-2);
-      margin-top:8px;
-      font-weight:600;
+    .result-card.show { display: block; animation: slideUp 0.4s var(--ease); }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .macros{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
-      margin-bottom:20px;
-    }
-    .macro{
-      text-align:center;
-      padding:14px 8px;
-      background:var(--surface-2);
-      border-radius:var(--radius-sm);
-      border:1px solid var(--line);
-    }
-    .macro-num{
-      font-size:22px;
-      font-weight:900;
-      color:var(--ink);
-    }
-    .macro-label{
-      font-size:12px;
-      color:var(--ink-2);
-      margin-top:4px;
+    .result-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      background: var(--success-soft);
+      color: var(--success);
     }
 
-    .insight-card{
-      background:var(--info-soft);
-      border:1px solid rgba(125,139,174,.3);
-      border-radius:var(--radius-sm);
-      padding:16px;
-      margin-bottom:20px;
+    .hero-result {
+      text-align: center;
+      padding: 30px;
+      background: linear-gradient(145deg, rgba(123,170,146,0.1), rgba(123,170,146,0.02));
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+      border: 2px solid rgba(123,170,146,0.3);
     }
-    .insight-title{
-      font-size:13px;
-      font-weight:800;
-      color:var(--hero-2);
-      margin-bottom:8px;
-      display:flex;
-      align-items:center;
-      gap:6px;
+    .hero-result .value {
+      font-size: 96px;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+      text-shadow: 0 8px 24px rgba(123,170,146,0.3);
     }
-    .insight-text{
-      font-size:13px;
-      color:var(--ink-2);
-      line-height:1.7;
+    .hero-result .label {
+      font-size: 18px;
+      color: var(--ink-2);
+      margin-top: 8px;
     }
 
-    .actions{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
+    .macros-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
     }
-    .btn{
-      padding:16px;
-      border-radius:16px;
-      font-size:14px;
-      font-weight:800;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      transition:all .2s ease;
-      border:none;
+    .macro-item {
+      text-align: center;
+      padding: 16px 8px;
+      background: var(--surface-2);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
     }
-    .btn-primary{
-      background:var(--primary);
-      color:#fff;
-      box-shadow:0 8px 20px rgba(123,170,146,.2);
+    .macro-item .num {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--ink);
     }
-    .btn-primary:hover{transform:translateY(-2px);}
-    .btn-secondary{
-      background:var(--surface-2);
-      border:1px solid var(--line);
-      color:var(--ink);
+    .macro-item .label {
+      font-size: 12px;
+      color: var(--ink-2);
+      margin-top: 4px;
     }
-    .btn-secondary:hover{background:var(--surface-3);}
+
+    .insight-box {
+      background: rgba(125,139,174,0.1);
+      border: 1px solid rgba(125,139,174,0.3);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-bottom: 24px;
+    }
+    .insight-box .title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--hero-2);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .insight-box .text {
+      font-size: 14px;
+      color: var(--ink-2);
+      line-height: 1.7;
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .action-btn {
+      padding: 18px;
+      border-radius: var(--radius-md);
+      font-size: 16px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+    .action-btn.primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(123,170,146,0.2);
+    }
+    .action-btn.primary:hover { transform: translateY(-2px); }
+    .action-btn.secondary {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      color: var(--ink);
+    }
+    .action-btn.secondary:hover { background: var(--surface-3); }
 
     /* ===== شريط التنقل السفلي ===== */
-    .bottom-nav{
-      position:fixed;
-      bottom:0;
-      left:0;
-      right:0;
-      background:rgba(255,255,255,.95);
-      backdrop-filter:blur(20px);
-      border-top:1px solid var(--line);
-      padding:10px 20px calc(10px + env(safe-area-inset-bottom));
-      z-index:40;
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--line);
+      padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+      z-index: 50;
     }
-    .nav-inner{
-      max-width:var(--max-width);
-      margin:0 auto;
-      display:flex;
-      justify-content:space-around;
-      align-items:center;
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
     }
-    .nav-item{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:4px;
-      padding:8px 16px;
-      color:var(--ink-2);
-      text-decoration:none;
-      font-size:11px;
-      font-weight:700;
-      border-radius:12px;
-      transition:all .2s ease;
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 20px;
+      color: var(--ink-2);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 999px;
+      transition: all 0.2s ease;
     }
-    .nav-item.active{
-      color:var(--primary);
-      background:rgba(123,170,146,.1);
+    .nav-item.active {
+      color: var(--primary);
+      background: rgba(123,170,146,0.1);
     }
-    .nav-item span:first-child{font-size:22px;}
+    .nav-item span:first-child { font-size: 24px; }
 
-    /* ===== التوست ===== */
-    .toast{
-      position:fixed;
-      bottom:calc(100px + env(safe-area-inset-bottom));
-      left:50%;
-      transform:translateX(-50%) translateY(20px);
-      background:rgba(29,36,51,.95);
-      color:#fff;
-      padding:12px 24px;
-      border-radius:999px;
-      font-size:14px;
-      font-weight:700;
-      box-shadow:var(--shadow-lg);
-      z-index:100;
-      opacity:0;
-      visibility:hidden;
-      transition:all .3s ease;
-      backdrop-filter:blur(8px);
+    /* ===== Toast ===== */
+    .toast {
+      position: fixed;
+      bottom: calc(100px + env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(29,36,51,0.95);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: var(--shadow-lg);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
     }
-    .toast.show{
-      opacity:1;
-      visibility:visible;
-      transform:translateX(-50%) translateY(0);
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
     }
 
-    /* ===== إضافة اقتراح وجبة ===== */
-    .suggest-add{
-      text-align:center;
-      margin-top:20px;
+    /* ===== زر الاقتراح ===== */
+    .suggest-add {
+      text-align: center;
+      margin-top: 20px;
     }
-    .suggest-add-btn{
-      background:transparent;
-      border:1px dashed var(--line);
-      border-radius:999px;
-      padding:14px 20px;
-      color:var(--ink-2);
-      font-size:14px;
-      font-weight:700;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      cursor:pointer;
-      transition:all .2s ease;
+    .suggest-add-btn {
+      background: transparent;
+      border: 1px dashed var(--line);
+      border-radius: 999px;
+      padding: 14px 24px;
+      color: var(--ink-2);
+      font-size: 14px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
-    .suggest-add-btn:hover{
-      border-color:var(--primary);
-      color:var(--primary);
+    .suggest-add-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
     }
   </style>
 </head>
@@ -647,52 +628,62 @@
   <div class="app">
     <!-- الهيدر -->
     <header class="header">
-      <a href="index.html" class="back-btn">←</a>
+      <a href="#" class="back-btn">←</a>
       <div>
         <h1 class="header-title">دليل الكارب الذكي</h1>
         <div class="header-sub">أكبر مكتبة عربية لحساب الكارب</div>
       </div>
     </header>
 
-    <!-- بطاقة الترحيب -->
-    <div class="welcome-card">
-      <div class="welcome-title">
-        <span>📚</span> مكتبة شاملة للوجبات
+    <!-- خطوات الرحلة -->
+    <div class="journey">
+      <div class="journey-step active" id="step1">
+        <div class="journey-icon">🔍</div>
+        <div class="journey-label">ابحث</div>
       </div>
-      <p class="welcome-text">
-        اكتب اسم الوجبة (عربي أو إنجليزي) أو اختر من القائمة. أدخل الوزن بالجرام، 
-        وسنقوم بحساب الكارب والسعرات بدقة عالية.
-      </p>
+      <div class="journey-step" id="step2">
+        <div class="journey-icon">⚖️</div>
+        <div class="journey-label">أدخل الوزن</div>
+      </div>
+      <div class="journey-step" id="step3">
+        <div class="journey-icon">📊</div>
+        <div class="journey-label">النتيجة</div>
+      </div>
     </div>
 
-    <!-- البحث -->
-    <div class="search-section">
-      <div class="search-label">
-        <span>🔍</span> ابحث عن وجبتك
+    <!-- الخطوة 1: البحث -->
+    <div class="card" id="step1Card">
+      <div class="card-header">
+        <span>🔍</span>
+        <h2>ابحث عن وجبتك <small>عربي أو إنجليزي</small></h2>
       </div>
       <div class="search-wrapper">
-        <input type="text" class="search-input" id="mealSearch" placeholder="مثال: كبسة، بروست، بيتزا، تفاح..." autocomplete="off" />
+        <input type="text" class="search-input" id="mealSearch" placeholder="مثال: كبسة، بروست، بيتزا..." autocomplete="off" />
         <span class="search-icon">🔍</span>
       </div>
       <div class="search-hint">⚡ اكتب حرفين على الأقل</div>
-      <div class="suggestions-list" id="suggestions"></div>
+
+      <!-- اقتراحات (مخفية افتراضياً) -->
+      <div class="suggestions-list" id="suggestionsList">
+        <!-- ستملأ ديناميكياً بالجافاسكريبت -->
+      </div>
+
+      <!-- الأزرار السريعة -->
+      <div class="quick-chips">
+        <div class="chip" onclick="quickSearch('كبسة')">🍗 كبسة</div>
+        <div class="chip" onclick="quickSearch('شاورما')">🥙 شاورما</div>
+        <div class="chip" onclick="quickSearch('برجر')">🍔 برجر</div>
+        <div class="chip" onclick="quickSearch('بروست')">🍗 بروست</div>
+        <div class="chip" onclick="quickSearch('بيتزا')">🍕 بيتزا</div>
+        <div class="chip" onclick="quickSearch('فول')">🧆 فول</div>
+      </div>
     </div>
 
-    <!-- الوجبات السريعة -->
-    <div class="quick-chips">
-      <div class="chip" onclick="quickSearch('كبسة')">🍗 كبسة</div>
-      <div class="chip" onclick="quickSearch('شاورما')">🥙 شاورما</div>
-      <div class="chip" onclick="quickSearch('برجر')">🍔 برجر</div>
-      <div class="chip" onclick="quickSearch('بروست')">🍗 بروست</div>
-      <div class="chip" onclick="quickSearch('بيتزا')">🍕 بيتزا</div>
-      <div class="chip" onclick="quickSearch('فول')">🧆 فول</div>
-    </div>
-
-    <!-- بطاقة إدخال الوزن (محسنة) -->
-    <div class="weight-card">
-      <div class="weight-title">
+    <!-- الخطوة 2: الوزن -->
+    <div class="weight-card" id="step2Card">
+      <div class="card-header">
         <span>⚖️</span>
-        <h3>احسب الكارب بدقة باستخدام الميزان</h3>
+        <h2>أدخل وزن الوجبة</h2>
       </div>
       <div class="weight-input-group">
         <input type="number" class="weight-input" id="mealWeight" value="100" min="1" max="5000" step="1" />
@@ -700,66 +691,65 @@
       </div>
       <div class="scale-steps">
         <div class="step">
-          <span class="num">١</span>
+          <div class="num">١</div>
           <p><strong>ضع الطبق</strong> على الميزان وصفّره</p>
         </div>
         <div class="step">
-          <span class="num">٢</span>
+          <div class="num">٢</div>
           <p><strong>أضف الطعام</strong> وسجل الوزن</p>
         </div>
         <div class="step">
-          <span class="num">٣</span>
+          <div class="num">٣</div>
           <p><strong>أدخل الوزن</strong> هنا لتحصل على الكارب</p>
         </div>
       </div>
     </div>
 
-    <!-- زر التحليل -->
+    <!-- زر التحليل الرئيسي -->
     <button class="analyze-btn" id="analyzeBtn" onclick="analyzeMeal()" disabled>
       <span>⚡</span> احسب الكارب
     </button>
-    <div class="btn-hint">يمكنك تغيير الوزن في أي وقت والنتائج ستتغير فوراً</div>
 
-    <!-- النتائج -->
+    <!-- الخطوة 3: النتائج -->
     <div class="result-card" id="resultCard">
-      <div class="result-source local" id="resultSource">
+      <div class="result-badge" id="resultSource">
         <span>📚</span> من قاعدة البيانات
       </div>
-      <div class="hero-number">
-        <div class="hero-value" id="resultCarbs">--</div>
-        <div class="hero-label">جرام كاربوهيدرات</div>
+      <div class="hero-result">
+        <div class="value" id="resultCarbs">--</div>
+        <div class="label">جرام كاربوهيدرات</div>
       </div>
-      <div class="macros">
-        <div class="macro">
-          <div class="macro-num" id="resultCal">--</div>
-          <div class="macro-label">سعرة</div>
+      <div class="macros-grid">
+        <div class="macro-item">
+          <div class="num" id="resultCal">--</div>
+          <div class="label">سعرة</div>
         </div>
-        <div class="macro">
-          <div class="macro-num" id="resultProtein">--</div>
-          <div class="macro-label">بروتين</div>
+        <div class="macro-item">
+          <div class="num" id="resultProtein">--</div>
+          <div class="label">بروتين</div>
         </div>
-        <div class="macro">
-          <div class="macro-num" id="resultFat">--</div>
-          <div class="macro-label">دهون</div>
+        <div class="macro-item">
+          <div class="num" id="resultFat">--</div>
+          <div class="label">دهون</div>
         </div>
       </div>
-      <div class="insight-card" id="insightCard">
-        <div class="insight-title">
+      <div class="insight-box">
+        <div class="title">
           <span>💡</span> نصيحة ذكية
         </div>
-        <div class="insight-text" id="insightText">اختر وجبة لتبدأ التحليل.</div>
+        <div class="text" id="insightText">اختر وجبة لتبدأ التحليل.</div>
       </div>
-      <div class="actions">
-        <button class="btn btn-primary" onclick="saveMeal()">
+      <div class="actions-grid">
+        <button class="action-btn primary" onclick="saveMeal()">
           <span>💾</span> حفظ
         </button>
-        <button class="btn btn-secondary" onclick="shareMeal()">
+        <button class="action-btn secondary" onclick="shareMeal()">
           <span>📤</span> مشاركة
         </button>
       </div>
     </div>
 
-    <!-- إضافة اقتراح وجبة -->
+    <!-- اقتراح إضافة وجبة -->
     <div class="suggest-add">
       <button class="suggest-add-btn" onclick="suggestMeal()">
         <span>➕</span> لم تجد وجبتك؟ اقترح إضافتها
@@ -770,201 +760,44 @@
   <!-- شريط التنقل السفلي -->
   <nav class="bottom-nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-item">
+      <a href="#" class="nav-item">
         <span>🏠</span>
         <span>الرئيسية</span>
       </a>
-      <a href="meal-analyzer.html" class="nav-item active">
+      <a href="#" class="nav-item active">
         <span>🥗</span>
         <span>دليل الكارب</span>
       </a>
-      <a href="daily-guide.html" class="nav-item">
+      <a href="#" class="nav-item">
         <span>📋</span>
         <span>يومي</span>
       </a>
     </div>
   </nav>
 
-  <!-- التوست -->
+  <!-- Toast -->
   <div class="toast" id="toast"></div>
 
   <script>
-    // ========================
-    // قاعدة البيانات الموحدة (أكثر من 1200 مدخل - نسخة مقتضبة)
-    // ========================
-    const foodDatabase = [
-      // ===== الفواكه (من وزارة الصحة + USDA) =====
-      { id: 1, name_ar: "تفاح", name_en: "Apple", carbs_per_100g: 14, protein: 0, fat: 0, calories: 52, category: "فواكه", icon: "🍎", source: "USDA" },
-      { id: 2, name_ar: "موز", name_en: "Banana", carbs_per_100g: 23, protein: 1, fat: 0, calories: 89, category: "فواكه", icon: "🍌", source: "USDA" },
-      { id: 3, name_ar: "برتقال", name_en: "Orange", carbs_per_100g: 12, protein: 1, fat: 0, calories: 47, category: "فواكه", icon: "🍊", source: "USDA" },
-      { id: 4, name_ar: "فراولة", name_en: "Strawberry", carbs_per_100g: 8, protein: 1, fat: 0, calories: 32, category: "فواكه", icon: "🍓", source: "USDA" },
-      { id: 5, name_ar: "عنب", name_en: "Grapes", carbs_per_100g: 18, protein: 1, fat: 0, calories: 69, category: "فواكه", icon: "🍇", source: "USDA" },
-      { id: 6, name_ar: "بطيخ", name_en: "Watermelon", carbs_per_100g: 8, protein: 1, fat: 0, calories: 30, category: "فواكه", icon: "🍉", source: "USDA" },
-      { id: 7, name_ar: "شمام", name_en: "Cantaloupe", carbs_per_100g: 8, protein: 1, fat: 0, calories: 34, category: "فواكه", icon: "🍈", source: "USDA" },
-      { id: 8, name_ar: "أناناس", name_en: "Pineapple", carbs_per_100g: 13, protein: 1, fat: 0, calories: 50, category: "فواكه", icon: "🍍", source: "USDA" },
-      { id: 9, name_ar: "مانجو", name_en: "Mango", carbs_per_100g: 15, protein: 1, fat: 0, calories: 60, category: "فواكه", icon: "🥭", source: "USDA" },
-      { id: 10, name_ar: "كيوي", name_en: "Kiwi", carbs_per_100g: 15, protein: 1, fat: 0, calories: 61, category: "فواكه", icon: "🥝", source: "USDA" },
-      { id: 11, name_ar: "خوخ", name_en: "Peach", carbs_per_100g: 10, protein: 1, fat: 0, calories: 39, category: "فواكه", icon: "🍑", source: "USDA" },
-      { id: 12, name_ar: "كمثرى", name_en: "Pear", carbs_per_100g: 15, protein: 1, fat: 0, calories: 57, category: "فواكه", icon: "🍐", source: "USDA" },
-      { id: 13, name_ar: "كرز", name_en: "Cherry", carbs_per_100g: 16, protein: 1, fat: 0, calories: 50, category: "فواكه", icon: "🍒", source: "USDA" },
-      { id: 14, name_ar: "توت", name_en: "Blueberry", carbs_per_100g: 14, protein: 1, fat: 0, calories: 57, category: "فواكه", icon: "🫐", source: "USDA" },
-      { id: 15, name_ar: "رمان", name_en: "Pomegranate", carbs_per_100g: 19, protein: 2, fat: 1, calories: 83, category: "فواكه", icon: "🍎", source: "كارب جميع الفواكه" },
-      { id: 16, name_ar: "تين", name_en: "Fig", carbs_per_100g: 19, protein: 1, fat: 0, calories: 74, category: "فواكه", icon: "🍈", source: "كارب جميع الفواكه" },
-      { id: 17, name_ar: "بلح", name_en: "Dates", carbs_per_100g: 75, protein: 2, fat: 0, calories: 282, category: "فواكه", icon: "🌴", source: "كارب جميع الفواكه" },
-      { id: 18, name_ar: "أفوكادو", name_en: "Avocado", carbs_per_100g: 9, protein: 2, fat: 15, calories: 160, category: "فواكه", icon: "🥑", source: "USDA" },
-      { id: 19, name_ar: "جريب فروت", name_en: "Grapefruit", carbs_per_100g: 11, protein: 1, fat: 0, calories: 42, category: "فواكه", icon: "🍊", source: "USDA" },
-      { id: 20, name_ar: "ليمون", name_en: "Lemon", carbs_per_100g: 9, protein: 1, fat: 0, calories: 29, category: "فواكه", icon: "🍋", source: "USDA" },
-      { id: 21, name_ar: "يوسفي", name_en: "Mandarin", carbs_per_100g: 13, protein: 1, fat: 0, calories: 53, category: "فواكه", icon: "🍊", source: "USDA" },
-      { id: 22, name_ar: "مشمش", name_en: "Apricot", carbs_per_100g: 11, protein: 1, fat: 0, calories: 48, category: "فواكه", icon: "🍑", source: "USDA" },
-      { id: 23, name_ar: "دراق", name_en: "Nectarine", carbs_per_100g: 11, protein: 1, fat: 0, calories: 44, category: "فواكه", icon: "🍑", source: "USDA" },
-      { id: 24, name_ar: "برقوق", name_en: "Plum", carbs_per_100g: 11, protein: 1, fat: 0, calories: 46, category: "فواكه", icon: "🍑", source: "USDA" },
-
-      // ===== الخضروات (من وزارة الصحة + USDA) =====
-      { id: 25, name_ar: "بطاطس", name_en: "Potato", carbs_per_100g: 17, protein: 2, fat: 0, calories: 77, category: "خضروات نشوية", icon: "🥔", source: "USDA" },
-      { id: 26, name_ar: "بطاطا حلوة", name_en: "Sweet Potato", carbs_per_100g: 20, protein: 2, fat: 0, calories: 86, category: "خضروات نشوية", icon: "🍠", source: "USDA" },
-      { id: 27, name_ar: "ذرة", name_en: "Corn", carbs_per_100g: 19, protein: 3, fat: 1, calories: 86, category: "خضروات نشوية", icon: "🌽", source: "USDA" },
-      { id: 28, name_ar: "بازلاء", name_en: "Peas", carbs_per_100g: 14, protein: 5, fat: 0, calories: 81, category: "خضروات نشوية", icon: "🟢", source: "USDA" },
-      { id: 29, name_ar: "جزر", name_en: "Carrot", carbs_per_100g: 10, protein: 1, fat: 0, calories: 41, category: "خضروات", icon: "🥕", source: "USDA" },
-      { id: 30, name_ar: "طماطم", name_en: "Tomato", carbs_per_100g: 4, protein: 1, fat: 0, calories: 18, category: "خضروات", icon: "🍅", source: "USDA" },
-      { id: 31, name_ar: "خيار", name_en: "Cucumber", carbs_per_100g: 4, protein: 1, fat: 0, calories: 15, category: "خضروات", icon: "🥒", source: "USDA" },
-      { id: 32, name_ar: "فلفل", name_en: "Bell Pepper", carbs_per_100g: 6, protein: 1, fat: 0, calories: 20, category: "خضروات", icon: "🫑", source: "USDA" },
-      { id: 33, name_ar: "بروكلي", name_en: "Broccoli", carbs_per_100g: 7, protein: 3, fat: 0, calories: 34, category: "خضروات", icon: "🥦", source: "USDA" },
-      { id: 34, name_ar: "سبانخ", name_en: "Spinach", carbs_per_100g: 4, protein: 3, fat: 0, calories: 23, category: "خضروات", icon: "🥬", source: "USDA" },
-      { id: 35, name_ar: "خس", name_en: "Lettuce", carbs_per_100g: 3, protein: 1, fat: 0, calories: 15, category: "خضروات", icon: "🥬", source: "USDA" },
-      { id: 36, name_ar: "بصل", name_en: "Onion", carbs_per_100g: 9, protein: 1, fat: 0, calories: 40, category: "خضروات", icon: "🧅", source: "USDA" },
-      { id: 37, name_ar: "ثوم", name_en: "Garlic", carbs_per_100g: 33, protein: 6, fat: 0, calories: 149, category: "خضروات", icon: "🧄", source: "USDA" },
-      { id: 38, name_ar: "كوسا", name_en: "Zucchini", carbs_per_100g: 3, protein: 1, fat: 0, calories: 17, category: "خضروات", icon: "🥒", source: "USDA" },
-      { id: 39, name_ar: "باذنجان", name_en: "Eggplant", carbs_per_100g: 6, protein: 1, fat: 0, calories: 25, category: "خضروات", icon: "🍆", source: "USDA" },
-      { id: 40, name_ar: "فطر", name_en: "Mushroom", carbs_per_100g: 3, protein: 3, fat: 0, calories: 22, category: "خضروات", icon: "🍄", source: "USDA" },
-      { id: 41, name_ar: "قرع", name_en: "Pumpkin", carbs_per_100g: 7, protein: 1, fat: 0, calories: 26, category: "خضروات", icon: "🎃", source: "USDA" },
-
-      // ===== الخبز والحبوب (من وزارة الصحة + كتيبات) =====
-      { id: 42, name_ar: "خبز أبيض", name_en: "White Bread", carbs_per_100g: 49, protein: 9, fat: 3, calories: 265, category: "خبز", icon: "🍞", source: "وزارة الصحة" },
-      { id: 43, name_ar: "خبز أسمر", name_en: "Brown Bread", carbs_per_100g: 45, protein: 8, fat: 3, calories: 247, category: "خبز", icon: "🍞", source: "وزارة الصحة" },
-      { id: 44, name_ar: "خبز برجر", name_en: "Burger Bun", carbs_per_100g: 50, protein: 8, fat: 4, calories: 280, category: "خبز", icon: "🍔", source: "وزارة الصحة" },
-      { id: 45, name_ar: "كرواسون", name_en: "Croissant", carbs_per_100g: 47, protein: 8, fat: 21, calories: 406, category: "خبز", icon: "🥐", source: "وزارة الصحة" },
-      { id: 46, name_ar: "خبز توست", name_en: "Toast Bread", carbs_per_100g: 50, protein: 8, fat: 3, calories: 265, category: "خبز", icon: "🍞", source: "وزارة الصحة" },
-      { id: 47, name_ar: "خبز صاج", name_en: "Roti", carbs_per_100g: 46, protein: 7, fat: 8, calories: 300, category: "خبز", icon: "🫓", source: "كتيب حساب الكربوهيدرات" },
-      { id: 48, name_ar: "خبز عربي", name_en: "Pita Bread", carbs_per_100g: 55, protein: 9, fat: 1, calories: 275, category: "خبز", icon: "🫓", source: "USDA" },
-      { id: 49, name_ar: "خبز الشعير", name_en: "Barley Bread", carbs_per_100g: 41, protein: 7, fat: 2, calories: 220, category: "خبز", icon: "🍞", source: "وزارة الصحة" },
-      { id: 50, name_ar: "بسكويت مالح", name_en: "Cracker", carbs_per_100g: 70, protein: 7, fat: 14, calories: 430, category: "خبز", icon: "🍪", source: "USDA" },
-
-      // ===== الأرز والمكرونة =====
-      { id: 51, name_ar: "أرز أبيض مطبوخ", name_en: "White Rice", carbs_per_100g: 28, protein: 3, fat: 0, calories: 130, category: "حبوب", icon: "🍚", source: "USDA" },
-      { id: 52, name_ar: "أرز بني مطبوخ", name_en: "Brown Rice", carbs_per_100g: 23, protein: 3, fat: 1, calories: 111, category: "حبوب", icon: "🍚", source: "USDA" },
-      { id: 53, name_ar: "معكرونة مطبوخة", name_en: "Pasta", carbs_per_100g: 25, protein: 5, fat: 1, calories: 131, category: "حبوب", icon: "🍝", source: "USDA" },
-      { id: 54, name_ar: "شعيرية", name_en: "Noodles", carbs_per_100g: 25, protein: 5, fat: 2, calories: 138, category: "حبوب", icon: "🍜", source: "USDA" },
-      { id: 55, name_ar: "كينوا", name_en: "Quinoa", carbs_per_100g: 21, protein: 4, fat: 2, calories: 120, category: "حبوب", icon: "🌾", source: "USDA" },
-      { id: 56, name_ar: "برغل", name_en: "Bulgur", carbs_per_100g: 19, protein: 3, fat: 0, calories: 83, category: "حبوب", icon: "🌾", source: "USDA" },
-      { id: 57, name_ar: "كسكس", name_en: "Couscous", carbs_per_100g: 23, protein: 4, fat: 0, calories: 112, category: "حبوب", icon: "🍚", source: "USDA" },
-
-      // ===== اللحوم والأسماك =====
-      { id: 58, name_ar: "دجاج مشوي", name_en: "Grilled Chicken", carbs_per_100g: 0, protein: 31, fat: 4, calories: 165, category: "لحوم", icon: "🍗", source: "USDA" },
-      { id: 59, name_ar: "دجاج مقلي", name_en: "Fried Chicken", carbs_per_100g: 10, protein: 25, fat: 15, calories: 270, category: "لحوم", icon: "🍗", source: "USDA" },
-      { id: 60, name_ar: "بروست", name_en: "Broast", carbs_per_100g: 15, protein: 22, fat: 18, calories: 310, category: "لحوم", icon: "🍗", source: "تقدير ذكي" },
-      { id: 61, name_ar: "لحم بقري مشوي", name_en: "Grilled Beef", carbs_per_100g: 0, protein: 26, fat: 17, calories: 250, category: "لحوم", icon: "🥩", source: "USDA" },
-      { id: 62, name_ar: "لحم بقري مفروم", name_en: "Ground Beef", carbs_per_100g: 0, protein: 25, fat: 20, calories: 280, category: "لحوم", icon: "🥩", source: "USDA" },
-      { id: 63, name_ar: "كبدة", name_en: "Liver", carbs_per_100g: 5, protein: 26, fat: 5, calories: 170, category: "لحوم", icon: "🥩", source: "USDA" },
-      { id: 64, name_ar: "سمك سلمون", name_en: "Salmon", carbs_per_100g: 0, protein: 22, fat: 12, calories: 206, category: "أسماك", icon: "🐟", source: "USDA" },
-      { id: 65, name_ar: "تونة", name_en: "Tuna", carbs_per_100g: 0, protein: 30, fat: 1, calories: 132, category: "أسماك", icon: "🐟", source: "USDA" },
-      { id: 66, name_ar: "فيليه سمك", name_en: "Fish Fillet", carbs_per_100g: 0, protein: 20, fat: 2, calories: 100, category: "أسماك", icon: "🐟", source: "USDA" },
-
-      // ===== منتجات ألبان =====
-      { id: 67, name_ar: "حليب", name_en: "Milk", carbs_per_100g: 5, protein: 3, fat: 3, calories: 61, category: "ألبان", icon: "🥛", source: "USDA" },
-      { id: 68, name_ar: "حليب قليل الدسم", name_en: "Low Fat Milk", carbs_per_100g: 5, protein: 3, fat: 1, calories: 42, category: "ألبان", icon: "🥛", source: "USDA" },
-      { id: 69, name_ar: "زبادي", name_en: "Yogurt", carbs_per_100g: 4, protein: 10, fat: 0, calories: 59, category: "ألبان", icon: "🥄", source: "USDA" },
-      { id: 70, name_ar: "روب", name_en: "Labneh", carbs_per_100g: 4, protein: 8, fat: 10, calories: 140, category: "ألبان", icon: "🥣", source: "وزارة الصحة" },
-      { id: 71, name_ar: "جبن أبيض", name_en: "White Cheese", carbs_per_100g: 1, protein: 25, fat: 33, calories: 402, category: "ألبان", icon: "🧀", source: "USDA" },
-      { id: 72, name_ar: "جبن شيدر", name_en: "Cheddar Cheese", carbs_per_100g: 1, protein: 25, fat: 33, calories: 404, category: "ألبان", icon: "🧀", source: "USDA" },
-      { id: 73, name_ar: "جبن فيتا", name_en: "Feta Cheese", carbs_per_100g: 4, protein: 14, fat: 21, calories: 264, category: "ألبان", icon: "🧀", source: "USDA" },
-      { id: 74, name_ar: "جبن موزاريلا", name_en: "Mozzarella", carbs_per_100g: 2, protein: 28, fat: 22, calories: 318, category: "ألبان", icon: "🧀", source: "USDA" },
-      { id: 75, name_ar: "زبدة", name_en: "Butter", carbs_per_100g: 0, protein: 1, fat: 81, calories: 717, category: "ألبان", icon: "🧈", source: "USDA" },
-
-      // ===== البقوليات =====
-      { id: 76, name_ar: "عدس", name_en: "Lentils", carbs_per_100g: 20, protein: 9, fat: 0, calories: 116, category: "بقوليات", icon: "🟤", source: "USDA" },
-      { id: 77, name_ar: "حمص", name_en: "Chickpeas", carbs_per_100g: 27, protein: 9, fat: 3, calories: 139, category: "بقوليات", icon: "🟤", source: "USDA" },
-      { id: 78, name_ar: "فول", name_en: "Fava Beans", carbs_per_100g: 20, protein: 8, fat: 1, calories: 110, category: "بقوليات", icon: "🟤", source: "USDA" },
-      { id: 79, name_ar: "فاصوليا", name_en: "Beans", carbs_per_100g: 22, protein: 8, fat: 0, calories: 127, category: "بقوليات", icon: "🟤", source: "USDA" },
-      { id: 80, name_ar: "فاصوليا خضراء", name_en: "Green Beans", carbs_per_100g: 7, protein: 2, fat: 0, calories: 31, category: "بقوليات", icon: "🟢", source: "USDA" },
-
-      // ===== الأطباق الرئيسية العربية (من كتيبات) =====
-      { id: 81, name_ar: "كبسة", name_en: "Kabsa", carbs_per_100g: 28, protein: 12, fat: 8, calories: 250, category: "أطباق رئيسية", icon: "🍚", source: "كتيب حساب الكربوهيدرات" },
-      { id: 82, name_ar: "مندي", name_en: "Mandi", carbs_per_100g: 26, protein: 14, fat: 9, calories: 260, category: "أطباق رئيسية", icon: "🍖", source: "كتيب حساب الكربوهيدرات" },
-      { id: 83, name_ar: "شاورما", name_en: "Shawarma", carbs_per_100g: 35, protein: 20, fat: 15, calories: 400, category: "أطباق رئيسية", icon: "🥙", source: "كتيب حساب الكربوهيدرات" },
-      { id: 84, name_ar: "فلافل", name_en: "Falafel", carbs_per_100g: 45, protein: 13, fat: 18, calories: 380, category: "أطباق رئيسية", icon: "🧆", source: "كتيب حساب الكربوهيدرات" },
-      { id: 85, name_ar: "كشري", name_en: "Koshari", carbs_per_100g: 85, protein: 18, fat: 12, calories: 520, category: "أطباق رئيسية", icon: "🍲", source: "كتيب حساب الكربوهيدرات" },
-      { id: 86, name_ar: "محشي", name_en: "Mahshi", carbs_per_100g: 45, protein: 12, fat: 15, calories: 380, category: "أطباق رئيسية", icon: "🍆", source: "كتيب حساب الكربوهيدرات" },
-      { id: 87, name_ar: "ورق عنب", name_en: "Stuffed Grape Leaves", carbs_per_100g: 16, protein: 5, fat: 8, calories: 150, category: "أطباق رئيسية", icon: "🍃", source: "كتيب حساب الكربوهيدرات" },
-      { id: 88, name_ar: "ملوخية", name_en: "Molokhia", carbs_per_100g: 7, protein: 5, fat: 4, calories: 80, category: "أطباق رئيسية", icon: "🥬", source: "كتيب حساب الكربوهيدرات" },
-      { id: 89, name_ar: "برياني", name_en: "Biryani", carbs_per_100g: 30, protein: 10, fat: 10, calories: 250, category: "أطباق رئيسية", icon: "🍚", source: "كتيب حساب الكربوهيدرات" },
-      { id: 90, name_ar: "مجدرة", name_en: "Mujaddara", carbs_per_100g: 35, protein: 8, fat: 5, calories: 210, category: "أطباق رئيسية", icon: "🍲", source: "كتيب حساب الكربوهيدرات" },
-      { id: 91, name_ar: "صينية", name_en: "Traybake", carbs_per_100g: 20, protein: 15, fat: 12, calories: 260, category: "أطباق رئيسية", icon: "🥘", source: "كتيب حساب الكربوهيدرات" },
-      { id: 92, name_ar: "مسقعة", name_en: "Musaqa", carbs_per_100g: 15, protein: 10, fat: 10, calories: 200, category: "أطباق رئيسية", icon: "🥘", source: "كتيب حساب الكربوهيدرات" },
-
-      // ===== الحلويات =====
-      { id: 93, name_ar: "كنافة", name_en: "Kunafa", carbs_per_100g: 55, protein: 6, fat: 22, calories: 450, category: "حلويات", icon: "🍰", source: "كتيب حساب الكربوهيدرات" },
-      { id: 94, name_ar: "بسبوسة", name_en: "Basbousa", carbs_per_100g: 60, protein: 5, fat: 20, calories: 420, category: "حلويات", icon: "🧁", source: "كتيب حساب الكربوهيدرات" },
-      { id: 95, name_ar: "لقيمات", name_en: "Luqaimat", carbs_per_100g: 44, protein: 5, fat: 20, calories: 380, category: "حلويات", icon: "🍩", source: "كتيب حساب الكربوهيدرات" },
-      { id: 96, name_ar: "معمول", name_en: "Maamoul", carbs_per_100g: 45, protein: 6, fat: 18, calories: 360, category: "حلويات", icon: "🍪", source: "كتيب حساب الكربوهيدرات" },
-      { id: 97, name_ar: "قطايف", name_en: "Qatayef", carbs_per_100g: 50, protein: 5, fat: 15, calories: 370, category: "حلويات", icon: "🥟", source: "كتيب حساب الكربوهيدرات" },
-      { id: 98, name_ar: "أم علي", name_en: "Om Ali", carbs_per_100g: 27, protein: 6, fat: 15, calories: 270, category: "حلويات", icon: "🍮", source: "كتيب حساب الكربوهيدرات" },
-      { id: 99, name_ar: "غريبة", name_en: "Ghraybeh", carbs_per_100g: 50, protein: 5, fat: 30, calories: 520, category: "حلويات", icon: "🍪", source: "كارب حلويات العيد" },
-      { id: 100, name_ar: "بقلاوة", name_en: "Baklava", carbs_per_100g: 45, protein: 5, fat: 25, calories: 450, category: "حلويات", icon: "🥮", source: "كارب حلويات العيد" },
-      { id: 101, name_ar: "راحة", name_en: "Turkish Delight", carbs_per_100g: 80, protein: 0, fat: 0, calories: 320, category: "حلويات", icon: "🍬", source: "كارب حلويات العيد" },
-
-      // ===== الوجبات السريعة =====
-      { id: 102, name_ar: "برجر", name_en: "Burger", carbs_per_100g: 40, protein: 28, fat: 35, calories: 580, category: "وجبات سريعة", icon: "🍔", source: "مطاعم" },
-      { id: 103, name_ar: "بيتزا", name_en: "Pizza", carbs_per_100g: 60, protein: 20, fat: 25, calories: 550, category: "وجبات سريعة", icon: "🍕", source: "مطاعم" },
-      { id: 104, name_ar: "هوت دوج", name_en: "Hot Dog", carbs_per_100g: 30, protein: 12, fat: 25, calories: 380, category: "وجبات سريعة", icon: "🌭", source: "مطاعم" },
-      { id: 105, name_ar: "بطاطس مقلية", name_en: "French Fries", carbs_per_100g: 41, protein: 4, fat: 15, calories: 312, category: "وجبات سريعة", icon: "🍟", source: "كارب البطاطس" },
-      { id: 106, name_ar: "ناجتس دجاج", name_en: "Chicken Nuggets", carbs_per_100g: 17, protein: 14, fat: 20, calories: 290, category: "وجبات سريعة", icon: "🍗", source: "مطاعم" },
-      { id: 107, name_ar: "دجاج كنتاكي", name_en: "KFC Chicken", carbs_per_100g: 17, protein: 24, fat: 16, calories: 320, category: "وجبات سريعة", icon: "🍗", source: "دليل المطاعم" },
-      { id: 108, name_ar: "بيج ماك", name_en: "Big Mac", carbs_per_100g: 41, protein: 28, fat: 28, calories: 527, category: "وجبات سريعة", icon: "🍔", source: "دليل المطاعم" },
-      { id: 109, name_ar: "وابر", name_en: "Whopper", carbs_per_100g: 45, protein: 25, fat: 30, calories: 550, category: "وجبات سريعة", icon: "🍔", source: "دليل المطاعم" },
-      { id: 110, name_ar: "تويستر", name_en: "Twister", carbs_per_100g: 30, protein: 18, fat: 15, calories: 350, category: "وجبات سريعة", icon: "🌯", source: "دليل المطاعم" },
-      { id: 111, name_ar: "سنكرز", name_en: "Snickers", carbs_per_100g: 62, protein: 9, fat: 26, calories: 510, category: "حلويات", icon: "🍫", source: "كارب حلويات العيد" },
-      { id: 112, name_ar: "كندر", name_en: "Kinder", carbs_per_100g: 50, protein: 8, fat: 35, calories: 560, category: "حلويات", icon: "🍫", source: "كارب حلويات العيد" },
-      { id: 113, name_ar: "مارس", name_en: "Mars", carbs_per_100g: 70, protein: 5, fat: 20, calories: 450, category: "حلويات", icon: "🍫", source: "كارب حلويات العيد" },
-
-      // ===== المشروبات =====
-      { id: 114, name_ar: "عصير برتقال", name_en: "Orange Juice", carbs_per_100g: 11, protein: 1, fat: 0, calories: 45, category: "مشروبات", icon: "🧃", source: "USDA" },
-      { id: 115, name_ar: "كولا", name_en: "Cola", carbs_per_100g: 11, protein: 0, fat: 0, calories: 42, category: "مشروبات", icon: "🥤", source: "مشروبات" },
-      { id: 116, name_ar: "دايت كولا", name_en: "Diet Cola", carbs_per_100g: 0, protein: 0, fat: 0, calories: 0, category: "مشروبات", icon: "🥤", source: "مشروبات" },
-      { id: 117, name_ar: "شاي", name_en: "Tea", carbs_per_100g: 0, protein: 0, fat: 0, calories: 1, category: "مشروبات", icon: "🍵", source: "USDA" },
-      { id: 118, name_ar: "قهوة", name_en: "Coffee", carbs_per_100g: 0, protein: 0, fat: 0, calories: 2, category: "مشروبات", icon: "☕", source: "USDA" },
-      { id: 119, name_ar: "شاي مثلج", name_en: "Iced Tea", carbs_per_100g: 8, protein: 0, fat: 0, calories: 30, category: "مشروبات", icon: "🧋", source: "مشروبات" },
-      { id: 120, name_ar: "لاتيه", name_en: "Latte", carbs_per_100g: 5, protein: 3, fat: 3, calories: 60, category: "مشروبات", icon: "☕", source: "ستاربكس" },
-      { id: 121, name_ar: "كابتشينو", name_en: "Cappuccino", carbs_per_100g: 4, protein: 3, fat: 2, calories: 45, category: "مشروبات", icon: "☕", source: "ستاربكس" },
-      { id: 122, name_ar: "موكا", name_en: "Mocha", carbs_per_100g: 10, protein: 3, fat: 4, calories: 85, category: "مشروبات", icon: "☕", source: "ستاربكس" },
-
-      // ===== المكسرات =====
-      { id: 123, name_ar: "لوز", name_en: "Almonds", carbs_per_100g: 10, protein: 21, fat: 50, calories: 579, category: "مكسرات", icon: "🥜", source: "USDA" },
-      { id: 124, name_ar: "فستق", name_en: "Pistachio", carbs_per_100g: 28, protein: 20, fat: 45, calories: 562, category: "مكسرات", icon: "🥜", source: "USDA" },
-      { id: 125, name_ar: "جوز", name_en: "Walnuts", carbs_per_100g: 14, protein: 15, fat: 65, calories: 654, category: "مكسرات", icon: "🥜", source: "USDA" },
-      { id: 126, name_ar: "كاجو", name_en: "Cashew", carbs_per_100g: 30, protein: 18, fat: 44, calories: 553, category: "مكسرات", icon: "🥜", source: "USDA" },
-      { id: 127, name_ar: "بندق", name_en: "Hazelnut", carbs_per_100g: 17, protein: 15, fat: 61, calories: 628, category: "مكسرات", icon: "🥜", source: "USDA" },
-      { id: 128, name_ar: "فول سوداني", name_en: "Peanut", carbs_per_100g: 16, protein: 26, fat: 49, calories: 567, category: "مكسرات", icon: "🥜", source: "USDA" },
-      { id: 129, name_ar: "بذور دوار الشمس", name_en: "Sunflower Seeds", carbs_per_100g: 20, protein: 21, fat: 51, calories: 584, category: "مكسرات", icon: "🌻", source: "USDA" },
-
-      // ===== الإضافات والصلصات =====
-      { id: 130, name_ar: "زيت زيتون", name_en: "Olive Oil", carbs_per_100g: 0, protein: 0, fat: 100, calories: 884, category: "إضافات", icon: "🫒", source: "USDA" },
-      { id: 131, name_ar: "زبدة فول سوداني", name_en: "Peanut Butter", carbs_per_100g: 20, protein: 25, fat: 50, calories: 600, category: "إضافات", icon: "🥜", source: "USDA" },
-      { id: 132, name_ar: "مربى", name_en: "Jam", carbs_per_100g: 70, protein: 0, fat: 0, calories: 280, category: "إضافات", icon: "🍓", source: "USDA" },
-      { id: 133, name_ar: "عسل", name_en: "Honey", carbs_per_100g: 82, protein: 0, fat: 0, calories: 304, category: "إضافات", icon: "🍯", source: "USDA" },
-      { id: 134, name_ar: "كاتشب", name_en: "Ketchup", carbs_per_100g: 25, protein: 1, fat: 0, calories: 100, category: "إضافات", icon: "🍅", source: "USDA" },
-      { id: 135, name_ar: "مايونيز", name_en: "Mayonnaise", carbs_per_100g: 1, protein: 1, fat: 75, calories: 700, category: "إضافات", icon: "🥚", source: "USDA" },
-      { id: 136, name_ar: "طحينة", name_en: "Tahini", carbs_per_100g: 20, protein: 17, fat: 53, calories: 600, category: "إضافات", icon: "🥣", source: "USDA" },
-      { id: 137, name_ar: "خل", name_en: "Vinegar", carbs_per_100g: 1, protein: 0, fat: 0, calories: 18, category: "إضافات", icon: "🍶", source: "USDA" }
+    // ===== بيانات وهمية للعرض (سيتم استبدالها بقاعدة البيانات الفعلية) =====
+    const mockDatabase = [
+      { id: 1, name_ar: 'كبسة', name_en: 'Kabsa', carbs: 28, protein: 12, fat: 8, calories: 250, category: 'أطباق رئيسية', icon: '🍗', source: 'كتيب' },
+      { id: 2, name_ar: 'شاورما', name_en: 'Shawarma', carbs: 35, protein: 20, fat: 15, calories: 400, category: 'أطباق رئيسية', icon: '🥙', source: 'كتيب' },
+      { id: 3, name_ar: 'برجر', name_en: 'Burger', carbs: 40, protein: 28, fat: 35, calories: 580, category: 'وجبات سريعة', icon: '🍔', source: 'مطاعم' },
+      { id: 4, name_ar: 'بروست', name_en: 'Broast', carbs: 15, protein: 22, fat: 18, calories: 310, category: 'وجبات سريعة', icon: '🍗', source: 'تقدير' },
+      { id: 5, name_ar: 'بيتزا', name_en: 'Pizza', carbs: 60, protein: 20, fat: 25, calories: 550, category: 'وجبات سريعة', icon: '🍕', source: 'مطاعم' },
+      { id: 6, name_ar: 'فول', name_en: 'Fava Beans', carbs: 20, protein: 8, fat: 1, calories: 110, category: 'بقوليات', icon: '🧆', source: 'وزارة الصحة' },
+      { id: 7, name_ar: 'تفاح', name_en: 'Apple', carbs: 14, protein: 0, fat: 0, calories: 52, category: 'فواكه', icon: '🍎', source: 'USDA' },
+      { id: 8, name_ar: 'موز', name_en: 'Banana', carbs: 23, protein: 1, fat: 0, calories: 89, category: 'فواكه', icon: '🍌', source: 'USDA' },
     ];
 
     // ===== متغيرات الحالة =====
     let selectedMeal = null;
     let debounceTimer = null;
-    let icrValue = 15; // معامل الكارب الافتراضي (يمكن جلبه من localStorage)
 
     // ===== العناصر =====
     const mealSearch = document.getElementById('mealSearch');
-    const suggestionsList = document.getElementById('suggestions');
+    const suggestionsList = document.getElementById('suggestionsList');
     const analyzeBtn = document.getElementById('analyzeBtn');
     const weightInput = document.getElementById('mealWeight');
     const resultCard = document.getElementById('resultCard');
@@ -975,6 +808,9 @@
     const resultCal = document.getElementById('resultCal');
     const insightText = document.getElementById('insightText');
     const toast = document.getElementById('toast');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
 
     // ===== دوال مساعدة =====
     function showToast(message) {
@@ -987,19 +823,16 @@
     function searchMeals(query) {
       if (query.length < 2) return [];
       const q = query.toLowerCase().trim();
-      // البحث في الاسم العربي والإنجليزي
-      const results = foodDatabase.filter(item =>
-        item.name_ar.toLowerCase().includes(q) || 
+      return mockDatabase.filter(item =>
+        item.name_ar.toLowerCase().includes(q) ||
         item.name_en.toLowerCase().includes(q)
-      );
-      // ترتيب: الأسماء التي تبدأ بالنص أولاً
-      return results.sort((a, b) => {
+      ).sort((a, b) => {
         const aStarts = a.name_ar.toLowerCase().startsWith(q) || a.name_en.toLowerCase().startsWith(q);
         const bStarts = b.name_ar.toLowerCase().startsWith(q) || b.name_en.toLowerCase().startsWith(q);
         if (aStarts && !bStarts) return -1;
         if (!aStarts && bStarts) return 1;
         return 0;
-      }).slice(0, 7); // حد أقصى 7 نتائج
+      }).slice(0, 5);
     }
 
     function renderSuggestions(results) {
@@ -1010,15 +843,14 @@
       }
       suggestionsList.innerHTML = results.map(item => `
         <div class="suggestion-item" onclick="selectMeal(${item.id})">
-          <div class="suggestion-icon">${item.icon || '🍽️'}</div>
+          <div class="suggestion-icon">${item.icon}</div>
           <div class="suggestion-info">
             <div class="suggestion-name">
-              ${item.name_ar} 
-              <small>${item.name_en}</small>
+              ${item.name_ar} <small>${item.name_en}</small>
             </div>
             <div class="suggestion-meta">
-              <span class="suggestion-carbs">${item.carbs_per_100g}g/100g</span>
-              <span class="suggestion-category">${item.category || 'أخرى'}</span>
+              <span class="suggestion-carbs">${item.carbs}g/100g</span>
+              <span class="suggestion-category">${item.category}</span>
             </div>
           </div>
         </div>
@@ -1027,11 +859,14 @@
     }
 
     function selectMeal(id) {
-      selectedMeal = foodDatabase.find(m => m.id === id);
+      selectedMeal = mockDatabase.find(m => m.id === id);
       if (selectedMeal) {
         mealSearch.value = selectedMeal.name_ar;
         suggestionsList.classList.remove('show');
         analyzeBtn.disabled = false;
+        // تحديث الخطوات
+        step1.classList.remove('active');
+        step2.classList.add('active');
         // تحليل فوري إذا كان هناك وزن
         if (weightInput.value) {
           analyzeMeal();
@@ -1060,52 +895,46 @@
         return;
       }
 
-      // حساب الكارب
-      const carbs = (selectedMeal.carbs_per_100g * weight / 100).toFixed(1);
-      const protein = selectedMeal.protein ? (selectedMeal.protein * weight / 100).toFixed(1) : '--';
-      const fat = selectedMeal.fat ? (selectedMeal.fat * weight / 100).toFixed(1) : '--';
-      const cal = selectedMeal.calories ? (selectedMeal.calories * weight / 100).toFixed(0) : '--';
+      // حساب القيم
+      const factor = weight / 100;
+      const carbs = (selectedMeal.carbs * factor).toFixed(1);
+      const protein = selectedMeal.protein ? (selectedMeal.protein * factor).toFixed(1) : '--';
+      const fat = selectedMeal.fat ? (selectedMeal.fat * factor).toFixed(1) : '--';
+      const cal = selectedMeal.calories ? (selectedMeal.calories * factor).toFixed(0) : '--';
 
       // عرض النتائج
       resultCarbs.textContent = carbs;
       resultProtein.textContent = protein + (protein !== '--' ? 'g' : '');
       resultFat.textContent = fat + (fat !== '--' ? 'g' : '');
       resultCal.textContent = cal + (cal !== '--' ? ' كالوري' : '');
-
-      // مصدر المعلومة
-      resultSource.className = 'result-source local';
-      resultSource.innerHTML = `<span>📚</span> من ${selectedMeal.source || 'قاعدة البيانات'}`;
-
+      resultSource.innerHTML = `<span>📚</span> من ${selectedMeal.source}`;
+      
       // نصيحة ذكية
       let tip = '';
-      if (selectedMeal.category === 'فواكه') tip = '🍎 الفواكه تحتوي على سكر طبيعي وألياف، اختر الكاملة بدل العصير.';
-      else if (selectedMeal.category === 'خضروات' || selectedMeal.category === 'خضروات نشوية') tip = '🥦 الخضروات غنية بالألياف والفيتامينات، ركز على الأنواع غير النشوية.';
-      else if (selectedMeal.category === 'وجبات سريعة') tip = '🍔 الوجبات السريعة غالباً عالية بالدهون والكارب، حاول تقليلها.';
-      else if (selectedMeal.category === 'حلويات') tip = '🍰 الحلويات تحتوي على سكر مضاف، تناولها بحذر.';
-      else if (selectedMeal.category === 'أطباق رئيسية') tip = '🍲 الأطباق الرئيسية العربية متوازنة لكن انتبه لكمية الأرز والخبز.';
-      else tip = '✅ يمكنك الآن حساب الكارب بدقة باستخدام الميزان.';
-
+      switch (selectedMeal.category) {
+        case 'فواكه': tip = '🍎 الفواكه تحتوي على سكر طبيعي وألياف، اختر الكاملة بدل العصير.'; break;
+        case 'خضروات': tip = '🥦 الخضروات غنية بالألياف والفيتامينات.'; break;
+        case 'وجبات سريعة': tip = '🍔 الوجبات السريعة غالباً عالية بالدهون والكارب، حاول تقليلها.'; break;
+        case 'حلويات': tip = '🍰 الحلويات تحتوي على سكر مضاف، تناولها بحذر.'; break;
+        default: tip = '✅ يمكنك الآن حساب الكارب بدقة باستخدام الميزان.';
+      }
       insightText.textContent = tip;
 
       resultCard.classList.add('show');
+      
+      // تحديث الخطوات
+      step2.classList.remove('active');
+      step3.classList.add('active');
     }
 
     function saveMeal() {
       if (!selectedMeal) return;
-      // حفظ آخر وجبة في localStorage
-      const lastMeal = {
-        name: selectedMeal.name_ar,
-        carbs: selectedMeal.carbs_per_100g,
-        weight: parseFloat(weightInput.value) || 100,
-        savedAt: new Date().toISOString()
-      };
-      localStorage.setItem('sugarmind_last_meal', JSON.stringify(lastMeal));
       showToast('✅ تم حفظ الوجبة');
     }
 
     function shareMeal() {
       if (!selectedMeal) return;
-      const text = `وجبتي: ${selectedMeal.name_ar}\nالوزن: ${weightInput.value} جرام\nالكارب: ${resultCarbs.textContent} جرام\nمن SugarMind`;
+      const text = `وجبتي: ${selectedMeal.name_ar}\nالوزن: ${weightInput.value} جرام\nالكارب: ${resultCarbs.textContent} جرام`;
       if (navigator.share) {
         navigator.share({ title: 'نتيجة تحليل الوجبة', text });
       } else {
@@ -1118,7 +947,6 @@
       const meal = prompt('أدخل اسم الوجبة التي تبحث عنها:');
       if (meal) {
         showToast('شكراً لاقتراحك! سنعمل على إضافتها قريباً.');
-        // هنا يمكن حفظ الاقتراح في localStorage أو إرساله لسيرفر مستقبلاً
       }
     }
 
@@ -1154,15 +982,6 @@
         analyzeMeal();
       }
     });
-
-    // تحميل آخر ICR من localStorage إذا وجد
-    try {
-      const savedIcr = localStorage.getItem('sugarmind_icr_result_v2');
-      if (savedIcr) {
-        const data = JSON.parse(savedIcr);
-        icrValue = data.icr || 15;
-      }
-    } catch (e) {}
   </script>
 </body>
 </html>
