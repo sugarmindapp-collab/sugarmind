@@ -3,291 +3,1476 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>تحليلات AI - SugarMind</title>
+  <title>فهم أعمق ليومك - SugarMind</title>
+  <meta name="description" content="تحليل أعمق ليومك داخل SugarMind: فهم نمطك، جودة بياناتك، والفرصة لفتح التحليلات الكاملة." />
   <meta name="theme-color" content="#F6F3EE" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ44R4V060"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PZ44R4V060');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
   <style>
-    /* نفس المتغيرات والأنماط السابقة (يمكن نسخها للاختصار) */
     :root{
       --bg:#F6F3EE;
       --bg-2:#EFEAE3;
       --surface:#FFFFFF;
       --surface-2:#F8F6F2;
-      --hero:#2A2F45;
-      --hero-2:#45496A;
+      --surface-3:#F0ECE7;
+      --hero:#232A3D;
+      --hero-2:#3A4160;
       --hero-3:#7D8BAE;
       --primary:#7BAA92;
+      --primary-2:#A9C9B9;
       --ink:#1D2433;
-      --ink-2:#667085;
+      --ink-2:#617087;
+      --ink-3:#8C94A4;
       --line:#E6E1D8;
+      --line-soft:rgba(69,73,106,.10);
+      --success:#61B07F;
+      --warning:#E6B85C;
       --danger:#DA726D;
-      --shadow-lg:0 24px 60px rgba(30,36,51,.10);
-      --shadow-md:0 16px 32px rgba(30,36,51,.08);
-      --radius-xxl:32px;
-      --radius-xl:26px;
+      --success-soft:rgba(97,176,127,.12);
+      --warning-soft:rgba(230,184,92,.15);
+      --danger-soft:rgba(218,114,109,.14);
+      --shadow-lg:0 28px 70px rgba(30,36,51,.12);
+      --shadow-md:0 18px 36px rgba(30,36,51,.08);
+      --shadow-sm:0 10px 18px rgba(30,36,51,.05);
+      --radius-xxl:34px;
+      --radius-xl:28px;
       --radius-lg:22px;
       --radius-md:18px;
       --radius-sm:14px;
       --safe-top:env(safe-area-inset-top);
       --safe-bottom:env(safe-area-inset-bottom);
-      --max-width:500px;
+      --max-width:520px;
       --ease:cubic-bezier(.2,.8,.2,1);
     }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent;}
-    body{background:var(--bg);color:var(--ink);min-height:100vh;}
-    .app{max-width:var(--max-width);margin:0 auto;padding:20px;padding-bottom:100px;}
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      -webkit-tap-highlight-color:transparent;
+      font-family:'Tajawal',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    }
+
+    html{
+      background:var(--bg);
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      min-height:100vh;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(123,170,146,.08), transparent 28%),
+        radial-gradient(circle at top right, rgba(125,139,174,.08), transparent 26%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    a{text-decoration:none;color:inherit}
+    button{border:0;background:none;color:inherit;cursor:pointer}
+    img{max-width:100%;display:block}
+
+    .bg-noise{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      opacity:.02;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    }
+
+    .app{
+      max-width:var(--max-width);
+      margin:0 auto;
+      min-height:100vh;
+      padding:calc(16px + var(--safe-top)) 18px calc(120px + var(--safe-bottom));
+    }
 
     .topbar{
-      display:flex; align-items:center; gap:16px; margin-bottom:24px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:18px;
     }
-    .back-btn{
-      width:44px; height:44px; border-radius:14px; background:var(--surface); border:1px solid var(--line);
-      display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--ink);
-      text-decoration:none; transition:0.25s;
-    }
-    .back-btn:hover{transform:translateX(-4px);}
-    .page-title{font-size:24px; font-weight:900;}
 
-    .countdown-badge{
-      background:linear-gradient(135deg, var(--danger), #F04438);
-      color:#fff;
-      padding:12px 20px;
-      border-radius:999px;
-      font-size:18px;
-      font-weight:900;
-      text-align:center;
-      margin-bottom:24px;
-      box-shadow:0 12px 24px rgba(218,114,109,.3);
+    .back-btn{
+      width:46px;
+      height:46px;
+      border-radius:16px;
+      background:rgba(255,255,255,.75);
+      border:1px solid var(--line);
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:8px;
-    }
-    .countdown-number{
-      background:rgba(255,255,255,0.2);
-      padding:8px 12px;
-      border-radius:12px;
-      font-family:monospace;
       font-size:22px;
+      color:var(--ink);
+      box-shadow:var(--shadow-sm);
+      transition:transform .22s var(--ease), border-color .22s var(--ease);
+      flex-shrink:0;
     }
 
-    .insight-card{
-      background:var(--surface);
-      border:1px solid var(--line);
-      border-radius:var(--radius-xl);
-      padding:22px;
-      margin-bottom:20px;
-      box-shadow:var(--shadow-md);
+    .back-btn:hover{
+      transform:translateY(-2px);
+      border-color:rgba(69,73,106,.18);
     }
-    .card-title{
-      font-size:18px;
+
+    .page-kicker{
+      font-size:12px;
+      color:var(--ink-3);
+      font-weight:800;
+      margin-bottom:4px;
+    }
+
+    .page-title{
+      font-size:25px;
       font-weight:900;
-      margin-bottom:16px;
-      display:flex;
+      color:var(--ink);
+      line-height:1.25;
+      letter-spacing:-.6px;
+    }
+
+    .hero{
+      background:
+        radial-gradient(circle at 10% 14%, rgba(255,255,255,.16), transparent 34%),
+        radial-gradient(circle at 100% 85%, rgba(123,170,146,.18), transparent 40%),
+        linear-gradient(160deg, #22293C 0%, #313855 52%, #20283A 100%);
+      color:#fff;
+      border-radius:32px;
+      padding:24px 22px;
+      box-shadow:0 26px 48px rgba(36,42,61,.16);
+      margin-bottom:18px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:'';
+      position:absolute;
+      top:-50%;
+      left:-50%;
+      width:200%;
+      height:200%;
+      background:linear-gradient(
+        45deg,
+        transparent 40%,
+        rgba(255,255,255,.05) 45%,
+        rgba(255,255,255,.14) 50%,
+        rgba(255,255,255,.05) 55%,
+        transparent 60%
+      );
+      transform:rotate(30deg) translateX(-100%);
+      animation:sheen 8s ease-in-out infinite;
+      pointer-events:none;
+      opacity:.58;
+    }
+
+    @keyframes sheen{
+      0%,100%{transform:rotate(30deg) translateX(-100%)}
+      50%{transform:rotate(30deg) translateX(100%)}
+    }
+
+    .hero-chip{
+      display:inline-flex;
       align-items:center;
       gap:8px;
+      min-height:32px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.10);
+      color:rgba(255,255,255,.88);
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:14px;
+      position:relative;
+      z-index:1;
     }
 
-    .stats-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:14px;
-      margin-bottom:24px;
+    .hero-title{
+      font-size:28px;
+      font-weight:900;
+      line-height:1.42;
+      margin-bottom:10px;
+      position:relative;
+      z-index:1;
     }
-    .stat-item{
+
+    .hero-text{
+      font-size:14px;
+      line-height:1.95;
+      color:rgba(255,255,255,.82);
+      position:relative;
+      z-index:1;
+    }
+
+    .trial-strip{
+      background:rgba(255,255,255,.78);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:16px;
+      margin-bottom:18px;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .trial-strip-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+
+    .trial-strip-title{
+      font-size:15px;
+      font-weight:900;
+      color:var(--ink);
+    }
+
+    .trial-pill{
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      font-size:12px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .trial-strip-text{
+      font-size:13px;
+      color:var(--ink-2);
+      line-height:1.85;
+      margin-bottom:12px;
+    }
+
+    .trial-progress{
+      width:100%;
+      height:12px;
       background:var(--surface-2);
       border:1px solid var(--line);
-      border-radius:var(--radius-lg);
-      padding:18px;
-      text-align:center;
-    }
-    .stat-icon{font-size:30px; margin-bottom:8px;}
-    .stat-value{font-size:28px; font-weight:900; color:var(--hero);}
-    .stat-label{font-size:12px; color:var(--ink-2);}
-
-    .chart-container{
-      height:200px;
-      margin-bottom:20px;
+      border-radius:999px;
+      overflow:hidden;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
     }
 
-    .insight-text{
-      font-size:15px;
-      line-height:2;
+    .trial-progress-fill{
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--primary-2), var(--primary));
+      box-shadow:0 8px 16px rgba(123,170,146,.22);
+      transition:width .35s var(--ease);
+    }
+
+    .section{
+      margin-bottom:18px;
+    }
+
+    .section-card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:22px;
+      box-shadow:var(--shadow-md);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:16px;
+    }
+
+    .section-title{
+      font-size:17px;
+      font-weight:900;
+      color:var(--ink);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      line-height:1.45;
+    }
+
+    .section-note{
+      font-size:12px;
+      color:#7D8BAE;
+      font-weight:800;
+      background:rgba(125,139,174,.08);
+      padding:5px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    .section-text{
+      font-size:13px;
       color:var(--ink-2);
-      background:rgba(123,170,146,0.08);
-      border-radius:var(--radius-lg);
-      padding:20px;
-      margin-bottom:20px;
-      border:1px solid rgba(123,170,146,0.2);
+      line-height:1.85;
+      margin-bottom:16px;
     }
 
-    .whatsapp-btn{
+    .gauges-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+
+    .gauge-card{
+      background:linear-gradient(145deg, var(--surface), var(--surface-2));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:16px 12px 14px;
+      text-align:center;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .gauge-wrap{
+      position:relative;
+      width:92px;
+      height:92px;
+      margin:0 auto 10px;
+      display:grid;
+      place-items:center;
+    }
+
+    .gauge-ring{
+      width:92px;
+      height:92px;
+      border-radius:50%;
+      position:relative;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.6), rgba(255,255,255,0) 34%),
+        conic-gradient(var(--gauge-color) calc(var(--gauge-value) * 1%), rgba(255,255,255,.7) 0);
+      box-shadow:
+        inset 0 8px 14px rgba(255,255,255,.55),
+        inset 0 -10px 16px rgba(0,0,0,.06),
+        0 14px 24px rgba(30,36,51,.08);
+    }
+
+    .gauge-ring::before{
+      content:'';
+      position:absolute;
+      inset:11px;
+      border-radius:50%;
+      background:linear-gradient(180deg, #FFFFFF 0%, #F3EFE9 100%);
+      box-shadow:inset 0 3px 6px rgba(255,255,255,.9), inset 0 -6px 10px rgba(0,0,0,.04);
+    }
+
+    .gauge-center{
+      position:absolute;
+      inset:0;
       display:flex;
       align-items:center;
       justify-content:center;
+      flex-direction:column;
+      z-index:2;
+      transform:translateY(1px);
+    }
+
+    .gauge-value{
+      font-size:22px;
+      font-weight:900;
+      color:var(--ink);
+      line-height:1;
+      letter-spacing:-.5px;
+    }
+
+    .gauge-unit{
+      font-size:10px;
+      color:var(--ink-3);
+      font-weight:800;
+      margin-top:3px;
+      line-height:1;
+    }
+
+    .gauge-title{
+      font-size:13px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:4px;
+      line-height:1.5;
+    }
+
+    .gauge-sub{
+      font-size:11px;
+      color:var(--ink-2);
+      line-height:1.7;
+    }
+
+    .insights-grid{
+      display:grid;
       gap:12px;
+    }
+
+    .insight-row{
+      background:var(--surface-2);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:16px;
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+    }
+
+    .insight-icon{
+      width:44px;
+      height:44px;
+      border-radius:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg, rgba(123,170,146,.18), rgba(125,139,174,.10));
+      color:var(--hero-2);
+      font-size:22px;
+      flex-shrink:0;
+    }
+
+    .insight-title{
+      font-size:15px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:6px;
+      line-height:1.45;
+    }
+
+    .insight-desc{
+      font-size:13px;
+      color:var(--ink-2);
+      line-height:1.85;
+    }
+
+    .trend-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:12px;
+    }
+
+    .trend-card{
+      background:linear-gradient(145deg, var(--surface), var(--surface-2));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:16px;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .spark-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .spark-title{
+      font-size:14px;
+      font-weight:900;
+      color:var(--ink);
+      line-height:1.5;
+    }
+
+    .spark-note{
+      font-size:11px;
+      color:var(--ink-3);
+      line-height:1.5;
+      margin-top:3px;
+    }
+
+    .spark-badge{
+      min-height:30px;
+      padding:0 10px;
+      border-radius:999px;
+      background:rgba(123,170,146,.10);
+      color:var(--primary);
+      font-size:11px;
+      font-weight:900;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      white-space:nowrap;
+    }
+
+    .sparkline{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:8px;
+      height:116px;
+      margin-bottom:10px;
+    }
+
+    .spark-col{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-end;
+      gap:8px;
+      min-width:0;
+    }
+
+    .spark-bar{
       width:100%;
-      padding:20px;
-      border-radius:var(--radius-lg);
+      max-width:26px;
+      border-radius:999px;
+      background:linear-gradient(180deg, var(--primary-2), var(--primary));
+      box-shadow:
+        inset 0 2px 4px rgba(255,255,255,.28),
+        0 10px 16px rgba(123,170,146,.16);
+      min-height:8px;
+    }
+
+    .spark-day{
+      font-size:10px;
+      color:var(--ink-3);
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .mini-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .mini-item{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px 14px;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .mini-item strong{
+      display:block;
+      font-size:15px;
+      font-weight:900;
+      color:var(--ink);
+      line-height:1.4;
+      margin-bottom:4px;
+    }
+
+    .mini-item span{
+      display:block;
+      font-size:12px;
+      color:var(--ink-2);
+      line-height:1.75;
+    }
+
+    .summary-box{
+      background:
+        radial-gradient(circle at 100% 0%, rgba(123,170,146,.10), transparent 36%),
+        linear-gradient(145deg, rgba(123,170,146,.08), rgba(255,255,255,.02));
+      border:1px solid rgba(123,170,146,.18);
+      border-radius:24px;
+      padding:18px;
+    }
+
+    .summary-title{
+      font-size:15px;
+      font-weight:900;
+      color:var(--hero-2);
+      margin-bottom:10px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .summary-text{
+      font-size:14px;
+      color:var(--ink-2);
+      line-height:1.95;
+      white-space:pre-line;
+    }
+
+    .unlock-card{
+      background:
+        radial-gradient(circle at 0% 20%, rgba(255,255,255,.12), transparent 36%),
+        radial-gradient(circle at 100% 80%, rgba(123,170,146,.18), transparent 42%),
+        linear-gradient(160deg, #232A3D 0%, #323856 54%, #20283B 100%);
+      color:#fff;
+      border-radius:30px;
+      padding:22px;
+      box-shadow:0 28px 48px rgba(36,42,61,.18);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .unlock-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:32px;
+      padding:0 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      color:rgba(255,255,255,.86);
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:14px;
+    }
+
+    .unlock-title{
+      font-size:24px;
+      font-weight:900;
+      line-height:1.5;
+      margin-bottom:8px;
+    }
+
+    .unlock-text{
+      font-size:14px;
+      color:rgba(255,255,255,.82);
+      line-height:1.95;
+      margin-bottom:16px;
+    }
+
+    .unlock-points{
+      display:grid;
+      gap:10px;
+      margin-bottom:18px;
+    }
+
+    .unlock-point{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      padding:12px 14px;
+      font-size:13px;
+      color:rgba(255,255,255,.88);
+      line-height:1.8;
+    }
+
+    .pricing-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      margin-bottom:16px;
+    }
+
+    .pricing-row strong{
+      display:block;
+      font-size:20px;
+      font-weight:900;
+      line-height:1.2;
+    }
+
+    .pricing-row span{
+      display:block;
+      font-size:12px;
+      color:rgba(255,255,255,.76);
+      line-height:1.7;
+      margin-top:4px;
+    }
+
+    .pricing-amount{
+      font-size:34px;
+      font-weight:900;
+      line-height:1;
+      letter-spacing:-1px;
+      white-space:nowrap;
+    }
+
+    .cta-grid{
+      display:grid;
+      gap:10px;
+    }
+
+    .cta-btn{
+      width:100%;
+      min-height:56px;
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      font-size:16px;
+      font-weight:900;
+      transition:transform .22s var(--ease), box-shadow .22s var(--ease);
+    }
+
+    .cta-btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .cta-primary{
       background:linear-gradient(135deg, #25D366, #128C7E);
       color:#fff;
-      font-size:18px;
-      font-weight:900;
-      border:none;
-      cursor:pointer;
-      transition:transform 0.2s var(--ease);
-      box-shadow:0 16px 30px rgba(37,211,102,0.2);
+      box-shadow:0 16px 30px rgba(37,211,102,.20);
     }
-    .whatsapp-btn:hover{transform:translateY(-3px);}
-    .whatsapp-btn.hidden{display:none;}
+
+    .cta-secondary{
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.16);
+      color:#fff;
+    }
+
+    .locked .lockable{
+      filter:blur(8px);
+      opacity:.55;
+      pointer-events:none;
+      user-select:none;
+    }
+
+    .lock-banner{
+      display:none;
+      margin-top:14px;
+      padding:14px 16px;
+      border-radius:18px;
+      background:var(--danger-soft);
+      border:1px solid rgba(218,114,109,.20);
+      color:#B4534F;
+      font-size:13px;
+      font-weight:800;
+      line-height:1.8;
+    }
+
+    .locked .lock-banner{
+      display:block;
+    }
+
+    .toast{
+      position:fixed;
+      right:50%;
+      bottom:calc(110px + var(--safe-bottom));
+      z-index:60;
+      transform:translateX(50%) translateY(18px);
+      min-width:210px;
+      max-width:calc(100vw - 32px);
+      padding:13px 16px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.97);
+      box-shadow:var(--shadow-md);
+      color:var(--ink);
+      text-align:center;
+      font-size:12px;
+      font-weight:900;
+      opacity:0;
+      visibility:hidden;
+      transition:all .22s ease;
+      backdrop-filter:blur(10px);
+    }
+
+    .toast.show{
+      opacity:1;
+      visibility:visible;
+      transform:translateX(50%) translateY(0);
+    }
+
+    @media (max-width:430px){
+      .gauges-grid,
+      .trend-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-title,
+      .unlock-title{
+        font-size:22px;
+      }
+
+      .pricing-row{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .pricing-amount{
+        font-size:30px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="app">
-    <div class="topbar">
-      <a href="daily-guide.html" class="back-btn">→</a>
-      <h1 class="page-title">تحليلات AI</h1>
-    </div>
+  <div class="bg-noise"></div>
 
-    <!-- عداد تنازلي 14 يوم -->
-    <div class="countdown-badge" id="countdown">
-      <span>⏳</span>
-      <span id="countdownTimer">14 : 23 : 59</span>
-      <span>يوم : ساعة : دقيقة</span>
-    </div>
+  <main class="app" id="pageRoot">
+    <header class="topbar">
+      <a href="daily-guide.html" class="back-btn" aria-label="العودة لصفحة اليوم">→</a>
+      <div>
+        <div class="page-kicker">الطبقة الأعمق</div>
+        <h1 class="page-title">فهم أعمق ليومك</h1>
+      </div>
+    </header>
 
-    <!-- بطاقات إحصائية -->
-    <div class="stats-grid">
-      <div class="stat-item">
-        <div class="stat-icon">📊</div>
-        <div class="stat-value" id="avgReading">--</div>
-        <div class="stat-label">متوسط القراءة</div>
+    <section class="hero">
+      <div class="hero-chip">🤖 تحليلات SugarMind الذكية</div>
+      <div class="hero-title">مو مجرد أرقام…<br>نبغى نفهم نمطك فعلًا</div>
+      <div class="hero-text">
+        هذه الصفحة تعطيك تذوقًا ذكيًا من التحليل الأعمق: جودة بياناتك، قابلية يومك للفهم، وبعض الإشارات اللي تبدأ تتكوّن من استخدامك داخل التطبيق.
       </div>
-      <div class="stat-item">
-        <div class="stat-icon">🎯</div>
-        <div class="stat-value" id="inRange">--%</div>
-        <div class="stat-label">في النطاق</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-icon">🍽️</div>
-        <div class="stat-value" id="totalMeals">--</div>
-        <div class="stat-label">وجبات محفوظة</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-icon">🧮</div>
-        <div class="stat-value" id="bestIcr">--</div>
-        <div class="stat-label">أفضل معامل</div>
-      </div>
-    </div>
+    </section>
 
-    <!-- رسم بياني شامل -->
-    <div class="insight-card">
-      <div class="card-title">📈 تطور القراءات</div>
-      <div class="chart-container">
-        <canvas id="fullChart"></canvas>
+    <section class="trial-strip">
+      <div class="trial-strip-top">
+        <div class="trial-strip-title" id="trialTitle">الفترة التجريبية الذكية ما زالت مفتوحة</div>
+        <div class="trial-pill" id="trialPill">جاري الاحتساب</div>
       </div>
-    </div>
-
-    <!-- تحليل نصي ذكي -->
-    <div class="insight-card">
-      <div class="card-title">🧠 ملخص ذكي</div>
-      <div class="insight-text" id="aiSummary">
-        جارٍ تحليل بياناتك...
+      <div class="trial-strip-text" id="trialText">
+        نفتح لك هذه الصفحة في البداية حتى يتكوّن نمطك، وبعدها تبدأ التحليلات الكاملة تتحول لمسار اشتراك شهري.
       </div>
-    </div>
+      <div class="trial-progress">
+        <div class="trial-progress-fill" id="trialProgressFill" style="width:0%"></div>
+      </div>
+    </section>
 
-    <!-- زر واتساب (يظهر بعد انتهاء العداد) -->
-    <button class="whatsapp-btn hidden" id="whatsappBtn">
-      <span>📱</span>
-      <span>تواصل معنا على واتساب</span>
-    </button>
-  </div>
+    <section class="section lockable">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="section-title">🧿 لقطة سريعة عنك الآن</div>
+          <div class="section-note">أقرب صورة</div>
+        </div>
+        <div class="section-text">هذه المؤشرات ليست تشخيصًا طبيًا، لكنها تعطيك إحساسًا واضحًا: هل بياناتك كافية؟ هل يومك بدأ يتضح؟ وهل التطبيق صار قادر يفهمك أكثر؟</div>
+
+        <div class="gauges-grid">
+          <div class="gauge-card">
+            <div class="gauge-wrap">
+              <div class="gauge-ring" id="gaugeQuality" style="--gauge-value:0;--gauge-color:var(--primary)"></div>
+              <div class="gauge-center">
+                <div class="gauge-value" id="qualityValue">0</div>
+                <div class="gauge-unit">/100</div>
+              </div>
+            </div>
+            <div class="gauge-title">جودة البيانات</div>
+            <div class="gauge-sub" id="qualitySub">نحتاج استخدام أكثر</div>
+          </div>
+
+          <div class="gauge-card">
+            <div class="gauge-wrap">
+              <div class="gauge-ring" id="gaugeClarity" style="--gauge-value:0;--gauge-color:#7D8BAE"></div>
+              <div class="gauge-center">
+                <div class="gauge-value" id="clarityValue">0</div>
+                <div class="gauge-unit">/100</div>
+              </div>
+            </div>
+            <div class="gauge-title">وضوح النمط</div>
+            <div class="gauge-sub" id="claritySub">ما زال يتكوّن</div>
+          </div>
+
+          <div class="gauge-card">
+            <div class="gauge-wrap">
+              <div class="gauge-ring" id="gaugeReady" style="--gauge-value:0;--gauge-color:#E6B85C"></div>
+              <div class="gauge-center">
+                <div class="gauge-value" id="readyValue">0</div>
+                <div class="gauge-unit">/100</div>
+              </div>
+            </div>
+            <div class="gauge-title">جاهزية التحليل</div>
+            <div class="gauge-sub" id="readySub">لم تكتمل بعد</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section lockable">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="section-title">✨ ماذا بدأنا نفهم عنك؟</div>
+          <div class="section-note">إشارات مبكرة</div>
+        </div>
+
+        <div class="insights-grid" id="insightsGrid"></div>
+      </div>
+    </section>
+
+    <section class="section lockable">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="section-title">📉 اتجاهات صغيرة لها معنى</div>
+          <div class="section-note">شكل جديد</div>
+        </div>
+
+        <div class="trend-grid">
+          <div class="trend-card">
+            <div class="spark-head">
+              <div>
+                <div class="spark-title">إيقاع استخدامك خلال 7 أيام</div>
+                <div class="spark-note">كل لمسة منك تساعدنا نفهم يومك بشكل أذكى</div>
+              </div>
+              <div class="spark-badge" id="activityBadge">بداية</div>
+            </div>
+
+            <div class="sparkline" id="sparkline"></div>
+          </div>
+
+          <div class="mini-list">
+            <div class="mini-item">
+              <strong id="avgReadingValue">--</strong>
+              <span>متوسط القراءة الحالي من آخر ما توفر عندك من بيانات محفوظة.</span>
+            </div>
+            <div class="mini-item">
+              <strong id="mealsCountValue">--</strong>
+              <span>عدد الوجبات التي تم حفظها إلى الآن داخل التطبيق.</span>
+            </div>
+            <div class="mini-item">
+              <strong id="bestIcrValue">--</strong>
+              <span>أفضل معامل متوفر حاليًا داخل بياناتك الحالية.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section lockable">
+      <div class="section-card">
+        <div class="section-head">
+          <div class="section-title">🧠 ملخص ذكي لك</div>
+          <div class="section-note">صياغة أقرب لك</div>
+        </div>
+
+        <div class="summary-box">
+          <div class="summary-title">ما الذي يقوله هذا كله عنك؟</div>
+          <div class="summary-text" id="summaryText">نحتاج بيانات أكثر حتى نعطيك ملخصًا شخصيًا أعمق.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="unlock-card">
+        <div class="unlock-badge">🔓 الخطوة التالية</div>
+        <div class="unlock-title" id="unlockTitle">افتح التحليلات الكاملة لما يكتمل نمطك</div>
+        <div class="unlock-text" id="unlockText">
+          خلال الفترة المجانية نسمح لك تتذوق عمق الفكرة. وبعدها يتحول هذا الفهم إلى مسار اشتراك شهري حتى تقدر تكمل على نفس الوضوح بدون انقطاع.
+        </div>
+
+        <div class="unlock-points">
+          <div class="unlock-point">📌 فهم أعمق لاتجاهات يومك بدل مجرد قراءة منفردة</div>
+          <div class="unlock-point">🍽️ ربط أذكى بين الوجبات، المعامل، والإشارات اليومية</div>
+          <div class="unlock-point">🪄 طبقة تحليل أقرب للفهم الشخصي لا مجرد إحصائيات عامة</div>
+        </div>
+
+        <div class="pricing-row">
+          <div>
+            <strong>الاشتراك الشهري</strong>
+            <span>الوصول المستمر للتحليلات الأعمق داخل SugarMind</span>
+          </div>
+          <div class="pricing-amount">لاحقًا</div>
+        </div>
+
+        <div class="cta-grid">
+          <button class="cta-btn cta-primary" id="whatsappBtn" type="button">
+            <span>📱</span>
+            <span>تواصل معنا على واتساب</span>
+          </button>
+          <button class="cta-btn cta-secondary" id="notifyBtn" type="button">
+            <span>🔔</span>
+            <span>ذكّرني عند فتح الاشتراك المباشر</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="lock-banner" id="lockBanner">
+      انتهت الفترة المفتوحة لهذه الصفحة، وما زال بإمكانك رؤية لمحة بسيطة. فتح التحليلات الكاملة سيكون عبر الاشتراك الشهري.
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
 
   <script>
-    (function() {
-      // إعداد العداد التنازلي (14 يوم)
-      function startCountdown() {
-        const targetDate = localStorage.getItem('ai_countdown_target');
-        let target;
-        if (!targetDate) {
-          // أول مرة: نضع هدف بعد 14 يوم من الآن
-          target = new Date().getTime() + 14 * 24 * 60 * 60 * 1000;
-          localStorage.setItem('ai_countdown_target', target.toString());
+    (function(){
+      const KEYS = {
+        HOME_V2:'sugarmind_home_v2',
+        HOME_V1:'sugarmind_home_v1',
+        PROFILE_V2:'sugarmind_profile_v2',
+        PROFILE_V1:'sugarmind_profile_v1',
+        ICR:'sugarmind_icr_result_v2',
+        MEAL:'sugarmind_meal_result_v1',
+        MEALS_LIST:'sugarmind_meals',
+        ACTIVITY_LOG:'sugarmind_activity_log_v1',
+        SHARE_COUNT:'sugarmind_share_count_v1',
+        AI_TRIAL_START:'sugarmind_ai_trial_start_v1',
+        AI_PAGE_OPENS:'sugarmind_ai_page_opens_v1'
+      };
+
+      const TRIAL_DAYS = 14;
+      const WHATSAPP_NUMBER = '966500000000';
+
+      const els = {
+        pageRoot: document.getElementById('pageRoot'),
+        trialTitle: document.getElementById('trialTitle'),
+        trialPill: document.getElementById('trialPill'),
+        trialText: document.getElementById('trialText'),
+        trialProgressFill: document.getElementById('trialProgressFill'),
+        gaugeQuality: document.getElementById('gaugeQuality'),
+        gaugeClarity: document.getElementById('gaugeClarity'),
+        gaugeReady: document.getElementById('gaugeReady'),
+        qualityValue: document.getElementById('qualityValue'),
+        clarityValue: document.getElementById('clarityValue'),
+        readyValue: document.getElementById('readyValue'),
+        qualitySub: document.getElementById('qualitySub'),
+        claritySub: document.getElementById('claritySub'),
+        readySub: document.getElementById('readySub'),
+        insightsGrid: document.getElementById('insightsGrid'),
+        sparkline: document.getElementById('sparkline'),
+        activityBadge: document.getElementById('activityBadge'),
+        avgReadingValue: document.getElementById('avgReadingValue'),
+        mealsCountValue: document.getElementById('mealsCountValue'),
+        bestIcrValue: document.getElementById('bestIcrValue'),
+        summaryText: document.getElementById('summaryText'),
+        unlockTitle: document.getElementById('unlockTitle'),
+        unlockText: document.getElementById('unlockText'),
+        whatsappBtn: document.getElementById('whatsappBtn'),
+        notifyBtn: document.getElementById('notifyBtn'),
+        lockBanner: document.getElementById('lockBanner'),
+        toast: document.getElementById('toast')
+      };
+
+      function readJSON(key){
+        try{
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : null;
+        }catch(_){
+          return null;
+        }
+      }
+
+      function writeJSON(key, value){
+        localStorage.setItem(key, JSON.stringify(value));
+      }
+
+      function showToast(message){
+        els.toast.textContent = message;
+        els.toast.classList.add('show');
+        clearTimeout(showToast.timer);
+        showToast.timer = setTimeout(() => {
+          els.toast.classList.remove('show');
+        }, 2600);
+      }
+
+      function getHomeData(){
+        return readJSON(KEYS.HOME_V2) || readJSON(KEYS.HOME_V1) || {};
+      }
+
+      function getProfileData(){
+        return readJSON(KEYS.PROFILE_V2) || readJSON(KEYS.PROFILE_V1) || {};
+      }
+
+      function getActivityLog(){
+        const raw = readJSON(KEYS.ACTIVITY_LOG);
+        return raw && typeof raw === 'object' ? raw : {};
+      }
+
+      function saveActivityLog(log){
+        writeJSON(KEYS.ACTIVITY_LOG, log);
+      }
+
+      function getTodayISO(date = new Date()){
+        return date.toISOString().slice(0, 10);
+      }
+
+      function bumpActivity(type){
+        const log = getActivityLog();
+        const day = getTodayISO();
+        if(!log[day]){
+          log[day] = { visits:0, refreshes:0, aiClicks:0, calculator:0, meals:0, reads:0, shares:0 };
+        }
+        if(!log[day][type]) log[day][type] = 0;
+        log[day][type] += 1;
+        saveActivityLog(log);
+      }
+
+      function getTrialData(){
+        let start = Number(localStorage.getItem(KEYS.AI_TRIAL_START) || 0);
+        if(!start){
+          start = Date.now();
+          localStorage.setItem(KEYS.AI_TRIAL_START, String(start));
+        }
+
+        const now = Date.now();
+        const diff = now - start;
+        const daysUsed = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const daysLeft = Math.max(0, TRIAL_DAYS - daysUsed);
+        const progress = Math.min(100, Math.max(0, (daysUsed / TRIAL_DAYS) * 100));
+        const expired = daysUsed >= TRIAL_DAYS;
+
+        return { start, daysUsed, daysLeft, progress, expired };
+      }
+
+      function getLast7Activity(){
+        const log = getActivityLog();
+        const data = [];
+
+        for(let i = 6; i >= 0; i--){
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          const key = getTodayISO(d);
+          const item = log[key] || { visits:0, refreshes:0, aiClicks:0, calculator:0, meals:0, reads:0, shares:0 };
+          const score =
+            (item.visits || 0) +
+            (item.refreshes || 0) +
+            ((item.meals || 0) * 2) +
+            ((item.reads || 0) * 2) +
+            ((item.aiClicks || 0) * 2) +
+            ((item.calculator || 0) * 1) +
+            ((item.shares || 0) * 3);
+
+          data.push({
+            day: i === 0 ? 'اليوم' : i === 1 ? 'أمس' : `-${i}`,
+            score,
+            raw:item
+          });
+        }
+
+        return data;
+      }
+
+      function setGauge(el, value, color){
+        const normalized = Math.max(0, Math.min(100, Math.round(value)));
+        el.style.setProperty('--gauge-value', normalized);
+        el.style.setProperty('--gauge-color', color);
+      }
+
+      function getReadingState(reading){
+        const value = Number(reading);
+        if(!Number.isFinite(value)) return { score:35, label:'غير واضحة' };
+        if(value < 70) return { score:42, label:'منخفضة' };
+        if(value <= 140) return { score:84, label:'متزنة' };
+        if(value <= 180) return { score:68, label:'مرتفعة قليلًا' };
+        return { score:50, label:'مرتفعة' };
+      }
+
+      function buildComputedModel(){
+        const homeData = getHomeData();
+        const profileData = getProfileData();
+        const icrData = readJSON(KEYS.ICR) || {};
+        const mealData = readJSON(KEYS.MEAL) || {};
+        const mealsList = readJSON(KEYS.MEALS_LIST) || [];
+        const shareCount = Number(localStorage.getItem(KEYS.SHARE_COUNT) || 0);
+        const activity = getLast7Activity();
+        const trial = getTrialData();
+        const pageOpens = Number(localStorage.getItem(KEYS.AI_PAGE_OPENS) || 0);
+        const reading = Number(homeData?.reading);
+        const readingState = getReadingState(reading);
+
+        const totalActivityScore = activity.reduce((sum, item) => sum + item.score, 0);
+        const activeDays = activity.filter(item => item.score > 0).length;
+        const mealsCount = Array.isArray(mealsList) ? mealsList.length : 0;
+        const hasICR = !!icrData?.icr;
+        const hasMeal = !!mealData?.carbs;
+        const hasReading = Number.isFinite(reading);
+
+        let qualityScore = 18;
+        qualityScore += hasReading ? 24 : 0;
+        qualityScore += hasICR ? 20 : 0;
+        qualityScore += Math.min(18, mealsCount * 3);
+        qualityScore += Math.min(20, activeDays * 3);
+        qualityScore = Math.min(100, qualityScore);
+
+        let clarityScore = 20;
+        clarityScore += hasReading ? 18 : 0;
+        clarityScore += hasMeal ? 18 : 0;
+        clarityScore += hasICR ? 16 : 0;
+        clarityScore += Math.min(16, totalActivityScore / 3);
+        clarityScore += Math.min(12, pageOpens * 2);
+        clarityScore = Math.min(100, Math.round(clarityScore));
+
+        let readyScore = 15;
+        readyScore += Math.min(25, trial.daysUsed * 2);
+        readyScore += Math.min(25, activeDays * 4);
+        readyScore += Math.min(20, mealsCount * 2);
+        readyScore += hasICR ? 15 : 0;
+        readyScore = Math.min(100, Math.round(readyScore));
+
+        let avgReading = '--';
+        if(hasReading){
+          avgReading = String(Math.round(reading));
+        }
+
+        const bestIcr = hasICR ? `1:${icrData.icr}` : '--';
+
+        return {
+          homeData,
+          profileData,
+          icrData,
+          mealData,
+          mealsList,
+          shareCount,
+          activity,
+          trial,
+          pageOpens,
+          reading,
+          readingState,
+          activeDays,
+          totalActivityScore,
+          mealsCount,
+          qualityScore,
+          clarityScore,
+          readyScore,
+          avgReading,
+          bestIcr
+        };
+      }
+
+      function qualityLabel(score){
+        if(score >= 80) return 'صورة ممتازة';
+        if(score >= 60) return 'جيدة وواضحة';
+        if(score >= 40) return 'بدأت تتكوّن';
+        return 'ما زالت أولية';
+      }
+
+      function clarityLabel(score){
+        if(score >= 80) return 'النمط واضح';
+        if(score >= 60) return 'أقرب للفهم';
+        if(score >= 40) return 'يتشكل تدريجيًا';
+        return 'ما زال مبكرًا';
+      }
+
+      function readyLabel(score){
+        if(score >= 80) return 'جاهز جدًا';
+        if(score >= 60) return 'قريب من الجاهزية';
+        if(score >= 40) return 'يبني أساسه';
+        return 'يحتاج وقتًا أكثر';
+      }
+
+      function renderTrial(model){
+        const { trial } = model;
+
+        if(trial.expired){
+          els.pageRoot.classList.add('locked');
+          els.trialTitle.textContent = 'انتهت الفترة المفتوحة لهذه الصفحة';
+          els.trialPill.textContent = 'مقفلة الآن';
+          els.trialPill.style.background = 'rgba(218,114,109,.14)';
+          els.trialPill.style.color = '#B4534F';
+          els.trialPill.style.border = '1px solid rgba(218,114,109,.18)';
+          els.trialText.textContent = 'الآن بقيت لك لمحة بسيطة فقط. فتح القراءة الأعمق الكاملة يتحول للمسار الشهري لاحقًا.';
+          els.trialProgressFill.style.width = '100%';
+          els.trialProgressFill.style.background = 'linear-gradient(90deg, #DA726D, #F04438)';
+          els.unlockTitle.textContent = 'التحليلات المفتوحة انتهت… لكن الصورة بدأت تتكوّن عنك';
+          els.unlockText.textContent = 'إذا ما تبي تخسر هذا الفهم اللي بدأ يتشكل من استخدامك، فالخطوة التالية هي فتح الوصول المستمر للتحليلات الأعمق.';
+          return;
+        }
+
+        els.trialTitle.textContent = `الفترة المفتوحة ما زالت فعالة • باقي ${trial.daysLeft} يوم`;
+        els.trialPill.textContent = `${trial.daysLeft} يوم متبقي`;
+        els.trialPill.style.background = 'rgba(123,170,146,.10)';
+        els.trialPill.style.color = 'var(--primary)';
+        els.trialPill.style.border = '1px solid rgba(123,170,146,.18)';
+        els.trialText.textContent = trial.daysLeft <= 4
+          ? 'بدأت الأيام الأخيرة من الفترة المفتوحة. الآن هو الوقت الأفضل لتشوف قيمة الصفحة قبل ما تتحول للتحليلات المدفوعة.'
+          : 'في هذه المرحلة نسمح لك تتذوق العمق الحقيقي للفكرة، حتى يتكوّن عندك انطباع واضح عن قيمة التحليلات المستمرة.';
+        els.trialProgressFill.style.width = `${trial.progress}%`;
+      }
+
+      function renderGauges(model){
+        els.qualityValue.textContent = model.qualityScore;
+        els.clarityValue.textContent = model.clarityScore;
+        els.readyValue.textContent = model.readyScore;
+
+        els.qualitySub.textContent = qualityLabel(model.qualityScore);
+        els.claritySub.textContent = clarityLabel(model.clarityScore);
+        els.readySub.textContent = readyLabel(model.readyScore);
+
+        setGauge(els.gaugeQuality, model.qualityScore, 'var(--primary)');
+        setGauge(els.gaugeClarity, model.clarityScore, '#7D8BAE');
+        setGauge(els.gaugeReady, model.readyScore, '#E6B85C');
+      }
+
+      function buildInsightRows(model){
+        const rows = [];
+        const userName = model.profileData?.name ? `يا ${model.profileData.name}` : '';
+
+        if(model.qualityScore < 45){
+          rows.push({
+            icon:'📥',
+            title:'بياناتك بدأت… لكنها ما زالت خفيفة',
+            desc:`${userName ? userName + '، ' : ''}كل ما زادت قراءاتك ووجباتك المحفوظة، صارت الصفحة أصدق في فهم نمطك بدل مجرد لمحات عامة.`
+          });
         } else {
-          target = parseInt(targetDate, 10);
+          rows.push({
+            icon:'🧩',
+            title:'بدأت ملامح نمطك تتكوّن',
+            desc:`واضح أن عندنا الآن مادة أولية جيدة لفهم يومك بشكل أهدأ، خصوصًا مع وجود ${model.mealsCount} وجبة محفوظة ونشاط داخل التطبيق.`
+          });
         }
 
-        function updateCountdown() {
-          const now = new Date().getTime();
-          const diff = target - now;
-
-          if (diff <= 0) {
-            document.getElementById('countdown').style.display = 'none';
-            document.getElementById('whatsappBtn').classList.remove('hidden');
-            clearInterval(interval);
-            return;
-          }
-
-          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-          document.getElementById('countdownTimer').innerHTML = `${days} : ${hours} : ${minutes}`;
+        if(model.homeData?.reading){
+          rows.push({
+            icon:'🩺',
+            title:`آخر قراءة عندك ${model.reading} mg/dL`,
+            desc:model.readingState.label === 'متزنة'
+              ? 'وهذا يعطينا انطباعًا مريحًا أن الوضع الحالي قريب من النطاق المناسب، لكنه يظل جزءًا من الصورة وليس كل الصورة.'
+              : `القراءة الحالية تبدو ${model.readingState.label}، وهذا يجعلنا نهتم أكثر بما قبلها: وجبة، توقيت، أو نمط الاستخدام.`
+          });
+        } else {
+          rows.push({
+            icon:'🕰️',
+            title:'ما زلنا ننتظر قراءة حالية أوضح',
+            desc:'بدون قراءة واضحة محفوظة، التحليل يبقى أقل عمقًا. أول قراءة حديثة ترفع قيمة هذه الصفحة مباشرة.'
+          });
         }
 
-        updateCountdown();
-        const interval = setInterval(updateCountdown, 60000); // كل دقيقة
+        if(model.icrData?.icr){
+          rows.push({
+            icon:'🧮',
+            title:`معاملك الحالي ${model.bestIcr}`,
+            desc:`وجود معامل كارب محفوظ يرفع جاهزية التحليل، لأنه يربط بين الحساب وفهم اليوم بدل أن يبقى كل شيء منفصل.`
+          });
+        } else {
+          rows.push({
+            icon:'📌',
+            title:'المعامل عندك غير مكتمل بعد',
+            desc:'هذه من أهم القطع الناقصة في فهمك الأعمق. وجود المعامل يحول التحليل من لطيف إلى مفيد جدًا.'
+          });
+        }
+
+        if(model.shareCount > 0){
+          rows.push({
+            icon:'🤍',
+            title:'واضح أنك شاركت التطبيق مع أحد يهمك',
+            desc:'هذا يعكس أنك ما تتعامل مع SugarMind كأداة فقط، بل كشيء فعلاً تشوف له قيمة في حياة أحد قريب منك.'
+          });
+        } else {
+          rows.push({
+            icon:'🌱',
+            title:'ما زلنا نبني علاقتك مع المنتج',
+            desc:'كل لمسة منك داخل التطبيق تعطي معنى أكبر للفهم، وتخلي هذه الصفحة أصدق بمرور الأيام.'
+          });
+        }
+
+        return rows.slice(0, 4);
       }
 
-      // محاكاة تحميل البيانات
-      function loadInsights() {
-        // بيانات تجريبية
-        document.getElementById('avgReading').textContent = '132';
-        document.getElementById('inRange').textContent = '68%';
-        document.getElementById('totalMeals').textContent = '12';
-        document.getElementById('bestIcr').textContent = '1:10';
-
-        // رسم بياني
-        const ctx = document.getElementById('fullChart').getContext('2d');
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: ['14 يوم', '12', '10', '8', '6', '4', 'قبل يومين', 'أمس', 'اليوم'],
-            datasets: [
-              {
-                label: 'قراءة السكر',
-                data: [145, 138, 160, 152, 140, 130, 125, 118, 128],
-                borderColor: '#7BAA92',
-                backgroundColor: 'rgba(123,170,146,0.1)',
-                tension: 0.3,
-                fill: true,
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } }
-          }
-        });
-
-        // نص تحليلي
-        document.getElementById('aiSummary').innerHTML = `بناءً على تحليل آخر 14 يوم:
-- أنت في النطاق المثالي 68% من الوقت.
-- أفضل أيامك هي الخميس (معدل 115).
-- وجبة "كبسة" ترفع السكر بمعدل 45 نقطة.
-- ننصح بتقليل الكارب في العشاء لتحسين قراءات الصباح.`;
+      function renderInsights(model){
+        const rows = buildInsightRows(model);
+        els.insightsGrid.innerHTML = rows.map(row => `
+          <div class="insight-row">
+            <div class="insight-icon">${row.icon}</div>
+            <div>
+              <div class="insight-title">${row.title}</div>
+              <div class="insight-desc">${row.desc}</div>
+            </div>
+          </div>
+        `).join('');
       }
 
-      document.addEventListener('DOMContentLoaded', () => {
-        startCountdown();
-        loadInsights();
+      function renderSparkline(model){
+        const maxScore = Math.max(...model.activity.map(item => item.score), 1);
+        els.sparkline.innerHTML = model.activity.map(item => {
+          const height = Math.max(8, Math.round((item.score / maxScore) * 88));
+          return `
+            <div class="spark-col">
+              <div class="spark-bar" style="height:${height}px"></div>
+              <div class="spark-day">${item.day}</div>
+            </div>
+          `;
+        }).join('');
 
-        document.getElementById('whatsappBtn').addEventListener('click', () => {
-          window.open('https://wa.me/966500000000?text=أرغب%20في%20الاستفسار%20عن%20تحليلات%20SugarMind', '_blank');
+        let badge = 'بداية';
+        if(model.totalActivityScore >= 40) badge = 'واضح';
+        if(model.totalActivityScore >= 70) badge = 'نشط';
+        if(model.totalActivityScore >= 100) badge = 'مرتبط';
+        els.activityBadge.textContent = badge;
+
+        els.avgReadingValue.textContent = model.avgReading;
+        els.mealsCountValue.textContent = model.mealsCount;
+        els.bestIcrValue.textContent = model.bestIcr;
+      }
+
+      function buildSummary(model){
+        const userName = model.profileData?.name ? `يا ${model.profileData.name}` : '';
+        const pieces = [];
+
+        if(userName){
+          pieces.push(`${userName}، بدأنا نشوف عندك ملامح استخدام لها معنى، مو مجرد زيارات عابرة.`);
+        } else {
+          pieces.push('بدأنا نشوف عندك ملامح استخدام لها معنى، مو مجرد زيارات عابرة.');
+        }
+
+        if(model.qualityScore >= 70){
+          pieces.push('جودة البيانات الحالية عندك جيدة، وهذا يعني أن الصفحة صارت تملك مادة فعلية تبني عليها فهمًا أعمق.');
+        } else if(model.qualityScore >= 45){
+          pieces.push('جودة البيانات الحالية متوسطة، وهذا ممتاز كبداية، لكن ما زال فيه مساحة كبيرة حتى يصير الفهم أدق.');
+        } else {
+          pieces.push('البيانات الحالية ما زالت أولية، والصفحة ما وصلت بعد لأقصى قوتها معك.');
+        }
+
+        if(model.clarityScore >= 65){
+          pieces.push('النمط بدأ يقترب من الوضوح، وبدأنا نخرج من مجرد قراءة منفردة إلى إحساس أقرب بطريقة يومك.');
+        } else {
+          pieces.push('النمط عندك ما زال في طور التشكّل، وهذا طبيعي جدًا في بداية العلاقة مع المنتج.');
+        }
+
+        if(model.trial.expired){
+          pieces.push('الآن صارت القيمة الحقيقية هنا في أنك ما تفقد هذا الفهم وهو في بدايته، وهذا هو منطق الاشتراك الشهري لاحقًا.');
+        } else if(model.trial.daysLeft <= 4){
+          pieces.push('أنت الآن داخل الأيام الأخيرة من الفترة المفتوحة، وهذا أفضل وقت حتى تلمس قيمة الصفحة قبل ما تنتقل للمسار الكامل.');
+        } else {
+          pieces.push('استمر أيام أكثر بنفس الهدوء، وستبدأ تلاحظ أن هذه الصفحة لا تعطيك أرقامًا فقط، بل صورة أقرب لك.');
+        }
+
+        return pieces.join('\n\n');
+      }
+
+      function renderSummary(model){
+        els.summaryText.textContent = buildSummary(model);
+      }
+
+      function getWhatsappText(model){
+        const name = model.profileData?.name || 'مستخدم من SugarMind';
+        const text =
+`السلام عليكم
+أنا ${name}
+أرغب بالاستفسار عن تحليلات SugarMind الذكية والاشتراك الشهري المستقبلي.
+
+جودة بياناتي الحالية: ${model.qualityScore}/100
+وضوح النمط: ${model.clarityScore}/100
+جاهزية التحليل: ${model.readyScore}/100
+عدد الوجبات المحفوظة: ${model.mealsCount}
+أفضل معامل متوفر: ${model.bestIcr}`;
+        return encodeURIComponent(text);
+      }
+
+      function bindEvents(model){
+        els.whatsappBtn.addEventListener('click', () => {
+          bumpActivity('aiClicks');
+          const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${getWhatsappText(model)}`;
+          window.open(url, '_blank');
         });
-      });
+
+        els.notifyBtn.addEventListener('click', () => {
+          localStorage.setItem('sugarmind_ai_waitlist_v1', 'true');
+          showToast('تم تسجيل رغبتك مبدئيًا');
+        });
+      }
+
+      function init(){
+        const opens = Number(localStorage.getItem(KEYS.AI_PAGE_OPENS) || 0) + 1;
+        localStorage.setItem(KEYS.AI_PAGE_OPENS, String(opens));
+        bumpActivity('aiClicks');
+
+        const model = buildComputedModel();
+        renderTrial(model);
+        renderGauges(model);
+        renderInsights(model);
+        renderSparkline(model);
+        renderSummary(model);
+        bindEvents(model);
+      }
+
+      document.addEventListener('DOMContentLoaded', init);
     })();
   </script>
 </body>
