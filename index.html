@@ -9,7 +9,6 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ44R4V060"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -32,7 +31,7 @@
       --surface:#FFFFFF;
       --surface-2:#F8F6F2;
       --surface-3:#F0ECE7;
-      --hero:#2A2F45;
+      --hero:#252B3F;
       --hero-2:#45496A;
       --hero-3:#7D8BAE;
       --primary:#7BAA92;
@@ -41,13 +40,9 @@
       --ink-2:#667085;
       --ink-3:#8C94A4;
       --line:#E6E1D8;
-      --line-soft:rgba(69,73,106,.10);
       --success:#61B07F;
       --warning:#E6B85C;
       --danger:#DA726D;
-      --success-soft:rgba(97,176,127,.12);
-      --warning-soft:rgba(230,184,92,.14);
-      --danger-soft:rgba(218,114,109,.14);
       --shadow-lg:0 24px 60px rgba(30,36,51,.12);
       --shadow-md:0 16px 32px rgba(30,36,51,.08);
       --shadow-sm:0 10px 18px rgba(30,36,51,.05);
@@ -63,8 +58,20 @@
       --ease:cubic-bezier(.2,.8,.2,1);
     }
 
-    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Tajawal',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
-    html{background:var(--bg);overflow-x:hidden;scroll-behavior:smooth}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      -webkit-tap-highlight-color:transparent;
+      font-family:'Tajawal',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif
+    }
+
+    html{
+      background:var(--bg);
+      overflow-x:hidden;
+      scroll-behavior:smooth
+    }
+
     body{
       min-height:100vh;
       color:var(--ink);
@@ -76,145 +83,309 @@
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
     }
+
     a{text-decoration:none;color:inherit}
     button,input{font:inherit}
     button{border:0;background:none;color:inherit;cursor:pointer}
     img{max-width:100%;display:block}
 
     .bg-noise{
-      position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.02;
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      opacity:.02;
       background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
     }
 
     .splash{
-      position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center;
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       background:linear-gradient(180deg, #F6F3EE 0%, #EFEAE3 100%);
       transition:opacity .45s ease, visibility .45s ease, transform .45s ease;
     }
-    .splash.hide{opacity:0; visibility:hidden; transform:scale(1.02)}
-    .splash-inner{text-align:center; padding:24px}
+
+    .splash.hide{
+      opacity:0;
+      visibility:hidden;
+      transform:scale(1.02)
+    }
+
+    .splash-inner{
+      text-align:center;
+      padding:24px
+    }
+
     .splash-mark{
-      width:108px; height:108px; border-radius:30px; margin:0 auto 20px;
-      display:flex; align-items:center; justify-content:center;
+      width:108px;
+      height:108px;
+      border-radius:30px;
+      margin:0 auto 20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 58%, var(--primary) 100%);
       box-shadow:0 20px 50px rgba(69,73,106,.20), inset 0 1px 0 rgba(255,255,255,.18);
     }
-    .splash-mark svg{width:56px; height:34px}
-    .splash-mark path{stroke:#fff; stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
-    .splash-title{font-size:36px; font-weight:900; letter-spacing:-1px; color:var(--ink); margin-bottom:8px}
-    .splash-sub{font-size:15px; color:var(--ink-2); margin-bottom:24px}
-    .splash-bar{width:160px; height:4px; background:rgba(69,73,106,.08); border-radius:999px; overflow:hidden; margin:0 auto}
-    .splash-bar span{
-      display:block; width:100%; height:100%;
-      background:linear-gradient(90deg, var(--primary), var(--hero-3));
-      transform-origin:right; animation:loader 1.1s ease forwards;
+
+    .splash-mark svg{
+      width:56px;
+      height:34px
     }
-    @keyframes loader{from{transform:scaleX(.1)}to{transform:scaleX(1)}}
+
+    .splash-mark path{
+      stroke:#fff;
+      stroke-width:4;
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round
+    }
+
+    .splash-title{
+      font-size:36px;
+      font-weight:900;
+      letter-spacing:-1px;
+      color:var(--ink);
+      margin-bottom:8px
+    }
+
+    .splash-sub{
+      font-size:15px;
+      color:var(--ink-2);
+      margin-bottom:24px
+    }
+
+    .splash-bar{
+      width:160px;
+      height:4px;
+      background:rgba(69,73,106,.08);
+      border-radius:999px;
+      overflow:hidden;
+      margin:0 auto
+    }
+
+    .splash-bar span{
+      display:block;
+      width:100%;
+      height:100%;
+      background:linear-gradient(90deg, var(--primary), var(--hero-3));
+      transform-origin:right;
+      animation:loader 1.1s ease forwards;
+    }
+
+    @keyframes loader{
+      from{transform:scaleX(.1)}
+      to{transform:scaleX(1)}
+    }
 
     .app{
       max-width:var(--max-width);
       margin:0 auto;
       min-height:100vh;
-      padding:calc(18px + var(--safe-top)) 18px calc(120px + var(--safe-bottom));
+      padding:calc(12px + var(--safe-top)) 18px calc(120px + var(--safe-bottom));
       position:relative;
     }
 
     .topbar{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      margin-bottom:28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px;
     }
-    .brand{display:flex; align-items:center; gap:12px; min-width:0}
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0
+    }
+
     .brand-mark{
-      width:52px; height:52px; border-radius:17px; flex-shrink:0;
-      display:flex; align-items:center; justify-content:center;
+      width:52px;
+      height:52px;
+      border-radius:17px;
+      flex-shrink:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 58%, var(--primary) 100%);
       box-shadow:0 14px 28px rgba(69,73,106,.14);
     }
-    .brand-mark svg{width:28px; height:16px}
-    .brand-mark path{stroke:#fff; stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
-    .brand-name{font-size:19px; font-weight:900; color:var(--ink); line-height:1}
-    .brand-sub{font-size:12px; color:var(--ink-2); margin-top:5px}
-    .top-actions{display:flex; align-items:center; gap:10px; flex-shrink:0}
-    .icon-btn,.install-btn{
-      min-height:46px; border-radius:16px; border:1px solid var(--line);
-      background:rgba(255,255,255,.65); color:var(--ink);
+
+    .brand-mark svg{
+      width:28px;
+      height:16px
+    }
+
+    .brand-mark path{
+      stroke:#fff;
+      stroke-width:4;
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round
+    }
+
+    .brand-name{
+      font-size:18px;
+      font-weight:900;
+      color:var(--ink);
+      line-height:1
+    }
+
+    .brand-sub{
+      font-size:13px;
+      color:#707A8F;
+      margin-top:4px
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-shrink:0
+    }
+
+    .install-btn{
+      min-height:46px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.65);
+      color:var(--ink);
       box-shadow:var(--shadow-sm);
       transition:transform .22s var(--ease), background .22s var(--ease), border-color .22s var(--ease);
+      padding:0 14px;
+      display:none;
+      align-items:center;
+      gap:8px;
+      font-size:13px;
+      font-weight:900
     }
-    .icon-btn:hover,.install-btn:hover{transform:translateY(-2px); border-color:rgba(69,73,106,.20)}
-    .icon-btn{width:46px; display:flex; align-items:center; justify-content:center; font-size:22px}
-    .install-btn{padding:0 14px; display:none; align-items:center; gap:8px; font-size:13px; font-weight:900}
 
-    .greeting{margin-bottom:32px}
+    .install-btn:hover{
+      transform:translateY(-2px);
+      border-color:rgba(69,73,106,.20)
+    }
+
+    .greeting{
+      margin-bottom:18px
+    }
+
     .time-chip{
-      display:inline-flex; align-items:center; gap:8px; min-height:34px; padding:0 12px;
-      border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.72);
-      color:var(--ink-2); font-size:12px; font-weight:900; margin-bottom:16px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:32px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.84);
+      color:#6F7890;
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:10px;
       box-shadow:var(--shadow-sm);
     }
-    .greeting-title{font-size:32px; font-weight:900; line-height:1.3; letter-spacing:-0.5px; color:var(--ink); margin-bottom:10px}
-    .greeting-sub{font-size:15px; color:var(--ink-2); line-height:1.8; opacity:0.9}
+
+    .greeting-title{
+      font-size:clamp(28px, 6vw, 34px);
+      font-weight:900;
+      line-height:1.22;
+      letter-spacing:-0.7px;
+      color:var(--ink);
+      margin-bottom:8px
+    }
+
+    .greeting-sub{
+      font-size:15px;
+      color:#6F7890;
+      line-height:1.7;
+      opacity:1
+    }
 
     .section{
-      margin-bottom:32px;
+      margin-bottom:26px;
       position:relative;
     }
+
     .section:not(:first-of-type)::before{
       content:'';
       position:absolute;
-      top:-16px;
+      top:-14px;
       left:50%;
       transform:translateX(-50%);
-      width:40px;
+      width:38px;
       height:1px;
       background:var(--line);
-      opacity:0.4;
+      opacity:.42;
     }
+
     .section-head{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:18px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
     }
-    .section-title{font-size:20px; font-weight:900; letter-spacing:-0.3px; color:var(--ink)}
-    .section-note{font-size:12px; color:var(--ink-3); font-weight:700; background:rgba(125,139,174,.08); padding:4px 10px; border-radius:999px}
 
-    /* ===== البطاقة الشخصية الفاخرة (نسخة محسنة) ===== */
-    .card-capture-surface {
-      position: relative;
-      border-radius: var(--radius-xxl);
-      padding: 4px;
-      background: linear-gradient(135deg, rgba(255,255,255,.9), rgba(255,255,255,.3));
-      box-shadow: 
-        0 40px 80px rgba(24,30,45,.25),
+    .section-title{
+      font-size:19px;
+      font-weight:900;
+      letter-spacing:-.3px;
+      color:var(--ink)
+    }
+
+    .section-note{
+      font-size:12px;
+      color:#7D8BAE;
+      font-weight:700;
+      background:rgba(125,139,174,.08);
+      padding:4px 10px;
+      border-radius:999px
+    }
+
+    .card-capture-surface{
+      position:relative;
+      border-radius:28px;
+      padding:4px;
+      background:linear-gradient(135deg, rgba(255,255,255,.94), rgba(255,255,255,.36));
+      box-shadow:
+        0 40px 80px rgba(24,30,45,.20),
         0 0 0 1px rgba(255,255,255,.6) inset;
-      overflow: hidden;
-      margin-bottom: 16px;
-      transform: translateZ(0);
+      overflow:hidden;
+      margin-bottom:12px;
+      transform:translateZ(0);
     }
 
-    .wallet-card {
-      position: relative;
-      min-height: 280px;
-      padding: 30px;
-      border-radius: calc(var(--radius-xxl) - 4px);
-      background: 
+    .wallet-card{
+      position:relative;
+      min-height:248px;
+      padding:24px 22px 20px;
+      border-radius:24px;
+      background:
         radial-gradient(circle at 0% 20%, rgba(255,255,255,.15) 0%, transparent 40%),
         radial-gradient(circle at 100% 80%, rgba(123,170,146,.25) 0%, transparent 50%),
         linear-gradient(165deg, #1E2639 0%, #2A2F45 50%, #1F2A3A 100%);
-      color: #fff;
-      overflow: hidden;
-      box-shadow: 
+      color:#fff;
+      overflow:hidden;
+      box-shadow:
         inset 0 1px 2px rgba(255,255,255,.3),
         inset 0 -2px 4px rgba(0,0,0,.2),
         0 20px 40px rgba(0,0,0,.4);
     }
 
-    .wallet-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
+    .wallet-card::before{
+      content:'';
+      position:absolute;
+      top:-50%;
+      left:-50%;
+      width:200%;
+      height:200%;
+      background:linear-gradient(
         45deg,
         transparent 40%,
         rgba(255,255,255,.1) 45%,
@@ -222,740 +393,570 @@
         rgba(255,255,255,.1) 55%,
         transparent 60%
       );
-      transform: rotate(30deg) translateX(-100%);
-      animation: sheen 8s ease-in-out infinite;
-      pointer-events: none;
+      transform:rotate(30deg) translateX(-100%);
+      animation:sheen 8s ease-in-out infinite;
+      pointer-events:none;
+      opacity:.65;
     }
+
+    @keyframes sheen{
+      0%,100%{transform:rotate(30deg) translateX(-100%)}
+      50%{transform:rotate(30deg) translateX(100%)}
+    }
+
+    .wallet-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px;
+      position:relative;
+      z-index:2;
+    }
+
+    .wallet-logo{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:14px;
+      font-weight:800;
+      color:rgba(255,255,255,.86);
+      letter-spacing:.5px;
+    }
+
+    .wallet-logo svg{
+      width:28px;
+      height:16px;
+      filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));
+    }
+
+    .wallet-logo svg path{
+      stroke:#fff;
+      stroke-width:4;
+      fill:none;
+    }
+
+    .wallet-badge{
+      background:rgba(255,255,255,.15);
+      backdrop-filter:blur(12px);
+      padding:8px 18px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      color:#fff;
+      border:1px solid rgba(255,255,255,.25);
+      box-shadow:0 4px 15px rgba(0,0,0,.2);
+    }
+
+    .wallet-main-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:16px;
+      margin-bottom:18px;
+      position:relative;
+      z-index:2;
+    }
+
+    .wallet-name-section{
+      flex:1;
+      min-width:0;
+    }
+
+    .wallet-name{
+      font-size:clamp(36px, 8vw, 48px);
+      font-weight:900;
+      line-height:1;
+      letter-spacing:.3px;
+      word-wrap:break-word;
+      overflow-wrap:break-word;
+      color:#fff;
+      margin-bottom:0;
+      text-shadow:0 2px 10px rgba(0,0,0,.35);
+    }
+
+    .wallet-message{
+      margin-top:10px;
+      font-size:15px;
+      color:rgba(255,255,255,.84);
+      line-height:1.65;
+      max-width:240px;
+      font-weight:500;
+    }
+
+    .wallet-reading-section{
+      text-align:left;
+      min-width:124px;
+      flex-shrink:0;
+    }
+
+    .wallet-reading-label{
+      font-size:13px;
+      color:rgba(255,255,255,.68);
+      font-weight:700;
+      margin-bottom:6px;
+      letter-spacing:.5px;
+    }
+
+    .wallet-reading-value{
+      display:flex;
+      align-items:baseline;
+      justify-content:flex-end;
+      gap:8px;
+      margin-top:6px;
+      font-size:64px;
+      font-weight:900;
+      line-height:.95;
+      color:#fff;
+      text-shadow:0 4px 15px rgba(0,0,0,.3);
+    }
 
-    @keyframes sheen {
-      0%, 100% { transform: rotate(30deg) translateX(-100%); }
-      50% { transform: rotate(30deg) translateX(100%); }
-    }
-
-    .wallet-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .wallet-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 15px;
-      font-weight: 800;
-      color: rgba(255,255,255,.8);
-      letter-spacing: 0.5px;
+    .wallet-reading-unit{
+      font-size:15px;
+      color:rgba(255,255,255,.72);
+      font-weight:700;
+    }
+
+    .wallet-details{
+      display:flex;
+      gap:12px;
+      margin-top:18px;
+      margin-bottom:0;
+      position:relative;
+      z-index:2;
+    }
+
+    .wallet-detail-item{
+      flex:1;
+      min-height:82px;
+      background:rgba(255,255,255,.10);
+      border-radius:20px;
+      padding:14px 14px 12px;
+      backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,.2);
+    }
+
+    .wallet-detail-label{
+      font-size:12px;
+      color:rgba(255,255,255,.68);
+      font-weight:800;
+      margin-bottom:8px;
+      letter-spacing:.2px;
+    }
+
+    .wallet-detail-value{
+      font-size:17px;
+      font-weight:900;
+      color:#fff;
+      line-height:1.35;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      min-height:28px;
+      border-radius:12px;
+    }
+
+    .wallet-detail-unit{
+      font-size:13px;
+      color:rgba(255,255,255,.56);
+      font-weight:700;
+    }
+
+    .wallet-qr-mini{
+      display:none !important;
+    }
+
+    .card-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .btn{
+      min-height:48px;
+      border-radius:18px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:0 14px;
+      font-size:14px;
+      font-weight:900;
+      transition:all .25s var(--ease);
+      cursor:pointer;
+      border:none;
+      position:relative;
+      overflow:hidden;
+      white-space:nowrap;
+      width:100%;
+    }
+
+    .btn:active{
+      transform:scale(.985);
+    }
+
+    .btn span{
+      font-size:16px;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--primary), #5E9A7A);
+      color:#fff;
+      box-shadow:0 12px 24px rgba(123,170,146,.25), 0 4px 8px rgba(123,170,146,.15);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-3px);
+      box-shadow:0 16px 32px rgba(123,170,146,.35);
+    }
+
+    .btn-accent{
+      background:linear-gradient(135deg, var(--hero-2), #3E4560);
+      color:#fff;
+      box-shadow:0 12px 24px rgba(69,73,106,.25);
+    }
+
+    .btn-accent:hover{
+      transform:translateY(-3px);
+      box-shadow:0 16px 32px rgba(69,73,106,.35);
+    }
+
+    .btn-outline{
+      background:var(--surface);
+      border:1.5px solid var(--line);
+      color:var(--ink);
+      box-shadow:var(--shadow-sm);
+    }
+
+    .btn-outline:hover{
+      background:var(--surface-2);
+      border-color:var(--hero-3);
+      transform:translateY(-2px);
+    }
+
+    .scan-card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      padding:24px;
+      box-shadow:var(--shadow-md);
+      margin-bottom:24px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .scan-card::before{
+      content:'';
+      position:absolute;
+      top:0;
+      right:0;
+      width:100px;
+      height:100px;
+      background:radial-gradient(circle, rgba(123,170,146,.1) 0%, transparent 70%);
+      border-radius:50%;
+      transform:translate(30%, -30%);
+    }
+
+    .scan-head{
+      display:flex;
+      gap:16px;
+      margin-bottom:20px;
+      position:relative;
+    }
+
+    .scan-icon{
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      background:linear-gradient(135deg, rgba(123,170,146,.2), rgba(125,139,174,.15));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:26px;
+      color:var(--hero-2);
+      flex-shrink:0;
+      box-shadow:0 4px 12px rgba(123,170,146,.15);
+    }
+
+    .scan-title{
+      font-size:20px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:6px;
+    }
+
+    .scan-copy{
+      font-size:14px;
+      color:var(--ink-2);
+      line-height:1.7;
+    }
+
+    .scan-form{
+      display:flex;
+      gap:12px;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+    }
+
+    .input{
+      flex:1;
+      min-width:150px;
+      height:56px;
+      border-radius:18px;
+      border:1.5px solid var(--line);
+      background:#fff;
+      padding:0 18px;
+      font-size:16px;
+      color:var(--ink);
+      outline:none;
+      transition:all .2s ease;
+    }
+
+    .input:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 4px rgba(123,170,146,.12);
+      transform:translateY(-1px);
+    }
+
+    .input::placeholder{
+      color:var(--ink-3);
+    }
+
+    .scan-result{
+      background:linear-gradient(180deg, var(--surface-2) 0%, #fff 100%);
+      border-radius:22px;
+      padding:24px;
+      border:1.5px solid var(--line);
+      display:none;
+      position:relative;
+      box-shadow:inset 0 2px 4px rgba(0,0,0,.02);
+    }
+
+    .scan-result.show{
+      display:block;
+      animation:slideUp .4s var(--ease);
+    }
+
+    @keyframes slideUp{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .scan-reading{
+      display:flex;
+      align-items:baseline;
+      gap:8px;
+      font-size:42px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:12px;
+      line-height:1;
+    }
+
+    .scan-reading span{
+      font-size:16px;
+      color:var(--ink-2);
+      font-weight:700;
+    }
+
+    .scan-status{
+      display:inline-block;
+      padding:8px 18px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+
+    .scan-message{
+      font-size:14px;
+      color:var(--ink-2);
+      line-height:1.8;
+      margin-bottom:16px;
+    }
+
+    .btn-save-reading{
+      background:#fff;
+      border:1.5px solid var(--line);
+      color:var(--ink);
+      padding:12px 20px;
+      border-radius:16px;
+      font-size:14px;
+      font-weight:900;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition:all .2s ease;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .btn-save-reading:hover{
+      background:var(--primary);
+      color:#fff;
+      border-color:var(--primary);
+      transform:translateY(-2px);
+      box-shadow:0 8px 16px rgba(123,170,146,.25);
+    }
+
+    .quick-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:14px;
+      margin-top:12px;
+    }
+
+    .quick-card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:24px 16px;
+      box-shadow:var(--shadow-sm);
+      transition:all .3s var(--ease);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .quick-card::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:3px;
+      background:linear-gradient(90deg, var(--primary), var(--hero-3));
+      transform:scaleX(0);
+      transition:transform .3s ease;
+    }
+
+    .quick-card:hover{
+      transform:translateY(-6px);
+      border-color:var(--primary);
+      box-shadow:var(--shadow-hover);
+    }
+
+    .quick-card:hover::before{
+      transform:scaleX(1);
+    }
+
+    .quick-icon{
+      width:56px;
+      height:56px;
+      border-radius:20px;
+      background:linear-gradient(135deg, rgba(123,170,146,.15), rgba(125,139,174,.1));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      color:var(--hero-2);
+      margin-bottom:14px;
+      transition:transform .3s ease;
+    }
+
+    .quick-card:hover .quick-icon{
+      transform:scale(1.1) rotate(-5deg);
+    }
+
+    .quick-card strong{
+      font-size:15px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:6px;
+    }
+
+    .quick-card span{
+      font-size:12px;
+      color:var(--ink-2);
+      line-height:1.6;
+    }
+
+    .share-cta-section{
+      margin-top:4px;
+    }
+
+    .share-cta-wrap{
+      background:transparent;
+      border:none;
+      box-shadow:none;
+      padding:0;
     }
 
-    .wallet-logo svg {
-      width: 28px;
-      height: 16px;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,.3));
-    }
-
-    .wallet-logo svg path {
-      stroke: #fff;
-      stroke-width: 4;
-      fill: none;
-    }
-
-    .wallet-badge {
-      background: rgba(255,255,255,.15);
-      backdrop-filter: blur(12px);
-      padding: 8px 18px;
-      border-radius: 100px;
-      font-size: 12px;
-      font-weight: 800;
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.25);
-      box-shadow: 0 4px 15px rgba(0,0,0,.2);
-    }
+    .share-cta-copy{
+      margin-bottom:12px;
+    }
+
+    .share-cta-eyebrow{
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      background:rgba(125,139,174,.08);
+      color:#7D8BAE;
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .share-cta-hook{
+      font-size:17px;
+      font-weight:900;
+      color:var(--ink);
+      line-height:1.5;
+      margin-bottom:4px;
+    }
+
+    .share-cta-sub{
+      font-size:14px;
+      line-height:1.8;
+      color:#6F7890;
+    }
+
+    .share-main-btn{
+      width:100%;
+      min-height:56px;
+      border-radius:22px;
+      background:linear-gradient(135deg, #45496A 0%, #2A2F45 100%);
+      color:#fff;
+      box-shadow:0 18px 30px rgba(42,47,69,.18);
+      font-size:16px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      transition:transform .22s var(--ease), box-shadow .22s var(--ease);
+    }
+
+    .share-main-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 22px 34px rgba(42,47,69,.22);
+    }
+
+    .share-main-btn .heart{
+      font-size:18px;
+    }
 
-    .wallet-main-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 20px;
-      margin-bottom: 30px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .wallet-name-section {
-      flex: 1;
-    }
-
-    .wallet-name {
-      font-size: clamp(32px, 7vw, 40px);
-      font-weight: 900;
-      line-height: 1.2;
-      letter-spacing: 0.5px;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      color: #fff;
-      margin-bottom: 8px;
-      text-shadow: 0 2px 10px rgba(0,0,0,.4);
-    }
-
-    .wallet-message {
-      font-size: 14px;
-      color: rgba(255,255,255,.7);
-      line-height: 1.6;
-      max-width: 200px;
-      font-weight: 500;
-    }
-
-    .wallet-reading-section {
-      text-align: left;
-      min-width: 130px;
-    }
-
-    .wallet-reading-label {
-      font-size: 12px;
-      color: rgba(255,255,255,.6);
-      font-weight: 700;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .wallet-reading-value {
-      font-size: 58px;
-      font-weight: 900;
-      line-height: 1;
-      color: #fff;
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      justify-content: flex-end;
-      text-shadow: 0 4px 15px rgba(0,0,0,.3);
-    }
-
-    .wallet-reading-unit {
-      font-size: 18px;
-      color: rgba(255,255,255,.6);
-      font-weight: 700;
-    }
-
-    .wallet-details {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .wallet-detail-item {
-      flex: 1;
-      min-width: 110px;
-      background: rgba(255,255,255,.1);
-      border-radius: 24px;
-      padding: 18px 16px;
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,.2);
-      transition: transform 0.3s ease;
-    }
-
-    .wallet-detail-item:hover {
-      transform: translateY(-4px);
-      background: rgba(255,255,255,.15);
-    }
-
-    .wallet-detail-label {
-      font-size: 11px;
-      color: rgba(255,255,255,.6);
-      font-weight: 800;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .wallet-detail-value {
-      font-size: 26px;
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.2;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .wallet-detail-unit {
-      font-size: 14px;
-      color: rgba(255,255,255,.5);
-      font-weight: 600;
-    }
-
-    .wallet-qr-mini {
-      position: absolute;
-      bottom: 24px;
-      left: 24px;
-      width: 70px;
-      height: 70px;
-      background: #fff;
-      border-radius: 18px;
-      padding: 6px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
-      border: 2px solid rgba(255,255,255,.7);
-    }
-
-    .wallet-qr-mini div {
-      width: 54px !important;
-      height: 54px !important;
-    }
-
-    .card-actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      min-height: 52px;
-      border-radius: 18px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 0 22px;
-      font-size: 15px;
-      font-weight: 900;
-      transition: all .25s var(--ease);
-      cursor: pointer;
-      border: none;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn:active {
-      transform: scale(0.98);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary), #5E9A7A);
-      color: #fff;
-      box-shadow: 0 12px 24px rgba(123,170,146,.25), 0 4px 8px rgba(123,170,146,.15);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 32px rgba(123,170,146,.35);
-    }
-
-    .btn-accent {
-      background: linear-gradient(135deg, var(--hero-2), #3E4560);
-      color: #fff;
-      box-shadow: 0 12px 24px rgba(69,73,106,.25);
-    }
-
-    .btn-accent:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 32px rgba(69,73,106,.35);
-    }
-
-    .btn-outline {
-      background: var(--surface);
-      border: 1.5px solid var(--line);
-      color: var(--ink);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .btn-outline:hover {
-      background: var(--surface-2);
-      border-color: var(--hero-3);
-      transform: translateY(-2px);
-    }
-
-    /* ===== القراءة السريعة ===== */
-    .scan-card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      padding: 24px;
-      box-shadow: var(--shadow-md);
-      margin-bottom: 24px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .scan-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 100px;
-      height: 100px;
-      background: radial-gradient(circle, rgba(123,170,146,.1) 0%, transparent 70%);
-      border-radius: 50%;
-      transform: translate(30%, -30%);
-    }
-
-    .scan-head {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 20px;
-      position: relative;
-    }
-
-    .scan-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, rgba(123,170,146,.2), rgba(125,139,174,.15));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      color: var(--hero-2);
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(123,170,146,.15);
-    }
-
-    .scan-title {
-      font-size: 20px;
-      font-weight: 900;
-      color: var(--ink);
-      margin-bottom: 6px;
-    }
-
-    .scan-copy {
-      font-size: 14px;
-      color: var(--ink-2);
-      line-height: 1.7;
-    }
-
-    .scan-form {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .input {
-      flex: 1;
-      min-width: 150px;
-      height: 56px;
-      border-radius: 18px;
-      border: 1.5px solid var(--line);
-      background: #fff;
-      padding: 0 18px;
-      font-size: 16px;
-      color: var(--ink);
-      outline: none;
-      transition: all 0.2s ease;
-    }
-
-    .input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(123,170,146,.12);
-      transform: translateY(-1px);
-    }
-
-    .input::placeholder {
-      color: var(--ink-3);
-    }
-
-    .scan-result {
-      background: linear-gradient(180deg, var(--surface-2) 0%, #fff 100%);
-      border-radius: 22px;
-      padding: 24px;
-      border: 1.5px solid var(--line);
-      display: none;
-      position: relative;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,.02);
-    }
-
-    .scan-result.show {
-      display: block;
-      animation: slideUp 0.4s var(--ease);
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .scan-reading {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      font-size: 42px;
-      font-weight: 900;
-      color: var(--ink);
-      margin-bottom: 12px;
-      line-height: 1;
-    }
-
-    .scan-reading span {
-      font-size: 16px;
-      color: var(--ink-2);
-      font-weight: 700;
-    }
-
-    .scan-status {
-      display: inline-block;
-      padding: 8px 18px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 900;
-      margin-bottom: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,.08);
-    }
-
-    .scan-message {
-      font-size: 14px;
-      color: var(--ink-2);
-      line-height: 1.8;
-      margin-bottom: 16px;
-    }
-
-    .btn-save-reading {
-      background: #fff;
-      border: 1.5px solid var(--line);
-      color: var(--ink);
-      padding: 12px 20px;
-      border-radius: 16px;
-      font-size: 14px;
-      font-weight: 900;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .btn-save-reading:hover {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(123,170,146,.25);
-    }
-
-    /* ===== أدواتك ===== */
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 12px;
-    }
-
-    .quick-card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 24px 16px;
-      box-shadow: var(--shadow-sm);
-      transition: all 0.3s var(--ease);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .quick-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary), var(--hero-3));
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-
-    .quick-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--primary);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .quick-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .quick-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(123,170,146,.15), rgba(125,139,174,.1));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      color: var(--hero-2);
-      margin-bottom: 14px;
-      transition: transform 0.3s ease;
-    }
-
-    .quick-card:hover .quick-icon {
-      transform: scale(1.1) rotate(-5deg);
-    }
-
-    .quick-card strong {
-      font-size: 15px;
-      font-weight: 900;
-      color: var(--ink);
-      margin-bottom: 6px;
-    }
-
-    .quick-card span {
-      font-size: 12px;
-      color: var(--ink-2);
-      line-height: 1.6;
-    }
-
-    /* ===== البطاقة الترويجية المحسّنة (إعادة تصميم كاملة) ===== */
-    .promo-card {
-      background: linear-gradient(145deg, #FFFFFF 0%, #F9F7F4 100%);
-      border-radius: var(--radius-xxl);
-      padding: 32px 28px;
-      box-shadow: 
-        0 24px 50px rgba(30,36,51,.1),
-        0 0 0 1px rgba(255,255,255,.9) inset,
-        0 2px 4px rgba(0,0,0,.02);
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(230,225,216,.5);
-    }
-
-    .promo-card::before {
-      content: '';
-      position: absolute;
-      top: -60px;
-      right: -60px;
-      width: 180px;
-      height: 180px;
-      background: radial-gradient(circle, rgba(123,170,146,.12) 0%, transparent 70%);
-      border-radius: 50%;
-      z-index: 0;
-    }
-
-    .promo-card::after {
-      content: '';
-      position: absolute;
-      bottom: -50px;
-      left: -50px;
-      width: 150px;
-      height: 150px;
-      background: radial-gradient(circle, rgba(125,139,174,.08) 0%, transparent 70%);
-      border-radius: 50%;
-      z-index: 0;
-    }
-
-    .promo-header {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .promo-logo {
-      width: 64px;
-      height: 64px;
-      border-radius: 22px;
-      background: linear-gradient(145deg, var(--hero), var(--hero-2));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 30px;
-      font-weight: 900;
-      box-shadow: 0 12px 28px rgba(42,47,69,.3);
-      position: relative;
-    }
-
-    .promo-badge {
-      position: absolute;
-      bottom: -6px;
-      left: -6px;
-      background: var(--success);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 900;
-      padding: 4px 12px;
-      border-radius: 999px;
-      border: 2px solid #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,.15);
-    }
-
-    .promo-title {
-      font-size: 28px;
-      font-weight: 900;
-      color: var(--ink);
-      line-height: 1.3;
-      letter-spacing: -0.5px;
-    }
-
-    .promo-subtitle {
-      font-size: 14px;
-      color: var(--ink-2);
-      margin-top: 6px;
-      font-weight: 500;
-    }
-
-    .promo-features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      position: relative;
-      z-index: 2;
-      margin: 8px 0;
-    }
-
-    .promo-feature {
-      background: rgba(255,255,255,.7);
-      border-radius: 20px;
-      padding: 18px 12px;
-      text-align: center;
-      border: 1px solid rgba(230,225,216,.8);
-      backdrop-filter: blur(8px);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .promo-feature:hover {
-      transform: translateY(-4px);
-      background: #fff;
-      box-shadow: 0 12px 24px rgba(0,0,0,.06);
-    }
-
-    .promo-feature-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, var(--primary-2), rgba(123,170,146,.15));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      color: var(--hero);
-      margin: 0 auto 12px;
-      box-shadow: 0 6px 14px rgba(123,170,146,.2);
-    }
-
-    .promo-feature-text {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--ink);
-      line-height: 1.5;
-    }
-
-    .promo-qr-row {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      background: linear-gradient(135deg, #F8F6F2, #fff);
-      border-radius: 28px;
-      padding: 24px;
-      border: 1.5px solid var(--line);
-      box-shadow: 0 12px 32px rgba(0,0,0,.04);
-      position: relative;
-      z-index: 2;
-    }
-
-    .promo-qr-box {
-      width: 120px;
-      height: 120px;
-      background: #fff;
-      border-radius: 24px;
-      padding: 12px;
-      box-shadow: 0 12px 28px rgba(0,0,0,.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      border: 2px solid var(--primary-2);
-    }
-
-    .promo-qr-box div {
-      width: 92px !important;
-      height: 92px !important;
-    }
-
-    .promo-qr-text {
-      flex: 1;
-    }
-
-    .promo-qr-text strong {
-      display: block;
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--ink);
-      margin-bottom: 10px;
-    }
-
-    .promo-qr-text p {
-      font-size: 14px;
-      color: var(--ink-2);
-      line-height: 1.7;
-      margin: 0;
-    }
-
-    .btn-promo-share {
-      width: 100%;
-      padding: 18px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--hero-2), var(--hero));
-      color: #fff;
-      font-size: 17px;
-      font-weight: 900;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      transition: all 0.3s var(--ease);
-      cursor: pointer;
-      box-shadow: 0 16px 32px rgba(69,73,106,.3);
-      position: relative;
-      overflow: hidden;
-      z-index: 2;
-    }
-
-    .btn-promo-share::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
-      transition: left 0.5s ease;
-    }
-
-    .btn-promo-share:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(69,73,106,.4);
-    }
-
-    .btn-promo-share:hover::before {
-      left: 100%;
-    }
-
-    /* باقي العناصر (شريط التنقل، الشيتات، التوست) كما هي مع تحسينات طفيفة */
     .bottom-nav-wrap{
-      position:fixed; right:0; left:0; bottom:0; z-index:30; pointer-events:none;
+      position:fixed;
+      right:0;
+      left:0;
+      bottom:0;
+      z-index:30;
+      pointer-events:none;
       padding:0 18px calc(14px + var(--safe-bottom));
     }
+
     .bottom-nav{
-      max-width:var(--max-width); margin:0 auto;
-      display:grid; grid-template-columns:repeat(4,1fr); gap:8px;
+      max-width:var(--max-width);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
       padding:10px;
       border-radius:28px;
       background:rgba(255,255,255,.95);
@@ -964,119 +965,535 @@
       box-shadow:0 12px 40px rgba(24,30,45,.12);
       pointer-events:auto;
     }
+
     .nav-item{
-      min-height:60px; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
-      font-size:11px; font-weight:900; color:var(--ink-3);
+      min-height:60px;
+      border-radius:18px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      font-size:11px;
+      font-weight:900;
+      color:var(--ink-3);
       transition:all .2s var(--ease);
       cursor:pointer;
-      position: relative;
+      position:relative;
     }
-    .nav-item span:first-child{font-size:20px; line-height:1; transition:transform 0.2s ease;}
+
+    .nav-item span:first-child{
+      font-size:20px;
+      line-height:1;
+      transition:transform .2s ease;
+    }
+
     .nav-item.active{
       background:linear-gradient(135deg, rgba(125,139,174,.15), rgba(123,170,146,.12));
       color:var(--primary);
       transform:translateY(-4px);
     }
+
     .nav-item.active span:first-child{
       font-size:24px;
       transform:scale(1.15);
-      filter: drop-shadow(0 4px 8px rgba(123,170,146,.3));
+      filter:drop-shadow(0 4px 8px rgba(123,170,146,.3));
     }
 
-    /* مؤشر النقطة النشطة */
-    .nav-item.active::after {
-      content: '';
-      position: absolute;
-      bottom: 6px;
-      width: 4px;
-      height: 4px;
-      background: var(--primary);
-      border-radius: 50%;
+    .nav-item.active::after{
+      content:'';
+      position:absolute;
+      bottom:6px;
+      width:4px;
+      height:4px;
+      background:var(--primary);
+      border-radius:50%;
     }
 
     .sheet-overlay{
-      position:fixed; inset:0; z-index:50;
-      background:rgba(29,36,51,.35); backdrop-filter:blur(12px);
-      padding:14px; display:flex; align-items:flex-end; justify-content:center;
-      opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease;
+      position:fixed;
+      inset:0;
+      z-index:50;
+      background:rgba(29,36,51,.35);
+      backdrop-filter:blur(12px);
+      padding:14px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      opacity:0;
+      visibility:hidden;
+      transition:opacity .3s ease, visibility .3s ease;
     }
-    .sheet-overlay.show{opacity:1; visibility:visible}
+
+    .sheet-overlay.show{
+      opacity:1;
+      visibility:visible
+    }
+
     .sheet{
       width:min(100%, var(--max-width));
       background:linear-gradient(180deg, #FFFFFF 0%, #F8F6F2 100%);
-      border:1px solid var(--line); border-radius:32px; box-shadow:var(--shadow-lg);
-      padding:20px 20px 24px; transform:translateY(30px); transition:transform .3s var(--ease);
+      border:1px solid var(--line);
+      border-radius:32px;
+      box-shadow:var(--shadow-lg);
+      padding:20px 20px 24px;
+      transform:translateY(30px);
+      transition:transform .3s var(--ease);
     }
-    .sheet-overlay.show .sheet{transform:translateY(0)}
-    .sheet-handle{width:40px; height:5px; border-radius:999px; background:var(--line); margin:0 auto 18px}
-    .sheet-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:18px}
-    .sheet-title{font-size:22px; font-weight:900; line-height:1.3; color:var(--ink); letter-spacing:-0.5px}
-    .sheet-sub{font-size:13px; color:var(--ink-2); line-height:1.7; margin-top:6px}
-    .close-btn{
-      width:42px; height:42px; border-radius:14px; flex-shrink:0;
-      border:1.5px solid var(--line); background:#fff; font-size:24px; color:var(--ink);
-      display:flex; align-items:center; justify-content:center;
-      transition: all 0.2s ease;
-    }
-    .close-btn:hover {
-      background: var(--surface-2);
-      transform: rotate(90deg);
-    }
-    .field{margin-bottom:14px}
-    .field label{display:block; font-size:13px; color:var(--ink-2); font-weight:900; margin-bottom:8px}
-    .inline-fields{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-    .helper{font-size:12px; color:var(--ink-3); line-height:1.7; margin:6px 2px 16px}
-    .sheet-actions{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;}
 
-    .install-steps{display:grid; gap:10px; margin:8px 0 18px}
-    .install-step{
-      display:flex; align-items:flex-start; gap:10px; padding:14px;
-      border-radius:18px; border:1px solid var(--line); background:var(--surface-2);
+    .sheet-overlay.show .sheet{
+      transform:translateY(0)
     }
+
+    .sheet-handle{
+      width:40px;
+      height:5px;
+      border-radius:999px;
+      background:var(--line);
+      margin:0 auto 18px
+    }
+
+    .sheet-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px
+    }
+
+    .sheet-title{
+      font-size:22px;
+      font-weight:900;
+      line-height:1.3;
+      color:var(--ink);
+      letter-spacing:-.5px
+    }
+
+    .sheet-sub{
+      font-size:13px;
+      color:var(--ink-2);
+      line-height:1.7;
+      margin-top:6px
+    }
+
+    .close-btn{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      flex-shrink:0;
+      border:1.5px solid var(--line);
+      background:#fff;
+      font-size:24px;
+      color:var(--ink);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:all .2s ease;
+    }
+
+    .close-btn:hover{
+      background:var(--surface-2);
+      transform:rotate(90deg);
+    }
+
+    .field{
+      margin-bottom:14px
+    }
+
+    .field label{
+      display:block;
+      font-size:13px;
+      color:var(--ink-2);
+      font-weight:900;
+      margin-bottom:8px
+    }
+
+    .helper{
+      font-size:12px;
+      color:var(--ink-3);
+      line-height:1.7;
+      margin:6px 2px 16px
+    }
+
+    .sheet-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:10px;
+    }
+
+    .install-steps{
+      display:grid;
+      gap:10px;
+      margin:8px 0 18px
+    }
+
+    .install-step{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:var(--surface-2);
+    }
+
     .install-step-index{
-      width:28px; height:28px; border-radius:10px; flex-shrink:0;
-      display:flex; align-items:center; justify-content:center;
-      background:rgba(125,139,174,.16); color:var(--hero-2); font-size:13px; font-weight:900;
+      width:28px;
+      height:28px;
+      border-radius:10px;
+      flex-shrink:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(125,139,174,.16);
+      color:var(--hero-2);
+      font-size:13px;
+      font-weight:900;
       margin-top:2px;
     }
-    .install-step strong{display:block; font-size:13px; color:var(--ink); font-weight:900; margin-bottom:4px}
-    .install-step span{display:block; font-size:12px; color:var(--ink-2); line-height:1.6}
-    .hidden{display:none !important}
+
+    .install-step strong{
+      display:block;
+      font-size:13px;
+      color:var(--ink);
+      font-weight:900;
+      margin-bottom:4px
+    }
+
+    .install-step span{
+      display:block;
+      font-size:12px;
+      color:var(--ink-2);
+      line-height:1.6
+    }
+
+    .hidden{
+      display:none !important
+    }
 
     .toast{
-      position:fixed; right:50%; bottom:calc(110px + var(--safe-bottom)); z-index:60;
+      position:fixed;
+      right:50%;
+      bottom:calc(110px + var(--safe-bottom));
+      z-index:60;
       transform:translateX(50%) translateY(20px);
-      min-width:220px; max-width:calc(100vw - 32px);
-      padding:14px 18px; border-radius:16px;
-      border:1px solid var(--line); background:rgba(255,255,255,.98);
-      box-shadow:var(--shadow-md); color:var(--ink); text-align:center; font-size:13px; font-weight:900;
-      opacity:0; visibility:hidden; transition:all .25s ease;
-      backdrop-filter: blur(10px);
+      min-width:220px;
+      max-width:calc(100vw - 32px);
+      padding:14px 18px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.98);
+      box-shadow:var(--shadow-md);
+      color:var(--ink);
+      text-align:center;
+      font-size:13px;
+      font-weight:900;
+      opacity:0;
+      visibility:hidden;
+      transition:all .25s ease;
+      backdrop-filter:blur(10px);
     }
-    .toast.show{opacity:1; visibility:visible; transform:translateX(50%) translateY(0)}
 
-    /* حالات القراءة المحسّنة */
-    .status-low { background: linear-gradient(135deg, #FF6B6B, #EE5A6F) !important; color: #fff !important; }
-    .status-range { background: linear-gradient(135deg, #51CF66, #40C057) !important; color: #fff !important; }
-    .status-slightly-high { background: linear-gradient(135deg, #FFD43B, #FCC419) !important; color: var(--ink) !important; }
-    .status-high { background: linear-gradient(135deg, #FF8787, #FA5252) !important; color: #fff !important; }
-    .status-very-high { background: linear-gradient(135deg, #C0392B, #A93226) !important; color: #fff !important; }
+    .toast.show{
+      opacity:1;
+      visibility:visible;
+      transform:translateX(50%) translateY(0)
+    }
+
+    .status-low{background:linear-gradient(135deg, #FF6B6B, #EE5A6F) !important;color:#fff !important}
+    .status-range{background:linear-gradient(135deg, #51CF66, #40C057) !important;color:#fff !important}
+    .status-slightly-high{background:linear-gradient(135deg, #FFD43B, #FCC419) !important;color:var(--ink) !important}
+    .status-high{background:linear-gradient(135deg, #FF8787, #FA5252) !important;color:#fff !important}
+    .status-very-high{background:linear-gradient(135deg, #C0392B, #A93226) !important;color:#fff !important}
+
+    .promo-export-stage{
+      position:fixed;
+      inset:auto;
+      right:-99999px;
+      top:0;
+      width:1080px;
+      pointer-events:none;
+      opacity:0;
+      z-index:-1;
+    }
+
+    .promo-export-card{
+      position:relative;
+      width:1080px;
+      min-height:1350px;
+      padding:54px;
+      border-radius:44px;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(255,255,255,.14) 0%, transparent 28%),
+        radial-gradient(circle at 85% 85%, rgba(123,170,146,.20) 0%, transparent 32%),
+        linear-gradient(160deg, #20273A 0%, #2D3350 48%, #1F2A3A 100%);
+      color:#fff;
+      direction:rtl;
+      font-family:'Tajawal', sans-serif;
+    }
+
+    .promo-export-card::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg, rgba(255,255,255,.06), transparent 28%, transparent 68%, rgba(255,255,255,.04));
+      pointer-events:none;
+    }
+
+    .promo-export-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:24px;
+      position:relative;
+      z-index:2;
+    }
+
+    .promo-export-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:34px;
+      font-weight:900;
+    }
+
+    .promo-export-brand-mark{
+      width:78px;
+      height:78px;
+      border-radius:24px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(145deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+    }
+
+    .promo-export-brand-mark svg{
+      width:42px;
+      height:24px;
+    }
+
+    .promo-export-brand-mark path{
+      stroke:#fff;
+      stroke-width:4;
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .promo-export-tag{
+      display:inline-flex;
+      align-items:center;
+      min-height:42px;
+      padding:0 18px;
+      border-radius:999px;
+      background:rgba(255,255,255,.1);
+      color:rgba(255,255,255,.82);
+      font-size:22px;
+      font-weight:800;
+    }
+
+    .promo-export-body{
+      position:relative;
+      z-index:2;
+      margin-top:56px;
+    }
+
+    .promo-export-kicker{
+      font-size:26px;
+      color:rgba(255,255,255,.78);
+      margin-bottom:10px;
+      font-weight:700;
+    }
+
+    .promo-export-title{
+      font-size:72px;
+      line-height:1.15;
+      font-weight:900;
+      letter-spacing:-1.2px;
+      margin-bottom:18px;
+      max-width:780px;
+    }
+
+    .promo-export-sub{
+      font-size:34px;
+      line-height:1.75;
+      color:rgba(255,255,255,.84);
+      max-width:860px;
+    }
+
+    .promo-export-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:18px;
+      margin-top:42px;
+    }
+
+    .promo-export-point{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:28px;
+      padding:24px 22px;
+      min-height:200px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+    .promo-export-point-icon{
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      background:rgba(169,201,185,.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      margin-bottom:18px;
+    }
+
+    .promo-export-point-title{
+      font-size:32px;
+      font-weight:900;
+      line-height:1.35;
+      margin-bottom:8px;
+    }
+
+    .promo-export-point-sub{
+      font-size:22px;
+      line-height:1.7;
+      color:rgba(255,255,255,.72);
+    }
+
+    .promo-export-footer{
+      margin-top:52px;
+      display:grid;
+      grid-template-columns:1.25fr .75fr;
+      gap:22px;
+      align-items:stretch;
+      position:relative;
+      z-index:2;
+    }
+
+    .promo-export-message{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:30px;
+      padding:28px 30px;
+    }
+
+    .promo-export-message-title{
+      font-size:38px;
+      font-weight:900;
+      margin-bottom:12px;
+    }
+
+    .promo-export-message-copy{
+      font-size:26px;
+      line-height:1.9;
+      color:rgba(255,255,255,.8);
+    }
+
+    .promo-export-qr{
+      background:#fff;
+      border-radius:30px;
+      padding:24px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      color:#1D2433;
+      min-height:100%;
+    }
+
+    .promo-export-qr-box{
+      width:210px;
+      height:210px;
+      background:#fff;
+      border-radius:20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:16px;
+    }
+
+    .promo-export-qr-title{
+      font-size:28px;
+      font-weight:900;
+      margin-bottom:6px;
+    }
+
+    .promo-export-qr-sub{
+      font-size:20px;
+      color:#667085;
+      line-height:1.7;
+    }
+
+    .promo-export-bottom{
+      margin-top:34px;
+      position:relative;
+      z-index:2;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+    }
+
+    .promo-export-note{
+      font-size:22px;
+      color:rgba(255,255,255,.68);
+    }
+
+    .promo-export-cta{
+      min-height:64px;
+      padding:0 28px;
+      border-radius:999px;
+      background:linear-gradient(135deg, #7BAA92 0%, #92B8A3 100%);
+      color:#fff;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:26px;
+      font-weight:900;
+      box-shadow:0 18px 28px rgba(123,170,146,.22);
+    }
 
     @media (max-width:480px){
-      .wallet-main-row{flex-direction:column; align-items: flex-start}
-      .wallet-reading-section{text-align:right; width:100%; margin-top: 20px}
-      .wallet-reading-value{justify-content:flex-start; font-size: 48px}
-      .quick-grid{grid-template-columns:1fr}
-      .promo-qr-row{flex-direction:column; align-items:center; text-align: center}
-      .promo-qr-text { text-align: center }
-      .promo-features{grid-template-columns:1fr}
+      .wallet-main-row{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .wallet-reading-section{
+        text-align:right;
+        width:100%;
+        min-width:unset;
+      }
+
+      .wallet-reading-value{
+        justify-content:flex-start;
+        font-size:48px;
+      }
+
+      .quick-grid{
+        grid-template-columns:1fr;
+      }
     }
 
-    /* تأثيرات خاصة للبطاقة عند التصدير */
-    @media print {
-      .wallet-card {
-        box-shadow: none;
-        border: 2px solid #ddd;
+    @media (max-width:420px){
+      .card-actions{
+        grid-template-columns:1fr;
+      }
+
+      .card-actions .btn{
+        width:100%;
+      }
+    }
+
+    @media print{
+      .wallet-card{
+        box-shadow:none;
+        border:2px solid #ddd;
       }
     }
   </style>
@@ -1116,20 +1533,18 @@
           <span>⬇️</span>
           <span>ثبت التطبيق</span>
         </button>
-        <button class="icon-btn" id="openRecorderBtn" type="button" aria-label="تعديل البطاقة">✏️</button>
       </div>
     </header>
 
     <section class="greeting">
-      <div class="time-chip" id="timeChip">🌤️ <span id="timeText">بداية يوم هادئ</span></div>
-      <h1 class="greeting-title" id="greetingTitle">حياك الله في SugarMind</h1>
-      <p class="greeting-sub" id="greetingSub">رحلة السكر الخاصة بك تبدأ هنا.</p>
+      <div class="time-chip" id="timeChip">☀️ <span id="timeText">بداية يوم هادئ</span></div>
+      <h1 class="greeting-title" id="greetingTitle">صباح الخير</h1>
+      <p class="greeting-sub" id="greetingSub">واجهة يومية أقرب لك، وتفهم يومك بهدوء.</p>
     </section>
 
-    <!-- ===== البطاقة الشخصية الفاخرة ===== -->
     <section class="section">
       <div class="section-head">
-        <div class="section-title">بطاقتي الصحية</div>
+        <div class="section-title">بطاقتي</div>
         <div class="section-note">خاصة بك</div>
       </div>
 
@@ -1137,7 +1552,7 @@
         <div class="wallet-card" id="walletCard">
           <div class="wallet-header">
             <div class="wallet-logo">
-              <svg viewBox="0 0 100 40" width="28" height="16">
+              <svg viewBox="0 0 100 40">
                 <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
               </svg>
               <span>SugarMind</span>
@@ -1150,6 +1565,7 @@
               <div class="wallet-name" id="walletName">ضيفنا الجديد</div>
               <div class="wallet-message" id="walletMessage">سجل اسمك وقراءتك لتفعيل البطاقة</div>
             </div>
+
             <div class="wallet-reading-section">
               <div class="wallet-reading-label">القراءة الحالية</div>
               <div class="wallet-reading-value">
@@ -1166,11 +1582,10 @@
             </div>
             <div class="wallet-detail-item">
               <div class="wallet-detail-label">معامل الكارب</div>
-              <div class="wallet-detail-value" id="walletRatio">1:--<span class="wallet-detail-unit">ICR</span></div>
+              <div class="wallet-detail-value" id="walletRatio">1:-- <span class="wallet-detail-unit">ICR</span></div>
             </div>
           </div>
 
-          <!-- باركود مدمج في تصميم البطاقة -->
           <div class="wallet-qr-mini" id="walletQrMini"></div>
         </div>
       </div>
@@ -1180,15 +1595,14 @@
           <span>📤</span> شارك بطاقتك
         </button>
         <button class="btn btn-accent" id="saveCardBtn">
-          <span>💾</span> احفظها كصورة
+          <span>💾</span> احفظ كصورة
         </button>
         <button class="btn btn-outline" id="editCardBtn">
-          <span>✏️</span> تعديل
+          <span>✏️</span> تعديل بياناتك
         </button>
       </div>
     </section>
 
-    <!-- ===== القراءة السريعة ===== -->
     <section class="section">
       <div class="section-head">
         <div class="section-title">اعرف قراءتك الآن</div>
@@ -1223,7 +1637,6 @@
       </div>
     </section>
 
-    <!-- ===== أدواتك ===== -->
     <section class="section">
       <div class="section-head">
         <div class="section-title">أدواتك اليومية</div>
@@ -1236,11 +1649,13 @@
           <strong>محلل الوجبة</strong>
           <span>تقدير الكارب والمغذيات</span>
         </a>
+
         <a class="quick-card" href="carb-calculator.html">
           <div class="quick-icon">🧮</div>
           <strong>حاسبة المعامل</strong>
           <span>احسب الجرعة والتصحيح</span>
         </a>
+
         <a class="quick-card" href="daily-guide.html">
           <div class="quick-icon">📋</div>
           <strong>الدليل اليومي</strong>
@@ -1249,50 +1664,22 @@
       </div>
     </section>
 
-    <!-- ===== البطاقة الترويجية (رسالة اهتمام) ===== -->
-    <section class="section">
+    <section class="section share-cta-section">
       <div class="section-head">
         <div class="section-title">شارك الاهتمام</div>
         <div class="section-note">ادعم غيرك</div>
       </div>
 
-      <div class="promo-card" id="promoCard">
-        <div class="promo-header">
-          <div class="promo-logo">
-            S
-            <span class="promo-badge">مجاني</span>
-          </div>
-          <div>
-            <div class="promo-title">خلي بالك على صحتك</div>
-            <div class="promo-subtitle">مع SugarMind – رفيق السكر اليومي</div>
-          </div>
+      <div class="share-cta-wrap">
+        <div class="share-cta-copy">
+          <div class="share-cta-eyebrow">تفهم تعب السكري اليومي</div>
+          <div class="share-cta-hook">ضايع بين كارب الوجبة، المعامل، والتصحيح؟</div>
+          <div class="share-cta-sub">شارك SugarMind مع شخص يهمك أمره، وخله يبدأ من بطاقة واضحة وقريبة منه.</div>
         </div>
 
-        <div class="promo-features">
-          <div class="promo-feature">
-            <div class="promo-feature-icon">📊</div>
-            <div class="promo-feature-text">حلل قراءاتك<br>الفورية بوضوح</div>
-          </div>
-          <div class="promo-feature">
-            <div class="promo-feature-icon">🧮</div>
-            <div class="promo-feature-text">احسب معامل<br>الكارب بدقة</div>
-          </div>
-          <div class="promo-feature">
-            <div class="promo-feature-icon">🍽️</div>
-            <div class="promo-feature-text">حلل أي وجبة<br>بثوانٍ معدودة</div>
-          </div>
-        </div>
-
-        <div class="promo-qr-row">
-          <div class="promo-qr-box" id="promoQrCode"></div>
-          <div class="promo-qr-text">
-            <strong>امسح وابدأ الرحلة</strong>
-            <p>افتح التطبيق مباشرة، وسجل قراءاتك بأمان تام. صحتك تستاهل.</p>
-          </div>
-        </div>
-
-        <button class="btn-promo-share" id="sharePromoBtn">
-          <span>❤️</span> شارك مع شخص تخاف عليه
+        <button class="share-main-btn" id="sharePromoBtn" type="button">
+          <span class="heart">❤️</span>
+          <span>شارك مع شخص تخاف عليه</span>
         </button>
       </div>
     </section>
@@ -1307,7 +1694,6 @@
     </nav>
   </div>
 
-  <!-- شيت تعديل البطاقة -->
   <div class="sheet-overlay" id="recorderOverlay" aria-hidden="true">
     <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="recorderTitle">
       <div class="sheet-handle"></div>
@@ -1318,15 +1704,19 @@
         </div>
         <button class="close-btn" id="closeRecorderBtn" type="button" aria-label="إغلاق">×</button>
       </div>
+
       <div class="field">
         <label for="nameInput">الاسم</label>
         <input class="input" id="nameInput" type="text" placeholder="مثال: خالد" maxlength="30" />
       </div>
+
       <div class="field">
         <label for="readingInput">قراءة السكر (mg/dL)</label>
         <input class="input" id="readingInput" type="number" inputmode="numeric" min="20" max="600" placeholder="مثال: 120" />
       </div>
+
       <p class="helper">💡 البيانات تُحفظ على جهازك فقط، لا تغادر هاتفك.</p>
+
       <div class="sheet-actions">
         <button class="btn btn-primary" id="saveReadingBtn">💾 حفظ</button>
         <button class="btn btn-outline" id="deleteDataBtn">🗑️ حذف</button>
@@ -1335,7 +1725,6 @@
     </div>
   </div>
 
-  <!-- شيت التثبيت -->
   <div class="sheet-overlay" id="installOverlay" aria-hidden="true">
     <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="installTitle">
       <div class="sheet-handle"></div>
@@ -1346,6 +1735,7 @@
         </div>
         <button class="close-btn" id="closeInstallBtn" type="button" aria-label="إغلاق">×</button>
       </div>
+
       <div class="install-steps hidden" id="iosInstallSteps">
         <div class="install-step">
           <div class="install-step-index">1</div>
@@ -1356,7 +1746,9 @@
           <div><strong>اختر "إضافة للشاشة الرئيسية"</strong><span>ثم أكد الإضافة.</span></div>
         </div>
       </div>
+
       <p class="helper" id="installCopy">أفضل وقت للتثبيت بعد أول استخدام.</p>
+
       <div class="sheet-actions">
         <button class="btn btn-primary" id="installNowBtn">تثبيت الآن</button>
         <button class="btn btn-outline" id="dismissInstallBtn">لاحقًا</button>
@@ -1366,10 +1758,69 @@
 
   <div class="toast" id="toast"></div>
 
+  <div class="promo-export-stage" id="promoExportStage" aria-hidden="true">
+    <div class="promo-export-card" id="promoExportCard">
+      <div class="promo-export-top">
+        <div class="promo-export-brand">
+          <div class="promo-export-brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 100 40" preserveAspectRatio="none">
+              <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
+            </svg>
+          </div>
+          <span>SugarMind</span>
+        </div>
+        <div class="promo-export-tag">مشاركة باهتمام</div>
+      </div>
+
+      <div class="promo-export-body">
+        <div class="promo-export-kicker" id="promoExportKicker">فيه أحد يهمه أمرك</div>
+        <div class="promo-export-title" id="promoExportTitle">شارك لك SugarMind لأنه قد يخفف عليك لخبطة السكر اليومية</div>
+        <div class="promo-export-sub" id="promoExportSub">تطبيق يفهم يومك بشكل أوضح، ويقرب لك أكثر 3 أشياء ترهق أغلب المصابين وأهاليهم.</div>
+
+        <div class="promo-export-grid">
+          <div class="promo-export-point">
+            <div class="promo-export-point-icon">🍽️</div>
+            <div class="promo-export-point-title">فهم كارب الوجبة</div>
+            <div class="promo-export-point-sub">أوضح وأسرع بدون تعقيد زائد.</div>
+          </div>
+
+          <div class="promo-export-point">
+            <div class="promo-export-point-icon">🧮</div>
+            <div class="promo-export-point-title">حساب المعامل</div>
+            <div class="promo-export-point-sub">بطريقة أقرب للفهم والثقة.</div>
+          </div>
+
+          <div class="promo-export-point">
+            <div class="promo-export-point-icon">📉</div>
+            <div class="promo-export-point-title">التصحيح والقراءة</div>
+            <div class="promo-export-point-sub">صورة يومية أهدأ وأوضح للحالة.</div>
+          </div>
+        </div>
+
+        <div class="promo-export-footer">
+          <div class="promo-export-message">
+            <div class="promo-export-message-title" id="promoExportMessageTitle">رسالة قريبة</div>
+            <div class="promo-export-message-copy" id="promoExportMessageCopy">
+              أحد قريب منك شارك لك هذا التطبيق لأنه يعرف أن فهم السكر اليومي أحيانًا يتعب، وودّه يوصلك شيء يخففها عليك.
+            </div>
+          </div>
+
+          <div class="promo-export-qr">
+            <div class="promo-export-qr-box" id="promoExportQrBox"></div>
+            <div class="promo-export-qr-title">امسح وابدأ</div>
+            <div class="promo-export-qr-sub">افتح التطبيق مباشرة وابدأ بطاقتك اليومية.</div>
+          </div>
+        </div>
+
+        <div class="promo-export-bottom">
+          <div class="promo-export-note">واجهة يومية أوضح لحالتك</div>
+          <div class="promo-export-cta">ابدأ مع SugarMind</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // ========================
-    // مفاتيح التخزين
-    // ========================
     const KEYS = {
       PROFILE: 'sugarmind_profile_v1',
       HOME: 'sugarmind_home_v1',
@@ -1383,9 +1834,6 @@
       VALUE_MOMENT: 'sugarmind_value_moment_v1'
     };
 
-    // ========================
-    // الحالة العامة
-    // ========================
     const state = {
       profile: {},
       home: {},
@@ -1394,14 +1842,10 @@
       deferredInstallPrompt: null,
       installTimer: null,
       qrMiniInstance: null,
-      qrPromoInstance: null,
       isIOS: /iphone|ipad|ipod/i.test(navigator.userAgent),
       isStandalone: window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
     };
 
-    // ========================
-    // العناصر
-    // ========================
     const els = {
       splash: document.getElementById('splashScreen'),
       greetingTitle: document.getElementById('greetingTitle'),
@@ -1418,7 +1862,6 @@
       shareCardBtn: document.getElementById('shareCardBtn'),
       saveCardBtn: document.getElementById('saveCardBtn'),
       editCardBtn: document.getElementById('editCardBtn'),
-      openRecorderBtn: document.getElementById('openRecorderBtn'),
       recorderOverlay: document.getElementById('recorderOverlay'),
       closeRecorderBtn: document.getElementById('closeRecorderBtn'),
       cancelRecorderBtn: document.getElementById('cancelRecorderBtn'),
@@ -1433,8 +1876,14 @@
       quickReadingStatus: document.getElementById('quickReadingStatus'),
       quickReadingMessage: document.getElementById('quickReadingMessage'),
       saveQuickReadingBtn: document.getElementById('saveQuickReadingBtn'),
-      promoQrCode: document.getElementById('promoQrCode'),
       sharePromoBtn: document.getElementById('sharePromoBtn'),
+      promoExportCard: document.getElementById('promoExportCard'),
+      promoExportKicker: document.getElementById('promoExportKicker'),
+      promoExportTitle: document.getElementById('promoExportTitle'),
+      promoExportSub: document.getElementById('promoExportSub'),
+      promoExportMessageTitle: document.getElementById('promoExportMessageTitle'),
+      promoExportMessageCopy: document.getElementById('promoExportMessageCopy'),
+      promoExportQrBox: document.getElementById('promoExportQrBox'),
       installTrigger: document.getElementById('installTrigger'),
       installOverlay: document.getElementById('installOverlay'),
       closeInstallBtn: document.getElementById('closeInstallBtn'),
@@ -1446,9 +1895,6 @@
       toast: document.getElementById('toast')
     };
 
-    // ========================
-    // دوال مساعدة
-    // ========================
     function readJSON(key){
       try{
         const raw = localStorage.getItem(key);
@@ -1476,29 +1922,31 @@
       return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
     }
 
-    function formatTime(value){
-      if(!value) return 'الآن';
-      if(/^\d{2}:\d{2}$/.test(value)){
-        const [h,m] = value.split(':').map(Number);
-        const d = new Date();
-        d.setHours(h,m,0,0);
-        return d.toLocaleTimeString('ar-SA', { hour:'numeric', minute:'2-digit' });
-      }
-      const d = new Date(value);
-      if(Number.isNaN(d.getTime())) return 'الآن';
-      return d.toLocaleTimeString('ar-SA', { hour:'numeric', minute:'2-digit' });
-    }
-
     function getPeriod(){
       const hour = new Date().getHours();
-      if(hour < 12) return {label:'صباح الخير', hint:'بداية يوم هادئ', icon:'🌤️'};
-      if(hour < 18) return {label:'مساء الخير', hint:'نكمل يومك بهدوء', icon:'☀️'};
-      return {label:'مساء الخير', hint:'خلنا نختم يومك بوضوح', icon:'🌙'};
+
+      if(hour < 12){
+        return {
+          label:'صباح الخير',
+          hint:'بداية يوم هادئ',
+          icon:'☀️',
+          subWithName:'بطاقتك جاهزة، وخطوتك اليوم أوضح.',
+          subWithoutName:'واجهة يومية أقرب لك، وتفهم يومك بهدوء.'
+        };
+      }
+
+      return {
+        label:'مساء الخير',
+        hint:'مساء لطيف ومرتب',
+        icon:'🌹',
+        subWithName:'بطاقتك جاهزة، ولمسات يومك واضحة قدامك.',
+        subWithoutName:'خلنا نختم يومك بصورة أوضح واهدى.'
+      };
     }
 
-    // حالات القراءة مع ألوان محسّنة
     function getReadingState(reading){
       const value = Number(reading);
+
       if(!Number.isFinite(value)){
         return {
           key:'empty',
@@ -1507,9 +1955,10 @@
           message:'سجل اسمك وقراءتك لتفعيل البطاقة',
           colorBg:'#E6E1D8',
           colorText:'#1D2433',
-          statusClass: ''
+          statusClass:''
         };
       }
+
       if(value < 70){
         return {
           key:'low',
@@ -1518,9 +1967,10 @@
           message:'قراءتك منخفضة، تحتاج تدخل سريع.',
           colorBg:'#DA726D',
           colorText:'#FFFFFF',
-          statusClass: 'status-low'
+          statusClass:'status-low'
         };
       }
+
       if(value <= 140){
         return {
           key:'range',
@@ -1529,9 +1979,10 @@
           message:'قراءتك في النطاق المثالي، أحسنت.',
           colorBg:'#61B07F',
           colorText:'#FFFFFF',
-          statusClass: 'status-range'
+          statusClass:'status-range'
         };
       }
+
       if(value <= 180){
         return {
           key:'slightly-high',
@@ -1540,9 +1991,10 @@
           message:'قراءتك أعلى من المثالي، راقب نفسك.',
           colorBg:'#E6B85C',
           colorText:'#1D2433',
-          statusClass: 'status-slightly-high'
+          statusClass:'status-slightly-high'
         };
       }
+
       if(value <= 250){
         return {
           key:'high',
@@ -1551,9 +2003,10 @@
           message:'قراءتك مرتفعة، راجع وجبتك أو جرعتك.',
           colorBg:'#DA726D',
           colorText:'#FFFFFF',
-          statusClass: 'status-high'
+          statusClass:'status-high'
         };
       }
+
       return {
         key:'very-high',
         label:'مرتفع جداً',
@@ -1561,14 +2014,14 @@
         message:'قراءتك مرتفعة جداً، تدخل طبي فوري.',
         colorBg:'#B33F3A',
         colorText:'#FFFFFF',
-        statusClass: 'status-very-high'
+        statusClass:'status-very-high'
       };
     }
 
-    // تحميل أحدث وجبة (للإنجازات)
     function getLatestMeal(){
       const direct = readJSON(KEYS.MEAL);
       if(direct) return direct;
+
       const list = readJSON(KEYS.MEALS_LIST);
       if(Array.isArray(list) && list.length){
         const last = list[list.length - 1];
@@ -1577,10 +2030,10 @@
           carbs: last.c ?? last.carbs ?? null,
         };
       }
+
       return null;
     }
 
-    // ترحيل البيانات القديمة
     function migrateLegacy(){
       const legacy = readJSON(KEYS.USER_LEGACY) || readJSON(KEYS.GUIDE_LEGACY);
       const profile = readJSON(KEYS.PROFILE);
@@ -1589,6 +2042,7 @@
       if(!profile && legacy?.name){
         writeJSON(KEYS.PROFILE, { name: String(legacy.name).trim() });
       }
+
       if(!home && (legacy?.reading || legacy?.time)){
         writeJSON(KEYS.HOME, {
           reading: legacy.reading ?? '',
@@ -1598,7 +2052,6 @@
       }
     }
 
-    // مزامنة مع المخازن القديمة
     function syncLegacyStores(){
       const payload = {
         name: state.profile?.name || '',
@@ -1606,11 +2059,11 @@
         time: state.home?.time || '',
         savedAt: state.home?.savedAt || new Date().toISOString()
       };
+
       writeJSON(KEYS.USER_LEGACY, payload);
       writeJSON(KEYS.GUIDE_LEGACY, payload);
     }
 
-    // تحميل الحالة من التخزين
     function hydrateState(){
       migrateLegacy();
       state.profile = readJSON(KEYS.PROFILE) || {};
@@ -1619,21 +2072,21 @@
       state.meal = getLatestMeal();
     }
 
-    // تحديث التحية
     function setGreeting(){
       const period = getPeriod();
       const name = state.profile?.name?.trim();
+
       els.timeChip.innerHTML = `${period.icon} <span>${period.hint}</span>`;
+
       if(name){
         els.greetingTitle.textContent = `${period.label} يا ${name}`;
-        els.greetingSub.textContent = 'بطاقتك الصحية جاهزة لمشاركة تقدمك.';
-      } else {
-        els.greetingTitle.textContent = 'حياك الله في SugarMind';
-        els.greetingSub.textContent = 'ابدأ رحلتك الصحية بخطوة بسيطة.';
+        els.greetingSub.textContent = period.subWithName;
+      }else{
+        els.greetingTitle.textContent = period.label;
+        els.greetingSub.textContent = period.subWithoutName;
       }
     }
 
-    // تحديث البطاقة الشخصية
     function setWalletCard(){
       const name = state.profile?.name?.trim() || 'ضيفنا الجديد';
       const reading = Number(state.home?.reading);
@@ -1644,25 +2097,24 @@
       els.walletMessage.textContent = readingState.message;
       els.walletTag.textContent = readingState.tag;
       els.walletReading.textContent = Number.isFinite(reading) ? reading : '--';
-      els.walletRatio.innerHTML = `${ratio}<span class="wallet-detail-unit">ICR</span>`;
-      
-      // تحديث الحالة مع الـ class المناسب للـ gradient
+      els.walletRatio.innerHTML = `${ratio} <span class="wallet-detail-unit">ICR</span>`;
       els.walletStateChip.textContent = readingState.label;
       els.walletStateChip.className = 'wallet-detail-value ' + readingState.statusClass;
+
       if(readingState.key === 'empty'){
         els.walletStateChip.style.background = readingState.colorBg;
         els.walletStateChip.style.color = readingState.colorText;
-      } else {
+      }else{
         els.walletStateChip.style.background = '';
         els.walletStateChip.style.color = '';
       }
     }
 
-    // إنشاء QR صغير داخل البطاقة
     function renderMiniQr(){
       const targetUrl = `${window.location.origin}${window.location.pathname}`;
       els.walletQrMini.innerHTML = '';
-      state.qrMiniInstance = new QRCode(els.walletQrMini, {
+
+      new QRCode(els.walletQrMini, {
         text: targetUrl,
         width: 52,
         height: 52,
@@ -1672,55 +2124,93 @@
       });
     }
 
-    // إنشاء QR كبير للبطاقة الترويجية
-    function renderPromoQr(){
-      const targetUrl = `${window.location.origin}${window.location.pathname}`;
-      els.promoQrCode.innerHTML = '';
-      state.qrPromoInstance = new QRCode(els.promoQrCode, {
+    function buildAppUrl(){
+      return `${window.location.origin}${window.location.pathname}`;
+    }
+
+    function getSharerName(){
+      return state.profile?.name?.trim() || '';
+    }
+
+    function buildPromoTexts(){
+      const sharerName = getSharerName();
+
+      if(sharerName){
+        return {
+          kicker:`${sharerName} يهمه أمرك`,
+          title:`${sharerName} شارك لك SugarMind لأنه قد يخفف عليك لخبطة السكر اليومية`,
+          sub:'تطبيق يفهم تعب كارب الوجبة، المعامل، والتصحيح بشكل أقرب وأوضح.',
+          messageTitle:'رسالة باهتمام',
+          messageCopy:`${sharerName} حاب يوصلك شيء ممكن يساعدك فعلًا، لأن يوم السكر مو دائمًا سهل، ووجود أداة أوضح يفرق كثير.`
+        };
+      }
+
+      return {
+        kicker:'فيه أحد يهمه أمرك',
+        title:'أحد قريب منك شارك لك SugarMind لأنه قد يخفف عليك لخبطة السكر اليومية',
+        sub:'تطبيق يفهم تعب كارب الوجبة، المعامل، والتصحيح بشكل أقرب وأوضح.',
+        messageTitle:'رسالة باهتمام',
+        messageCopy:'أحد قريب منك شارك لك هذا التطبيق لأنه يعرف أن يوم السكر أحيانًا يتعب، وودّه يوصلك شيء يسهّل عليك أكثر.'
+      };
+    }
+
+    function renderPromoExportQr(){
+      const targetUrl = buildAppUrl();
+      els.promoExportQrBox.innerHTML = '';
+
+      new QRCode(els.promoExportQrBox, {
         text: targetUrl,
-        width: 86,
-        height: 86,
+        width: 180,
+        height: 180,
         colorDark: '#1D2433',
         colorLight: '#FFFFFF',
         correctLevel: QRCode.CorrectLevel.M
       });
     }
 
-    // عرض نتيجة القراءة السريعة
+    function setPromoExportCard(){
+      const promoTexts = buildPromoTexts();
+      els.promoExportKicker.textContent = promoTexts.kicker;
+      els.promoExportTitle.textContent = promoTexts.title;
+      els.promoExportSub.textContent = promoTexts.sub;
+      els.promoExportMessageTitle.textContent = promoTexts.messageTitle;
+      els.promoExportMessageCopy.textContent = promoTexts.messageCopy;
+      renderPromoExportQr();
+    }
+
     function setQuickReadingResult(reading){
       const readingState = getReadingState(reading);
       els.quickReadingValue.textContent = reading;
       els.quickReadingStatus.textContent = readingState.label;
       els.quickReadingStatus.className = 'scan-status ' + readingState.statusClass;
+
       if(readingState.key === 'empty'){
         els.quickReadingStatus.style.background = readingState.colorBg;
         els.quickReadingStatus.style.color = readingState.colorText;
-      } else {
+      }else{
         els.quickReadingStatus.style.background = '';
         els.quickReadingStatus.style.color = '';
       }
+
       els.quickReadingMessage.textContent = readingState.message;
       els.quickReadingResult.classList.add('show');
     }
 
-    // تعبئة النموذج من الحالة
     function fillFormFromState(){
       els.nameInput.value = state.profile?.name || '';
       els.readingInput.value = state.home?.reading ?? '';
     }
 
-    // التصيير الكامل
     function render(){
       hydrateState();
       setGreeting();
       setWalletCard();
       fillFormFromState();
       renderMiniQr();
-      renderPromoQr();
+      setPromoExportCard();
       refreshInstallButton();
     }
 
-    // فتح شيت التعديل
     function openRecorder(){
       fillFormFromState();
       els.recorderOverlay.classList.add('show');
@@ -1733,7 +2223,6 @@
       els.recorderOverlay.setAttribute('aria-hidden', 'true');
     }
 
-    // حفظ البيانات من الشيت
     function saveReading(){
       const name = els.nameInput.value.trim();
       const readingValue = Number(els.readingInput.value.trim());
@@ -1769,7 +2258,6 @@
       maybePromptInstallAfterValue();
     }
 
-    // حذف البيانات
     function deleteUserData(){
       if(confirm('هل أنت متأكد من حذف جميع بياناتك؟ لا يمكن التراجع.')){
         localStorage.removeItem(KEYS.PROFILE);
@@ -1779,18 +2267,31 @@
         localStorage.removeItem(KEYS.ICR);
         localStorage.removeItem(KEYS.MEAL);
         localStorage.removeItem(KEYS.MEALS_LIST);
+
         state.profile = {};
         state.home = {};
         state.icr = null;
         state.meal = null;
+
         closeRecorder();
         render();
         showToast('تم حذف جميع البيانات');
       }
     }
 
-    // تصدير البطاقة الشخصية كصورة
+    async function waitForFontsReady(){
+      try{
+        if(document.fonts && document.fonts.ready){
+          await document.fonts.ready;
+        }
+      }catch(_){}
+
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    }
+
     async function createCardBlob(){
+      await waitForFontsReady();
+
       const canvas = await html2canvas(els.cardCaptureSurface, {
         scale: 3,
         backgroundColor: '#252B3F',
@@ -1798,10 +2299,13 @@
         allowTaint: true,
         logging: false,
         windowWidth: els.cardCaptureSurface.scrollWidth,
-        windowHeight: els.cardCaptureSurface.scrollHeight
+        windowHeight: els.cardCaptureSurface.scrollHeight,
+        imageTimeout: 0,
+        foreignObjectRendering: false
       });
-      return new Promise((resolve) => {
-        canvas.toBlob((blob) => resolve(blob), 'image/png', 1);
+
+      return new Promise(resolve => {
+        canvas.toBlob(blob => resolve(blob), 'image/png', 1);
       });
     }
 
@@ -1814,16 +2318,19 @@
       try{
         showToast('جاري تجهيز البطاقة الفاخرة...');
         const blob = await createCardBlob();
+
         if(!blob){
           showToast('تعذر تجهيز الصورة');
           return;
         }
+
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = buildCardFileName();
         document.body.appendChild(link);
         link.click();
         link.remove();
+
         setTimeout(() => URL.revokeObjectURL(link.href), 1500);
         showToast('🎉 تم حفظ البطاقة في معرض الصور');
       }catch(_){
@@ -1833,119 +2340,147 @@
 
     async function shareCardImage(){
       try{
-        showToast('جاري تجهيز البطاقة للمشاركة...');
+        showToast('جاري تجهيز بطاقتك للمشاركة...');
         const blob = await createCardBlob();
+
         if(!blob){
           showToast('تعذر تجهيز البطاقة');
           return;
         }
+
         const file = new File([blob], buildCardFileName(), { type:'image/png' });
+
         if(navigator.share && navigator.canShare && navigator.canShare({ files:[file] })){
           await navigator.share({
             files:[file],
-            title:'بطاقتي الصحية من SugarMind',
-            text:`قراءة ${state.home?.reading || '--'} mg/dL - تابع تقدمي مع SugarMind`
+            title:'بطاقتي من SugarMind',
+            text:`هذه بطاقتي من SugarMind - قراءة ${state.home?.reading || '--'} mg/dL`
           });
           showToast('تم فتح المشاركة');
           return;
         }
-        // fallback
+
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = buildCardFileName();
         link.click();
-        showToast('تم حفظ الصورة (المشاركة غير مدعومة)');
+        showToast('تم حفظ الصورة بدل المشاركة');
       }catch(error){
         if(error && error.name === 'AbortError'){
           showToast('تم إلغاء المشاركة');
           return;
         }
+
         showToast('تعذر مشاركة البطاقة الآن');
       }
     }
 
-    // تصدير البطاقة الترويجية كصورة
     async function createPromoBlob(){
-      const promoElement = document.getElementById('promoCard');
-      const canvas = await html2canvas(promoElement, {
-        scale: 3,
-        backgroundColor: '#F6F3EE',
+      await waitForFontsReady();
+      setPromoExportCard();
+
+      const canvas = await html2canvas(els.promoExportCard, {
+        scale: 2.5,
+        backgroundColor: '#20273A',
         useCORS: true,
         allowTaint: true,
-        logging: false
+        logging: false,
+        windowWidth: 1080,
+        windowHeight: 1350,
+        imageTimeout: 0,
+        foreignObjectRendering: false
       });
-      return new Promise((resolve) => {
-        canvas.toBlob((blob) => resolve(blob), 'image/png', 1);
+
+      return new Promise(resolve => {
+        canvas.toBlob(blob => resolve(blob), 'image/png', 1);
       });
     }
 
     async function sharePromoCard(){
       try{
-        showToast('جاري تجهيز رسالة الاهتمام...');
+        showToast('جاري تجهيز بطاقة المشاركة...');
         const blob = await createPromoBlob();
+
         if(!blob){
-          showToast('تعذر تجهيز الصورة');
+          showToast('تعذر تجهيز البطاقة');
           return;
         }
-        const file = new File([blob], 'SugarMind-ادعم-صحته.png', { type:'image/png' });
+
+        const sharerName = getSharerName();
+        const fileName = sharerName
+          ? `SugarMind-${sharerName}-شارك-باهتمام.png`
+          : 'SugarMind-شارك-باهتمام.png';
+
+        const shareText = sharerName
+          ? `${sharerName} شارك لك SugarMind لأنه يهتم لأمرك`
+          : 'تمت مشاركة SugarMind باهتمام';
+
+        const file = new File([blob], fileName, { type:'image/png' });
+
         if(navigator.share && navigator.canShare && navigator.canShare({ files:[file] })){
           await navigator.share({
             files:[file],
-            title:'خلي بالك على صحتك',
-            text:'تطبيق SugarMind – رفيقك اليومي لإدارة السكر بذكاء'
+            title:'SugarMind',
+            text:shareText
           });
           showToast('❤️ تمت المشاركة بنجاح');
           return;
         }
+
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'SugarMind-ادعم-صحته.png';
+        link.download = fileName;
         link.click();
-        showToast('تم حفظ الصورة');
+        showToast('تم حفظ بطاقة المشاركة');
       }catch(error){
         if(error && error.name === 'AbortError'){
           showToast('تم إلغاء المشاركة');
           return;
         }
-        showToast('تعذر المشاركة');
+
+        showToast('تعذر مشاركة البطاقة الآن');
       }
     }
 
-    // القراءة السريعة
     function handleQuickReading(){
       const value = Number(els.quickReadingInput.value.trim());
+
       if(!Number.isFinite(value) || value < 20 || value > 600){
         showToast('أدخل قراءة واضحة بين 20 و 600');
         els.quickReadingInput.focus();
         return;
       }
+
       setQuickReadingResult(value);
     }
 
-    // حفظ القراءة السريعة في البطاقة
     function saveQuickReadingToCard(){
       const value = Number(els.quickReadingValue.textContent);
+
       if(!Number.isFinite(value) || value < 20 || value > 600){
         showToast('لا توجد قراءة صالحة للحفظ');
         return;
       }
+
       const name = state.profile?.name?.trim() || 'ضيفنا الجديد';
       const time = currentTimeValue();
+
       state.profile = { name };
       state.home = {
         reading: value,
         time,
         savedAt: new Date().toISOString()
       };
+
       writeJSON(KEYS.PROFILE, state.profile);
       writeJSON(KEYS.HOME, state.home);
       syncLegacyStores();
       localStorage.setItem(KEYS.VALUE_MOMENT, 'true');
+
       render();
       showToast('✅ تم حفظ القراءة في بطاقتك');
     }
 
-    // دوال التثبيت (كما هي)
     function shouldOfferInstall(){
       if(state.isStandalone) return false;
       if(localStorage.getItem(KEYS.INSTALL_COMPLETED) === 'true') return false;
@@ -1959,6 +2494,7 @@
 
     function openInstallSheet(){
       if(!shouldOfferInstall()) return;
+
       if(state.isIOS){
         els.installSub.textContent = 'على الآيفون من زر المشاركة في Safari.';
         els.installCopy.textContent = 'أضف للشاشة الرئيسية.';
@@ -1970,6 +2506,7 @@
         els.iosInstallSteps.classList.add('hidden');
         els.installNowBtn.textContent = 'تثبيت';
       }
+
       els.installOverlay.classList.add('show');
     }
 
@@ -1985,14 +2522,17 @@
         showToast('اتبع الخطوات من Safari');
         return;
       }
+
       if(!state.deferredInstallPrompt){
         closeInstallSheet();
         showToast('التثبيت غير متاح الآن');
         return;
       }
+
       try{
         state.deferredInstallPrompt.prompt();
         const choice = await state.deferredInstallPrompt.userChoice;
+
         if(choice && choice.outcome === 'accepted'){
           localStorage.setItem(KEYS.INSTALL_COMPLETED, 'true');
           localStorage.removeItem(KEYS.INSTALL_DISMISSED);
@@ -2028,9 +2568,7 @@
       }, 1000);
     }
 
-    // ربط الأحداث
     function bindEvents(){
-      els.openRecorderBtn.addEventListener('click', openRecorder);
       els.editCardBtn.addEventListener('click', openRecorder);
       els.closeRecorderBtn.addEventListener('click', closeRecorder);
       els.cancelRecorderBtn.addEventListener('click', closeRecorder);
@@ -2053,6 +2591,7 @@
       els.recorderOverlay.addEventListener('click', (e) => {
         if(e.target === els.recorderOverlay) closeRecorder();
       });
+
       els.installOverlay.addEventListener('click', (e) => {
         if(e.target === els.installOverlay) closeInstallSheet();
       });
@@ -2062,10 +2601,12 @@
           closeRecorder();
           closeInstallSheet();
         }
+
         if(e.key === 'Enter'){
           if(els.recorderOverlay.classList.contains('show') && e.target.tagName !== 'BUTTON'){
             saveReading();
           }
+
           if(document.activeElement === els.quickReadingInput){
             handleQuickReading();
           }
@@ -2080,6 +2621,7 @@
         refreshInstallButton();
         scheduleInstallForReturningUser();
       });
+
       window.addEventListener('appinstalled', () => {
         localStorage.setItem(KEYS.INSTALL_COMPLETED, 'true');
         localStorage.removeItem(KEYS.INSTALL_DISMISSED);
@@ -2089,7 +2631,6 @@
       });
     }
 
-    // تهيئة الصفحة
     document.addEventListener('DOMContentLoaded', () => {
       bindEvents();
       setupInstallEvents();
