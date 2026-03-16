@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>فهم أعمق ليومك - SugarMind</title>
-  <meta name="description" content="تحليل أعمق ليومك داخل SugarMind: فهم نمطك، جودة بياناتك، والفرصة لفتح التحليلات الكاملة." />
+  <meta name="description" content="تحليل أعمق ليومك داخل SugarMind: جودة بياناتك، وضوح نمطك، وإشارات تساعدك تفهم يومك بشكل أهدأ." />
   <meta name="theme-color" content="#F6F3EE" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -34,8 +34,8 @@
       --primary:#7BAA92;
       --primary-2:#A9C9B9;
       --ink:#1D2433;
-      --ink-2:#617087;
-      --ink-3:#8C94A4;
+      --ink-2:#5D6B82;
+      --ink-3:#8791A2;
       --line:#E6E1D8;
       --line-soft:rgba(69,73,106,.10);
       --success:#61B07F;
@@ -86,7 +86,6 @@
 
     a{text-decoration:none;color:inherit}
     button{border:0;background:none;color:inherit;cursor:pointer}
-    img{max-width:100%;display:block}
 
     .bg-noise{
       position:fixed;
@@ -101,7 +100,7 @@
       max-width:var(--max-width);
       margin:0 auto;
       min-height:100vh;
-      padding:calc(16px + var(--safe-top)) 18px calc(120px + var(--safe-bottom));
+      padding:calc(16px + var(--safe-top)) 18px calc(46px + var(--safe-bottom));
     }
 
     .topbar{
@@ -115,7 +114,7 @@
       width:46px;
       height:46px;
       border-radius:16px;
-      background:rgba(255,255,255,.75);
+      background:rgba(255,255,255,.78);
       border:1px solid var(--line);
       display:flex;
       align-items:center;
@@ -134,7 +133,7 @@
 
     .page-kicker{
       font-size:12px;
-      color:var(--ink-3);
+      color:var(--hero-3);
       font-weight:800;
       margin-bottom:4px;
     }
@@ -196,7 +195,7 @@
       border-radius:999px;
       border:1px solid rgba(255,255,255,.16);
       background:rgba(255,255,255,.10);
-      color:rgba(255,255,255,.88);
+      color:rgba(255,255,255,.90);
       font-size:12px;
       font-weight:800;
       margin-bottom:14px;
@@ -216,13 +215,13 @@
     .hero-text{
       font-size:14px;
       line-height:1.95;
-      color:rgba(255,255,255,.82);
+      color:rgba(255,255,255,.88);
       position:relative;
       z-index:1;
     }
 
     .trial-strip{
-      background:rgba(255,255,255,.78);
+      background:rgba(255,255,255,.82);
       border:1px solid var(--line);
       border-radius:22px;
       padding:16px;
@@ -242,6 +241,7 @@
       font-size:15px;
       font-weight:900;
       color:var(--ink);
+      line-height:1.5;
     }
 
     .trial-pill{
@@ -260,7 +260,7 @@
     .trial-strip-text{
       font-size:13px;
       color:var(--ink-2);
-      line-height:1.85;
+      line-height:1.9;
       margin-bottom:12px;
     }
 
@@ -316,7 +316,7 @@
 
     .section-note{
       font-size:12px;
-      color:#7D8BAE;
+      color:var(--hero-3);
       font-weight:800;
       background:rgba(125,139,174,.08);
       padding:5px 10px;
@@ -327,7 +327,7 @@
     .section-text{
       font-size:13px;
       color:var(--ink-2);
-      line-height:1.85;
+      line-height:1.9;
       margin-bottom:16px;
     }
 
@@ -416,49 +416,7 @@
     .gauge-sub{
       font-size:11px;
       color:var(--ink-2);
-      line-height:1.7;
-    }
-
-    .insights-grid{
-      display:grid;
-      gap:12px;
-    }
-
-    .insight-row{
-      background:var(--surface-2);
-      border:1px solid var(--line);
-      border-radius:20px;
-      padding:16px;
-      display:flex;
-      gap:14px;
-      align-items:flex-start;
-    }
-
-    .insight-icon{
-      width:44px;
-      height:44px;
-      border-radius:16px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:linear-gradient(135deg, rgba(123,170,146,.18), rgba(125,139,174,.10));
-      color:var(--hero-2);
-      font-size:22px;
-      flex-shrink:0;
-    }
-
-    .insight-title{
-      font-size:15px;
-      font-weight:900;
-      color:var(--ink);
-      margin-bottom:6px;
-      line-height:1.45;
-    }
-
-    .insight-desc{
-      font-size:13px;
-      color:var(--ink-2);
-      line-height:1.85;
+      line-height:1.75;
     }
 
     .trend-grid{
@@ -491,10 +449,10 @@
     }
 
     .spark-note{
-      font-size:11px;
-      color:var(--ink-3);
-      line-height:1.5;
-      margin-top:3px;
+      font-size:12px;
+      color:var(--ink-2);
+      line-height:1.7;
+      margin-top:4px;
     }
 
     .spark-badge{
@@ -574,7 +532,7 @@
       display:block;
       font-size:12px;
       color:var(--ink-2);
-      line-height:1.75;
+      line-height:1.8;
     }
 
     .summary-box{
@@ -603,131 +561,51 @@
       white-space:pre-line;
     }
 
-    .unlock-card{
+    .value-strip{
       background:
-        radial-gradient(circle at 0% 20%, rgba(255,255,255,.12), transparent 36%),
-        radial-gradient(circle at 100% 80%, rgba(123,170,146,.18), transparent 42%),
-        linear-gradient(160deg, #232A3D 0%, #323856 54%, #20283B 100%);
-      color:#fff;
-      border-radius:30px;
-      padding:22px;
-      box-shadow:0 28px 48px rgba(36,42,61,.18);
-      position:relative;
-      overflow:hidden;
+        radial-gradient(circle at 0% 20%, rgba(123,170,146,.10), transparent 34%),
+        linear-gradient(145deg, rgba(255,255,255,.92), rgba(248,246,242,.94));
+      border:1px solid rgba(123,170,146,.16);
+      border-radius:28px;
+      padding:20px 18px;
+      box-shadow:var(--shadow-md);
     }
 
-    .unlock-badge{
-      display:inline-flex;
+    .value-strip-title{
+      font-size:17px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:8px;
+      display:flex;
       align-items:center;
       gap:8px;
-      min-height:32px;
-      padding:0 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-      color:rgba(255,255,255,.86);
-      font-size:12px;
-      font-weight:800;
+      line-height:1.5;
+    }
+
+    .value-strip-text{
+      font-size:13px;
+      color:var(--ink-2);
+      line-height:1.9;
       margin-bottom:14px;
     }
 
-    .unlock-title{
-      font-size:24px;
-      font-weight:900;
-      line-height:1.5;
-      margin-bottom:8px;
-    }
-
-    .unlock-text{
-      font-size:14px;
-      color:rgba(255,255,255,.82);
-      line-height:1.95;
-      margin-bottom:16px;
-    }
-
-    .unlock-points{
+    .value-points{
       display:grid;
       gap:10px;
-      margin-bottom:18px;
     }
 
-    .unlock-point{
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:16px;
+    .value-point{
+      background:rgba(255,255,255,.78);
+      border:1px solid var(--line);
+      border-radius:18px;
       padding:12px 14px;
       font-size:13px;
-      color:rgba(255,255,255,.88);
+      color:var(--ink);
       line-height:1.8;
     }
 
-    .pricing-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:14px 16px;
-      border-radius:18px;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.10);
-      margin-bottom:16px;
-    }
-
-    .pricing-row strong{
-      display:block;
-      font-size:20px;
-      font-weight:900;
-      line-height:1.2;
-    }
-
-    .pricing-row span{
-      display:block;
-      font-size:12px;
-      color:rgba(255,255,255,.76);
-      line-height:1.7;
-      margin-top:4px;
-    }
-
-    .pricing-amount{
-      font-size:34px;
-      font-weight:900;
-      line-height:1;
-      letter-spacing:-1px;
-      white-space:nowrap;
-    }
-
-    .cta-grid{
-      display:grid;
-      gap:10px;
-    }
-
-    .cta-btn{
-      width:100%;
-      min-height:56px;
-      border-radius:18px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      font-size:16px;
-      font-weight:900;
-      transition:transform .22s var(--ease), box-shadow .22s var(--ease);
-    }
-
-    .cta-btn:hover{
-      transform:translateY(-2px);
-    }
-
-    .cta-primary{
-      background:linear-gradient(135deg, #25D366, #128C7E);
-      color:#fff;
-      box-shadow:0 16px 30px rgba(37,211,102,.20);
-    }
-
-    .cta-secondary{
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.16);
-      color:#fff;
+    .value-point strong{
+      color:var(--hero-2);
     }
 
     .locked .lockable{
@@ -747,7 +625,7 @@
       color:#B4534F;
       font-size:13px;
       font-weight:800;
-      line-height:1.8;
+      line-height:1.9;
     }
 
     .locked .lock-banner{
@@ -757,7 +635,7 @@
     .toast{
       position:fixed;
       right:50%;
-      bottom:calc(110px + var(--safe-bottom));
+      bottom:calc(32px + var(--safe-bottom));
       z-index:60;
       transform:translateX(50%) translateY(18px);
       min-width:210px;
@@ -789,18 +667,8 @@
         grid-template-columns:1fr;
       }
 
-      .hero-title,
-      .unlock-title{
+      .hero-title{
         font-size:22px;
-      }
-
-      .pricing-row{
-        flex-direction:column;
-        align-items:flex-start;
-      }
-
-      .pricing-amount{
-        font-size:30px;
       }
     }
   </style>
@@ -819,19 +687,19 @@
 
     <section class="hero">
       <div class="hero-chip">🤖 تحليلات SugarMind الذكية</div>
-      <div class="hero-title">مو مجرد أرقام…<br>نبغى نفهم نمطك فعلًا</div>
+      <div class="hero-title">مو مجرد قراءة…<br>الصورة كلها تبدأ تتضح</div>
       <div class="hero-text">
-        هذه الصفحة تعطيك تذوقًا ذكيًا من التحليل الأعمق: جودة بياناتك، قابلية يومك للفهم، وبعض الإشارات اللي تبدأ تتكوّن من استخدامك داخل التطبيق.
+        هنا نشوف جودة بياناتك الحالية، هل استخدامك صار يعطي معنى، وهل التطبيق بدأ يكوّن صورة أوضح عن يومك بدل لقطات متفرقة.
       </div>
     </section>
 
     <section class="trial-strip">
       <div class="trial-strip-top">
-        <div class="trial-strip-title" id="trialTitle">الفترة التجريبية الذكية ما زالت مفتوحة</div>
+        <div class="trial-strip-title" id="trialTitle">الفترة المفتوحة ما زالت فعالة</div>
         <div class="trial-pill" id="trialPill">جاري الاحتساب</div>
       </div>
       <div class="trial-strip-text" id="trialText">
-        نفتح لك هذه الصفحة في البداية حتى يتكوّن نمطك، وبعدها تبدأ التحليلات الكاملة تتحول لمسار اشتراك شهري.
+        هذه الصفحة تفتح لك الآن حتى يبدأ النمط يتكوّن من استخدامك، وبعدها تصبح القراءة الأعمق مرتبطة بالمسار الكامل مستقبلًا.
       </div>
       <div class="trial-progress">
         <div class="trial-progress-fill" id="trialProgressFill" style="width:0%"></div>
@@ -841,10 +709,12 @@
     <section class="section lockable">
       <div class="section-card">
         <div class="section-head">
-          <div class="section-title">🧿 لقطة سريعة عنك الآن</div>
-          <div class="section-note">أقرب صورة</div>
+          <div class="section-title">🧿 وين وصلت بياناتك؟</div>
+          <div class="section-note">أوضح نقطة الآن</div>
         </div>
-        <div class="section-text">هذه المؤشرات ليست تشخيصًا طبيًا، لكنها تعطيك إحساسًا واضحًا: هل بياناتك كافية؟ هل يومك بدأ يتضح؟ وهل التطبيق صار قادر يفهمك أكثر؟</div>
+        <div class="section-text">
+          هذه المؤشرات تعطيك قراءة سريعة عن وضع بياناتك داخل التطبيق: هل الصورة بدأت تنضج؟ وهل صار عندنا أساس يكفي لفهم أهدأ وأكثر واقعية؟
+        </div>
 
         <div class="gauges-grid">
           <div class="gauge-card">
@@ -879,7 +749,7 @@
                 <div class="gauge-unit">/100</div>
               </div>
             </div>
-            <div class="gauge-title">جاهزية التحليل</div>
+            <div class="gauge-title">جاهزية القراءة</div>
             <div class="gauge-sub" id="readySub">لم تكتمل بعد</div>
           </div>
         </div>
@@ -889,19 +759,11 @@
     <section class="section lockable">
       <div class="section-card">
         <div class="section-head">
-          <div class="section-title">✨ ماذا بدأنا نفهم عنك؟</div>
-          <div class="section-note">إشارات مبكرة</div>
+          <div class="section-title">📉 اتجاهات استخدامك</div>
+          <div class="section-note">شكل له معنى</div>
         </div>
-
-        <div class="insights-grid" id="insightsGrid"></div>
-      </div>
-    </section>
-
-    <section class="section lockable">
-      <div class="section-card">
-        <div class="section-head">
-          <div class="section-title">📉 اتجاهات صغيرة لها معنى</div>
-          <div class="section-note">شكل جديد</div>
+        <div class="section-text">
+          كل زيارة، قراءة محفوظة، أو وجبة تحللها تزيد من عمق الصورة. هذا الجزء يوضح هل استخدامك عابر أو بدأ يتحول لشيء يمكن البناء عليه.
         </div>
 
         <div class="trend-grid">
@@ -909,7 +771,7 @@
             <div class="spark-head">
               <div>
                 <div class="spark-title">إيقاع استخدامك خلال 7 أيام</div>
-                <div class="spark-note">كل لمسة منك تساعدنا نفهم يومك بشكل أذكى</div>
+                <div class="spark-note">كل لمسة منك ترفع وضوح يومك أكثر</div>
               </div>
               <div class="spark-badge" id="activityBadge">بداية</div>
             </div>
@@ -920,15 +782,15 @@
           <div class="mini-list">
             <div class="mini-item">
               <strong id="avgReadingValue">--</strong>
-              <span>متوسط القراءة الحالي من آخر ما توفر عندك من بيانات محفوظة.</span>
+              <span>متوسط القراءة الحالي من آخر البيانات المتوفرة عندك.</span>
             </div>
             <div class="mini-item">
               <strong id="mealsCountValue">--</strong>
-              <span>عدد الوجبات التي تم حفظها إلى الآن داخل التطبيق.</span>
+              <span>عدد الوجبات التي تم حفظها فعليًا داخل التطبيق.</span>
             </div>
             <div class="mini-item">
               <strong id="bestIcrValue">--</strong>
-              <span>أفضل معامل متوفر حاليًا داخل بياناتك الحالية.</span>
+              <span>أفضل معامل متوفر حاليًا من بياناتك الحالية.</span>
             </div>
           </div>
         </div>
@@ -939,53 +801,33 @@
       <div class="section-card">
         <div class="section-head">
           <div class="section-title">🧠 ملخص ذكي لك</div>
-          <div class="section-note">صياغة أقرب لك</div>
+          <div class="section-note">الخلاصة الأهم</div>
         </div>
 
         <div class="summary-box">
-          <div class="summary-title">ما الذي يقوله هذا كله عنك؟</div>
-          <div class="summary-text" id="summaryText">نحتاج بيانات أكثر حتى نعطيك ملخصًا شخصيًا أعمق.</div>
+          <div class="summary-title">وش تقول الصورة الحالية؟</div>
+          <div class="summary-text" id="summaryText">نحتاج بيانات أكثر حتى نعطيك خلاصة أصدق.</div>
         </div>
       </div>
     </section>
 
     <section class="section">
-      <div class="unlock-card">
-        <div class="unlock-badge">🔓 الخطوة التالية</div>
-        <div class="unlock-title" id="unlockTitle">افتح التحليلات الكاملة لما يكتمل نمطك</div>
-        <div class="unlock-text" id="unlockText">
-          خلال الفترة المجانية نسمح لك تتذوق عمق الفكرة. وبعدها يتحول هذا الفهم إلى مسار اشتراك شهري حتى تقدر تكمل على نفس الوضوح بدون انقطاع.
+      <div class="value-strip">
+        <div class="value-strip-title">✨ متى يصير التحليل فعلاً أقوى؟</div>
+        <div class="value-strip-text">
+          كل ما اكتملت الثلاثة هذه مع بعض، صار فهم يومك أوضح بكثير من مجرد متابعة رقم منفرد.
         </div>
 
-        <div class="unlock-points">
-          <div class="unlock-point">📌 فهم أعمق لاتجاهات يومك بدل مجرد قراءة منفردة</div>
-          <div class="unlock-point">🍽️ ربط أذكى بين الوجبات، المعامل، والإشارات اليومية</div>
-          <div class="unlock-point">🪄 طبقة تحليل أقرب للفهم الشخصي لا مجرد إحصائيات عامة</div>
-        </div>
-
-        <div class="pricing-row">
-          <div>
-            <strong>الاشتراك الشهري</strong>
-            <span>الوصول المستمر للتحليلات الأعمق داخل SugarMind</span>
-          </div>
-          <div class="pricing-amount">لاحقًا</div>
-        </div>
-
-        <div class="cta-grid">
-          <button class="cta-btn cta-primary" id="whatsappBtn" type="button">
-            <span>📱</span>
-            <span>تواصل معنا على واتساب</span>
-          </button>
-          <button class="cta-btn cta-secondary" id="notifyBtn" type="button">
-            <span>🔔</span>
-            <span>ذكّرني عند فتح الاشتراك المباشر</span>
-          </button>
+        <div class="value-points">
+          <div class="value-point"><strong>قراءة محفوظة:</strong> تعطينا نقطة واضحة عن وضعك الحالي.</div>
+          <div class="value-point"><strong>وجبة محفوظة:</strong> تربط الحدث بما قبله بدل التخمين.</div>
+          <div class="value-point"><strong>معامل محفوظ:</strong> يحول الحساب من معلومة متفرقة إلى فهم قابل للتكرار.</div>
         </div>
       </div>
     </section>
 
     <div class="lock-banner" id="lockBanner">
-      انتهت الفترة المفتوحة لهذه الصفحة، وما زال بإمكانك رؤية لمحة بسيطة. فتح التحليلات الكاملة سيكون عبر الاشتراك الشهري.
+      انتهت الفترة المفتوحة لهذه الصفحة. ما زالت اللمحة البسيطة موجودة، لكن القراءة الأعمق تتطلب استمرارًا أكثر في جمع الصورة كاملة.
     </div>
   </main>
 
@@ -1002,13 +844,11 @@
         MEAL:'sugarmind_meal_result_v1',
         MEALS_LIST:'sugarmind_meals',
         ACTIVITY_LOG:'sugarmind_activity_log_v1',
-        SHARE_COUNT:'sugarmind_share_count_v1',
         AI_TRIAL_START:'sugarmind_ai_trial_start_v1',
         AI_PAGE_OPENS:'sugarmind_ai_page_opens_v1'
       };
 
       const TRIAL_DAYS = 14;
-      const WHATSAPP_NUMBER = '966500000000';
 
       const els = {
         pageRoot: document.getElementById('pageRoot'),
@@ -1025,17 +865,12 @@
         qualitySub: document.getElementById('qualitySub'),
         claritySub: document.getElementById('claritySub'),
         readySub: document.getElementById('readySub'),
-        insightsGrid: document.getElementById('insightsGrid'),
         sparkline: document.getElementById('sparkline'),
         activityBadge: document.getElementById('activityBadge'),
         avgReadingValue: document.getElementById('avgReadingValue'),
         mealsCountValue: document.getElementById('mealsCountValue'),
         bestIcrValue: document.getElementById('bestIcrValue'),
         summaryText: document.getElementById('summaryText'),
-        unlockTitle: document.getElementById('unlockTitle'),
-        unlockText: document.getElementById('unlockText'),
-        whatsappBtn: document.getElementById('whatsappBtn'),
-        notifyBtn: document.getElementById('notifyBtn'),
         lockBanner: document.getElementById('lockBanner'),
         toast: document.getElementById('toast')
       };
@@ -1059,7 +894,7 @@
         clearTimeout(showToast.timer);
         showToast.timer = setTimeout(() => {
           els.toast.classList.remove('show');
-        }, 2600);
+        }, 2400);
       }
 
       function getHomeData(){
@@ -1087,7 +922,7 @@
         const log = getActivityLog();
         const day = getTodayISO();
         if(!log[day]){
-          log[day] = { visits:0, refreshes:0, aiClicks:0, calculator:0, meals:0, reads:0, shares:0 };
+          log[day] = { visits:0, refreshes:0, aiViews:0, calculator:0, meals:0, reads:0, shares:0 };
         }
         if(!log[day][type]) log[day][type] = 0;
         log[day][type] += 1;
@@ -1119,20 +954,20 @@
           const d = new Date();
           d.setDate(d.getDate() - i);
           const key = getTodayISO(d);
-          const item = log[key] || { visits:0, refreshes:0, aiClicks:0, calculator:0, meals:0, reads:0, shares:0 };
+          const item = log[key] || { visits:0, refreshes:0, aiViews:0, calculator:0, meals:0, reads:0, shares:0 };
+
           const score =
             (item.visits || 0) +
             (item.refreshes || 0) +
             ((item.meals || 0) * 2) +
             ((item.reads || 0) * 2) +
-            ((item.aiClicks || 0) * 2) +
+            ((item.aiViews || 0) * 2) +
             ((item.calculator || 0) * 1) +
             ((item.shares || 0) * 3);
 
           data.push({
             day: i === 0 ? 'اليوم' : i === 1 ? 'أمس' : `-${i}`,
-            score,
-            raw:item
+            score
           });
         }
 
@@ -1147,11 +982,11 @@
 
       function getReadingState(reading){
         const value = Number(reading);
-        if(!Number.isFinite(value)) return { score:35, label:'غير واضحة' };
-        if(value < 70) return { score:42, label:'منخفضة' };
-        if(value <= 140) return { score:84, label:'متزنة' };
-        if(value <= 180) return { score:68, label:'مرتفعة قليلًا' };
-        return { score:50, label:'مرتفعة' };
+        if(!Number.isFinite(value)) return { label:'غير واضحة', score:35 };
+        if(value < 70) return { label:'منخفضة', score:42 };
+        if(value <= 140) return { label:'متزنة', score:84 };
+        if(value <= 180) return { label:'مرتفعة قليلًا', score:68 };
+        return { label:'مرتفعة', score:50 };
       }
 
       function buildComputedModel(){
@@ -1160,7 +995,6 @@
         const icrData = readJSON(KEYS.ICR) || {};
         const mealData = readJSON(KEYS.MEAL) || {};
         const mealsList = readJSON(KEYS.MEALS_LIST) || [];
-        const shareCount = Number(localStorage.getItem(KEYS.SHARE_COUNT) || 0);
         const activity = getLast7Activity();
         const trial = getTrialData();
         const pageOpens = Number(localStorage.getItem(KEYS.AI_PAGE_OPENS) || 0);
@@ -1196,20 +1030,12 @@
         readyScore += hasICR ? 15 : 0;
         readyScore = Math.min(100, Math.round(readyScore));
 
-        let avgReading = '--';
-        if(hasReading){
-          avgReading = String(Math.round(reading));
-        }
-
-        const bestIcr = hasICR ? `1:${icrData.icr}` : '--';
-
         return {
           homeData,
           profileData,
           icrData,
           mealData,
           mealsList,
-          shareCount,
           activity,
           trial,
           pageOpens,
@@ -1221,8 +1047,8 @@
           qualityScore,
           clarityScore,
           readyScore,
-          avgReading,
-          bestIcr
+          avgReading: hasReading ? String(Math.round(reading)) : '--',
+          bestIcr: hasICR ? `1:${icrData.icr}` : '--'
         };
       }
 
@@ -1241,10 +1067,10 @@
       }
 
       function readyLabel(score){
-        if(score >= 80) return 'جاهز جدًا';
-        if(score >= 60) return 'قريب من الجاهزية';
-        if(score >= 40) return 'يبني أساسه';
-        return 'يحتاج وقتًا أكثر';
+        if(score >= 80) return 'جاهزة جدًا';
+        if(score >= 60) return 'قريبة من الجاهزية';
+        if(score >= 40) return 'تبني أساسها';
+        return 'تحتاج وقتًا أكثر';
       }
 
       function renderTrial(model){
@@ -1257,11 +1083,9 @@
           els.trialPill.style.background = 'rgba(218,114,109,.14)';
           els.trialPill.style.color = '#B4534F';
           els.trialPill.style.border = '1px solid rgba(218,114,109,.18)';
-          els.trialText.textContent = 'الآن بقيت لك لمحة بسيطة فقط. فتح القراءة الأعمق الكاملة يتحول للمسار الشهري لاحقًا.';
+          els.trialText.textContent = 'الآن بقيت لك لمحة بسيطة فقط. ومع الوقت كل ما رجعت وسجلت بيانات أكثر، صارت الصورة أقرب للمعنى الحقيقي.';
           els.trialProgressFill.style.width = '100%';
           els.trialProgressFill.style.background = 'linear-gradient(90deg, #DA726D, #F04438)';
-          els.unlockTitle.textContent = 'التحليلات المفتوحة انتهت… لكن الصورة بدأت تتكوّن عنك';
-          els.unlockText.textContent = 'إذا ما تبي تخسر هذا الفهم اللي بدأ يتشكل من استخدامك، فالخطوة التالية هي فتح الوصول المستمر للتحليلات الأعمق.';
           return;
         }
 
@@ -1271,8 +1095,8 @@
         els.trialPill.style.color = 'var(--primary)';
         els.trialPill.style.border = '1px solid rgba(123,170,146,.18)';
         els.trialText.textContent = trial.daysLeft <= 4
-          ? 'بدأت الأيام الأخيرة من الفترة المفتوحة. الآن هو الوقت الأفضل لتشوف قيمة الصفحة قبل ما تتحول للتحليلات المدفوعة.'
-          : 'في هذه المرحلة نسمح لك تتذوق العمق الحقيقي للفكرة، حتى يتكوّن عندك انطباع واضح عن قيمة التحليلات المستمرة.';
+          ? 'أنت داخل الأيام الأخيرة من المرحلة المفتوحة. هذا أفضل وقت حتى تلاحظ كيف تبدأ البيانات تتحول إلى صورة أهدأ وأوضح.'
+          : 'في هذه المرحلة نفتح لك عمق الفكرة تدريجيًا، حتى تبدأ تلاحظ الفرق بين المتابعة العشوائية والمتابعة التي لها معنى.';
         els.trialProgressFill.style.width = `${trial.progress}%`;
       }
 
@@ -1290,86 +1114,9 @@
         setGauge(els.gaugeReady, model.readyScore, '#E6B85C');
       }
 
-      function buildInsightRows(model){
-        const rows = [];
-        const userName = model.profileData?.name ? `يا ${model.profileData.name}` : '';
-
-        if(model.qualityScore < 45){
-          rows.push({
-            icon:'📥',
-            title:'بياناتك بدأت… لكنها ما زالت خفيفة',
-            desc:`${userName ? userName + '، ' : ''}كل ما زادت قراءاتك ووجباتك المحفوظة، صارت الصفحة أصدق في فهم نمطك بدل مجرد لمحات عامة.`
-          });
-        } else {
-          rows.push({
-            icon:'🧩',
-            title:'بدأت ملامح نمطك تتكوّن',
-            desc:`واضح أن عندنا الآن مادة أولية جيدة لفهم يومك بشكل أهدأ، خصوصًا مع وجود ${model.mealsCount} وجبة محفوظة ونشاط داخل التطبيق.`
-          });
-        }
-
-        if(model.homeData?.reading){
-          rows.push({
-            icon:'🩺',
-            title:`آخر قراءة عندك ${model.reading} mg/dL`,
-            desc:model.readingState.label === 'متزنة'
-              ? 'وهذا يعطينا انطباعًا مريحًا أن الوضع الحالي قريب من النطاق المناسب، لكنه يظل جزءًا من الصورة وليس كل الصورة.'
-              : `القراءة الحالية تبدو ${model.readingState.label}، وهذا يجعلنا نهتم أكثر بما قبلها: وجبة، توقيت، أو نمط الاستخدام.`
-          });
-        } else {
-          rows.push({
-            icon:'🕰️',
-            title:'ما زلنا ننتظر قراءة حالية أوضح',
-            desc:'بدون قراءة واضحة محفوظة، التحليل يبقى أقل عمقًا. أول قراءة حديثة ترفع قيمة هذه الصفحة مباشرة.'
-          });
-        }
-
-        if(model.icrData?.icr){
-          rows.push({
-            icon:'🧮',
-            title:`معاملك الحالي ${model.bestIcr}`,
-            desc:`وجود معامل كارب محفوظ يرفع جاهزية التحليل، لأنه يربط بين الحساب وفهم اليوم بدل أن يبقى كل شيء منفصل.`
-          });
-        } else {
-          rows.push({
-            icon:'📌',
-            title:'المعامل عندك غير مكتمل بعد',
-            desc:'هذه من أهم القطع الناقصة في فهمك الأعمق. وجود المعامل يحول التحليل من لطيف إلى مفيد جدًا.'
-          });
-        }
-
-        if(model.shareCount > 0){
-          rows.push({
-            icon:'🤍',
-            title:'واضح أنك شاركت التطبيق مع أحد يهمك',
-            desc:'هذا يعكس أنك ما تتعامل مع SugarMind كأداة فقط، بل كشيء فعلاً تشوف له قيمة في حياة أحد قريب منك.'
-          });
-        } else {
-          rows.push({
-            icon:'🌱',
-            title:'ما زلنا نبني علاقتك مع المنتج',
-            desc:'كل لمسة منك داخل التطبيق تعطي معنى أكبر للفهم، وتخلي هذه الصفحة أصدق بمرور الأيام.'
-          });
-        }
-
-        return rows.slice(0, 4);
-      }
-
-      function renderInsights(model){
-        const rows = buildInsightRows(model);
-        els.insightsGrid.innerHTML = rows.map(row => `
-          <div class="insight-row">
-            <div class="insight-icon">${row.icon}</div>
-            <div>
-              <div class="insight-title">${row.title}</div>
-              <div class="insight-desc">${row.desc}</div>
-            </div>
-          </div>
-        `).join('');
-      }
-
       function renderSparkline(model){
         const maxScore = Math.max(...model.activity.map(item => item.score), 1);
+
         els.sparkline.innerHTML = model.activity.map(item => {
           const height = Math.max(8, Math.round((item.score / maxScore) * 88));
           return `
@@ -1384,8 +1131,8 @@
         if(model.totalActivityScore >= 40) badge = 'واضح';
         if(model.totalActivityScore >= 70) badge = 'نشط';
         if(model.totalActivityScore >= 100) badge = 'مرتبط';
-        els.activityBadge.textContent = badge;
 
+        els.activityBadge.textContent = badge;
         els.avgReadingValue.textContent = model.avgReading;
         els.mealsCountValue.textContent = model.mealsCount;
         els.bestIcrValue.textContent = model.bestIcr;
@@ -1393,83 +1140,55 @@
 
       function buildSummary(model){
         const userName = model.profileData?.name ? `يا ${model.profileData.name}` : '';
-        const pieces = [];
+        const parts = [];
 
         if(userName){
-          pieces.push(`${userName}، بدأنا نشوف عندك ملامح استخدام لها معنى، مو مجرد زيارات عابرة.`);
+          parts.push(`${userName}، واضح أن استخدامك للتطبيق بدأ يعطي معنى فعلي، مو مجرد فتح صفحة ثم إغلاقها.`);
         } else {
-          pieces.push('بدأنا نشوف عندك ملامح استخدام لها معنى، مو مجرد زيارات عابرة.');
+          parts.push('واضح أن استخدامك للتطبيق بدأ يعطي معنى فعلي، مو مجرد فتح صفحة ثم إغلاقها.');
         }
 
         if(model.qualityScore >= 70){
-          pieces.push('جودة البيانات الحالية عندك جيدة، وهذا يعني أن الصفحة صارت تملك مادة فعلية تبني عليها فهمًا أعمق.');
+          parts.push('جودة البيانات الحالية عندك جيدة، وهذا يعني أن التطبيق صار يملك أساسًا محترمًا يبني عليه فهمًا أهدأ ليومك.');
         } else if(model.qualityScore >= 45){
-          pieces.push('جودة البيانات الحالية متوسطة، وهذا ممتاز كبداية، لكن ما زال فيه مساحة كبيرة حتى يصير الفهم أدق.');
+          parts.push('البيانات الحالية متوسطة وهذا ممتاز كبداية، لكن ما زال فيه مساحة حتى تصير القراءة الأعمق أصدق وأكثر فائدة.');
         } else {
-          pieces.push('البيانات الحالية ما زالت أولية، والصفحة ما وصلت بعد لأقصى قوتها معك.');
+          parts.push('البيانات الحالية ما زالت أولية، ولهذا التحليل هنا يعطي إشارات مبكرة أكثر من كونه حكمًا واضحًا.');
         }
 
         if(model.clarityScore >= 65){
-          pieces.push('النمط بدأ يقترب من الوضوح، وبدأنا نخرج من مجرد قراءة منفردة إلى إحساس أقرب بطريقة يومك.');
+          parts.push('النمط عندك بدأ يقترب من الوضوح، وهذا يعني أن التكرار الهادئ في الاستخدام قاعد يسوي فرق حقيقي.');
         } else {
-          pieces.push('النمط عندك ما زال في طور التشكّل، وهذا طبيعي جدًا في بداية العلاقة مع المنتج.');
+          parts.push('النمط عندك ما زال في طور التشكّل، وهذا طبيعي جدًا في البداية، خصوصًا إذا كانت البيانات متقطعة أو قليلة.');
         }
 
-        if(model.trial.expired){
-          pieces.push('الآن صارت القيمة الحقيقية هنا في أنك ما تفقد هذا الفهم وهو في بدايته، وهذا هو منطق الاشتراك الشهري لاحقًا.');
-        } else if(model.trial.daysLeft <= 4){
-          pieces.push('أنت الآن داخل الأيام الأخيرة من الفترة المفتوحة، وهذا أفضل وقت حتى تلمس قيمة الصفحة قبل ما تنتقل للمسار الكامل.');
+        if(model.homeData?.reading && model.icrData?.icr && model.mealsCount > 0){
+          parts.push('وجود قراءة محفوظة + معامل + وجبة واحدة على الأقل هو أول شكل فعلي للصورة التي نحتاجها حتى يصير الفهم أعمق.');
         } else {
-          pieces.push('استمر أيام أكثر بنفس الهدوء، وستبدأ تلاحظ أن هذه الصفحة لا تعطيك أرقامًا فقط، بل صورة أقرب لك.');
+          parts.push('القطعة الناقصة الآن غالبًا ليست شيء واحد فقط، بل اكتمال الربط بين القراءة والوجبة والمعامل معًا.');
         }
 
-        return pieces.join('\n\n');
+        return parts.join('\n\n');
       }
 
       function renderSummary(model){
         els.summaryText.textContent = buildSummary(model);
       }
 
-      function getWhatsappText(model){
-        const name = model.profileData?.name || 'مستخدم من SugarMind';
-        const text =
-`السلام عليكم
-أنا ${name}
-أرغب بالاستفسار عن تحليلات SugarMind الذكية والاشتراك الشهري المستقبلي.
-
-جودة بياناتي الحالية: ${model.qualityScore}/100
-وضوح النمط: ${model.clarityScore}/100
-جاهزية التحليل: ${model.readyScore}/100
-عدد الوجبات المحفوظة: ${model.mealsCount}
-أفضل معامل متوفر: ${model.bestIcr}`;
-        return encodeURIComponent(text);
-      }
-
-      function bindEvents(model){
-        els.whatsappBtn.addEventListener('click', () => {
-          bumpActivity('aiClicks');
-          const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${getWhatsappText(model)}`;
-          window.open(url, '_blank');
-        });
-
-        els.notifyBtn.addEventListener('click', () => {
-          localStorage.setItem('sugarmind_ai_waitlist_v1', 'true');
-          showToast('تم تسجيل رغبتك مبدئيًا');
-        });
-      }
-
       function init(){
         const opens = Number(localStorage.getItem(KEYS.AI_PAGE_OPENS) || 0) + 1;
         localStorage.setItem(KEYS.AI_PAGE_OPENS, String(opens));
-        bumpActivity('aiClicks');
+        bumpActivity('aiViews');
 
         const model = buildComputedModel();
         renderTrial(model);
         renderGauges(model);
-        renderInsights(model);
         renderSparkline(model);
         renderSummary(model);
-        bindEvents(model);
+
+        if(!model.homeData?.reading && !model.icrData?.icr && model.mealsCount === 0){
+          showToast('ابدأ بقراءة أو وجبة أو معامل حتى تصبح هذه الصفحة أذكى');
+        }
       }
 
       document.addEventListener('DOMContentLoaded', init);
