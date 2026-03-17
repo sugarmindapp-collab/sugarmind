@@ -3,8 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>SugarMind - رفيقك اليومي</title>
-  <meta name="description" content="واجهة يومية أوضح لحالتك، تساعدك في القراءة، الوجبة، والمعامل بشكل أقرب وأسهل." />
+  <title>SugarMind | حاسبة السكر والكارب اليومية لمرضى السكري</title>
+  <meta name="description" content="SugarMind يساعدك على تسجيل قراءة السكر، فهم الكارب، ومتابعة يومك بطريقة أوضح. حاسبة سكر وكارب يومية مناسبة للمصابين وأولياء الأمور." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://sugarmind.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SugarMind" />
+  <meta property="og:locale" content="ar_SA" />
+  <meta property="og:title" content="SugarMind | حاسبة السكر والكارب اليومية" />
+  <meta property="og:description" content="تابع قراءة السكر، افهم الكارب، وابدأ يومك بوضوح أكثر داخل SugarMind." />
+  <meta property="og:url" content="https://sugarmind.app/" />
+  <meta property="og:image" content="https://sugarmind.app/og-cover.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SugarMind | حاسبة السكر والكارب اليومية" />
+  <meta name="twitter:description" content="تابع قراءة السكر، افهم الكارب، وابدأ يومك بوضوح أكثر داخل SugarMind." />
+  <meta name="twitter:image" content="https://sugarmind.app/og-cover.png" />
   <meta name="theme-color" content="#F6F3EE" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -877,6 +890,78 @@
       line-height:1.6;
     }
 
+
+    /* Knowledge CTA */
+    .knowledge-section{
+      margin-top:2px;
+    }
+
+    .knowledge-card{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      background:linear-gradient(145deg, rgba(125,139,174,.10), rgba(123,170,146,.08));
+      border:1px solid rgba(125,139,174,.18);
+      border-radius:28px;
+      padding:20px 18px;
+      box-shadow:var(--shadow-md);
+      transition:all .24s var(--ease);
+    }
+
+    .knowledge-card:hover{
+      transform:translateY(-3px);
+      box-shadow:var(--shadow-hover);
+    }
+
+    .knowledge-content{
+      min-width:0;
+      flex:1;
+    }
+
+    .knowledge-eyebrow{
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.62);
+      color:#6E7FA7;
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:8px;
+      border:1px solid rgba(255,255,255,.6);
+    }
+
+    .knowledge-title{
+      font-size:18px;
+      font-weight:900;
+      color:var(--ink);
+      line-height:1.5;
+      margin-bottom:6px;
+    }
+
+    .knowledge-text{
+      font-size:13px;
+      color:var(--ink-2);
+      line-height:1.85;
+    }
+
+    .knowledge-arrow{
+      width:46px;
+      height:46px;
+      border-radius:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-sm);
+      font-size:22px;
+      color:var(--hero-2);
+      flex-shrink:0;
+    }
+
     /* Share CTA */
     .share-cta-section{
       margin-top:4px;
@@ -1239,6 +1324,24 @@
       }
     }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SugarMind",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "ar-SA",
+    "url": "https://sugarmind.app/",
+    "description": "منصة تساعد على تسجيل قراءة السكر، متابعة اليوم، وفهم الكارب والجرعات بشكل أوضح.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "SAR"
+    }
+  }
+  </script>
 </head>
 <body>
   <div class="bg-noise"></div>
@@ -1282,6 +1385,7 @@
       <div class="time-chip" id="timeChip">☀️ <span>بداية يوم هادئ</span></div>
       <h1 class="greeting-title" id="greetingTitle">صباح الخير</h1>
       <p class="greeting-sub" id="greetingSub">واجهة يومية أقرب لك، وتفهم يومك بهدوء.</p>
+      <div style="margin-top:12px; font-size:14px; line-height:1.9; color:#7A8498; max-width:430px;">SugarMind هو تطبيق ويب يساعدك على متابعة قراءة السكر، حساب الكارب، وفهم يومك بشكل أوضح داخل واجهة عربية بسيطة ومريحة.</div>
     </section>
 
     <section class="section">
@@ -1413,6 +1517,22 @@
           <span>ملخص يومك وتوصيات</span>
         </a>
       </div>
+    </section>
+
+    <section class="section knowledge-section">
+      <div class="section-head">
+        <div class="section-title">معرفتك للسكر</div>
+        <div class="section-note">تقوّي الظهور</div>
+      </div>
+
+      <a class="knowledge-card" href="knowledge.html" aria-label="الانتقال إلى صفحة معرفتك للسكر">
+        <div class="knowledge-content">
+          <div class="knowledge-eyebrow">مركز معرفي قادم</div>
+          <div class="knowledge-title">افتح مواضيع معرفية عن السكري والكارب</div>
+          <div class="knowledge-text">صفحة معرفية مهيأة للسيو تجمع شروحات مفيدة عن قراءة السكر، الكارب، الجرعات، والروتين اليومي بلغة قريبة وواضحة.</div>
+        </div>
+        <div class="knowledge-arrow">←</div>
+      </a>
     </section>
 
     <section class="section share-cta-section">
@@ -2213,7 +2333,7 @@
       endText(ctx);
 
       fillRoundRect(ctx, 54, 1090, 304, 206, 30, '#FFFFFF');
-      ctx.drawImage(qrCanvas, 96, 1128, 220, 220);
+      ctx.drawImage(qrCanvas, 96, 1083, 220, 220);
 
       fillRoundRect(ctx, 390, 1090, 600, 206, 30, 'rgba(255,255,255,.08)');
       strokeRoundRect(ctx, 390, 1090, 600, 206, 30, 'rgba(255,255,255,.10)', 2);
@@ -2228,11 +2348,6 @@
 
       setupText(ctx, '500 34px Tajawal', 'rgba(255,255,255,.82)');
       drawWrappedText(ctx, 'واجهة يومية أوضح لحالتك. امسح الكود وافتح التطبيق مباشرة.', 942, 1242, 520, 44, 2);
-      endText(ctx);
-
-      fillRoundRect(ctx, 54, 1218, 304, 76, 38, 'rgba(123,170,146,1)');
-      setupText(ctx, '900 40px Tajawal', '#FFFFFF', 'center');
-      ctx.fillText('افتح بطاقتك', 206, 1268);
       endText(ctx);
 
       return await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1));
@@ -2301,10 +2416,10 @@
       });
 
       fillRoundRect(ctx, 54, 1046, 360, 250, 30, '#FFFFFF');
-      ctx.drawImage(qrCanvas, 124, 1085, 220, 220);
+      ctx.drawImage(qrCanvas, 124, 1048, 220, 220);
 
       setupText(ctx, '900 42px Tajawal', '#1D2433', 'center');
-      ctx.fillText('امسح وابدأ', 234, 1295);
+      ctx.fillText('امسح لفتح SugarMind', 234, 1295);
       endText(ctx);
 
       fillRoundRect(ctx, 434, 1046, 556, 250, 30, 'rgba(255,255,255,.08)');
@@ -2316,11 +2431,6 @@
 
       setupText(ctx, '500 34px Tajawal', 'rgba(255,255,255,.82)');
       drawWrappedText(ctx, data.messageCopy, 942, 1220, 476, 46, 3);
-      endText(ctx);
-
-      fillRoundRect(ctx, 54, 1208, 304, 76, 38, 'rgba(123,170,146,1)');
-      setupText(ctx, '900 40px Tajawal', '#FFFFFF', 'center');
-      ctx.fillText('ابدأ مع SugarMind', 206, 1258);
       endText(ctx);
 
       setupText(ctx, '500 30px Tajawal', 'rgba(255,255,255,.70)');
