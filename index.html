@@ -3,22 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  
-  <title>SugarMind | حاسبة السكر والكارب اليومية لمرضى السكري</title>
-  <meta name="description" content="SugarMind يساعدك على تسجيل قراءة السكر، فهم الكارب، ومتابعة يومك بطريقة أوضح. حاسبة سكر وكارب يومية مناسبة للمصابين وأولياء الأمور." />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="SugarMind | حاسبة السكر والكارب اليومية" />
-  <meta property="og:description" content="تابع قراءة السكر، افهم الكارب، وابدأ يومك بوضوح أكثر داخل SugarMind." />
-  <meta property="og:image" content="https://sugarmind.app/og-cover.png" />
-  <meta property="og:locale" content="ar_SA" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="SugarMind | حاسبة السكر والكارب اليومية" />
-  <meta name="twitter:description" content="تابع قراءة السكر، افهم الكارب، وابدأ يومك بوضوح أكثر داخل SugarMind." />
-  <meta name="theme-color" content="#02040A" />
+  <title>SugarMind - رفيقك اليومي</title>
+  <meta name="description" content="واجهة يومية أوضح لحالتك، تساعدك في القراءة، الوجبة، والمعامل بشكل أقرب وأسهل." />
+  <meta name="theme-color" content="#F6F3EE" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
+  <!-- Google tag -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ44R4V060"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -26,2146 +17,2586 @@
     gtag('js', new Date());
     gtag('config', 'G-PZ44R4V060');
   </script>
-  
-  <!-- Fonts -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Libs -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
-    /* ===== SYSTEM TOKENS - Aurora Bioluminescent Theme ===== */
-    :root {
-      /* الخلفيات - محيط منتصف الليل العميق */
-      --bg-abyss: #02040A;
-      --bg-deep: #080C14;
-      --bg-elevated: #0F1729;
-      --bg-glass: rgba(15, 23, 41, 0.7);
-      
-      /* الأساسي - فيروزي نيون مضيء (مثل أجهزة العناية المركزة) */
-      --neon-cyan: #00F0FF;
-      --neon-cyan-soft: #5EE7FF;
-      --neon-cyan-dark: #00B8C4;
-      --cyan-glow: rgba(0, 240, 255, 0.4);
-      
-      /* الثانوي - بنفسجي فاقع (تباين عصري) */
-      --neon-purple: #C084FC;
-      --neon-purple-soft: #E9D5FF;
-      --purple-glow: rgba(192, 132, 252, 0.3);
-      
-      /* الإنجاز - ذهبي فاقع */
-      --neon-gold: #FACC15;
-      --gold-glow: rgba(250, 204, 21, 0.4);
-      
-      /* الحالات */
-      --danger: #FF0040;
-      --warning: #FF9900;
-      --success: #00FF88;
-      
-      /* النصوص */
-      --text-primary: #F0F9FF;
-      --text-secondary: #94A3B8;
-      --text-muted: #475569;
-      
-      /* الحدود والتأثيرات */
-      --border-glow: rgba(0, 240, 255, 0.1);
-      --glass-border: rgba(255, 255, 255, 0.05);
-      
-      /* المسافات */
-      --safe-top: env(safe-area-inset-top);
-      --safe-bottom: env(safe-area-inset-bottom);
-      
-      /* الحركات */
-      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-
-    html {
-      background: var(--bg-abyss);
-      overflow-x: hidden;
-    }
-
-    body {
-      background: var(--bg-abyss);
-      color: var(--text-primary);
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ===== AURORA BACKGROUND ===== */
-    .aurora-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background: 
-        radial-gradient(ellipse at 20% 20%, rgba(0, 240, 255, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(192, 132, 252, 0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(0, 184, 196, 0.05) 0%, transparent 70%),
-        var(--bg-abyss);
-      animation: aurora-shift 20s ease-in-out infinite;
-    }
-
-    @keyframes aurora-shift {
-      0%, 100% { filter: hue-rotate(0deg); }
-      50% { filter: hue-rotate(15deg); }
-    }
-
-    .noise-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      opacity: 0.04;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-      pointer-events: none;
-    }
-
-    /* ===== SPLASH SCREEN ===== */
-    .splash-screen {
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      background: var(--bg-abyss);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.8s var(--ease-smooth);
-    }
-
-    .splash-screen.vanish {
-      opacity: 0;
-      visibility: hidden;
-      transform: scale(1.1);
-    }
-
-    .splash-aurora {
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, var(--neon-cyan) 0%, var(--neon-purple) 40%, transparent 70%);
-      border-radius: 50%;
-      opacity: 0.2;
-      filter: blur(80px);
-      animation: aurora-pulse 4s ease-in-out infinite;
-    }
-
-    @keyframes aurora-pulse {
-      0%, 100% { transform: scale(1); opacity: 0.2; }
-      50% { transform: scale(1.2); opacity: 0.3; }
-    }
-
-    .splash-content {
-      text-align: center;
-      z-index: 1;
-      animation: float-gentle 3s ease-in-out infinite;
-    }
-
-    @keyframes float-gentle {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
-    }
-
-    .splash-logo {
-      width: 150px;
-      height: 150px;
-      margin: 0 auto 40px;
-      position: relative;
-    }
-
-    .splash-circle {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: linear-gradient(145deg, var(--neon-cyan) 0%, var(--neon-cyan-dark) 100%);
-      box-shadow: 
-        0 0 60px var(--cyan-glow),
-        0 0 100px rgba(0, 240, 255, 0.2),
-        inset 0 2px 20px rgba(255,255,255,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      animation: neon-breathe 3s ease-in-out infinite;
-    }
-
-    @keyframes neon-breathe {
-      0%, 100% { 
-        transform: scale(1); 
-        box-shadow: 0 0 60px var(--cyan-glow), 0 0 100px rgba(0, 240, 255, 0.2);
-      }
-      50% { 
-        transform: scale(1.05); 
-        box-shadow: 0 0 80px var(--cyan-glow), 0 0 120px rgba(0, 240, 255, 0.3);
-      }
-    }
-
-    .splash-pulse {
-      width: 70%;
-      height: 50%;
-    }
-
-    .splash-pulse svg {
-      width: 100%;
-      height: 100%;
-      fill: none;
-      stroke: white;
-      stroke-width: 4;
-      stroke-linecap: round;
-      filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
-      animation: heartbeat 2s ease-in-out infinite;
-    }
-
-    @keyframes heartbeat {
-      0%, 100% { stroke-width: 4; opacity: 1; }
-      50% { stroke-width: 5; opacity: 0.9; }
-    }
-
-    .splash-brand {
-      font-size: 48px;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--text-primary) 0%, var(--neon-cyan) 50%, var(--neon-purple) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 12px;
-      letter-spacing: -2px;
-    }
-
-    .splash-tagline {
-      color: var(--text-secondary);
-      font-size: 18px;
-      font-weight: 500;
-      margin-bottom: 48px;
-    }
-
-    .splash-loader {
-      width: 180px;
-      height: 4px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 2px;
-      overflow: hidden;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .splash-progress {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple), var(--neon-cyan));
-      background-size: 200% 100%;
-      border-radius: 2px;
-      animation: load-progress 2.5s ease forwards, shimmer-move 2s linear infinite;
-    }
-
-    @keyframes load-progress {
-      to { width: 100%; }
-    }
-
-    @keyframes shimmer-move {
-      to { background-position: -200% 0; }
-    }
-
-    /* ===== APP CONTAINER ===== */
-    .app-container {
-      max-width: 430px;
-      margin: 0 auto;
-      min-height: 100vh;
-      padding-bottom: calc(100px + var(--safe-bottom));
-      position: relative;
-      opacity: 0;
-      animation: fade-in 0.8s var(--ease-smooth) 2.5s forwards;
-    }
-
-    @keyframes fade-in {
-      to { opacity: 1; }
-    }
-
-    /* ===== SMART HEADER ===== */
-    .smart-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      padding: 16px 20px;
-      padding-top: calc(16px + var(--safe-top));
-      background: linear-gradient(to bottom, rgba(2, 4, 10, 0.95) 0%, rgba(8, 12, 20, 0.8) 100%);
-      backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid var(--border-glow);
-      transition: all 0.3s var(--ease-smooth);
-    }
-
-    .smart-header.hidden {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-icon {
-      width: 42px;
-      height: 42px;
-      position: relative;
-    }
-
-    .logo-bg {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: linear-gradient(145deg, var(--neon-cyan) 0%, var(--neon-cyan-dark) 100%);
-      box-shadow: 0 0 20px var(--cyan-glow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: icon-pulse 4s ease-in-out infinite;
-    }
-
-    @keyframes icon-pulse {
-      0%, 100% { box-shadow: 0 0 20px var(--cyan-glow); }
-      50% { box-shadow: 0 0 30px var(--cyan-glow), 0 0 40px rgba(0, 240, 255, 0.2); }
-    }
-
-    .mini-pulse {
-      width: 60%;
-      height: 40%;
-    }
-
-    .mini-pulse svg {
-      width: 100%;
-      height: 100%;
-      fill: none;
-      stroke: white;
-      stroke-width: 4;
-      stroke-linecap: round;
-    }
-
-    .brand-text {
-      font-size: 24px;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--text-primary) 0%, var(--neon-cyan) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .quick-actions {
-      display: flex;
-      gap: 10px;
-    }
-
-    .action-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      background: var(--bg-glass);
-      border: 1px solid var(--glass-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      cursor: pointer;
-      transition: all 0.3s var(--ease-spring);
-      color: var(--text-secondary);
-      backdrop-filter: blur(10px);
-    }
-
-    .action-btn:hover {
-      border-color: var(--neon-cyan);
-      color: var(--neon-cyan);
-      box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
-      transform: translateY(-2px);
-    }
-
-    .action-btn.add {
-      background: linear-gradient(145deg, var(--neon-cyan) 0%, var(--neon-cyan-dark) 100%);
-      color: var(--bg-abyss);
-      border: none;
-      box-shadow: 0 0 20px var(--cyan-glow);
-    }
-
-    .action-btn.add:hover {
-      box-shadow: 0 0 30px var(--cyan-glow);
-      transform: scale(1.05);
-    }
-
-    /* ===== GREETING SECTION ===== */
-    .greeting-section {
-      padding: 24px 20px;
-    }
-
-    .time-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      background: var(--bg-glass);
-      border: 1px solid var(--border-glow);
-      border-radius: 100px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--neon-cyan);
-      margin-bottom: 16px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
-    }
-
-    .greeting-title {
-      font-size: 32px;
-      font-weight: 900;
-      line-height: 1.4;
-      margin-bottom: 12px;
-      min-height: 90px;
-      color: var(--text-primary);
-    }
-
-    .greeting-title .highlight {
-      background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-purple) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .greeting-sub {
-      font-size: 16px;
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-
-    /* ===== RECORDER MODAL ===== */
-    .recorder-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(2, 4, 10, 0.9);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.4s var(--ease-smooth);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-    }
-
-    .recorder-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .recorder-sheet {
-      width: 100%;
-      max-width: 430px;
-      background: var(--bg-elevated);
-      border-radius: 32px 32px 0 0;
-      padding: 24px;
-      padding-bottom: calc(24px + var(--safe-bottom));
-      transform: translateY(100%);
-      transition: transform 0.4s var(--ease-spring);
-      border-top: 1px solid var(--border-glow);
-      box-shadow: 0 -10px 40px rgba(0, 240, 255, 0.1);
-    }
-
-    .recorder-overlay.active .recorder-sheet {
-      transform: translateY(0);
-    }
-
-    .recorder-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
-    .recorder-title {
-      font-size: 20px;
-      font-weight: 900;
-      color: var(--text-primary);
-    }
-
-    .close-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--bg-glass);
-      border: 1px solid var(--glass-border);
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 20px;
-      transition: all 0.3s;
-    }
-
-    .close-btn:hover {
-      background: var(--danger);
-      color: white;
-      transform: rotate(90deg);
-    }
-
-    .input-group {
-      margin-bottom: 20px;
-    }
-
-    .input-label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .input-field {
-      width: 100%;
-      padding: 16px;
-      background: var(--bg-deep);
-      border: 2px solid var(--glass-border);
-      border-radius: 16px;
-      color: var(--text-primary);
-      font-size: 18px;
-      font-weight: 700;
-      transition: all 0.3s;
-      outline: none;
-    }
-
-    .input-field:focus {
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.1), 0 0 20px rgba(0, 240, 255, 0.2);
-    }
-
-    .reading-input-wrap {
-      position: relative;
-    }
-
-    .unit-badge {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0, 240, 255, 0.1);
-      color: var(--neon-cyan);
-      padding: 4px 10px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .save-btn {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(145deg, var(--neon-cyan) 0%, var(--neon-cyan-dark) 100%);
-      border: none;
-      border-radius: 16px;
-      color: var(--bg-abyss);
-      font-size: 18px;
-      font-weight: 900;
-      cursor: pointer;
-      transition: all 0.3s var(--ease-spring);
-      box-shadow: 0 0 30px var(--cyan-glow);
-      margin-top: 8px;
-    }
-
-    .save-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 40px var(--cyan-glow);
-    }
-
-    /* ===== LIVING CARD ===== */
-    .living-card {
-      margin: 0 20px 24px;
-      background: var(--bg-glass);
-      border: 1px solid var(--border-glow);
-      border-radius: 28px;
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(20px);
-      box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(0, 240, 255, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      opacity: 0;
-      transform: translateY(30px) scale(0.95);
-      transition: all 0.6s var(--ease-spring);
-    }
-
-    .living-card.visible {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    .living-card.hidden {
-      display: none;
-    }
-
-    .living-card.emergency {
-      animation: emergency-pulse 2s ease-in-out infinite;
-      border-color: rgba(255, 0, 64, 0.5);
-      box-shadow: 0 0 30px rgba(255, 0, 64, 0.3);
-    }
-
-    @keyframes emergency-pulse {
-      0%, 100% { box-shadow: 0 0 30px rgba(255, 0, 64, 0.3); }
-      50% { box-shadow: 0 0 50px rgba(255, 0, 64, 0.5); }
-    }
-
-    .card-glow {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-purple), transparent);
-      background-size: 200% 100%;
-      animation: gradient-shift 3s linear infinite;
-    }
-
-    @keyframes gradient-shift {
-      0% { background-position: 100% 0; }
-      100% { background-position: -100% 0; }
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
-    .user-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .user-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, var(--neon-cyan) 0%, var(--neon-purple) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 900;
-      color: white;
-      box-shadow: 0 0 20px var(--cyan-glow);
-    }
-
-    .user-info h3 {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 2px;
-    }
-
-    .user-info p {
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-
-    .status-pill {
-      padding: 8px 16px;
-      border-radius: 100px;
-      font-size: 13px;
-      font-weight: 800;
-      background: rgba(0, 240, 255, 0.1);
-      color: var(--neon-cyan);
-      border: 1px solid rgba(0, 240, 255, 0.3);
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-      animation: status-glow 3s ease-in-out infinite;
-    }
-
-    @keyframes status-glow {
-      0%, 100% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); }
-      50% { box-shadow: 0 0 25px rgba(0, 240, 255, 0.4); }
-    }
-
-    .reading-display {
-      text-align: center;
-      margin: 32px 0;
-    }
-
-    .reading-number {
-      font-size: 72px;
-      font-weight: 900;
-      line-height: 1;
-      background: linear-gradient(180deg, var(--text-primary) 0%, var(--neon-cyan) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-variant-numeric: tabular-nums;
-      position: relative;
-      display: inline-block;
-    }
-
-    .reading-number::after {
-      content: 'mg/dL';
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 14px;
-      color: var(--text-secondary);
-      -webkit-text-fill-color: var(--text-secondary);
-      font-weight: 600;
-    }
-
-    .reading-context {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 16px;
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-
-    .trend-badge {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      padding: 6px 12px;
-      background: var(--bg-glass);
-      border-radius: 100px;
-      font-size: 12px;
-      font-weight: 700;
-      border: 1px solid var(--glass-border);
-    }
-
-    .trend-up { color: var(--neon-cyan); border-color: rgba(0, 240, 255, 0.3); }
-    .trend-down { color: var(--danger); border-color: rgba(255, 0, 64, 0.3); }
-
-    .card-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .btn {
-      padding: 14px;
-      border-radius: 14px;
-      border: none;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 0.3s var(--ease-spring);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .btn-primary {
-      background: linear-gradient(145deg, var(--neon-cyan) 0%, var(--neon-cyan-dark) 100%);
-      color: var(--bg-abyss);
-      box-shadow: 0 0 20px var(--cyan-glow);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 30px var(--cyan-glow);
-    }
-
-    .btn-secondary {
-      background: var(--bg-glass);
-      color: var(--text-primary);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(10px);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--neon-purple);
-      color: var(--neon-purple);
-      box-shadow: 0 0 20px var(--purple-glow);
-    }
-
-    /* ===== CTA SECTION ===== */
-    .cta-section {
-      padding: 0 20px;
-      margin-bottom: 24px;
-    }
-
-    .cta-card {
-      background: linear-gradient(145deg, var(--bg-glass) 0%, rgba(0, 240, 255, 0.05) 100%);
-      border: 1px solid var(--border-glow);
-      border-radius: 28px;
-      padding: 32px 24px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-    }
-
-    .cta-orb {
-      position: absolute;
-      width: 200px;
-      height: 200px;
-      background: var(--neon-cyan);
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.2;
-      top: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: orb-pulse 4s ease-in-out infinite;
-    }
-
-    @keyframes orb-pulse {
-      0%, 100% { opacity: 0.2; transform: translateX(-50%) scale(1); }
-      50% { opacity: 0.3; transform: translateX(-50%) scale(1.2); }
-    }
-
-    .cta-icon {
-      font-size: 48px;
-      margin-bottom: 16px;
-      display: inline-block;
-      animation: float-icon 3s ease-in-out infinite;
-      filter: drop-shadow(0 0 20px var(--cyan-glow));
-    }
-
-    @keyframes float-icon {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .cta-title {
-      font-size: 22px;
-      font-weight: 900;
-      margin-bottom: 8px;
-      color: var(--text-primary);
-    }
-
-    .cta-text {
-      color: var(--text-secondary);
-      font-size: 15px;
-      margin-bottom: 24px;
-      line-height: 1.7;
-    }
-
-
-    /* ===== KNOWLEDGE SPOTLIGHT ===== */
-    .knowledge-section {
-      padding: 0 20px;
-      margin-bottom: 24px;
-    }
-
-    .knowledge-card {
-      background: linear-gradient(145deg, rgba(192, 132, 252, 0.12) 0%, rgba(0, 240, 255, 0.06) 100%);
-      border: 1px solid rgba(192, 132, 252, 0.22);
-      border-radius: 26px;
-      padding: 22px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      position: relative;
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 28px rgba(192, 132, 252, 0.08);
-      transition: all 0.3s var(--ease-spring);
-    }
-
-    .knowledge-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .knowledge-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(192, 132, 252, 0.34);
-      box-shadow: 0 0 34px rgba(192, 132, 252, 0.16);
-    }
-
-    .knowledge-card:hover::before { opacity: 1; }
-
-    .knowledge-icon {
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
-      background: linear-gradient(145deg, rgba(192, 132, 252, 0.22) 0%, rgba(0, 240, 255, 0.14) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      flex-shrink: 0;
-      box-shadow: 0 0 24px rgba(192, 132, 252, 0.12);
-    }
-
-    .knowledge-content { flex: 1; position: relative; z-index: 1; }
-
-    .knowledge-eyebrow {
-      display: inline-flex;
-      min-height: 24px;
-      align-items: center;
-      padding: 0 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      color: var(--neon-purple-soft);
-      font-size: 11px;
-      font-weight: 800;
-      margin-bottom: 8px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .knowledge-title {
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-      line-height: 1.45;
-    }
-
-    .knowledge-text {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      max-width: 250px;
-    }
-
-    .knowledge-arrow {
-      font-size: 24px;
-      color: var(--neon-purple-soft);
-      flex-shrink: 0;
-      transition: transform 0.3s ease, color 0.3s ease;
-      position: relative;
-      z-index: 1;
-    }
-
-    .knowledge-card:hover .knowledge-arrow {
-      transform: translateX(-4px);
-      color: var(--neon-cyan);
-    }
-
-    /* ===== FEATURES ===== */
-    .features-section {
-      padding: 0 20px;
-      margin-bottom: 100px;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .section-title {
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--text-primary);
-    }
-
-    .section-link {
-      font-size: 13px;
-      color: var(--neon-cyan);
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .section-link:hover {
-      color: var(--neon-purple);
-      text-shadow: 0 0 10px var(--purple-glow);
-    }
-
-    .features-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .feature-card {
-      background: var(--bg-glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      cursor: pointer;
-      transition: all 0.3s var(--ease-spring);
-      text-decoration: none;
-      color: inherit;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-    }
-
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent 0%, rgba(0, 240, 255, 0.05) 100%);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .feature-card:hover::before {
-      opacity: 1;
-    }
-
-    .feature-card:hover {
-      transform: translateX(-4px);
-      border-color: rgba(0, 240, 255, 0.3);
-      box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
-    }
-
-    .feature-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      background: linear-gradient(145deg, rgba(0, 240, 255, 0.2) 0%, rgba(192, 132, 252, 0.1) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      flex-shrink: 0;
-      box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
-    }
-
-    .feature-content {
-      flex: 1;
-    }
-
-    .feature-content h4 {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-    }
-
-    .feature-content p {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    .feature-arrow {
-      font-size: 20px;
-      color: var(--text-secondary);
-      transition: all 0.3s;
-    }
-
-    .feature-card:hover .feature-arrow {
-      color: var(--neon-cyan);
-      transform: translateX(-4px);
-    }
-
-    /* ===== INSTALL BANNER ===== */
-    .install-banner {
-      position: fixed;
-      bottom: 90px;
-      left: 50%;
-      transform: translateX(-50%) translateY(200%);
-      width: calc(100% - 40px);
-      max-width: 390px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-glow);
-      border-radius: 20px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 240, 255, 0.1);
-      z-index: 80;
-      transition: transform 0.5s var(--ease-spring);
-      backdrop-filter: blur(20px);
-    }
-
-    .install-banner.show {
-      transform: translateX(-50%) translateY(0);
-    }
-
-    .install-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      background: linear-gradient(145deg, var(--neon-cyan) 0%, var(--neon-cyan-dark) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      flex-shrink: 0;
-      box-shadow: 0 0 20px var(--cyan-glow);
-    }
-
-    .install-content {
-      flex: 1;
-    }
-
-    .install-title {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 2px;
-    }
-
-    .install-text {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-
-    .install-btn {
-      background: var(--neon-cyan);
-      color: var(--bg-abyss);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.3s;
-      white-space: nowrap;
-      box-shadow: 0 0 15px var(--cyan-glow);
-    }
-
-    .install-btn:hover {
-      background: var(--neon-cyan-soft);
-      transform: scale(1.05);
-      box-shadow: 0 0 25px var(--cyan-glow);
-    }
-
-    .install-close {
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--danger);
-      border: 2px solid var(--bg-abyss);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 700;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-      transition: all 0.3s;
-    }
-
-    .install-close:hover {
-      transform: scale(1.1) rotate(90deg);
-    }
-
-    /* ===== BOTTOM NAV ===== */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(2, 4, 10, 0.95);
-      backdrop-filter: blur(20px);
-      border-top: 1px solid var(--border-glow);
-      padding: 12px 20px calc(12px + var(--safe-bottom));
-      z-index: 90;
-    }
-
-    .nav-container {
-      max-width: 430px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 8px 24px;
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 700;
-      transition: all 0.3s var(--ease-spring);
-      border-radius: 16px;
-      position: relative;
-    }
-
-    .nav-item.active {
-      color: var(--neon-cyan);
-      background: rgba(0, 240, 255, 0.1);
-      text-shadow: 0 0 10px var(--cyan-glow);
-    }
-
-    .nav-item::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--neon-cyan);
-      opacity: 0;
-      box-shadow: 0 0 10px var(--neon-cyan);
-      transition: all 0.3s;
-    }
-
-    .nav-item.active::before {
-      opacity: 1;
-      top: -2px;
-    }
-
-    .nav-icon {
-      font-size: 24px;
-      transition: transform 0.3s;
-    }
-
-    .nav-item:hover .nav-icon {
-      transform: translateY(-2px);
-    }
-
-    /* ===== TOAST ===== */
-    .toast-container {
-      position: fixed;
-      top: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10001;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      pointer-events: none;
-    }
-
-    .toast {
-      background: rgba(15, 23, 41, 0.95);
-      color: var(--text-primary);
-      padding: 14px 24px;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 14px;
-      border: 1px solid var(--border-glow);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 240, 255, 0.1);
-      animation: toast-in 0.4s var(--ease-spring);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 200px;
-      justify-content: center;
-    }
-
-    @keyframes toast-in {
-      from { opacity: 0; transform: translateY(-20px) scale(0.9); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .toast.hiding {
-      animation: toast-out 0.3s forwards;
-    }
-
-    @keyframes toast-out {
-      to { opacity: 0; transform: translateY(-10px) scale(0.9); }
-    }
-
-    /* ===== MODALS ===== */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(2, 4, 10, 0.95);
-      backdrop-filter: blur(10px);
-      z-index: 2000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-      opacity: 1;
-    }
-
-    .modal-content {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-glow);
-      border-radius: 24px;
-      padding: 24px;
-      max-width: 360px;
-      width: 100%;
-      transform: scale(0.9) translateY(20px);
-      transition: all 0.3s var(--ease-spring);
-      box-shadow: 0 0 40px rgba(0, 240, 255, 0.1);
-    }
-
-    .modal-overlay.active .modal-content {
-      transform: scale(1) translateY(0);
-    }
-
-    /* ===== EXPORT CARDS ===== */
-    .export-stage {
-      position: fixed;
-      top: -99999px;
-      left: -99999px;
-      pointer-events: none;
-      opacity: 0;
-      z-index: -1;
-    }
-
-    .export-card {
-      width: 1080px;
-      min-height: 1350px;
-      padding: 56px;
-      border-radius: 42px;
-      position: relative;
-      overflow: hidden;
-      color: #F8FBFF;
-      font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
-      box-shadow: 0 30px 90px rgba(0,0,0,0.25);
-    }
-
-    .export-card.personal {
+    :root{
+      --bg:#F6F3EE;
+      --bg-2:#EFEAE3;
+      --surface:#FFFFFF;
+      --surface-2:#F8F6F2;
+      --surface-3:#F0ECE7;
+      --hero:#21283B;
+      --hero-2:#343C59;
+      --hero-3:#7E8DB1;
+      --primary:#7BAA92;
+      --primary-2:#9FC5B1;
+      --ink:#1D2433;
+      --ink-2:#667085;
+      --ink-3:#8C94A4;
+      --line:#E6E1D8;
+      --success:#56D46F;
+      --warning:#E6B85C;
+      --danger:#D66560;
+      --shadow-lg:0 26px 60px rgba(30,36,51,.12);
+      --shadow-md:0 16px 32px rgba(30,36,51,.08);
+      --shadow-sm:0 10px 18px rgba(30,36,51,.05);
+      --shadow-hover:0 20px 30px rgba(30,36,51,.12);
+      --radius-xxl:34px;
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:18px;
+      --radius-sm:14px;
+      --safe-top:env(safe-area-inset-top);
+      --safe-bottom:env(safe-area-inset-bottom);
+      --max-width:520px;
+      --ease:cubic-bezier(.2,.8,.2,1);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      -webkit-tap-highlight-color:transparent;
+      font-family:'Tajawal',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    }
+
+    html{
+      background:var(--bg);
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      min-height:100vh;
+      color:var(--ink);
       background:
-        radial-gradient(circle at 12% 18%, rgba(94, 231, 255, 0.18) 0%, transparent 32%),
-        radial-gradient(circle at 88% 82%, rgba(192, 132, 252, 0.18) 0%, transparent 34%),
-        linear-gradient(160deg, #07111F 0%, #10192C 48%, #0A1220 100%);
-      border: 2px solid rgba(94, 231, 255, 0.18);
+        radial-gradient(circle at top left, rgba(123,170,146,.07), transparent 28%),
+        radial-gradient(circle at top right, rgba(126,141,177,.08), transparent 30%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
 
-    .export-card.invite {
+    a{text-decoration:none;color:inherit}
+    button,input{font:inherit}
+    button{border:0;background:none;color:inherit;cursor:pointer}
+    img{max-width:100%;display:block}
+
+    .bg-noise{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      opacity:.02;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    }
+
+    /* Splash */
+    .splash{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(180deg, #F6F3EE 0%, #EFEAE3 100%);
+      transition:opacity .45s ease, visibility .45s ease, transform .45s ease;
+    }
+
+    .splash.hide{
+      opacity:0;
+      visibility:hidden;
+      transform:scale(1.02);
+    }
+
+    .splash-inner{
+      text-align:center;
+      padding:24px;
+    }
+
+    .splash-mark{
+      width:110px;
+      height:110px;
+      border-radius:32px;
+      margin:0 auto 20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 56%, var(--primary) 100%);
+      box-shadow:0 22px 54px rgba(69,73,106,.20), inset 0 1px 0 rgba(255,255,255,.18);
+    }
+
+    .splash-mark svg{width:56px;height:34px}
+    .splash-mark path{
+      stroke:#fff;
+      stroke-width:4;
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .splash-title{
+      font-size:36px;
+      font-weight:900;
+      letter-spacing:-1px;
+      color:var(--ink);
+      margin-bottom:8px;
+    }
+
+    .splash-sub{
+      font-size:15px;
+      color:var(--ink-2);
+      margin-bottom:24px;
+    }
+
+    .splash-bar{
+      width:160px;
+      height:4px;
+      background:rgba(69,73,106,.08);
+      border-radius:999px;
+      overflow:hidden;
+      margin:0 auto;
+    }
+
+    .splash-bar span{
+      display:block;
+      width:100%;
+      height:100%;
+      background:linear-gradient(90deg, var(--primary), var(--hero-3));
+      transform-origin:right;
+      animation:loader 1.1s ease forwards;
+    }
+
+    @keyframes loader{
+      from{transform:scaleX(.1)}
+      to{transform:scaleX(1)}
+    }
+
+    .app{
+      max-width:var(--max-width);
+      margin:0 auto;
+      min-height:100vh;
+      padding:calc(12px + var(--safe-top)) 18px calc(124px + var(--safe-bottom));
+      position:relative;
+    }
+
+    /* Top */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:54px;
+      height:54px;
+      border-radius:18px;
+      flex-shrink:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 58%, var(--primary) 100%);
+      box-shadow:0 14px 28px rgba(69,73,106,.14);
+    }
+
+    .brand-mark svg{width:28px;height:16px}
+    .brand-mark path{
+      stroke:#fff;
+      stroke-width:4;
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .brand-name{
+      font-size:19px;
+      font-weight:900;
+      color:var(--ink);
+      line-height:1;
+    }
+
+    .brand-sub{
+      font-size:13px;
+      color:#707A8F;
+      margin-top:4px;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-shrink:0;
+    }
+
+    .install-btn{
+      min-height:46px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.7);
+      color:var(--ink);
+      box-shadow:var(--shadow-sm);
+      transition:transform .22s var(--ease), border-color .22s var(--ease);
+      padding:0 14px;
+      display:none;
+      align-items:center;
+      gap:8px;
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .install-btn:hover{
+      transform:translateY(-2px);
+      border-color:rgba(69,73,106,.20);
+    }
+
+    /* Greeting */
+    .greeting{
+      margin-bottom:18px;
+    }
+
+    .time-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:32px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.86);
+      color:#6F7890;
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:10px;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .greeting-title{
+      font-size:clamp(28px, 6vw, 34px);
+      font-weight:900;
+      line-height:1.22;
+      letter-spacing:-0.7px;
+      color:var(--ink);
+      margin-bottom:8px;
+    }
+
+    .greeting-sub{
+      font-size:15px;
+      color:#6F7890;
+      line-height:1.7;
+    }
+
+    /* Sections */
+    .section{
+      margin-bottom:26px;
+      position:relative;
+    }
+
+    .section:not(:first-of-type)::before{
+      content:'';
+      position:absolute;
+      top:-14px;
+      left:50%;
+      transform:translateX(-50%);
+      width:38px;
+      height:1px;
+      background:var(--line);
+      opacity:.42;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .section-title{
+      font-size:19px;
+      font-weight:900;
+      letter-spacing:-.3px;
+      color:var(--ink);
+    }
+
+    .section-note{
+      font-size:12px;
+      color:#7D8BAE;
+      font-weight:700;
+      background:rgba(125,139,174,.08);
+      padding:4px 10px;
+      border-radius:999px;
+    }
+
+    /* Daily card */
+    .card-shell{
+      position:relative;
+      border-radius:28px;
+      padding:4px;
+      background:linear-gradient(135deg, rgba(255,255,255,.94), rgba(255,255,255,.38));
+      box-shadow:
+        0 40px 80px rgba(24,30,45,.20),
+        0 0 0 1px rgba(255,255,255,.6) inset;
+      overflow:hidden;
+      margin-bottom:12px;
+      transform:translateZ(0);
+    }
+
+    .wallet-card{
+      position:relative;
+      min-height:256px;
+      padding:24px 22px 20px;
+      border-radius:24px;
       background:
-        radial-gradient(circle at 0% 15%, rgba(192, 132, 252, 0.20) 0%, transparent 34%),
-        radial-gradient(circle at 100% 85%, rgba(0, 240, 255, 0.18) 0%, transparent 36%),
-        linear-gradient(160deg, #16122A 0%, #1D1737 50%, #120F24 100%);
-      border: 2px solid rgba(192, 132, 252, 0.20);
+        radial-gradient(circle at 10% 18%, rgba(255,255,255,.16) 0%, transparent 34%),
+        radial-gradient(circle at 100% 82%, rgba(123,170,146,.24) 0%, transparent 40%),
+        linear-gradient(165deg, #1E2639 0%, #28304A 48%, #1E2738 100%);
+      color:#fff;
+      overflow:hidden;
+      box-shadow:
+        inset 0 1px 2px rgba(255,255,255,.3),
+        inset 0 -2px 4px rgba(0,0,0,.2),
+        0 20px 40px rgba(0,0,0,.4);
     }
 
-    .export-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.06), transparent 26%, transparent 74%, rgba(255,255,255,0.04));
-      pointer-events: none;
+    .wallet-card::before{
+      content:'';
+      position:absolute;
+      top:-50%;
+      left:-50%;
+      width:200%;
+      height:200%;
+      background:linear-gradient(
+        45deg,
+        transparent 40%,
+        rgba(255,255,255,.08) 45%,
+        rgba(255,255,255,.22) 50%,
+        rgba(255,255,255,.08) 55%,
+        transparent 60%
+      );
+      transform:rotate(30deg) translateX(-100%);
+      animation:sheen 8s ease-in-out infinite;
+      pointer-events:none;
+      opacity:.65;
     }
 
-    /* ===== EMERGENCY ===== */
-    .emergency-banner {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(135deg, var(--danger), #b30030);
-      padding: 16px 20px;
-      padding-top: calc(16px + var(--safe-top));
-      z-index: 10000;
-      display: none;
-      animation: slide-down 0.5s var(--ease-spring);
-      box-shadow: 0 4px 20px rgba(255, 0, 64, 0.4);
+    @keyframes sheen{
+      0%,100%{transform:rotate(30deg) translateX(-100%)}
+      50%{transform:rotate(30deg) translateX(100%)}
     }
 
-    @keyframes slide-down {
-      from { transform: translateY(-100%); }
-      to { transform: translateY(0); }
+    .wallet-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px;
+      position:relative;
+      z-index:2;
     }
 
-    .emergency-content {
-      max-width: 430px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+    .wallet-logo{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:14px;
+      font-weight:800;
+      color:rgba(255,255,255,.86);
+      letter-spacing:.5px;
     }
 
-    .emergency-text {
-      color: white;
-      font-weight: 800;
-      font-size: 14px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    .wallet-logo svg{
+      width:28px;
+      height:16px;
+      filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));
     }
 
-    .emergency-btn {
-      background: white;
-      color: var(--danger);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-weight: 800;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.3s;
-      white-space: nowrap;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    .wallet-logo svg path{
+      stroke:#fff;
+      stroke-width:4;
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round;
     }
 
-    .emergency-btn:hover {
-      transform: scale(1.05);
+    .wallet-badge{
+      background:rgba(255,255,255,.15);
+      backdrop-filter:blur(12px);
+      padding:8px 18px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      color:#fff;
+      border:1px solid rgba(255,255,255,.25);
+      box-shadow:0 4px 15px rgba(0,0,0,.2);
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    .wallet-main{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:16px;
+      position:relative;
+      z-index:2;
+    }
+
+    .wallet-name-wrap{
+      flex:1;
+      min-width:0;
+    }
+
+    .wallet-name{
+      font-size:clamp(36px, 8vw, 48px);
+      font-weight:900;
+      line-height:1;
+      letter-spacing:.3px;
+      color:#fff;
+      text-shadow:0 2px 10px rgba(0,0,0,.35);
+      margin-bottom:10px;
+    }
+
+    .wallet-message{
+      font-size:15px;
+      color:rgba(255,255,255,.84);
+      line-height:1.65;
+      max-width:240px;
+      font-weight:500;
+    }
+
+    .wallet-reading-wrap{
+      min-width:132px;
+      text-align:left;
+      flex-shrink:0;
+    }
+
+    .wallet-reading-label{
+      font-size:13px;
+      color:rgba(255,255,255,.68);
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .wallet-reading-value{
+      display:flex;
+      align-items:baseline;
+      justify-content:flex-end;
+      gap:8px;
+      font-size:64px;
+      font-weight:900;
+      line-height:.95;
+      color:#fff;
+      text-shadow:0 4px 15px rgba(0,0,0,.3);
+    }
+
+    .wallet-reading-unit{
+      font-size:15px;
+      color:rgba(255,255,255,.72);
+      font-weight:700;
+    }
+
+    .wallet-panels{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:18px;
+      position:relative;
+      z-index:2;
+    }
+
+    .wallet-panel{
+      min-height:88px;
+      background:rgba(255,255,255,.10);
+      border-radius:20px;
+      padding:14px 14px 12px;
+      backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,.2);
+    }
+
+    .wallet-panel-label{
+      font-size:12px;
+      color:rgba(255,255,255,.68);
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .wallet-panel-value{
+      font-size:18px;
+      font-weight:900;
+      color:#fff;
+      line-height:1.35;
+      min-height:28px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .wallet-panel-unit{
+      font-size:13px;
+      color:rgba(255,255,255,.56);
+      font-weight:700;
+    }
+
+    .wallet-state-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:44px;
+      padding:0 18px;
+      border-radius:999px;
+      font-size:16px;
+      font-weight:900;
+      box-shadow:0 10px 20px rgba(0,0,0,.18);
+    }
+
+    /* Card actions */
+    .card-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .btn{
+      min-height:50px;
+      border-radius:18px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:0 16px;
+      font-size:14px;
+      font-weight:800;
+      transition:all .25s var(--ease);
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+      white-space:nowrap;
+      width:100%;
+      line-height:1;
+    }
+
+    .btn .icon{
+      font-size:16px;
+      line-height:1;
+      flex-shrink:0;
+    }
+
+    .btn-label{
+      display:inline-flex;
+      align-items:center;
+      line-height:1;
+      transform:translateY(1px);
+    }
+
+    .btn:active{transform:scale(.985)}
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--primary), #5E9A7A);
+      color:#fff;
+      box-shadow:0 12px 24px rgba(123,170,146,.25), 0 4px 8px rgba(123,170,146,.15);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-3px);
+      box-shadow:0 16px 32px rgba(123,170,146,.35);
+    }
+
+    .btn-accent{
+      background:linear-gradient(135deg, var(--hero-2), #3E4560);
+      color:#fff;
+      box-shadow:0 12px 24px rgba(69,73,106,.25);
+    }
+
+    .btn-accent:hover{
+      transform:translateY(-3px);
+      box-shadow:0 16px 32px rgba(69,73,106,.35);
+    }
+
+    .btn-outline{
+      background:var(--surface);
+      border:1.5px solid var(--line);
+      color:var(--ink);
+      box-shadow:var(--shadow-sm);
+    }
+
+    .btn-outline:hover{
+      background:var(--surface-2);
+      border-color:var(--hero-3);
+      transform:translateY(-2px);
+    }
+
+    /* Scan */
+    .scan-card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:var(--radius-xl);
+      padding:24px;
+      box-shadow:var(--shadow-md);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .scan-card::before{
+      content:'';
+      position:absolute;
+      top:0;
+      right:0;
+      width:100px;
+      height:100px;
+      background:radial-gradient(circle, rgba(123,170,146,.1) 0%, transparent 70%);
+      border-radius:50%;
+      transform:translate(30%, -30%);
+    }
+
+    .scan-head{
+      display:flex;
+      gap:16px;
+      margin-bottom:20px;
+      position:relative;
+    }
+
+    .scan-icon{
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      background:linear-gradient(135deg, rgba(123,170,146,.2), rgba(125,139,174,.15));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:26px;
+      color:var(--hero-2);
+      flex-shrink:0;
+      box-shadow:0 4px 12px rgba(123,170,146,.15);
+    }
+
+    .scan-title{
+      font-size:20px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:6px;
+    }
+
+    .scan-copy{
+      font-size:14px;
+      color:var(--ink-2);
+      line-height:1.7;
+    }
+
+    .scan-form{
+      display:flex;
+      gap:12px;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+    }
+
+    .input{
+      flex:1;
+      min-width:150px;
+      height:56px;
+      border-radius:18px;
+      border:1.5px solid var(--line);
+      background:#fff;
+      padding:0 18px;
+      font-size:16px;
+      color:var(--ink);
+      outline:none;
+      transition:all .2s ease;
+    }
+
+    .input:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 4px rgba(123,170,146,.12);
+      transform:translateY(-1px);
+    }
+
+    .input::placeholder{
+      color:var(--ink-3);
+    }
+
+    .scan-result{
+      background:linear-gradient(180deg, var(--surface-2) 0%, #fff 100%);
+      border-radius:22px;
+      padding:24px;
+      border:1.5px solid var(--line);
+      display:none;
+      box-shadow:inset 0 2px 4px rgba(0,0,0,.02);
+    }
+
+    .scan-result.show{
+      display:block;
+      animation:slideUp .4s var(--ease);
+    }
+
+    @keyframes slideUp{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .scan-reading{
+      display:flex;
+      align-items:baseline;
+      gap:8px;
+      font-size:42px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:12px;
+      line-height:1;
+    }
+
+    .scan-reading span{
+      font-size:16px;
+      color:var(--ink-2);
+      font-weight:700;
+    }
+
+    .scan-status{
+      display:inline-block;
+      padding:8px 18px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+
+    .scan-message{
+      font-size:14px;
+      color:var(--ink-2);
+      line-height:1.8;
+      margin-bottom:16px;
+    }
+
+    .btn-save-reading{
+      background:#fff;
+      border:1.5px solid var(--line);
+      color:var(--ink);
+      padding:12px 20px;
+      border-radius:16px;
+      font-size:14px;
+      font-weight:900;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition:all .2s ease;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .btn-save-reading:hover{
+      background:var(--primary);
+      color:#fff;
+      border-color:var(--primary);
+      transform:translateY(-2px);
+      box-shadow:0 8px 16px rgba(123,170,146,.25);
+    }
+
+    /* Tools */
+    .quick-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:14px;
+      margin-top:12px;
+    }
+
+    .quick-card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:24px 16px;
+      box-shadow:var(--shadow-sm);
+      transition:all .3s var(--ease);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .quick-card::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:3px;
+      background:linear-gradient(90deg, var(--primary), var(--hero-3));
+      transform:scaleX(0);
+      transition:transform .3s ease;
+    }
+
+    .quick-card:hover{
+      transform:translateY(-6px);
+      border-color:var(--primary);
+      box-shadow:var(--shadow-hover);
+    }
+
+    .quick-card:hover::before{transform:scaleX(1)}
+
+    .quick-icon{
+      width:56px;
+      height:56px;
+      border-radius:20px;
+      background:linear-gradient(135deg, rgba(123,170,146,.15), rgba(125,139,174,.1));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      color:var(--hero-2);
+      margin-bottom:14px;
+      transition:transform .3s ease;
+    }
+
+    .quick-card:hover .quick-icon{
+      transform:scale(1.1) rotate(-5deg);
+    }
+
+    .quick-card strong{
+      font-size:15px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:6px;
+    }
+
+    .quick-card span{
+      font-size:12px;
+      color:var(--ink-2);
+      line-height:1.6;
+    }
+
+    /* Share CTA */
+    .share-cta-section{
+      margin-top:4px;
+    }
+
+    .share-cta-copy{
+      margin-bottom:12px;
+    }
+
+    .share-cta-eyebrow{
+      display:inline-flex;
+      align-items:center;
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      background:rgba(125,139,174,.08);
+      color:#7D8BAE;
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .share-cta-hook{
+      font-size:17px;
+      font-weight:900;
+      color:var(--ink);
+      line-height:1.5;
+      margin-bottom:4px;
+    }
+
+    .share-cta-sub{
+      font-size:14px;
+      line-height:1.8;
+      color:#6F7890;
+    }
+
+    .share-main-btn{
+      width:100%;
+      min-height:56px;
+      border-radius:22px;
+      background:linear-gradient(135deg, #45496A 0%, #2A2F45 100%);
+      color:#fff;
+      box-shadow:0 18px 30px rgba(42,47,69,.18);
+      font-size:16px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      transition:transform .22s var(--ease), box-shadow .22s var(--ease);
+    }
+
+    .share-main-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 22px 34px rgba(42,47,69,.22);
+    }
+
+    /* Bottom nav */
+    .bottom-nav-wrap{
+      position:fixed;
+      right:0;
+      left:0;
+      bottom:0;
+      z-index:30;
+      pointer-events:none;
+      padding:0 18px calc(14px + var(--safe-bottom));
+    }
+
+    .bottom-nav{
+      max-width:var(--max-width);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      padding:10px;
+      border-radius:28px;
+      background:rgba(255,255,255,.95);
+      border:1px solid var(--line);
+      backdrop-filter:blur(20px);
+      box-shadow:0 12px 40px rgba(24,30,45,.12);
+      pointer-events:auto;
+    }
+
+    .nav-item{
+      min-height:60px;
+      border-radius:18px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      font-size:11px;
+      font-weight:900;
+      color:var(--ink-3);
+      transition:all .2s var(--ease);
+      position:relative;
+    }
+
+    .nav-item span:first-child{
+      font-size:20px;
+      line-height:1;
+      transition:transform .2s ease;
+    }
+
+    .nav-item.active{
+      background:linear-gradient(135deg, rgba(125,139,174,.15), rgba(123,170,146,.12));
+      color:var(--primary);
+      transform:translateY(-4px);
+    }
+
+    .nav-item.active span:first-child{
+      font-size:24px;
+      transform:scale(1.15);
+      filter:drop-shadow(0 4px 8px rgba(123,170,146,.3));
+    }
+
+    .nav-item.active::after{
+      content:'';
+      position:absolute;
+      bottom:6px;
+      width:4px;
+      height:4px;
+      background:var(--primary);
+      border-radius:50%;
+    }
+
+    /* Sheets */
+    .sheet-overlay{
+      position:fixed;
+      inset:0;
+      z-index:50;
+      background:rgba(29,36,51,.35);
+      backdrop-filter:blur(12px);
+      padding:14px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      opacity:0;
+      visibility:hidden;
+      transition:opacity .3s ease, visibility .3s ease;
+    }
+
+    .sheet-overlay.show{
+      opacity:1;
+      visibility:visible;
+    }
+
+    .sheet{
+      width:min(100%, var(--max-width));
+      background:linear-gradient(180deg, #FFFFFF 0%, #F8F6F2 100%);
+      border:1px solid var(--line);
+      border-radius:32px;
+      box-shadow:var(--shadow-lg);
+      padding:20px 20px 24px;
+      transform:translateY(30px);
+      transition:transform .3s var(--ease);
+    }
+
+    .sheet-overlay.show .sheet{
+      transform:translateY(0);
+    }
+
+    .sheet-handle{
+      width:40px;
+      height:5px;
+      border-radius:999px;
+      background:var(--line);
+      margin:0 auto 18px;
+    }
+
+    .sheet-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .sheet-title{
+      font-size:22px;
+      font-weight:900;
+      line-height:1.3;
+      color:var(--ink);
+      letter-spacing:-.5px;
+    }
+
+    .sheet-sub{
+      font-size:13px;
+      color:var(--ink-2);
+      line-height:1.7;
+      margin-top:6px;
+    }
+
+    .close-btn{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      flex-shrink:0;
+      border:1.5px solid var(--line);
+      background:#fff;
+      font-size:24px;
+      color:var(--ink);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:all .2s ease;
+    }
+
+    .close-btn:hover{
+      background:var(--surface-2);
+      transform:rotate(90deg);
+    }
+
+    .field{
+      margin-bottom:14px;
+    }
+
+    .field label{
+      display:block;
+      font-size:13px;
+      color:var(--ink-2);
+      font-weight:900;
+      margin-bottom:8px;
+    }
+
+    .helper{
+      font-size:12px;
+      color:var(--ink-3);
+      line-height:1.7;
+      margin:6px 2px 16px;
+    }
+
+    .sheet-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:10px;
+    }
+
+    .install-steps{
+      display:grid;
+      gap:10px;
+      margin:8px 0 18px;
+    }
+
+    .install-step{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:var(--surface-2);
+    }
+
+    .install-step-index{
+      width:28px;
+      height:28px;
+      border-radius:10px;
+      flex-shrink:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(125,139,174,.16);
+      color:var(--hero-2);
+      font-size:13px;
+      font-weight:900;
+      margin-top:2px;
+    }
+
+    .install-step strong{
+      display:block;
+      font-size:13px;
+      color:var(--ink);
+      font-weight:900;
+      margin-bottom:4px;
+    }
+
+    .install-step span{
+      display:block;
+      font-size:12px;
+      color:var(--ink-2);
+      line-height:1.6;
+    }
+
+    .hidden{display:none !important}
+
+    /* Toast */
+    .toast{
+      position:fixed;
+      right:50%;
+      bottom:calc(110px + var(--safe-bottom));
+      z-index:60;
+      transform:translateX(50%) translateY(20px);
+      min-width:220px;
+      max-width:calc(100vw - 32px);
+      padding:14px 18px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.98);
+      box-shadow:var(--shadow-md);
+      color:var(--ink);
+      text-align:center;
+      font-size:13px;
+      font-weight:900;
+      opacity:0;
+      visibility:hidden;
+      transition:all .25s ease;
+      backdrop-filter:blur(10px);
+    }
+
+    .toast.show{
+      opacity:1;
+      visibility:visible;
+      transform:translateX(50%) translateY(0);
+    }
+
+    .status-low{background:linear-gradient(135deg, #FF6B6B, #EE5A6F) !important;color:#fff !important}
+    .status-range{background:linear-gradient(135deg, #51CF66, #40C057) !important;color:#fff !important}
+    .status-slightly-high{background:linear-gradient(135deg, #FFD43B, #FCC419) !important;color:var(--ink) !important}
+    .status-high{background:linear-gradient(135deg, #FF8787, #FA5252) !important;color:#fff !important}
+    .status-very-high{background:linear-gradient(135deg, #C0392B, #A93226) !important;color:#fff !important}
+
+    .qr-stage{
+      position:fixed;
+      right:-99999px;
+      top:-99999px;
+      opacity:0;
+      pointer-events:none;
+    }
+
+    @media (max-width:480px){
+      .wallet-main{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .wallet-reading-wrap{
+        text-align:right;
+        width:100%;
+        min-width:unset;
+      }
+
+      .wallet-reading-value{
+        justify-content:flex-start;
+        font-size:48px;
+      }
+
+      .quick-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:420px){
+      .card-actions{
+        grid-template-columns:1fr;
+      }
+
+      .card-actions .btn{
+        width:100%;
+      }
     }
   </style>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "SugarMind",
-    "applicationCategory": "HealthApplication",
-    "operatingSystem": "Web",
-    "inLanguage": "ar-SA",
-    "description": "منصة تساعد على تسجيل قراءة السكر، متابعة اليوم، وفهم الكارب والجرعات بشكل أوضح.",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "SAR"
-    }
-  }
-  </script>
 </head>
 <body>
+  <div class="bg-noise"></div>
 
-  <!-- Aurora Background -->
-  <div class="aurora-bg"></div>
-  <div class="noise-overlay"></div>
-
-  <!-- Emergency Banner -->
-  <div class="emergency-banner" id="emergencyBanner">
-    <div class="emergency-content">
-      <span class="emergency-text">⚠️ قراءة منخفضة جداً - تناول سكر سريع</span>
-      <button class="emergency-btn" onclick="handleEmergency()">فهمت</button>
+  <div class="splash" id="splashScreen">
+    <div class="splash-inner">
+      <div class="splash-mark">
+        <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
+        </svg>
+      </div>
+      <div class="splash-title">SugarMind</div>
+      <div class="splash-sub">بطاقتك اليومية للسكر والكارب</div>
+      <div class="splash-bar"><span></span></div>
     </div>
   </div>
 
-  <!-- Toast Container -->
-  <div class="toast-container" id="toastContainer"></div>
-
-  <!-- Install Banner -->
-  <div class="install-banner" id="installBanner">
-    <button class="install-close" onclick="dismissInstall()">×</button>
-    <div class="install-icon">🍃</div>
-    <div class="install-content">
-      <div class="install-title">ثبت SugarMind</div>
-      <div class="install-text">وصول سريع من الشاشة الرئيسية</div>
-    </div>
-    <button class="install-btn" onclick="installApp()">تثبيت</button>
-  </div>
-
-  <!-- Recorder Modal -->
-  <div class="recorder-overlay" id="recorderModal" onclick="closeRecorderOnBackdrop(event)">
-    <div class="recorder-sheet" onclick="event.stopPropagation()">
-      <div class="recorder-header">
-        <h3 class="recorder-title">📊 تسجيل قراءة جديدة</h3>
-        <button class="close-btn" onclick="closeRecorder()">×</button>
-      </div>
-      
-      <div class="input-group">
-        <label class="input-label">الاسم</label>
-        <input type="text" class="input-field" id="inputName" placeholder="اسمك الكريم">
-      </div>
-
-      <div class="input-group">
-        <label class="input-label">قراءة السكر</label>
-        <div class="reading-input-wrap">
-          <input type="number" class="input-field" id="inputReading" placeholder="مثال: 120">
-          <span class="unit-badge">mg/dL</span>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 100 40" preserveAspectRatio="none">
+            <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">SugarMind</div>
+          <div class="brand-sub">واجهة يومية أوضح لحالتك</div>
         </div>
       </div>
 
-      <div class="input-group">
-        <label class="input-label">الوقت</label>
-        <input type="time" class="input-field" id="inputTime">
-      </div>
-
-      <button class="save-btn" onclick="saveReading()">
-        <span>💾</span> حفظ القراءة
-      </button>
-    </div>
-  </div>
-
-  <!-- Share Modal -->
-  <div class="modal-overlay" id="shareModal" onclick="closeShareModal(event)">
-    <div class="modal-content">
-      <h3 style="font-size: 22px; font-weight: 900; margin-bottom: 8px; color: var(--text-primary);">مخرجاتك جاهزة ✨</h3>
-      <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 14px; line-height: 1.7;">نزّل بطاقتك الشخصية أو بطاقة دعوة أنيقة للمشاركة مع شخص يهمك.</p>
-      <div id="qrContainer" style="background: white; padding: 16px; border-radius: 16px; display: inline-block; margin-bottom: 20px;"></div>
-      <button class="btn btn-primary" onclick="downloadCard()" style="width: 100%; margin-bottom: 10px;">📥 تحميل بطاقتي</button>
-      <button class="btn btn-secondary" onclick="downloadInviteCard()" style="width: 100%; margin-bottom: 10px;">❤️ تحميل بطاقة دعوة</button>
-      <button class="btn btn-secondary" onclick="closeShareModalDirect()" style="width: 100%;">إغلاق</button>
-    </div>
-  </div>
-
-  <!-- Export Stage -->
-  <div class="export-stage" aria-hidden="true">
-    <div id="exportCard" class="export-card personal">
-      <div style="position:relative; z-index:1; display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:38px;">
-        <div style="display:inline-flex; align-items:center; gap:10px; min-height:42px; padding:0 16px; border-radius:999px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.10); font-size:22px; font-weight:800;">بطاقتي اليومية</div>
-        <div style="text-align:left;">
-          <div style="font-size:40px; font-weight:900; color:#5EE7FF; text-shadow:0 0 24px rgba(94,231,255,0.25);">SugarMind</div>
-          <div style="font-size:20px; color:rgba(240,249,255,0.72); margin-top:8px;">متابعة السكر والكارب بشكل أوضح</div>
-        </div>
-      </div>
-
-      <div style="position:relative; z-index:1; display:flex; justify-content:space-between; align-items:flex-start; gap:24px; margin-bottom:34px;">
-        <div style="flex:1; min-width:0;">
-          <div style="font-size:72px; font-weight:900; line-height:1.05; margin-bottom:14px; color:#F8FBFF;" id="exportUserName">ضيفنا الجديد</div>
-          <div style="font-size:30px; color:rgba(240,249,255,0.80); line-height:1.8; max-width:580px;" id="exportMessage">هذه بطاقتي اليومية من SugarMind.</div>
-        </div>
-        <div style="min-width:290px; text-align:left;">
-          <div style="font-size:24px; color:rgba(240,249,255,0.64); font-weight:700; margin-bottom:12px;">القراءة الحالية</div>
-          <div style="font-size:112px; font-weight:900; line-height:0.95; color:var(--card-color, #5EE7FF); text-shadow:0 0 32px rgba(94,231,255,0.22); letter-spacing:-2px;" id="exportReading">---</div>
-          <div style="font-size:28px; color:rgba(240,249,255,0.70); font-weight:800; margin-top:8px;">mg/dL</div>
-        </div>
-      </div>
-
-      <div style="position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:34px;">
-        <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.10); border-radius:26px; padding:22px;">
-          <div style="font-size:20px; color:rgba(240,249,255,0.62); font-weight:700; margin-bottom:12px;">الحالة</div>
-          <div style="font-size:38px; font-weight:900; color:#F8FBFF; line-height:1.4;" id="exportStatus">---</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.10); border-radius:26px; padding:22px;">
-          <div style="font-size:20px; color:rgba(240,249,255,0.62); font-weight:700; margin-bottom:12px;">وقت القراءة</div>
-          <div style="font-size:38px; font-weight:900; color:#F8FBFF; line-height:1.4;" id="exportReadTime">---</div>
-        </div>
-      </div>
-
-      <div style="position:relative; z-index:1; display:grid; grid-template-columns:300px 1fr; gap:22px; align-items:stretch;">
-        <div style="background:#fff; border-radius:28px; padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
-          <div id="exportQr" style="width:220px; height:220px; background:#fff; border-radius:18px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;"></div>
-          <div style="font-size:26px; font-weight:900; color:#111827; margin-bottom:6px;">امسح وابدأ</div>
-          <div style="font-size:18px; color:#667085; line-height:1.7;">افتح التطبيق مباشرة وسجّل يومك.</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.10); border-radius:28px; padding:24px 26px; display:flex; flex-direction:column; justify-content:center;">
-          <div style="font-size:34px; font-weight:900; color:#F8FBFF; margin-bottom:12px;">بطاقة متابعة أنيقة</div>
-          <div style="font-size:24px; color:rgba(240,249,255,0.82); line-height:1.9;">صُممت لتشارك وضعك بشكل واضح وراقي، بدون تشويش، ومع حضور بصري يليق بـ SugarMind.</div>
-        </div>
-      </div>
-    </div>
-
-    <div id="inviteExportCard" class="export-card invite">
-      <div style="position:relative; z-index:1; display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:34px;">
-        <div style="display:inline-flex; align-items:center; gap:10px; min-height:42px; padding:0 16px; border-radius:999px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.10); font-size:22px; font-weight:800;">رسالة اهتمام</div>
-        <div style="text-align:left;">
-          <div style="font-size:40px; font-weight:900; color:#E9D5FF; text-shadow:0 0 24px rgba(233,213,255,0.20);">SugarMind</div>
-          <div style="font-size:20px; color:rgba(240,249,255,0.72); margin-top:8px;">لشخص يهمك أمره</div>
-        </div>
-      </div>
-
-      <div style="position:relative; z-index:1; font-size:68px; font-weight:900; line-height:1.2; color:#F8FBFF; margin-bottom:18px; max-width:760px;" id="inviteHeadline">فيه أحد يهمه أمرك</div>
-      <div style="position:relative; z-index:1; font-size:30px; color:rgba(240,249,255,0.84); line-height:1.9; max-width:860px; margin-bottom:34px;" id="inviteMessage">شارك لك SugarMind لأنه قد يسهّل عليك فهم قراءة السكر، كارب الوجبة، ومعامل الكارب بطريقة أوضح.</div>
-
-      <div style="position:relative; z-index:1; display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:34px;">
-        <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.10); border-radius:24px; padding:22px;">
-          <div style="font-size:34px; margin-bottom:14px;">📊</div>
-          <div style="font-size:28px; font-weight:900; color:#F8FBFF; margin-bottom:8px;">فهم القراءة</div>
-          <div style="font-size:20px; color:rgba(240,249,255,0.74); line-height:1.7;">يوضح لك معنى قراءتك الحالية بشكل أسرع.</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.10); border-radius:24px; padding:22px;">
-          <div style="font-size:34px; margin-bottom:14px;">🍽️</div>
-          <div style="font-size:28px; font-weight:900; color:#F8FBFF; margin-bottom:8px;">حساب الكارب</div>
-          <div style="font-size:20px; color:rgba(240,249,255,0.74); line-height:1.7;">يساعدك تقرّب كارب الوجبة بطريقة أسهل.</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.10); border-radius:24px; padding:22px;">
-          <div style="font-size:34px; margin-bottom:14px;">🧮</div>
-          <div style="font-size:28px; font-weight:900; color:#F8FBFF; margin-bottom:8px;">المعامل والتصحيح</div>
-          <div style="font-size:20px; color:rgba(240,249,255,0.74); line-height:1.7;">يدخلك على أدوات أوضح لمعامل الكارب والتصحيح.</div>
-        </div>
-      </div>
-
-      <div style="position:relative; z-index:1; display:grid; grid-template-columns:300px 1fr; gap:22px; align-items:stretch;">
-        <div style="background:#fff; border-radius:28px; padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
-          <div id="inviteExportQr" style="width:220px; height:220px; background:#fff; border-radius:18px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;"></div>
-          <div style="font-size:26px; font-weight:900; color:#111827; margin-bottom:6px;">امسح وابدأ</div>
-          <div style="font-size:18px; color:#667085; line-height:1.7;">ادخل مباشرة وابدأ أول خطوة.</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.10); border-radius:28px; padding:24px 26px; display:flex; flex-direction:column; justify-content:center;">
-          <div style="font-size:34px; font-weight:900; color:#F8FBFF; margin-bottom:12px;">بطاقة دعوة راقية</div>
-          <div style="font-size:24px; color:rgba(240,249,255,0.82); line-height:1.9;">بدل ما ترسل رابط جاف، شارك بطاقة تعكس اهتمامك وتشرح قيمة SugarMind من أول نظرة.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SPLASH SCREEN -->
-  <div class="splash-screen" id="splashScreen">
-    <div class="splash-aurora"></div>
-    <div class="splash-content">
-      <div class="splash-logo">
-        <div class="splash-circle">
-          <div class="splash-pulse">
-            <svg viewBox="0 0 100 40" preserveAspectRatio="none">
-              <path d="M0 20 Q 10 20, 15 20 T 25 20 T 35 20 L 40 5 L 45 35 L 50 15 L 55 25 L 60 10 L 65 20 T 75 20 T 85 20 T 100 20" />
-            </svg>
-          </div>
-        </div>
-      </div>
-      <h1 class="splash-brand">SugarMind</h1>
-      <p class="splash-tagline">أول خطوة ذكية مع سكرك</p>
-      <div class="splash-loader">
-        <div class="splash-progress"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main App -->
-  <div class="app-container">
-    
-    <!-- Header -->
-    <header class="smart-header" id="smartHeader">
-      <div class="header-content">
-        <div class="brand">
-          <div class="logo-icon">
-            <div class="logo-bg">
-              <svg class="mini-pulse" viewBox="0 0 100 40" preserveAspectRatio="none">
-                <path d="M0 20 Q 10 20, 15 20 T 25 20 T 35 20 L 40 5 L 45 35 L 50 15 L 55 25 L 60 10 L 65 20 T 75 20 T 85 20 T 100 20" 
-                      stroke="white" stroke-width="4" fill="none" stroke-linecap="round"/>
-              </svg>
-            </div>
-          </div>
-          <div class="brand-text">SugarMind</div>
-        </div>
-        
-        <div class="quick-actions">
-          <button class="action-btn add" onclick="openRecorder()" title="قراءة جديدة">
-            <span style="font-size: 24px;">+</span>
-          </button>
-        </div>
+      <div class="top-actions">
+        <button class="install-btn" id="installTrigger" type="button">
+          <span>⬇️</span>
+          <span>ثبت التطبيق</span>
+        </button>
       </div>
     </header>
 
-    <!-- Greeting -->
-    <section class="greeting-section">
-      <div class="time-badge" id="timeBadge">
-        <span id="timeIcon">🌅</span>
-        <span id="timeLabel">---</span>
-      </div>
-      <h1 class="greeting-title" id="greetingText">
-        أهلاً بك 👋
-      </h1>
-      <p class="greeting-sub" id="greetingSub">سجل قراءة السكر، تابع يومك، وافهم الكارب بطريقة أوضح.</p>
+    <section class="greeting">
+      <div class="time-chip" id="timeChip">☀️ <span>بداية يوم هادئ</span></div>
+      <h1 class="greeting-title" id="greetingTitle">صباح الخير</h1>
+      <p class="greeting-sub" id="greetingSub">واجهة يومية أقرب لك، وتفهم يومك بهدوء.</p>
     </section>
 
-    <!-- Living Card -->
-    <div class="living-card hidden" id="livingCard">
-      <div class="card-glow"></div>
-      
-      <div class="card-header">
-        <div class="user-meta">
-          <div class="user-avatar" id="userAvatar">👤</div>
-          <div class="user-info">
-            <h3 id="cardName">---</h3>
-            <p id="cardDate">---</p>
-          </div>
-        </div>
-        <div class="status-pill" id="statusPill">---</div>
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">بطاقتي</div>
+        <div class="section-note">خاصة بك</div>
       </div>
 
-      <div class="reading-display">
-        <div class="reading-number" id="readingNum">---</div>
-        <div class="reading-context">
-          <span id="readingTime">---</span>
-          <div class="trend-badge trend-up" id="trendBadge">
-            <span>↗️</span>
-            <span id="trendText">مستقر</span>
+      <div class="card-shell">
+        <div class="wallet-card">
+          <div class="wallet-header">
+            <div class="wallet-logo">
+              <svg viewBox="0 0 100 40">
+                <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
+              </svg>
+              <span>SugarMind</span>
+            </div>
+            <div class="wallet-badge" id="walletTag">بطاقة يومية</div>
+          </div>
+
+          <div class="wallet-main">
+            <div class="wallet-name-wrap">
+              <div class="wallet-name" id="walletName">ضيفنا الجديد</div>
+              <div class="wallet-message" id="walletMessage">سجل اسمك وقراءتك لتفعيل البطاقة</div>
+            </div>
+
+            <div class="wallet-reading-wrap">
+              <div class="wallet-reading-label">القراءة الحالية</div>
+              <div class="wallet-reading-value">
+                <span id="walletReading">--</span>
+                <span class="wallet-reading-unit">mg/dL</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="wallet-panels">
+            <div class="wallet-panel">
+              <div class="wallet-panel-label">الحالة</div>
+              <div class="wallet-panel-value">
+                <span class="wallet-state-pill" id="walletStateChip">بانتظار القراءة</span>
+              </div>
+            </div>
+
+            <div class="wallet-panel">
+              <div class="wallet-panel-label">معامل الكارب</div>
+              <div class="wallet-panel-value" id="walletRatio">1:-- <span class="wallet-panel-unit">ICR</span></div>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="card-actions">
-        <button class="btn btn-primary" onclick="openShareModal()">
-          <span>📤</span> مشاركة
+        <button class="btn btn-primary" id="shareCardBtn" type="button">
+          <span class="icon">📤</span>
+          <span class="btn-label">شارك بطاقتك</span>
         </button>
-        <button class="btn btn-secondary" onclick="openRecorder()">
-          <span>✏️</span> تحديث
+
+        <button class="btn btn-accent" id="saveCardBtn" type="button">
+          <span class="icon">💾</span>
+          <span class="btn-label">احفظ كصورة</span>
+        </button>
+
+        <button class="btn btn-outline" id="editCardBtn" type="button">
+          <span class="icon">✏️</span>
+          <span class="btn-label">تعديل بياناتك</span>
         </button>
       </div>
-    </div>
+    </section>
 
-    <!-- CTA Section -->
-    <div class="cta-section" id="ctaSection">
-      <div class="cta-card">
-        <div class="cta-orb"></div>
-        <div class="cta-icon">✨</div>
-        <h3 class="cta-title">ابدأ رحلتك الآن</h3>
-        <p class="cta-text">سجل قراءاتك بذكية واحصل على تحليل فوري ومتابعة يومية سهلة ومريحة</p>
-        <button class="btn btn-primary" onclick="openRecorder()" style="width: 100%;">
-          ⚡ تسجيل القراءة
-        </button>
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">اعرف قراءتك الآن</div>
+        <div class="section-note">تحليل فوري</div>
       </div>
-    </div>
 
-    <!-- Knowledge Spotlight -->
-    <section class="knowledge-section">
-      <a class="knowledge-card" href="knowledge.html" aria-label="الانتقال إلى صفحة المواضيع والمعرفة">
-        <div class="knowledge-icon">📚</div>
-        <div class="knowledge-content">
-          <div class="knowledge-eyebrow">مركز المعرفة</div>
-          <h2 class="knowledge-title">مواضيع تهمك في السكري والكارب</h2>
-          <p class="knowledge-text">تعلم بهدوء عن حساب الكارب، فهم القراءات، والوجبات الشائعة داخل مكتبة مرتبة وسهلة.</p>
+      <div class="scan-card">
+        <div class="scan-head">
+          <div class="scan-icon">🩺</div>
+          <div>
+            <div class="scan-title">فحص سريع للسكر</div>
+            <div class="scan-copy">أدخل قراءة الجلوكوز، واحصل على التحليل الفوري.</div>
+          </div>
         </div>
-        <div class="knowledge-arrow">←</div>
-      </a>
-    </section>
 
-    <!-- Features -->
-    <section class="features-section">
-      <div class="section-header">
-        <h2 class="section-title">أدواتك الذكية</h2>
-        <span class="section-link" onclick="showToast('قريباً...', '🔜')">الكل</span>
-      </div>
-      
-      <div class="features-list">
-        <a class="feature-card" href="meal-analyzer.html" aria-label="الانتقال إلى محلل الوجبة">
-          <div class="feature-icon">🍽️</div>
-          <div class="feature-content">
-            <h4>محلل الوجبة</h4>
-            <p>صور، اكتب، أو قولها - ونعطيك الكارب والأنسولين</p>
-          </div>
-          <div class="feature-arrow">←</div>
-        </a>
+        <div class="scan-form">
+          <input class="input" id="quickReadingInput" type="number" inputmode="numeric" min="20" max="600" placeholder="مثال: 124" />
+          <button class="btn btn-primary" id="quickReadingBtn" type="button">
+            <span class="btn-label">اعرف قراءتك</span>
+          </button>
+        </div>
 
-        <a class="feature-card" href="carb-calculator.html" aria-label="الانتقال إلى حاسبة المعامل">
-          <div class="feature-icon">🧮</div>
-          <div class="feature-content">
-            <h4>حاسب معاملك</h4>
-            <p>جاوب 3 أسئلة ونحدد معامل الكارب المناسب لك</p>
+        <div class="scan-result" id="quickReadingResult">
+          <div class="scan-reading">
+            <span id="quickReadingValue">--</span>
+            <span>mg/dL</span>
           </div>
-          <div class="feature-arrow">←</div>
-        </a>
+          <div class="scan-status" id="quickReadingStatus">--</div>
+          <div class="scan-message" id="quickReadingMessage">أدخل القراءة حتى تظهر النتيجة.</div>
 
-        <a class="feature-card" href="daily-guide.html" aria-label="الانتقال إلى الدليل اليومي">
-          <div class="feature-icon">📋</div>
-          <div class="feature-content">
-            <h4>دليلك اليومي</h4>
-            <p>قراءاتك، وجباتك، وأهدافك في مكان واحد</p>
-          </div>
-          <div class="feature-arrow">←</div>
-        </a>
+          <button class="btn-save-reading" id="saveQuickReadingBtn" type="button">
+            <span>💾</span> حفظ في بطاقتي
+          </button>
+        </div>
       </div>
     </section>
 
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">أدواتك اليومية</div>
+        <div class="section-note">الأساس</div>
+      </div>
+
+      <div class="quick-grid">
+        <a class="quick-card" href="meal-analyzer.html">
+          <div class="quick-icon">🍽️</div>
+          <strong>محلل الوجبة</strong>
+          <span>تقدير الكارب والمغذيات</span>
+        </a>
+
+        <a class="quick-card" href="carb-calculator.html">
+          <div class="quick-icon">🧮</div>
+          <strong>حاسبة المعامل</strong>
+          <span>احسب الجرعة والتصحيح</span>
+        </a>
+
+        <a class="quick-card" href="daily-guide.html">
+          <div class="quick-icon">📋</div>
+          <strong>الدليل اليومي</strong>
+          <span>ملخص يومك وتوصيات</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section share-cta-section">
+      <div class="section-head">
+        <div class="section-title">شارك الاهتمام</div>
+        <div class="section-note">ادعم غيرك</div>
+      </div>
+
+      <div class="share-cta-copy">
+        <div class="share-cta-eyebrow">تفهم تعب السكري اليومي</div>
+        <div class="share-cta-hook">ضايع بين كارب الوجبة، المعامل، والتصحيح؟</div>
+        <div class="share-cta-sub">شارك SugarMind مع شخص يهمك أمره، وخله يبدأ من بطاقة واضحة وقريبة منه.</div>
+      </div>
+
+      <button class="share-main-btn" id="sharePromoBtn" type="button">
+        <span>❤️</span>
+        <span>شارك مع شخص تخاف عليه</span>
+      </button>
+    </section>
+  </main>
+
+  <div class="bottom-nav-wrap">
+    <nav class="bottom-nav" aria-label="التنقل السفلي">
+      <a class="nav-item active" href="index.html"><span>🏠</span><span>الرئيسية</span></a>
+      <a class="nav-item" href="meal-analyzer.html"><span>🍽️</span><span>الوجبات</span></a>
+      <a class="nav-item" href="carb-calculator.html"><span>🧮</span><span>الحساب</span></a>
+      <a class="nav-item" href="daily-guide.html"><span>📋</span><span>اليوم</span></a>
+    </nav>
   </div>
 
-  <!-- Bottom Navigation -->
-  <nav class="bottom-nav">
-    <div class="nav-container">
-      <a href="index.html" class="nav-item active" onclick="setActiveNav(this, 'home')">
-        <span class="nav-icon">🏠</span>
-        <span>الرئيسية</span>
-      </a>
-      <a href="daily-guide.html" class="nav-item" onclick="setActiveNav(this, 'analytics')">
-        <span class="nav-icon">📈</span>
-        <span>تحليلاتي</span>
-      </a>
+  <div class="sheet-overlay" id="recorderOverlay" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="recorderTitle">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <div>
+          <h3 class="sheet-title" id="recorderTitle">تعديل بطاقتك</h3>
+          <p class="sheet-sub">أدخل اسمك وآخر قراءة سجلتها.</p>
+        </div>
+        <button class="close-btn" id="closeRecorderBtn" type="button" aria-label="إغلاق">×</button>
+      </div>
+
+      <div class="field">
+        <label for="nameInput">الاسم</label>
+        <input class="input" id="nameInput" type="text" placeholder="مثال: هنادي" maxlength="30" />
+      </div>
+
+      <div class="field">
+        <label for="readingInput">قراءة السكر (mg/dL)</label>
+        <input class="input" id="readingInput" type="number" inputmode="numeric" min="20" max="600" placeholder="مثال: 120" />
+      </div>
+
+      <p class="helper">💡 البيانات تُحفظ على جهازك فقط، لا تغادر هاتفك.</p>
+
+      <div class="sheet-actions">
+        <button class="btn btn-primary" id="saveReadingBtn" type="button">
+          <span class="icon">💾</span>
+          <span class="btn-label">حفظ</span>
+        </button>
+
+        <button class="btn btn-outline" id="deleteDataBtn" type="button">
+          <span class="icon">🗑️</span>
+          <span class="btn-label">حذف</span>
+        </button>
+
+        <button class="btn btn-outline" id="cancelRecorderBtn" type="button">
+          <span class="btn-label">إلغاء</span>
+        </button>
+      </div>
     </div>
-  </nav>
+  </div>
+
+  <div class="sheet-overlay" id="installOverlay" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="installTitle">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <div>
+          <h3 class="sheet-title" id="installTitle">ثبت SugarMind على شاشتك</h3>
+          <p class="sheet-sub" id="installSub">للوصول السريع كتطبيق.</p>
+        </div>
+        <button class="close-btn" id="closeInstallBtn" type="button" aria-label="إغلاق">×</button>
+      </div>
+
+      <div class="install-steps hidden" id="iosInstallSteps">
+        <div class="install-step">
+          <div class="install-step-index">1</div>
+          <div><strong>اضغط زر المشاركة</strong><span>من أسفل شاشة Safari.</span></div>
+        </div>
+        <div class="install-step">
+          <div class="install-step-index">2</div>
+          <div><strong>اختر "إضافة للشاشة الرئيسية"</strong><span>ثم أكد الإضافة.</span></div>
+        </div>
+      </div>
+
+      <p class="helper" id="installCopy">أفضل وقت للتثبيت بعد أول استخدام.</p>
+
+      <div class="sheet-actions">
+        <button class="btn btn-primary" id="installNowBtn" type="button">
+          <span class="btn-label">تثبيت الآن</span>
+        </button>
+
+        <button class="btn btn-outline" id="dismissInstallBtn" type="button">
+          <span class="btn-label">لاحقًا</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <div class="qr-stage" id="qrStage"></div>
 
   <script>
-    // ===== STATE =====
-    const AppState = {
-      user: null,
-      deferredPrompt: null,
-      installDismissed: localStorage.getItem('installDismissed') === 'true',
-      installTimer: null
+    const KEYS = {
+      PROFILE: 'sugarmind_profile_v3',
+      HOME: 'sugarmind_home_v3',
+      USER_LEGACY: 'sugarmind_user',
+      GUIDE_LEGACY: 'sugarmind_v5',
+      ICR: 'sugarmind_icr_result_v2',
+      INSTALL_DISMISSED: 'sugarmind_install_dismissed_v1',
+      INSTALL_COMPLETED: 'sugarmind_install_completed_v1',
+      VALUE_MOMENT: 'sugarmind_value_moment_v1'
     };
 
-    const GREETINGS = {
-      dawn:    { icon: '🌅', label: 'الفجر', text: (n) => `فجرك ورد يا ${n}، جهز قراءة الصيام؟` },
-      morning: { icon: '🌹', label: 'الصباح', text: (n) => `صباح النور يا ${n}، كيف الصبح؟` },
-      noon:    { icon: '☀️', label: 'الظهر', text: (n) => `طول الله عمرك ${n}، كيف السكر الظهر؟` },
-      evening: { icon: '🌙', label: 'المساء', text: (n) => `مساك طيب ${n}، يومك كان كيف؟` },
-      night:   { icon: '🌟', label: 'الليل', text: (n) => `تصبح على خير ${n}، نوم هنيئ` }
+    const state = {
+      profile: {},
+      home: {},
+      icr: null,
+      deferredInstallPrompt: null,
+      installTimer: null,
+      isIOS: /iphone|ipad|ipod/i.test(navigator.userAgent),
+      isStandalone: window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true
     };
 
-    // ===== INIT =====
-    window.addEventListener('load', () => {
-      // إخفاء Splash Screen بعد 2.5 ثانية
-      setTimeout(() => {
-        document.getElementById('splashScreen').classList.add('vanish');
-        setTimeout(() => {
-          document.getElementById('splashScreen').style.display = 'none';
-        }, 800);
-      }, 2500);
+    const els = {
+      splash: document.getElementById('splashScreen'),
+      greetingTitle: document.getElementById('greetingTitle'),
+      greetingSub: document.getElementById('greetingSub'),
+      timeChip: document.getElementById('timeChip'),
+      walletName: document.getElementById('walletName'),
+      walletMessage: document.getElementById('walletMessage'),
+      walletTag: document.getElementById('walletTag'),
+      walletReading: document.getElementById('walletReading'),
+      walletRatio: document.getElementById('walletRatio'),
+      walletStateChip: document.getElementById('walletStateChip'),
+      shareCardBtn: document.getElementById('shareCardBtn'),
+      saveCardBtn: document.getElementById('saveCardBtn'),
+      editCardBtn: document.getElementById('editCardBtn'),
+      recorderOverlay: document.getElementById('recorderOverlay'),
+      closeRecorderBtn: document.getElementById('closeRecorderBtn'),
+      cancelRecorderBtn: document.getElementById('cancelRecorderBtn'),
+      saveReadingBtn: document.getElementById('saveReadingBtn'),
+      deleteDataBtn: document.getElementById('deleteDataBtn'),
+      nameInput: document.getElementById('nameInput'),
+      readingInput: document.getElementById('readingInput'),
+      quickReadingInput: document.getElementById('quickReadingInput'),
+      quickReadingBtn: document.getElementById('quickReadingBtn'),
+      quickReadingResult: document.getElementById('quickReadingResult'),
+      quickReadingValue: document.getElementById('quickReadingValue'),
+      quickReadingStatus: document.getElementById('quickReadingStatus'),
+      quickReadingMessage: document.getElementById('quickReadingMessage'),
+      saveQuickReadingBtn: document.getElementById('saveQuickReadingBtn'),
+      sharePromoBtn: document.getElementById('sharePromoBtn'),
+      installTrigger: document.getElementById('installTrigger'),
+      installOverlay: document.getElementById('installOverlay'),
+      closeInstallBtn: document.getElementById('closeInstallBtn'),
+      dismissInstallBtn: document.getElementById('dismissInstallBtn'),
+      installNowBtn: document.getElementById('installNowBtn'),
+      iosInstallSteps: document.getElementById('iosInstallSteps'),
+      installSub: document.getElementById('installSub'),
+      installCopy: document.getElementById('installCopy'),
+      toast: document.getElementById('toast'),
+      qrStage: document.getElementById('qrStage')
+    };
 
-      initApp();
-      setupInstallPrompt();
-      setupScrollBehavior();
-    });
-
-    function initApp() {
-      const saved = localStorage.getItem('sugarmind_user');
-      if (saved) {
-        AppState.user = JSON.parse(saved);
-        updateUI();
-      } else {
-        showEmptyState();
-        scheduleInstallPrompt('idle');
+    function readJSON(key){
+      try{
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : null;
+      }catch(_){
+        return null;
       }
-
-      const now = new Date();
-      const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-      document.getElementById('inputTime').value = timeStr;
     }
 
-    // ===== TIME & GREETINGS =====
-    function getTimePhase() {
+    function writeJSON(key, value){
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function showToast(message){
+      els.toast.textContent = message;
+      els.toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        els.toast.classList.remove('show');
+      }, 2600);
+    }
+
+    function currentTimeValue(){
+      const d = new Date();
+      return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    }
+
+    function getPeriod(){
       const hour = new Date().getHours();
-      if (hour >= 5 && hour < 7) return 'dawn';
-      if (hour >= 7 && hour < 12) return 'morning';
-      if (hour >= 12 && hour < 17) return 'noon';
-      if (hour >= 17 && hour < 21) return 'evening';
-      return 'night';
-    }
-
-    function updateGreeting() {
-      const phase = getTimePhase();
-      const greeting = GREETINGS[phase];
-      const name = AppState.user?.name || 'صديقي';
-      
-      document.getElementById('timeIcon').textContent = greeting.icon;
-      document.getElementById('timeLabel').textContent = greeting.label;
-      document.getElementById('greetingText').innerHTML = greeting.text(name).replace(name, `<span class="highlight">${name}</span>`);
-      document.getElementById('greetingSub').textContent = AppState.user ? 'جهز قراءة اليوم؟' : 'سجل أول قراءة وانضم للوعي الصحي';
-    }
-
-    // ===== UI UPDATES =====
-    function updateUI() {
-      updateGreeting();
-      
-      if (AppState.user && AppState.user.reading) {
-        showLivingCard();
-        hideEmptyState();
-        checkEmergency();
-        scheduleInstallPrompt('success');
-      } else {
-        showEmptyState();
+      if(hour < 12){
+        return {
+          label:'صباح الخير',
+          hint:'بداية يوم هادئ',
+          icon:'☀️',
+          subWithName:'بطاقتك جاهزة، وخطوتك اليوم أوضح.',
+          subWithoutName:'واجهة يومية أقرب لك، وتفهم يومك بهدوء.'
+        };
       }
-    }
-
-    function showLivingCard() {
-      const card = document.getElementById('livingCard');
-      const user = AppState.user;
-      
-      document.getElementById('userAvatar').textContent = user.name.charAt(0);
-      document.getElementById('cardName').textContent = user.name;
-      document.getElementById('cardDate').textContent = new Date().toLocaleDateString('ar-SA');
-      
-      const analysis = analyzeReading(user.reading);
-      const pill = document.getElementById('statusPill');
-      pill.textContent = analysis.level;
-      pill.style.background = `${analysis.color}20`;
-      pill.style.color = analysis.color;
-      pill.style.borderColor = `${analysis.color}40`;
-      
-      document.getElementById('readingNum').textContent = user.reading;
-      document.getElementById('readingTime').textContent = user.time || 'الآن';
-      
-      const trendBadge = document.getElementById('trendBadge');
-      if (user.previousReading) {
-        const diff = user.reading - user.previousReading;
-        trendBadge.className = diff > 0 ? 'trend-badge trend-up' : diff < 0 ? 'trend-badge trend-down' : 'trend-badge';
-        trendBadge.innerHTML = diff > 0 ? '<span>↗️</span><span>مرتفع</span>' : diff < 0 ? '<span>↘️</span><span>منخفض</span>' : '<span>➡️</span><span>مستقر</span>';
-      }
-      
-      card.classList.remove('hidden');
-      setTimeout(() => card.classList.add('visible'), 100);
-      
-      document.documentElement.style.setProperty('--card-color', analysis.color);
-    }
-
-    function showEmptyState() {
-      document.getElementById('ctaSection').style.display = 'block';
-      document.getElementById('livingCard').classList.add('hidden');
-      document.getElementById('livingCard').classList.remove('visible');
-    }
-
-    function hideEmptyState() {
-      document.getElementById('ctaSection').style.display = 'none';
-    }
-
-    function analyzeReading(value) {
-      const v = parseFloat(value);
-      if (v < 70) return { level: 'منخفض جداً', color: '#FF0040', emergency: true };
-      if (v < 80) return { level: 'انتباه', color: '#FF9900', emergency: false };
-      if (v <= 140) return { level: 'ممتاز', color: '#00F0FF', emergency: false };
-      if (v <= 180) return { level: 'جيد', color: '#FACC15', emergency: false };
-      if (v <= 250) return { level: 'مراجعة', color: '#FF6B00', emergency: false };
-      return { level: 'طارئ', color: '#FF0040', emergency: true };
-    }
-
-    function checkEmergency() {
-      const analysis = analyzeReading(AppState.user.reading);
-      document.getElementById('emergencyBanner').style.display = analysis.emergency ? 'block' : 'none';
-      document.getElementById('livingCard').classList.toggle('emergency', analysis.emergency);
-    }
-
-    function handleEmergency() {
-      document.getElementById('emergencyBanner').style.display = 'none';
-      showToast('تناول تمر أو عصير سريع', '🍯');
-    }
-
-    // ===== RECORDER =====
-    function openRecorder() {
-      const modal = document.getElementById('recorderModal');
-      if (AppState.user) document.getElementById('inputName').value = AppState.user.name || '';
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeRecorder() {
-      document.getElementById('recorderModal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    function closeRecorderOnBackdrop(e) {
-      if (e.target === e.currentTarget) closeRecorder();
-    }
-
-    function saveReading() {
-      const name = document.getElementById('inputName').value.trim();
-      const reading = document.getElementById('inputReading').value;
-      const time = document.getElementById('inputTime').value;
-      
-      if (!name || !reading) {
-        showToast('يرجى إدخال الاسم والقراءة', '⚠️');
-        return;
-      }
-
-      const previousReading = AppState.user?.reading;
-      
-      AppState.user = {
-        name,
-        reading: parseFloat(reading),
-        time: time || new Date().toLocaleTimeString('ar-SA', {hour: '2-digit', minute:'2-digit'}),
-        previousReading,
-        savedAt: new Date().toISOString()
+      return {
+        label:'مساء الخير',
+        hint:'مساء لطيف ومرتب',
+        icon:'🌹',
+        subWithName:'بطاقتك جاهزة، ولمسات يومك واضحة قدامك.',
+        subWithoutName:'خلنا نختم يومك بصورة أوضح وأهدى.'
       };
-      
-      localStorage.setItem('sugarmind_user', JSON.stringify(AppState.user));
-      
-      closeRecorder();
-      updateUI();
-      showToast('تم حفظ القراءة بنجاح! 🎉', '✅');
-      
-      // Confetti
-      if (typeof confetti !== 'undefined') {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#00F0FF', '#C084FC', '#FACC15']
+    }
+
+    function getReadingState(reading){
+      const value = Number(reading);
+
+      if(!Number.isFinite(value)){
+        return {
+          key:'empty',
+          label:'بانتظار القراءة',
+          tag:'بطاقة يومية',
+          message:'سجل اسمك وقراءتك لتفعيل البطاقة',
+          className:'',
+          bg:'#E6E1D8',
+          fg:'#1D2433'
+        };
+      }
+
+      if(value < 70){
+        return {
+          key:'low',
+          label:'منخفض',
+          tag:'يحتاج انتباه',
+          message:'قراءتك منخفضة، تحتاج تدخل سريع.',
+          className:'status-low'
+        };
+      }
+
+      if(value <= 140){
+        return {
+          key:'range',
+          label:'في النطاق',
+          tag:'مطمئن',
+          message:'قراءتك في النطاق المثالي، أحسنت.',
+          className:'status-range'
+        };
+      }
+
+      if(value <= 180){
+        return {
+          key:'slightly-high',
+          label:'مرتفع قليلاً',
+          tag:'انتبه',
+          message:'قراءتك أعلى من المثالي، راقب نفسك.',
+          className:'status-slightly-high'
+        };
+      }
+
+      if(value <= 250){
+        return {
+          key:'high',
+          label:'مرتفع',
+          tag:'مراجعة',
+          message:'قراءتك مرتفعة، راجع وجبتك أو جرعتك.',
+          className:'status-high'
+        };
+      }
+
+      return {
+        key:'very-high',
+        label:'مرتفع جدًا',
+        tag:'خطر',
+        message:'قراءتك مرتفعة جدًا، تحتاج انتباه أعلى.',
+        className:'status-very-high'
+      };
+    }
+
+    function migrateLegacy(){
+      const legacy = readJSON(KEYS.USER_LEGACY) || readJSON(KEYS.GUIDE_LEGACY);
+      const profile = readJSON(KEYS.PROFILE);
+      const home = readJSON(KEYS.HOME);
+
+      if(!profile && legacy?.name){
+        writeJSON(KEYS.PROFILE, { name: String(legacy.name).trim() });
+      }
+
+      if(!home && (legacy?.reading || legacy?.time)){
+        writeJSON(KEYS.HOME, {
+          reading: legacy.reading ?? '',
+          time: legacy.time || '',
+          savedAt: legacy.savedAt || new Date().toISOString()
         });
       }
     }
 
-    // ===== INSTALL PROMPT =====
-    function setupInstallPrompt() {
-      window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        AppState.deferredPrompt = e;
-      });
+    function syncLegacyStores(){
+      const payload = {
+        name: state.profile?.name || '',
+        reading: state.home?.reading ?? '',
+        time: state.home?.time || '',
+        savedAt: state.home?.savedAt || new Date().toISOString()
+      };
+      writeJSON(KEYS.USER_LEGACY, payload);
+      writeJSON(KEYS.GUIDE_LEGACY, payload);
+    }
 
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-      if (isIOS && !AppState.installDismissed) {
-        setTimeout(() => { if (!AppState.user) showInstallBanner(); }, 10000);
+    function hydrateState(){
+      migrateLegacy();
+      state.profile = readJSON(KEYS.PROFILE) || {};
+      state.home = readJSON(KEYS.HOME) || {};
+      state.icr = readJSON(KEYS.ICR) || null;
+    }
+
+    function setGreeting(){
+      const period = getPeriod();
+      const name = state.profile?.name?.trim();
+
+      els.timeChip.innerHTML = `${period.icon} <span>${period.hint}</span>`;
+
+      if(name){
+        els.greetingTitle.textContent = `${period.label} يا ${name}`;
+        els.greetingSub.textContent = period.subWithName;
+      }else{
+        els.greetingTitle.textContent = period.label;
+        els.greetingSub.textContent = period.subWithoutName;
       }
     }
 
-    function scheduleInstallPrompt(type) {
-      if (AppState.installDismissed || !AppState.deferredPrompt) return;
-      clearTimeout(AppState.installTimer);
-      
-      AppState.installTimer = setTimeout(() => {
-        showInstallBanner();
-      }, type === 'success' ? 2000 : 8000);
+    function setWalletCard(){
+      const name = state.profile?.name?.trim() || 'ضيفنا الجديد';
+      const reading = Number(state.home?.reading);
+      const readingState = getReadingState(reading);
+      const ratio = state.icr?.icr ? `1:${state.icr.icr}` : '1:--';
+
+      els.walletName.textContent = name;
+      els.walletMessage.textContent = readingState.message;
+      els.walletTag.textContent = readingState.tag;
+      els.walletReading.textContent = Number.isFinite(reading) ? reading : '--';
+      els.walletRatio.innerHTML = `${ratio} <span class="wallet-panel-unit">ICR</span>`;
+      els.walletStateChip.textContent = readingState.label;
+      els.walletStateChip.className = 'wallet-state-pill ' + readingState.className;
+
+      if(readingState.key === 'empty'){
+        els.walletStateChip.style.background = readingState.bg;
+        els.walletStateChip.style.color = readingState.fg;
+      }else{
+        els.walletStateChip.style.background = '';
+        els.walletStateChip.style.color = '';
+      }
     }
 
-    function showInstallBanner() {
-      if (window.matchMedia('(display-mode: standalone)').matches) return;
-      document.getElementById('installBanner').classList.add('show');
+    function setQuickReadingResult(reading){
+      const stateInfo = getReadingState(reading);
+      els.quickReadingValue.textContent = reading;
+      els.quickReadingStatus.textContent = stateInfo.label;
+      els.quickReadingStatus.className = 'scan-status ' + stateInfo.className;
+
+      if(stateInfo.key === 'empty'){
+        els.quickReadingStatus.style.background = stateInfo.bg;
+        els.quickReadingStatus.style.color = stateInfo.fg;
+      }else{
+        els.quickReadingStatus.style.background = '';
+        els.quickReadingStatus.style.color = '';
+      }
+
+      els.quickReadingMessage.textContent = stateInfo.message;
+      els.quickReadingResult.classList.add('show');
     }
 
-    function dismissInstall() {
-      document.getElementById('installBanner').classList.remove('show');
-      AppState.installDismissed = true;
-      localStorage.setItem('installDismissed', 'true');
+    function fillFormFromState(){
+      els.nameInput.value = state.profile?.name || '';
+      els.readingInput.value = state.home?.reading ?? '';
     }
 
-    async function installApp() {
-      if (!AppState.deferredPrompt) {
-        showToast('اضغط "شارك" ثم "إضافة للشاشة الرئيسية"', '📱');
+    function render(){
+      hydrateState();
+      setGreeting();
+      setWalletCard();
+      fillFormFromState();
+      refreshInstallButton();
+    }
+
+    function openRecorder(){
+      fillFormFromState();
+      els.recorderOverlay.classList.add('show');
+      els.recorderOverlay.setAttribute('aria-hidden', 'false');
+      setTimeout(() => els.nameInput.focus(), 60);
+    }
+
+    function closeRecorder(){
+      els.recorderOverlay.classList.remove('show');
+      els.recorderOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    function saveReading(){
+      const name = els.nameInput.value.trim();
+      const readingValue = Number(els.readingInput.value.trim());
+
+      if(!name){
+        showToast('اكتب اسمك أولًا');
+        els.nameInput.focus();
         return;
       }
-      
-      AppState.deferredPrompt.prompt();
-      const { outcome } = await AppState.deferredPrompt.userChoice;
-      
-      if (outcome === 'accepted') {
-        showToast('تم التثبيت بنجاح! 🚀', '🎉');
-        dismissInstall();
+
+      if(!Number.isFinite(readingValue) || readingValue < 20 || readingValue > 600){
+        showToast('أدخل قراءة واضحة بين 20 و 600');
+        els.readingInput.focus();
+        return;
       }
-      AppState.deferredPrompt = null;
+
+      state.profile = { name };
+      state.home = {
+        reading: readingValue,
+        time: currentTimeValue(),
+        savedAt: new Date().toISOString()
+      };
+
+      writeJSON(KEYS.PROFILE, state.profile);
+      writeJSON(KEYS.HOME, state.home);
+      syncLegacyStores();
+      localStorage.setItem(KEYS.VALUE_MOMENT, 'true');
+
+      closeRecorder();
+      render();
+      showToast('✨ تم تحديث بطاقتك بنجاح');
+      maybePromptInstallAfterValue();
     }
 
-    // ===== SHARING =====
-    function openShareModal() {
-      if (!AppState.user) return;
-      
-      const analysis = analyzeReading(AppState.user.reading);
-      const qrContainer = document.getElementById('qrContainer');
-      qrContainer.innerHTML = '';
-      
-      const refCode = btoa(unescape(encodeURIComponent(AppState.user.name))).substring(0, 8);
-      const qrData = `${window.location.origin}${window.location.pathname}?ref=${refCode}`;
-      
-      new QRCode(qrContainer, {
-        text: qrData,
-        width: 140,
-        height: 140,
-        colorDark: '#02040A',
-        colorLight: '#ffffff'
-      });
-      
-      document.getElementById('exportUserName').textContent = AppState.user.name;
-      document.getElementById('exportMessage').textContent = `قراءة اليوم محفوظة داخل SugarMind بشكل واضح وأنيق.`;
-      document.getElementById('exportReading').textContent = AppState.user.reading;
-      document.getElementById('exportStatus').textContent = analysis.level;
-      document.getElementById('exportStatus').style.color = analysis.color;
-      document.getElementById('exportReadTime').textContent = AppState.user.time || 'الآن';
-      
-      const expQr = document.getElementById('exportQr');
-      expQr.innerHTML = '';
-      new QRCode(expQr, { text: qrData, width: 220, height: 220, colorDark: '#0B1220', colorLight: '#FFFFFF' });
-
-      const inviteQr = document.getElementById('inviteExportQr');
-      inviteQr.innerHTML = '';
-      new QRCode(inviteQr, { text: qrData, width: 220, height: 220, colorDark: '#1B1531', colorLight: '#FFFFFF' });
-
-      const inviteHeadline = document.getElementById('inviteHeadline');
-      const inviteMessage = document.getElementById('inviteMessage');
-      inviteHeadline.textContent = `فيه أحد يهمه أمرك`;
-      inviteMessage.textContent = `${AppState.user.name} شارك لك SugarMind لأنه قد يسهّل عليك فهم قراءة السكر، كارب الوجبة، ومعامل الكارب بطريقة أوضح.`;
-
-      document.getElementById('shareModal').classList.add('active');
+    function deleteUserData(){
+      if(confirm('هل أنت متأكد من حذف جميع بياناتك؟')){
+        localStorage.removeItem(KEYS.PROFILE);
+        localStorage.removeItem(KEYS.HOME);
+        localStorage.removeItem(KEYS.USER_LEGACY);
+        localStorage.removeItem(KEYS.GUIDE_LEGACY);
+        localStorage.removeItem(KEYS.ICR);
+        state.profile = {};
+        state.home = {};
+        state.icr = null;
+        closeRecorder();
+        render();
+        showToast('تم حذف جميع البيانات');
+      }
     }
 
-    function closeShareModal(e) {
-      if (e.target === e.currentTarget) document.getElementById('shareModal').classList.remove('active');
+    function handleQuickReading(){
+      const value = Number(els.quickReadingInput.value.trim());
+
+      if(!Number.isFinite(value) || value < 20 || value > 600){
+        showToast('أدخل قراءة واضحة بين 20 و 600');
+        els.quickReadingInput.focus();
+        return;
+      }
+
+      setQuickReadingResult(value);
     }
 
-    function closeShareModalDirect() {
-      document.getElementById('shareModal').classList.remove('active');
+    function saveQuickReadingToCard(){
+      const value = Number(els.quickReadingValue.textContent);
+
+      if(!Number.isFinite(value) || value < 20 || value > 600){
+        showToast('لا توجد قراءة صالحة للحفظ');
+        return;
+      }
+
+      const name = state.profile?.name?.trim() || 'ضيفنا الجديد';
+      state.profile = { name };
+      state.home = {
+        reading: value,
+        time: currentTimeValue(),
+        savedAt: new Date().toISOString()
+      };
+
+      writeJSON(KEYS.PROFILE, state.profile);
+      writeJSON(KEYS.HOME, state.home);
+      syncLegacyStores();
+      localStorage.setItem(KEYS.VALUE_MOMENT, 'true');
+
+      render();
+      showToast('✅ تم حفظ القراءة في بطاقتك');
     }
 
-    async function waitForFontsReady() {
-      try {
-        if (document.fonts && document.fonts.ready) {
+    function buildAppUrl(){
+      return `${window.location.origin}${window.location.pathname}`;
+    }
+
+    function getSharerName(){
+      return state.profile?.name?.trim() || '';
+    }
+
+    function getUserExportData(){
+      const name = state.profile?.name?.trim() || 'ضيفنا الجديد';
+      const reading = Number(state.home?.reading);
+      const stateInfo = getReadingState(reading);
+      const ratio = state.icr?.icr ? `1:${state.icr.icr}` : '1:--';
+
+      return {
+        name,
+        reading: Number.isFinite(reading) ? String(reading) : '--',
+        unit: 'mg/dL',
+        tag: stateInfo.tag,
+        message: stateInfo.message,
+        status: stateInfo.label,
+        ratio
+      };
+    }
+
+    function getPromoExportData(){
+      const sharerName = getSharerName();
+
+      if(sharerName){
+        return {
+          eyebrow:'مشاركة باهتمام',
+          fromLine:`${sharerName} يهمه أمرك`,
+          title1:`${sharerName} شارك لك هذا`,
+          title2:'لأنه قد يخفف عليك',
+          title3:'لخبطة السكر اليومية',
+          sub:'أداة أقرب لفهم الوجبة، المعامل، والتصحيح.',
+          messageTitle:'رسالة باهتمام',
+          messageCopy:`${sharerName} حب يوصل لك شيء ممكن يفيدك فعلًا، لأن يوم السكر مو دائمًا سهل، ووجود أداة أوضح يفرق كثير.`
+        };
+      }
+
+      return {
+        eyebrow:'مشاركة باهتمام',
+        fromLine:'فيه أحد يهمه أمرك',
+        title1:'تمت مشاركة هذا معك',
+        title2:'لأنه قد يخفف عليك',
+        title3:'لخبطة السكر اليومية',
+        sub:'أداة أقرب لفهم الوجبة، المعامل، والتصحيح.',
+        messageTitle:'رسالة باهتمام',
+        messageCopy:'أحد قريب منك شارك لك هذا لأنه يعرف أن يوم السكر أحيانًا يتعب، وودّه يوصلك شيء يسهّل عليك أكثر.'
+      };
+    }
+
+    async function waitForFontsReady(){
+      try{
+        if(document.fonts && document.fonts.ready){
           await document.fonts.ready;
         }
-      } catch (e) {}
+      }catch(_){}
       await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     }
 
-    async function renderExportToPng(targetId, fileName) {
-      await waitForFontsReady();
-      const canvas = await html2canvas(document.getElementById(targetId), {
-        scale: 2,
-        backgroundColor: null,
-        useCORS: true,
-        allowTaint: true,
-        logging: false,
-        imageTimeout: 0,
-        foreignObjectRendering: false
+    async function generateQrCanvas(url, size = 220){
+      const box = document.createElement('div');
+      els.qrStage.appendChild(box);
+
+      new QRCode(box, {
+        text: url,
+        width: size,
+        height: size,
+        colorDark: '#1D2433',
+        colorLight: '#FFFFFF',
+        correctLevel: QRCode.CorrectLevel.M
       });
 
-      const link = document.createElement('a');
-      link.download = fileName;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    }
+      await new Promise(resolve => setTimeout(resolve, 70));
 
-    async function downloadCard() {
-      try {
-        await renderExportToPng('exportCard', `SugarMind-${AppState.user.name}.png`);
-        showToast('تم تحميل بطاقتك! 💾', '✅');
-      } catch (err) {
-        showToast('حدث خطأ، حاول مرة أخرى', '❌');
+      const qrCanvas = box.querySelector('canvas');
+      if(qrCanvas){
+        els.qrStage.removeChild(box);
+        return qrCanvas;
       }
-    }
 
-    async function downloadInviteCard() {
-      try {
-        const current = Number(localStorage.getItem('sugarmind_share_count_v1') || 0);
-        localStorage.setItem('sugarmind_share_count_v1', String(current + 1));
-        await renderExportToPng('inviteExportCard', `SugarMind-Invite-${AppState.user.name}.png`);
-        showToast('تم تحميل بطاقة الدعوة ❤️', '💌');
-      } catch (err) {
-        showToast('حدث خطأ، حاول مرة أخرى', '❌');
+      const img = box.querySelector('img');
+      if(img){
+        await new Promise(resolve => {
+          if(img.complete) resolve();
+          else img.onload = resolve;
+        });
+
+        const c = document.createElement('canvas');
+        c.width = size;
+        c.height = size;
+        const cctx = c.getContext('2d');
+        cctx.fillStyle = '#fff';
+        cctx.fillRect(0,0,size,size);
+        cctx.drawImage(img, 0, 0, size, size);
+        els.qrStage.removeChild(box);
+        return c;
       }
+
+      els.qrStage.removeChild(box);
+      throw new Error('QR generation failed');
     }
 
-    // ===== UTILITIES =====
-    function showToast(message, icon = '✨') {
-      const container = document.getElementById('toastContainer');
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.innerHTML = `<span>${icon}</span> ${message}`;
-      container.appendChild(toast);
-      
-      setTimeout(() => {
-        toast.classList.add('hiding');
-        setTimeout(() => toast.remove(), 300);
-      }, 3000);
+    function roundRectPath(ctx, x, y, w, h, r){
+      const radius = Math.min(r, w/2, h/2);
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.arcTo(x + w, y, x + w, y + h, radius);
+      ctx.arcTo(x + w, y + h, x, y + h, radius);
+      ctx.arcTo(x, y + h, x, y, radius);
+      ctx.arcTo(x, y, x + w, y, radius);
+      ctx.closePath();
     }
 
-    function setActiveNav(el, page) {
-      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-      el.classList.add('active');
-      if (page === 'analytics') window.location.href = 'daily-guide.html';
+    function fillRoundRect(ctx, x, y, w, h, r, fillStyle){
+      ctx.save();
+      roundRectPath(ctx, x, y, w, h, r);
+      ctx.fillStyle = fillStyle;
+      ctx.fill();
+      ctx.restore();
     }
 
-    function setupScrollBehavior() {
-      let lastScroll = 0;
-      const header = document.getElementById('smartHeader');
-      
-      window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        if (currentScroll > lastScroll && currentScroll > 100) {
-          header.classList.add('hidden');
-        } else {
-          header.classList.remove('hidden');
+    function strokeRoundRect(ctx, x, y, w, h, r, strokeStyle, lineWidth = 1){
+      ctx.save();
+      roundRectPath(ctx, x, y, w, h, r);
+      ctx.strokeStyle = strokeStyle;
+      ctx.lineWidth = lineWidth;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function setupText(ctx, font, color, align = 'right'){
+      ctx.save();
+      ctx.font = font;
+      ctx.fillStyle = color;
+      ctx.textAlign = align;
+      ctx.textBaseline = 'alphabetic';
+      if('direction' in ctx) ctx.direction = 'rtl';
+    }
+
+    function endText(ctx){
+      ctx.restore();
+    }
+
+    function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 10){
+      const words = String(text).split(' ');
+      let line = '';
+      const lines = [];
+
+      for(const word of words){
+        const test = line ? `${line} ${word}` : word;
+        if(ctx.measureText(test).width <= maxWidth){
+          line = test;
+        }else{
+          if(line) lines.push(line);
+          line = word;
         }
-        lastScroll = currentScroll;
-      }, { passive: true });
+      }
+      if(line) lines.push(line);
+
+      const finalLines = lines.slice(0, maxLines);
+      finalLines.forEach((ln, i) => {
+        ctx.fillText(ln, x, y + (i * lineHeight));
+      });
+
+      return finalLines.length;
     }
+
+    function drawBrandMark(ctx, x, y, size){
+      fillRoundRect(ctx, x, y, size, size, 22, 'rgba(255,255,255,.12)');
+      strokeRoundRect(ctx, x, y, size, size, 22, 'rgba(255,255,255,.12)', 1.5);
+
+      ctx.save();
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      ctx.moveTo(x + 10, y + size/2);
+      ctx.lineTo(x + 26, y + size/2);
+      ctx.lineTo(x + 34, y + 18);
+      ctx.lineTo(x + 43, y + size - 12);
+      ctx.lineTo(x + 52, y + 26);
+      ctx.lineTo(x + 60, y + 36);
+      ctx.lineTo(x + 69, y + 20);
+      ctx.lineTo(x + 78, y + size/2);
+      ctx.lineTo(x + size - 10, y + size/2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function createBaseCanvas(width, height){
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      return canvas;
+    }
+
+    function drawPremiumBackground(ctx, width, height){
+      const g = ctx.createLinearGradient(0, 0, width, height);
+      g.addColorStop(0, '#20273A');
+      g.addColorStop(.46, '#2C3450');
+      g.addColorStop(1, '#1D2638');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, width, height);
+
+      const r1 = ctx.createRadialGradient(150, 260, 20, 150, 260, 360);
+      r1.addColorStop(0, 'rgba(255,255,255,.13)');
+      r1.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = r1;
+      ctx.fillRect(0,0,width,height);
+
+      const r2 = ctx.createRadialGradient(width - 130, height - 180, 20, width - 130, height - 180, 340);
+      r2.addColorStop(0, 'rgba(123,170,146,.20)');
+      r2.addColorStop(1, 'rgba(123,170,146,0)');
+      ctx.fillStyle = r2;
+      ctx.fillRect(0,0,width,height);
+
+      ctx.save();
+      ctx.globalAlpha = .15;
+      const sheen = ctx.createLinearGradient(0, 0, width, height);
+      sheen.addColorStop(.22, 'rgba(255,255,255,0)');
+      sheen.addColorStop(.50, 'rgba(255,255,255,.12)');
+      sheen.addColorStop(.78, 'rgba(255,255,255,0)');
+      ctx.fillStyle = sheen;
+      ctx.translate(width * .2, -40);
+      ctx.rotate(-0.24);
+      ctx.fillRect(-90, -120, width * .35, height + 220);
+      ctx.restore();
+    }
+
+    async function createUserCardBlob(){
+      await waitForFontsReady();
+
+      const data = getUserExportData();
+      const canvas = createBaseCanvas(1080, 1350);
+      const ctx = canvas.getContext('2d');
+      const qrCanvas = await generateQrCanvas(buildAppUrl(), 220);
+
+      drawPremiumBackground(ctx, canvas.width, canvas.height);
+
+      fillRoundRect(ctx, 36, 36, 1008, 1278, 42, 'rgba(255,255,255,.04)');
+      strokeRoundRect(ctx, 36, 36, 1008, 1278, 42, 'rgba(255,255,255,.08)', 2);
+
+      fillRoundRect(ctx, 54, 54, 220, 66, 33, 'rgba(255,255,255,.10)');
+      strokeRoundRect(ctx, 54, 54, 220, 66, 33, 'rgba(255,255,255,.14)', 2);
+      setupText(ctx, '900 34px Tajawal', '#FFFFFF', 'center');
+      ctx.fillText(data.tag, 164, 97);
+      endText(ctx);
+
+      drawBrandMark(ctx, 910, 54, 80);
+      setupText(ctx, '900 54px Tajawal', '#FFFFFF');
+      ctx.fillText('SugarMind', 880, 102);
+      endText(ctx);
+
+      setupText(ctx, '900 102px Tajawal', '#FFFFFF');
+      ctx.shadowColor = 'rgba(0,0,0,.28)';
+      ctx.shadowBlur = 22;
+      ctx.fillText(data.name, 960, 255);
+      endText(ctx);
+
+      setupText(ctx, '500 48px Tajawal', 'rgba(255,255,255,.84)');
+      drawWrappedText(ctx, data.message, 960, 340, 740, 62, 2);
+      endText(ctx);
+
+      setupText(ctx, '700 34px Tajawal', 'rgba(255,255,255,.66)');
+      ctx.fillText('القراءة الحالية', 960, 500);
+      endText(ctx);
+
+      setupText(ctx, '900 158px Tajawal', '#FFFFFF');
+      ctx.shadowColor = 'rgba(0,0,0,.25)';
+      ctx.shadowBlur = 24;
+      ctx.fillText(data.reading, 960, 664);
+      endText(ctx);
+
+      setupText(ctx, '800 56px Tajawal', 'rgba(255,255,255,.78)');
+      ctx.fillText(data.unit, 690, 658);
+      endText(ctx);
+
+      fillRoundRect(ctx, 54, 806, 448, 248, 32, 'rgba(255,255,255,.09)');
+      strokeRoundRect(ctx, 54, 806, 448, 248, 32, 'rgba(255,255,255,.12)', 2);
+
+      setupText(ctx, '800 30px Tajawal', 'rgba(255,255,255,.66)');
+      ctx.fillText('معامل الكارب', 454, 868);
+      endText(ctx);
+
+      setupText(ctx, '900 86px Tajawal', '#FFFFFF');
+      ctx.fillText(data.ratio, 454, 970);
+      endText(ctx);
+
+      fillRoundRect(ctx, 540, 806, 450, 248, 32, 'rgba(255,255,255,.09)');
+      strokeRoundRect(ctx, 540, 806, 450, 248, 32, 'rgba(255,255,255,.12)', 2);
+
+      setupText(ctx, '800 30px Tajawal', 'rgba(255,255,255,.66)');
+      ctx.fillText('الحالة', 942, 868);
+      endText(ctx);
+
+      let statusColor = '#56D46F';
+      if(data.status === 'منخفض') statusColor = '#D66560';
+      if(data.status === 'مرتفع') statusColor = '#E6906F';
+      if(data.status === 'مرتفع قليلاً') statusColor = '#D3B158';
+      if(data.status === 'مرتفع جدًا') statusColor = '#D66560';
+      if(data.status === 'بانتظار القراءة') statusColor = '#98A2B3';
+
+      fillRoundRect(ctx, 598, 918, 330, 98, 49, statusColor);
+      setupText(ctx, '900 62px Tajawal', '#FFFFFF', 'center');
+      ctx.fillText(data.status, 763, 982);
+      endText(ctx);
+
+      fillRoundRect(ctx, 54, 1090, 304, 206, 30, '#FFFFFF');
+      ctx.drawImage(qrCanvas, 96, 1128, 220, 220);
+
+      fillRoundRect(ctx, 390, 1090, 600, 206, 30, 'rgba(255,255,255,.08)');
+      strokeRoundRect(ctx, 390, 1090, 600, 206, 30, 'rgba(255,255,255,.10)', 2);
+
+      setupText(ctx, '900 58px Tajawal', '#FFFFFF');
+      ctx.fillText('بطاقتي', 942, 1166);
+      endText(ctx);
+
+      setupText(ctx, '800 44px Tajawal', 'rgba(255,255,255,.92)');
+      ctx.fillText('SugarMind', 710, 1166);
+      endText(ctx);
+
+      setupText(ctx, '500 34px Tajawal', 'rgba(255,255,255,.82)');
+      drawWrappedText(ctx, 'واجهة يومية أوضح لحالتك. امسح الكود وافتح التطبيق مباشرة.', 942, 1242, 520, 44, 2);
+      endText(ctx);
+
+      fillRoundRect(ctx, 54, 1218, 304, 76, 38, 'rgba(123,170,146,1)');
+      setupText(ctx, '900 40px Tajawal', '#FFFFFF', 'center');
+      ctx.fillText('افتح بطاقتك', 206, 1268);
+      endText(ctx);
+
+      return await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1));
+    }
+
+    async function createPromoCardBlob(){
+      await waitForFontsReady();
+
+      const data = getPromoExportData();
+      const canvas = createBaseCanvas(1080, 1350);
+      const ctx = canvas.getContext('2d');
+      const qrCanvas = await generateQrCanvas(buildAppUrl(), 220);
+
+      drawPremiumBackground(ctx, canvas.width, canvas.height);
+
+      fillRoundRect(ctx, 36, 36, 1008, 1278, 42, 'rgba(255,255,255,.04)');
+      strokeRoundRect(ctx, 36, 36, 1008, 1278, 42, 'rgba(255,255,255,.08)', 2);
+
+      fillRoundRect(ctx, 54, 54, 220, 66, 33, 'rgba(255,255,255,.10)');
+      setupText(ctx, '900 34px Tajawal', '#FFFFFF', 'center');
+      ctx.fillText(data.eyebrow, 164, 97);
+      endText(ctx);
+
+      drawBrandMark(ctx, 910, 54, 80);
+      setupText(ctx, '900 54px Tajawal', '#FFFFFF');
+      ctx.fillText('SugarMind', 880, 102);
+      endText(ctx);
+
+      setupText(ctx, '800 38px Tajawal', 'rgba(255,255,255,.86)');
+      ctx.fillText(data.fromLine, 960, 212);
+      endText(ctx);
+
+      setupText(ctx, '900 88px Tajawal', '#FFFFFF');
+      ctx.fillText(data.title1, 960, 330);
+      ctx.fillText(data.title2, 960, 450);
+      ctx.fillText(data.title3, 960, 570);
+      endText(ctx);
+
+      setupText(ctx, '500 42px Tajawal', 'rgba(255,255,255,.84)');
+      drawWrappedText(ctx, data.sub, 960, 665, 820, 56, 2);
+      endText(ctx);
+
+      const cards = [
+        { x: 54, title:'التصحيح والقراءة', sub:'صورة يومية أهدأ وأوضح للحالة.', icon:'📉' },
+        { x: 364, title:'حساب المعامل', sub:'بطريقة أقرب للفهم والثقة.', icon:'🧮' },
+        { x: 674, title:'فهم كارب الوجبة', sub:'أوضح وأسرع بدون تعقيد زائد.', icon:'🍽️' }
+      ];
+
+      cards.forEach(card => {
+        fillRoundRect(ctx, card.x, 780, 256, 228, 28, 'rgba(255,255,255,.08)');
+        strokeRoundRect(ctx, card.x, 780, 256, 228, 28, 'rgba(255,255,255,.10)', 2);
+
+        fillRoundRect(ctx, card.x + 178, 800, 56, 56, 18, 'rgba(169,201,185,.16)');
+
+        setupText(ctx, '900 28px Tajawal', '#FFFFFF', 'center');
+        ctx.fillText(card.icon, card.x + 206, 838);
+        endText(ctx);
+
+        setupText(ctx, '900 28px Tajawal', '#FFFFFF');
+        drawWrappedText(ctx, card.title, card.x + 220, 920, 186, 36, 2);
+        endText(ctx);
+
+        setupText(ctx, '500 18px Tajawal', 'rgba(255,255,255,.76)');
+        drawWrappedText(ctx, card.sub, card.x + 220, 992, 192, 28, 2);
+        endText(ctx);
+      });
+
+      fillRoundRect(ctx, 54, 1046, 360, 250, 30, '#FFFFFF');
+      ctx.drawImage(qrCanvas, 124, 1085, 220, 220);
+
+      setupText(ctx, '900 42px Tajawal', '#1D2433', 'center');
+      ctx.fillText('امسح وابدأ', 234, 1295);
+      endText(ctx);
+
+      fillRoundRect(ctx, 434, 1046, 556, 250, 30, 'rgba(255,255,255,.08)');
+      strokeRoundRect(ctx, 434, 1046, 556, 250, 30, 'rgba(255,255,255,.10)', 2);
+
+      setupText(ctx, '900 56px Tajawal', '#FFFFFF');
+      ctx.fillText(data.messageTitle, 942, 1134);
+      endText(ctx);
+
+      setupText(ctx, '500 34px Tajawal', 'rgba(255,255,255,.82)');
+      drawWrappedText(ctx, data.messageCopy, 942, 1220, 476, 46, 3);
+      endText(ctx);
+
+      fillRoundRect(ctx, 54, 1208, 304, 76, 38, 'rgba(123,170,146,1)');
+      setupText(ctx, '900 40px Tajawal', '#FFFFFF', 'center');
+      ctx.fillText('ابدأ مع SugarMind', 206, 1258);
+      endText(ctx);
+
+      setupText(ctx, '500 30px Tajawal', 'rgba(255,255,255,.70)');
+      ctx.fillText('واجهة يومية أوضح لحالتك', 942, 1272);
+      endText(ctx);
+
+      return await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1));
+    }
+
+    function buildCardFileName(){
+      const safeName = (state.profile?.name || 'SugarMind').replace(/[^\w\u0600-\u06FF-]+/g, '_');
+      return `SugarMind-${safeName}.png`;
+    }
+
+    async function saveBlob(blob, fileName){
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(link.href), 1500);
+    }
+
+    async function shareBlob(blob, fileName, title, text, fallbackToast){
+      const file = new File([blob], fileName, { type:'image/png' });
+
+      if(navigator.share && navigator.canShare && navigator.canShare({ files:[file] })){
+        await navigator.share({ files:[file], title, text });
+        return true;
+      }
+
+      await saveBlob(blob, fileName);
+      showToast(fallbackToast);
+      return false;
+    }
+
+    async function shareCardImage(){
+      try{
+        showToast('جاري تجهيز بطاقتك...');
+        const blob = await createUserCardBlob();
+
+        if(!blob){
+          showToast('تعذر تجهيز البطاقة');
+          return;
+        }
+
+        const shared = await shareBlob(
+          blob,
+          buildCardFileName(),
+          'بطاقتي من SugarMind',
+          `هذه بطاقتي من SugarMind - قراءة ${state.home?.reading || '--'} mg/dL`,
+          'تم حفظ الصورة بدل المشاركة'
+        );
+
+        if(shared) showToast('تم فتح المشاركة');
+      }catch(error){
+        if(error && error.name === 'AbortError'){
+          showToast('تم إلغاء المشاركة');
+          return;
+        }
+        showToast('تعذر مشاركة البطاقة الآن');
+      }
+    }
+
+    async function saveCardImage(){
+      try{
+        showToast('جاري تجهيز البطاقة...');
+        const blob = await createUserCardBlob();
+
+        if(!blob){
+          showToast('تعذر تجهيز الصورة');
+          return;
+        }
+
+        await saveBlob(blob, buildCardFileName());
+        showToast('تم حفظ البطاقة');
+      }catch(_){
+        showToast('تعذر حفظ البطاقة الآن');
+      }
+    }
+
+    async function sharePromoCard(){
+      try{
+        showToast('جاري تجهيز بطاقة المشاركة...');
+        const blob = await createPromoCardBlob();
+
+        if(!blob){
+          showToast('تعذر تجهيز البطاقة');
+          return;
+        }
+
+        const sharerName = getSharerName();
+        const fileName = sharerName
+          ? `SugarMind-${sharerName}-شارك-باهتمام.png`
+          : 'SugarMind-شارك-باهتمام.png';
+
+        const shareText = sharerName
+          ? `${sharerName} شارك لك هذا لأنه يهتم لأمرك`
+          : 'تمت مشاركة هذه البطاقة باهتمام';
+
+        const shared = await shareBlob(
+          blob,
+          fileName,
+          'SugarMind',
+          shareText,
+          'تم حفظ بطاقة المشاركة'
+        );
+
+        if(shared) showToast('❤️ تمت المشاركة بنجاح');
+      }catch(error){
+        if(error && error.name === 'AbortError'){
+          showToast('تم إلغاء المشاركة');
+          return;
+        }
+        showToast('تعذر مشاركة البطاقة الآن');
+      }
+    }
+
+    function shouldOfferInstall(){
+      if(state.isStandalone) return false;
+      if(localStorage.getItem(KEYS.INSTALL_COMPLETED) === 'true') return false;
+      if(localStorage.getItem(KEYS.INSTALL_DISMISSED) === 'true') return false;
+      return state.isIOS || !!state.deferredInstallPrompt;
+    }
+
+    function refreshInstallButton(){
+      els.installTrigger.style.display = shouldOfferInstall() ? 'inline-flex' : 'none';
+    }
+
+    function openInstallSheet(){
+      if(!shouldOfferInstall()) return;
+
+      if(state.isIOS){
+        els.installSub.textContent = 'على الآيفون من زر المشاركة في Safari.';
+        els.installCopy.textContent = 'أضف للشاشة الرئيسية.';
+        els.iosInstallSteps.classList.remove('hidden');
+        els.installNowBtn.textContent = 'فهمت';
+      }else{
+        els.installSub.textContent = 'ثبت التطبيق على جهازك.';
+        els.installCopy.textContent = 'سيتم إضافته للشاشة الرئيسية.';
+        els.iosInstallSteps.classList.add('hidden');
+        els.installNowBtn.textContent = 'تثبيت';
+      }
+
+      els.installOverlay.classList.add('show');
+    }
+
+    function closeInstallSheet(){
+      els.installOverlay.classList.remove('show');
+    }
+
+    async function handleInstallNow(){
+      if(state.isIOS){
+        localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
+        closeInstallSheet();
+        refreshInstallButton();
+        showToast('اتبع الخطوات من Safari');
+        return;
+      }
+
+      if(!state.deferredInstallPrompt){
+        closeInstallSheet();
+        showToast('التثبيت غير متاح الآن');
+        return;
+      }
+
+      try{
+        state.deferredInstallPrompt.prompt();
+        const choice = await state.deferredInstallPrompt.userChoice;
+
+        if(choice && choice.outcome === 'accepted'){
+          localStorage.setItem(KEYS.INSTALL_COMPLETED, 'true');
+          localStorage.removeItem(KEYS.INSTALL_DISMISSED);
+          showToast('تم تثبيت التطبيق');
+        }else{
+          localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
+        }
+      }catch(_){
+        showToast('تعذر التثبيت');
+      }finally{
+        state.deferredInstallPrompt = null;
+        closeInstallSheet();
+        refreshInstallButton();
+      }
+    }
+
+    function maybePromptInstallAfterValue(){
+      if(!shouldOfferInstall()) return;
+      clearTimeout(state.installTimer);
+      state.installTimer = setTimeout(openInstallSheet, 1400);
+    }
+
+    function scheduleInstallForReturningUser(){
+      if(!localStorage.getItem(KEYS.VALUE_MOMENT)) return;
+      if(!shouldOfferInstall()) return;
+      clearTimeout(state.installTimer);
+      state.installTimer = setTimeout(openInstallSheet, 6500);
+    }
+
+    function hideSplash(){
+      setTimeout(() => {
+        els.splash.classList.add('hide');
+      }, 1000);
+    }
+
+    function bindEvents(){
+      els.editCardBtn.addEventListener('click', openRecorder);
+      els.closeRecorderBtn.addEventListener('click', closeRecorder);
+      els.cancelRecorderBtn.addEventListener('click', closeRecorder);
+      els.saveReadingBtn.addEventListener('click', saveReading);
+      els.deleteDataBtn.addEventListener('click', deleteUserData);
+      els.shareCardBtn.addEventListener('click', shareCardImage);
+      els.saveCardBtn.addEventListener('click', saveCardImage);
+      els.quickReadingBtn.addEventListener('click', handleQuickReading);
+      els.saveQuickReadingBtn.addEventListener('click', saveQuickReadingToCard);
+      els.sharePromoBtn.addEventListener('click', sharePromoCard);
+      els.installTrigger.addEventListener('click', openInstallSheet);
+      els.closeInstallBtn.addEventListener('click', closeInstallSheet);
+      els.dismissInstallBtn.addEventListener('click', () => {
+        localStorage.setItem(KEYS.INSTALL_DISMISSED, 'true');
+        closeInstallSheet();
+        refreshInstallButton();
+      });
+      els.installNowBtn.addEventListener('click', handleInstallNow);
+
+      els.recorderOverlay.addEventListener('click', (e) => {
+        if(e.target === els.recorderOverlay) closeRecorder();
+      });
+
+      els.installOverlay.addEventListener('click', (e) => {
+        if(e.target === els.installOverlay) closeInstallSheet();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape'){
+          closeRecorder();
+          closeInstallSheet();
+        }
+
+        if(e.key === 'Enter'){
+          if(els.recorderOverlay.classList.contains('show') && e.target.tagName !== 'BUTTON'){
+            saveReading();
+          }
+
+          if(document.activeElement === els.quickReadingInput){
+            handleQuickReading();
+          }
+        }
+      });
+    }
+
+    function setupInstallEvents(){
+      window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        state.deferredInstallPrompt = event;
+        refreshInstallButton();
+        scheduleInstallForReturningUser();
+      });
+
+      window.addEventListener('appinstalled', () => {
+        localStorage.setItem(KEYS.INSTALL_COMPLETED, 'true');
+        localStorage.removeItem(KEYS.INSTALL_DISMISSED);
+        closeInstallSheet();
+        refreshInstallButton();
+        showToast('تم تثبيت SugarMind');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      bindEvents();
+      setupInstallEvents();
+      render();
+      hideSplash();
+      scheduleInstallForReturningUser();
+    });
   </script>
 </body>
 </html>
