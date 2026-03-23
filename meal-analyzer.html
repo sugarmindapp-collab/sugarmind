@@ -11,11 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- مكتبات خارجية -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
-  
-  <!-- الربط بالمكتبة الأصلية -->
   <script src="food-database.js"></script>
 
   <style>
@@ -42,1054 +39,210 @@
       --ease:cubic-bezier(.2,.8,.2,1);
     }
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:'Tajawal',-apple-system,BlinkMacSystemFont,sans-serif;
-      -webkit-tap-highlight-color:transparent;
-    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-tap-highlight-color:transparent;}
 
-    html,body{
-      background:var(--bg);
-      color:var(--ink);
-      min-height:100vh;
-      overflow-x:hidden;
-    }
+    html,body{background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden;}
 
-    .app{
-      max-width:var(--max-width);
-      margin:0 auto;
-      padding:calc(8px + var(--safe-top)) 14px calc(100px + var(--safe-bottom));
-    }
+    .app{max-width:var(--max-width);margin:0 auto;padding:calc(8px + var(--safe-top)) 14px calc(100px + var(--safe-bottom));}
 
-    .header-compact{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:12px;
-      padding:8px 0;
-    }
+    /* تعديل 1: الشعار الأصلي */
+    .header-compact{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:8px 0;}
 
-    .brand-mini{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
+    .brand-mini{display:flex;align-items:center;gap:10px;}
 
     .brand-mark{
-      width:40px;
-      height:40px;
-      border-radius:12px;
-      background:linear-gradient(145deg, var(--hero), var(--primary));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#fff;
-      font-size:20px;
+      width:48px;height:48px;border-radius:16px;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(145deg, var(--hero) 0%, var(--hero-2) 58%, var(--primary) 100%);
+      box-shadow:0 14px 28px rgba(69,73,106,.14);
     }
 
-    .brand-text{
-      font-size:16px;
-      font-weight:800;
-      color:var(--ink);
-    }
+    .brand-mark svg{width:28px;height:16px}
+    .brand-mark path{stroke:#fff;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round;}
 
-    .brand-sub{
-      font-size:11px;
-      color:var(--ink-2);
-    }
+    .brand-text{font-size:18px;font-weight:900;color:var(--ink);}
+    .brand-sub{font-size:12px;color:var(--ink-2);margin-top:2px;}
 
-    .recent-bar{
-      background:var(--surface);
-      border:1px solid var(--line);
-      border-radius:var(--radius-lg);
-      padding:12px;
-      margin-bottom:12px;
-      box-shadow:var(--shadow-sm);
-      display:none;
-    }
-
+    .recent-bar{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:12px;margin-bottom:12px;box-shadow:var(--shadow-sm);display:none;}
     .recent-bar.show{display:block;}
-
-    .recent-header{
-      font-size:12px;
-      font-weight:800;
-      color:var(--ink-2);
-      margin-bottom:10px;
-      display:flex;
-      align-items:center;
-      gap:6px;
-    }
-
-    .recent-chips{
-      display:flex;
-      gap:8px;
-      overflow-x:auto;
-      scrollbar-width:none;
-      padding-bottom:4px;
-    }
-
+    .recent-header{font-size:12px;font-weight:800;color:var(--ink-2);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+    .recent-chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;}
     .recent-chips::-webkit-scrollbar{display:none;}
 
     .recent-chip{
-      flex-shrink:0;
-      padding:8px 14px;
-      background:var(--surface-2);
-      border:1px solid var(--line);
-      border-radius:999px;
-      font-size:13px;
-      font-weight:700;
-      cursor:pointer;
-      transition:all .2s;
-      display:flex;
-      align-items:center;
-      gap:6px;
-      position:relative;
-      user-select:none;
-      -webkit-user-select:none;
+      flex-shrink:0;padding:8px 14px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;
+      font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;
+      position:relative;user-select:none;-webkit-user-select:none;
     }
-
     .recent-chip:active{transform:scale(0.96);}
+    .recent-chip:hover,.recent-chip.active{background:var(--primary);color:#fff;border-color:var(--primary);transform:translateY(-1px);}
 
-    .recent-chip:hover, .recent-chip.active{
-      background:var(--primary);
-      color:#fff;
-      border-color:var(--primary);
-      transform:translateY(-1px);
-    }
-
-    /* منيو الضغط المطول */
     .chip-context-menu{
-      position:absolute;
-      bottom:100%;
-      left:50%;
-      transform:translateX(-50%) scale(0);
-      background:#fff;
-      border-radius:12px;
-      box-shadow:var(--shadow-lg);
-      padding:8px;
-      min-width:180px;
-      z-index:50;
-      opacity:0;
-      transition:all .2s;
-      pointer-events:none;
-      margin-bottom:8px;
-      border:1px solid var(--line);
+      position:absolute;bottom:100%;left:50%;transform:translateX(-50%) scale(0);
+      background:#fff;border-radius:12px;box-shadow:var(--shadow-lg);padding:8px;min-width:180px;z-index:50;opacity:0;transition:all .2s;pointer-events:none;margin-bottom:8px;border:1px solid var(--line);
     }
-
-    .chip-context-menu.show{
-      transform:translateX(-50%) scale(1);
-      opacity:1;
-      pointer-events:auto;
-    }
-
-    .context-item{
-      padding:10px 14px;
-      border-radius:8px;
-      font-size:13px;
-      cursor:pointer;
-      white-space:nowrap;
-      transition:background .2s;
-    }
-
+    .chip-context-menu.show{transform:translateX(-50%) scale(1);opacity:1;pointer-events:auto;}
+    .context-item{padding:10px 14px;border-radius:8px;font-size:13px;cursor:pointer;white-space:nowrap;transition:background .2s;}
     .context-item:hover{background:var(--surface-2);}
 
-    .journey-compact{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:8px;
-      margin-bottom:16px;
-      background:var(--surface);
-      padding:6px;
-      border-radius:var(--radius-lg);
-      border:1px solid var(--line);
-    }
-
-    .j-step{
-      text-align:center;
-      padding:10px 4px;
-      border-radius:12px;
-      cursor:pointer;
-      transition:all .2s;
-      position:relative;
-    }
-
-    .j-step.active{
-      background:linear-gradient(135deg, var(--primary), #6B9A82);
-      color:#fff;
-      box-shadow:0 4px 12px rgba(123,170,146,.3);
-    }
-
+    .journey-compact{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;background:var(--surface);padding:6px;border-radius:var(--radius-lg);border:1px solid var(--line);}
+    .j-step{text-align:center;padding:10px 4px;border-radius:12px;cursor:pointer;transition:all .2s;position:relative;}
+    .j-step.active{background:linear-gradient(135deg, var(--primary), #6B9A82);color:#fff;box-shadow:0 4px 12px rgba(123,170,146,.3);}
     .j-step.active .j-icon{color:#fff;}
     .j-step:not(.active):hover{background:var(--surface-2);}
+    .j-icon{font-size:20px;margin-bottom:4px;display:block;color:var(--ink-2);}
+    .j-label{font-size:11px;font-weight:800;}
 
-    .j-icon{
-      font-size:20px;
-      margin-bottom:4px;
-      display:block;
-      color:var(--ink-2);
-    }
+    .main-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);overflow:hidden;margin-bottom:16px;}
 
-    .j-label{
-      font-size:11px;
-      font-weight:800;
-    }
-
-    .main-card{
-      background:var(--surface);
-      border:1px solid var(--line);
-      border-radius:var(--radius-xl);
-      box-shadow:var(--shadow-md);
-      overflow:hidden;
-      margin-bottom:16px;
-    }
-
-    .card-header{
-      padding:16px;
-      border-bottom:1px solid var(--line);
-      background:linear-gradient(180deg, var(--surface), var(--surface-2));
-    }
-
-    .card-title{
-      font-size:18px;
-      font-weight:900;
-      color:var(--ink);
-      margin-bottom:4px;
-    }
-
-    .card-sub{
-      font-size:13px;
-      color:var(--ink-2);
-    }
+    .card-header{padding:16px;border-bottom:1px solid var(--line);background:linear-gradient(180deg, var(--surface), var(--surface-2));}
+    .card-title{font-size:18px;font-weight:900;color:var(--ink);margin-bottom:4px;}
+    .card-sub{font-size:13px;color:var(--ink-2);}
 
     .card-body{padding:16px;}
 
-    .mode-tabs{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
-      margin-bottom:16px;
-    }
+    /* تعديل 3: ثلاث تبويبات */
+    .mode-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
 
     .mode-tab{
-      padding:10px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:transparent;
-      font-size:14px;
-      font-weight:800;
-      color:var(--ink-2);
-      cursor:pointer;
-      transition:all .2s;
+      padding:10px;border-radius:12px;border:1px solid var(--line);background:transparent;
+      font-size:13px;font-weight:800;color:var(--ink-2);cursor:pointer;transition:all .2s;
+      display:flex;align-items:center;justify-content:center;gap:4px;
     }
+    .mode-tab.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+    .mode-tab:not(.active):hover{background:var(--surface-2);}
 
-    .mode-tab.active{
-      background:var(--ink);
-      color:#fff;
-      border-color:var(--ink);
-    }
+    .search-box{position:relative;margin-bottom:12px;}
+    .search-input{width:100%;padding:14px 50px 14px 18px;border:2px solid var(--line);border-radius:999px;font-size:16px;font-weight:700;outline:none;transition:all .2s;background:#fff;}
+    .search-input:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(123,170,146,.12);}
+    .search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:20px;color:var(--ink-2);}
 
-    .search-box{
-      position:relative;
-      margin-bottom:12px;
-    }
+    .quick-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+    .preset-btn{padding:8px 14px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+    .preset-btn:hover,.preset-btn.active{background:var(--hero);color:#fff;border-color:var(--hero);}
 
-    .search-input{
-      width:100%;
-      padding:14px 50px 14px 18px;
-      border:2px solid var(--line);
-      border-radius:999px;
-      font-size:16px;
-      font-weight:700;
-      outline:none;
-      transition:all .2s;
-      background:#fff;
-    }
-
-    .search-input:focus{
-      border-color:var(--primary);
-      box-shadow:0 0 0 4px rgba(123,170,146,.12);
-    }
-
-    .search-icon{
-      position:absolute;
-      left:18px;
-      top:50%;
-      transform:translateY(-50%);
-      font-size:20px;
-      color:var(--ink-2);
-    }
-
-    .quick-chips{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-bottom:8px;
-    }
-
-    .preset-btn{
-      padding:8px 14px;
-      background:var(--surface-2);
-      border:1px solid var(--line);
-      border-radius:999px;
-      font-size:13px;
-      font-weight:700;
-      cursor:pointer;
-      transition:all .2s;
-    }
-
-    .preset-btn:hover, .preset-btn.active{
-      background:var(--hero);
-      color:#fff;
-      border-color:var(--hero);
-    }
-
-    .suggestions{
-      max-height:320px;
-      overflow-y:auto;
-      border:1px solid var(--line);
-      border-radius:16px;
-      margin-top:8px;
-      background:#fff;
-      box-shadow:var(--shadow-lg);
-      display:none;
-    }
-
+    .suggestions{max-height:320px;overflow-y:auto;border:1px solid var(--line);border-radius:16px;margin-top:8px;background:#fff;box-shadow:var(--shadow-lg);display:none;}
     .suggestions.show{display:block;}
-
-    .sugg-item{
-      padding:14px 16px;
-      border-bottom:1px solid var(--line);
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      gap:12px;
-      transition:background .2s;
-    }
-
+    .sugg-item{padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;align-items:center;gap:12px;transition:background .2s;}
     .sugg-item:hover{background:var(--surface-2);}
     .sugg-item:last-child{border-bottom:none;}
-
-    .sugg-icon{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      background:linear-gradient(135deg, rgba(123,170,146,.15), rgba(125,139,174,.1));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:24px;
-      flex-shrink:0;
-    }
-
+    .sugg-icon{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg, rgba(123,170,146,.15), rgba(125,139,174,.1));display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
     .sugg-info{flex:1;min-width:0;}
-
-    .sugg-name{
-      font-weight:900;
-      font-size:15px;
-      margin-bottom:3px;
-      display:flex;
-      align-items:center;
-      gap:6px;
-    }
-
-    .sugg-en{
-      font-size:12px;
-      color:var(--ink-2);
-      font-weight:500;
-    }
-
-    .sugg-meta{
-      font-size:12px;
-      color:var(--ink-2);
-      display:flex;
-      align-items:center;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .sugg-badge{
-      background:rgba(123,170,146,.16);
-      color:var(--hero);
-      padding:3px 10px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:900;
-    }
-
-    .conf-badge{
-      padding:3px 10px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:900;
-    }
-
+    .sugg-name{font-weight:900;font-size:15px;margin-bottom:3px;display:flex;align-items:center;gap:6px;}
+    .sugg-en{font-size:12px;color:var(--ink-2);font-weight:500;}
+    .sugg-meta{font-size:12px;color:var(--ink-2);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .sugg-badge{background:rgba(123,170,146,.16);color:var(--hero);padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;}
+    .conf-badge{padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;}
     .conf-high{background:rgba(86,212,111,.12);color:var(--success);}
     .conf-medium{background:var(--warning-soft);color:#A87912;}
     .conf-est{background:rgba(125,139,174,.12);color:var(--hero-2);}
 
-    /* بطاقة إضافة منتج جديد */
-    .add-product-card{
-      background:linear-gradient(135deg, rgba(123,170,146,.08), rgba(230,184,92,.05));
-      border:2px dashed var(--primary);
-      border-radius:16px;
-      padding:20px;
-      margin-top:12px;
-      text-align:center;
-      display:none;
-    }
-
+    .add-product-card{background:linear-gradient(135deg, rgba(123,170,146,.08), rgba(230,184,92,.05));border:2px dashed var(--primary);border-radius:16px;padding:20px;margin-top:12px;text-align:center;display:none;}
     .add-product-card.show{display:block;animation:slideUp .3s;}
+    .add-title{font-size:16px;font-weight:900;color:var(--hero);margin-bottom:8px;}
+    .add-desc{font-size:13px;color:var(--ink-2);margin-bottom:16px;line-height:1.6;}
+    .add-actions{display:flex;gap:10px;justify-content:center;}
+    .btn-add{padding:12px 20px;border-radius:12px;border:none;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;}
+    .btn-scan{background:var(--hero);color:#fff;box-shadow:0 4px 12px rgba(33,40,59,.2);}
+    .btn-manual{background:#fff;color:var(--ink);border:1px solid var(--line);}
 
-    .add-title{
-      font-size:16px;
-      font-weight:900;
-      color:var(--hero);
-      margin-bottom:8px;
-    }
+    .library-empty{text-align:center;padding:30px 20px;color:var(--ink-2);line-height:1.8;font-size:14px;background:var(--surface-2);border-radius:16px;border:1px dashed var(--line);}
 
-    .add-desc{
-      font-size:13px;
-      color:var(--ink-2);
-      margin-bottom:16px;
-      line-height:1.6;
-    }
-
-    .add-actions{
-      display:flex;
-      gap:10px;
-      justify-content:center;
-    }
-
-    .btn-add{
-      padding:12px 20px;
-      border-radius:12px;
-      border:none;
-      font-size:14px;
-      font-weight:800;
-      cursor:pointer;
-      transition:all .2s;
-      display:flex;
-      align-items:center;
-      gap:6px;
-    }
-
-    .btn-scan{
-      background:var(--hero);
-      color:#fff;
-      box-shadow:0 4px 12px rgba(33,40,59,.2);
-    }
-
-    .btn-manual{
-      background:#fff;
-      color:var(--ink);
-      border:1px solid var(--line);
-    }
-
-    .library-empty{
-      text-align:center;
-      padding:30px 20px;
-      color:var(--ink-2);
-      line-height:1.8;
-      font-size:14px;
-      background:var(--surface-2);
-      border-radius:16px;
-      border:1px dashed var(--line);
-    }
-
-    .weight-section{
-      background:var(--surface-2);
-      border-radius:16px;
-      padding:16px;
-      margin-top:16px;
-      border:2px solid transparent;
-      transition:all .3s;
-    }
-
-    .weight-section.has-selection{
-      border-color:rgba(123,170,146,.3);
-      background:#fff;
-    }
-
-    .selected-item{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-bottom:16px;
-      padding-bottom:16px;
-      border-bottom:1px dashed var(--line);
-    }
-
-    .sel-icon{
-      width:48px;
-      height:48px;
-      border-radius:14px;
-      background:linear-gradient(135deg, var(--primary), #6B9A82);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:28px;
-      color:#fff;
-      flex-shrink:0;
-    }
-
+    .weight-section{background:var(--surface-2);border-radius:16px;padding:16px;margin-top:16px;border:2px solid transparent;transition:all .3s;}
+    .weight-section.has-selection{border-color:rgba(123,170,146,.3);background:#fff;}
+    .selected-item{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--line);}
+    .sel-icon{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg, var(--primary), #6B9A82);display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;flex-shrink:0;}
     .sel-details{flex:1;min-width:0;}
-
-    .sel-name{
-      font-size:17px;
-      font-weight:900;
-      margin-bottom:2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .sel-meta{
-      font-size:12px;
-      color:var(--ink-2);
-    }
-
-    .weight-input-row{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:12px;
-      margin-bottom:12px;
-    }
-
-    .weight-field{
-      position:relative;
-    }
-
-    .weight-input{
-      width:100%;
-      padding:16px 50px 16px 16px;
-      border:2px solid var(--line);
-      border-radius:16px;
-      font-size:28px;
-      font-weight:900;
-      text-align:center;
-      outline:none;
-      transition:all .2s;
-      background:#fff;
-    }
-
-    .weight-input:focus{
-      border-color:var(--primary);
-      box-shadow:0 0 0 4px rgba(123,170,146,.12);
-    }
-
-    .weight-unit{
-      position:absolute;
-      left:16px;
-      top:50%;
-      transform:translateY(-50%);
-      font-size:14px;
-      color:var(--ink-2);
-      font-weight:700;
-      pointer-events:none;
-    }
-
-    .weight-presets{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-bottom:16px;
-    }
-
-    .inline-result{
-      background:linear-gradient(145deg, rgba(123,170,146,.10), rgba(123,170,146,.05));
-      border:2px solid rgba(123,170,146,.3);
-      border-radius:20px;
-      padding:20px;
-      margin:16px 0;
-      text-align:center;
-      display:none;
-      animation:fadeIn .4s;
-    }
-
+    .sel-name{font-size:17px;font-weight:900;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .sel-meta{font-size:12px;color:var(--ink-2);}
+    .weight-input-row{display:grid;grid-template-columns:1fr auto;gap:12px;margin-bottom:12px;}
+    .weight-field{position:relative;}
+    .weight-input{width:100%;padding:16px 50px 16px 16px;border:2px solid var(--line);border-radius:16px;font-size:28px;font-weight:900;text-align:center;outline:none;transition:all .2s;background:#fff;}
+    .weight-input:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(123,170,146,.12);}
+    .weight-unit{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--ink-2);font-weight:700;pointer-events:none;}
+    .weight-presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+    .inline-result{background:linear-gradient(145deg, rgba(123,170,146,.10), rgba(123,170,146,.05));border:2px solid rgba(123,170,146,.3);border-radius:20px;padding:20px;margin:16px 0;text-align:center;display:none;animation:fadeIn .4s;}
     .inline-result.show{display:block;}
-
-    @keyframes fadeIn{
-      from{opacity:0;transform:translateY(10px);}
-      to{opacity:1;transform:translateY(0);}
-    }
-
-    .result-carb-value{
-      font-size:56px;
-      font-weight:900;
-      color:var(--primary);
-      line-height:1;
-      margin-bottom:8px;
-      text-shadow:0 4px 12px rgba(123,170,146,.2);
-    }
-
-    .result-carb-label{
-      font-size:15px;
-      color:var(--ink-2);
-      margin-bottom:16px;
-    }
-
-    .macros-row{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:8px;
-      margin-bottom:16px;
-    }
-
-    .macro-box{
-      background:#fff;
-      padding:12px 8px;
-      border-radius:12px;
-      border:1px solid rgba(123,170,146,.2);
-    }
-
-    .macro-val{
-      font-size:18px;
-      font-weight:900;
-      color:var(--ink);
-      margin-bottom:2px;
-    }
-
-    .macro-lbl{
-      font-size:11px;
-      color:var(--ink-2);
-      font-weight:700;
-    }
-
-    .result-actions{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:8px;
-    }
-
-    .btn{
-      padding:12px 8px;
-      border-radius:12px;
-      border:none;
-      font-size:13px;
-      font-weight:800;
-      cursor:pointer;
-      transition:all .2s;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:4px;
-    }
-
-    .btn-primary{
-      background:var(--primary);
-      color:#fff;
-      box-shadow:0 4px 12px rgba(123,170,146,.3);
-    }
-
-    .btn-primary:hover{
-      transform:translateY(-2px);
-      box-shadow:0 6px 16px rgba(123,170,146,.4);
-    }
-
-    .btn-secondary{
-      background:#fff;
-      color:var(--ink);
-      border:1px solid var(--line);
-    }
-
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+    .result-carb-value{font-size:56px;font-weight:900;color:var(--primary);line-height:1;margin-bottom:8px;text-shadow:0 4px 12px rgba(123,170,146,.2);}
+    .result-carb-label{font-size:15px;color:var(--ink-2);margin-bottom:16px;}
+    .macros-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
+    .macro-box{background:#fff;padding:12px 8px;border-radius:12px;border:1px solid rgba(123,170,146,.2);}
+    .macro-val{font-size:18px;font-weight:900;color:var(--ink);margin-bottom:2px;}
+    .macro-lbl{font-size:11px;color:var(--ink-2);font-weight:700;}
+    .result-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+    .btn{padding:12px 8px;border-radius:12px;border:none;font-size:13px;font-weight:800;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:4px;}
+    .btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 12px rgba(123,170,146,.3);}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(123,170,146,.4);}
+    .btn-secondary{background:#fff;color:var(--ink);border:1px solid var(--line);}
     .btn-secondary:hover{background:var(--surface-2);}
-
-    .btn-card{
-      background:linear-gradient(135deg,#7BAA92,#5E9A7A);
-      color:#fff;
-      border:none;
-      box-shadow:0 4px 12px rgba(123,170,146,.4);
-    }
-
-    .btn-card:hover{
-      transform:translateY(-2px);
-      box-shadow:0 8px 20px rgba(123,170,146,.5);
-    }
-
-    .btn-dark{
-      background:var(--hero);
-      color:#fff;
-    }
-
+    .btn-card{background:linear-gradient(135deg,#7BAA92,#5E9A7A);color:#fff;border:none;box-shadow:0 4px 12px rgba(123,170,146,.4);}
+    .btn-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(123,170,146,.5);}
+    .btn-dark{background:var(--hero);color:#fff;}
     .btn-dark:hover{background:var(--hero-2);}
+    .analyze-btn{width:100%;padding:16px;background:linear-gradient(135deg, var(--hero), #343C59);color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:900;cursor:pointer;margin-top:8px;transition:all .2s;box-shadow:0 8px 20px rgba(33,40,59,.2);display:flex;align-items:center;justify-content:center;gap:8px;}
+    .analyze-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 24px rgba(33,40,59,.3);}
+    .analyze-btn:disabled{opacity:.5;cursor:not-allowed;}
+    .sticky-summary{position:fixed;bottom:calc(90px + var(--safe-bottom));left:50%;transform:translateX(-50%) translateY(100px);background:#fff;padding:12px 24px;border-radius:999px;box-shadow:var(--shadow-lg);border:1px solid var(--line);z-index:40;display:flex;align-items:center;gap:16px;min-width:280px;justify-content:center;transition:transform .3s var(--ease);}
+    .sticky-summary.show{transform:translateX(-50%) translateY(0);}
+    .sticky-label{font-size:13px;color:var(--ink-2);}
+    .sticky-val{font-size:24px;font-weight:900;color:var(--primary);}
 
-    .analyze-btn{
-      width:100%;
-      padding:16px;
-      background:linear-gradient(135deg, var(--hero), #343C59);
-      color:#fff;
-      border:none;
-      border-radius:16px;
-      font-size:16px;
-      font-weight:900;
-      cursor:pointer;
-      margin-top:8px;
-      transition:all .2s;
-      box-shadow:0 8px 20px rgba(33,40,59,.2);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-    }
-
-    .analyze-btn:hover:not(:disabled){
-      transform:translateY(-2px);
-      box-shadow:0 12px 24px rgba(33,40,59,.3);
-    }
-
-    .analyze-btn:disabled{
-      opacity:.5;
-      cursor:not-allowed;
-    }
-
-    .sticky-summary{
-      position:fixed;
-      bottom:calc(90px + var(--safe-bottom));
-      left:50%;
-      transform:translateX(-50%) translateY(100px);
-      background:#fff;
-      padding:12px 24px;
-      border-radius:999px;
-      box-shadow:var(--shadow-lg);
-      border:1px solid var(--line);
-      z-index:40;
-      display:flex;
-      align-items:center;
-      gap:16px;
-      min-width:280px;
-      justify-content:center;
-      transition:transform .3s var(--ease);
-    }
-
-    .sticky-summary.show{
-      transform:translateX(-50%) translateY(0);
-    }
-
-    .sticky-label{
-      font-size:13px;
-      color:var(--ink-2);
-    }
-
-    .sticky-val{
-      font-size:24px;
-      font-weight:900;
-      color:var(--primary);
-    }
-
-    /* مودال تصدير البطاقة */
-    .export-modal{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.85);
-      z-index:100;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-      backdrop-filter:blur(10px);
-    }
-
-    .export-modal.show{display:flex;}
-
-    .export-card{
-      background:var(--surface);
-      border-radius:24px;
-      width:100%;
-      max-width:400px;
-      max-height:90vh;
-      overflow-y:auto;
-      padding:24px;
-      text-align:center;
-    }
-
-    .export-preview{
-      background:#fff;
-      border-radius:16px;
-      padding:12px;
-      margin-bottom:20px;
-      box-shadow:0 4px 16px rgba(0,0,0,0.1);
-    }
-
-    .export-preview canvas{
-      max-width:100%;
-      height:auto;
-      border-radius:12px;
-      display:block;
-      margin:0 auto;
-    }
-
-    .export-title{
-      font-size:18px;
-      font-weight:900;
-      margin-bottom:8px;
-      color:var(--ink);
-    }
-
-    .export-desc{
-      font-size:14px;
-      color:var(--ink-2);
-      margin-bottom:20px;
-      line-height:1.6;
-    }
-
-    .export-actions{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-
-    .btn-full{
-      grid-column:1/-1;
-    }
-
-    /* مودال الكاميرا */
-    .camera-modal{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.95);
-      z-index:100;
-      display:none;
-      flex-direction:column;
-    }
-
+    /* تعديل 2: كاميرا محسنة بدون خط مسح */
+    .camera-modal{position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:100;display:none;flex-direction:column;}
     .camera-modal.show{display:flex;}
-
-    .camera-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:16px;
-      color:#fff;
-      background:rgba(255,255,255,0.1);
-      backdrop-filter:blur(10px);
-    }
-
-    .camera-title{
-      font-size:18px;
-      font-weight:900;
-    }
-
-    .camera-close{
-      background:none;
-      border:none;
-      color:#fff;
-      font-size:28px;
-      cursor:pointer;
-      width:44px;
-      height:44px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border-radius:50%;
-    }
-
-    .camera-preview{
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .camera-video{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .camera-overlay{
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+    .camera-header{display:flex;justify-content:space-between;align-items:center;padding:16px;color:#fff;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);}
+    .camera-title{font-size:18px;font-weight:900;}
+    .camera-close{background:none;border:none;color:#fff;font-size:28px;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;}
+    .camera-preview{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+    .camera-video{width:100%;height:100%;object-fit:cover;}
+    .camera-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+    
+    /* إطار بسيط بدون خط مسح */
+    .focus-frame{
+      width:280px;height:280px;border:3px solid rgba(123,170,146,0.8);border-radius:20px;
+      position:relative;box-shadow:0 0 0 4000px rgba(0,0,0,0.5);
       pointer-events:none;
     }
+    .focus-frame::before,.focus-frame::after{content:'';position:absolute;width:40px;height:40px;border-color:var(--success);border-style:solid;}
+    .focus-frame::before{top:-3px;left:-3px;border-width:6px 0 0 6px;border-radius:16px 0 0 0;}
+    .focus-frame::after{bottom:-3px;right:-3px;border-width:0 6px 6px 0;border-radius:0 0 16px 0;}
 
-    .scan-frame{
-      width:280px;
-      height:280px;
-      border:3px solid var(--primary);
-      border-radius:20px;
-      position:relative;
-      box-shadow:0 0 0 4000px rgba(0,0,0,0.5);
+    /* نقطة الفوكس */
+    .focus-point{
+      position:absolute;width:40px;height:40px;border:2px solid var(--success);border-radius:50%;
+      display:none;pointer-events:none;transform:translate(-50%,-50%);
+      box-shadow:0 0 0 2px rgba(0,0,0,0.5), inset 0 0 10px rgba(123,170,146,0.5);
     }
+    .focus-point.show{display:block;}
 
-    .scan-frame::before,
-    .scan-frame::after{
-      content:'';
-      position:absolute;
-      width:40px;
-      height:40px;
-      border-color:var(--success);
-      border-style:solid;
-    }
+    .camera-hint{position:absolute;bottom:100px;left:0;right:0;text-align:center;color:#fff;font-size:14px;padding:0 40px;line-height:1.6;text-shadow:0 2px 4px rgba(0,0,0,0.5);}
+    .camera-capture{padding:20px;display:flex;justify-content:center;gap:20px;background:#000;}
+    .btn-capture{width:72px;height:72px;border-radius:50%;background:#fff;border:4px solid var(--ink-2);cursor:pointer;position:relative;}
+    .btn-capture::after{content:'';position:absolute;inset:8px;border-radius:50%;background:var(--primary);}
+    .btn-capture:active::after{background:var(--success);}
 
-    .scan-frame::before{
-      top:-3px;
-      left:-3px;
-      border-width:6px 0 0 6px;
-      border-radius:16px 0 0 0;
-    }
-
-    .scan-frame::after{
-      bottom:-3px;
-      right:-3px;
-      border-width:0 6px 6px 0;
-      border-radius:0 0 16px 0;
-    }
-
-    .scan-line{
-      position:absolute;
-      width:100%;
-      height:2px;
-      background:var(--success);
-      box-shadow:0 0 10px var(--success);
-      animation:scan 2s infinite;
-      top:20%;
-    }
-
-    @keyframes scan{
-      0%,100%{top:20%;opacity:0;}
-      50%{top:80%;opacity:1;}
-    }
-
-    .camera-hint{
-      position:absolute;
-      bottom:100px;
-      left:0;
-      right:0;
-      text-align:center;
-      color:#fff;
-      font-size:14px;
-      padding:0 40px;
-      line-height:1.6;
-      text-shadow:0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    .camera-capture{
-      padding:20px;
-      display:flex;
-      justify-content:center;
-      gap:20px;
-      background:#000;
-    }
-
-    .btn-capture{
-      width:72px;
-      height:72px;
-      border-radius:50%;
-      background:#fff;
-      border:4px solid var(--ink-2);
-      cursor:pointer;
-      position:relative;
-    }
-
-    .btn-capture::after{
-      content:'';
-      position:absolute;
-      inset:8px;
-      border-radius:50%;
-      background:var(--primary);
-    }
-
-    .btn-capture:active::after{
-      background:var(--success);
-    }
-
-    .ocr-processing{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.9);
-      z-index:101;
-      display:none;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      color:#fff;
-    }
-
+    .ocr-processing{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:101;display:none;flex-direction:column;align-items:center;justify-content:center;color:#fff;}
     .ocr-processing.show{display:flex;}
-
-    .ocr-spinner{
-      width:60px;
-      height:60px;
-      border:4px solid rgba(255,255,255,0.2);
-      border-top-color:var(--primary);
-      border-radius:50%;
-      animation:spin 1s linear infinite;
-      margin-bottom:20px;
-    }
-
+    .ocr-spinner{width:60px;height:60px;border:4px solid rgba(255,255,255,0.2);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:20px;}
     @keyframes spin{to{transform:rotate(360deg);}}
+    .ocr-text{font-size:16px;font-weight:700;}
 
-    .ocr-text{
-      font-size:16px;
-      font-weight:700;
-    }
+    .export-modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(10px);}
+    .export-modal.show{display:flex;}
+    .export-card{background:var(--surface);border-radius:24px;width:100%;max-width:400px;max-height:90vh;overflow-y:auto;padding:24px;text-align:center;}
+    .export-preview{background:#fff;border-radius:16px;padding:12px;margin-bottom:20px;box-shadow:0 4px 16px rgba(0,0,0,0.1);}
+    .export-preview canvas{max-width:100%;height:auto;border-radius:12px;display:block;margin:0 auto;}
+    .export-title{font-size:18px;font-weight:900;margin-bottom:8px;color:var(--ink);}
+    .export-desc{font-size:14px;color:var(--ink-2);margin-bottom:20px;line-height:1.6;}
+    .export-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .btn-full{grid-column:1/-1;}
 
-    .bottom-nav{
-      position:fixed;
-      bottom:calc(12px + var(--safe-bottom));
-      left:50%;
-      transform:translateX(-50%);
-      width:calc(100% - 28px);
-      max-width:400px;
-      background:rgba(255,255,255,.95);
-      backdrop-filter:blur(20px);
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:8px;
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:4px;
-      box-shadow:0 12px 40px rgba(24,30,45,.12);
-      z-index:30;
-    }
-
-    .nav-item{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:4px;
-      padding:8px 4px;
-      border-radius:16px;
-      text-decoration:none;
-      color:var(--ink-2);
-      font-size:11px;
-      font-weight:800;
-      transition:all .2s;
-    }
-
-    .nav-item.active{
-      background:var(--surface-2);
-      color:var(--primary);
-    }
-
-    .nav-icon{
-      font-size:20px;
-      line-height:1;
-    }
-
-    .toast{
-      position:fixed;
-      top:calc(12px + var(--safe-top));
-      left:50%;
-      transform:translateX(-50%) translateY(-100px);
-      background:var(--ink);
-      color:#fff;
-      padding:14px 28px;
-      border-radius:999px;
-      font-size:15px;
-      font-weight:800;
-      z-index:1000;
-      transition:transform .3s;
-      box-shadow:0 8px 24px rgba(0,0,0,.3);
-    }
-
+    .bottom-nav{position:fixed;bottom:calc(12px + var(--safe-bottom));left:50%;transform:translateX(-50%);width:calc(100% - 28px);max-width:400px;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:24px;padding:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;box-shadow:0 12px 40px rgba(24,30,45,.12);z-index:30;}
+    .nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border-radius:16px;text-decoration:none;color:var(--ink-2);font-size:11px;font-weight:800;transition:all .2s;}
+    .nav-item.active{background:var(--surface-2);color:var(--primary);}
+    .nav-icon{font-size:20px;line-height:1;}
+    .toast{position:fixed;top:calc(12px + var(--safe-top));left:50%;transform:translateX(-50%) translateY(-100px);background:var(--ink);color:#fff;padding:14px 28px;border-radius:999px;font-size:15px;font-weight:800;z-index:1000;transition:transform .3s;box-shadow:0 8px 24px rgba(0,0,0,.3);}
     .toast.show{transform:translateX(-50%) translateY(0);}
 
     @media (max-width:380px){
@@ -1097,7 +250,9 @@
       .result-actions{grid-template-columns:1fr;}
       .export-actions{grid-template-columns:1fr;}
       .result-carb-value{font-size:48px;}
-      .scan-frame{width:240px;height:240px;}
+      .focus-frame{width:240px;height:240px;}
+      .mode-tabs{grid-template-columns:1fr;}
+      .mode-tab{font-size:12px;padding:8px;}
     }
   </style>
 </head>
@@ -1105,7 +260,12 @@
   <main class="app">
     <header class="header-compact">
       <div class="brand-mini">
-        <div class="brand-mark">🧠</div>
+        <!-- تعديل 1: الشعار الأصلي من الملف الأول -->
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 100 40" preserveAspectRatio="none">
+            <path d="M0 20 H24 L34 6 L45 33 L54 14 L62 24 L72 10 L82 20 H100"></path>
+          </svg>
+        </div>
         <div>
           <div class="brand-text">SugarMind</div>
           <div class="brand-sub">محلل الوجبة الذكي</div>
@@ -1114,42 +274,31 @@
       <button onclick="resetAll()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-2);padding:8px;">🔄</button>
     </header>
 
-    <!-- Recent Meals Bar -->
     <div class="recent-bar" id="recentBar">
       <div class="recent-header">⚡ آخر الوجبات (اضغط للحساب السريع، اضغط مطولاً للخيارات)</div>
       <div class="recent-chips" id="recentChips"></div>
     </div>
 
-    <!-- Journey Steps -->
     <div class="journey-compact">
-      <div class="j-step active" id="jStep1" onclick="goToStep(1)">
-        <span class="j-icon">🔍</span>
-        <span class="j-label">اختر الصنف</span>
-      </div>
-      <div class="j-step" id="jStep2" onclick="goToStep(2)">
-        <span class="j-icon">⚖️</span>
-        <span class="j-label">الوزن</span>
-      </div>
-      <div class="j-step" id="jStep3" onclick="goToStep(3)">
-        <span class="j-icon">📊</span>
-        <span class="j-label">النتيجة</span>
-      </div>
+      <div class="j-step active" id="jStep1" onclick="goToStep(1)"><span class="j-icon">🔍</span><span class="j-label">اختر الصنف</span></div>
+      <div class="j-step" id="jStep2" onclick="goToStep(2)"><span class="j-icon">⚖️</span><span class="j-label">الوزن</span></div>
+      <div class="j-step" id="jStep3" onclick="goToStep(3)"><span class="j-icon">📊</span><span class="j-label">النتيجة</span></div>
     </div>
 
-    <!-- البطاقة الرئيسية -->
     <div class="main-card">
       <div class="card-header">
         <div class="card-title" id="cardTitle">ابحث عن الصنف الغذائي</div>
-        <div class="card-sub" id="cardSub">ابحث في المكتبة العامة أو مكتبتك الخاصة</div>
+        <div class="card-sub" id="cardSub">ابحث في المكتبة أو أضف منتجاً جديداً</div>
       </div>
 
       <div class="card-body">
+        <!-- تعديل 3: ثلاث تبويبات واضحة -->
         <div class="mode-tabs">
           <button class="mode-tab active" id="tabSearch" onclick="setMode('search')">🔍 البحث</button>
           <button class="mode-tab" id="tabLibrary" onclick="setMode('library')">📚 مكتبتي</button>
+          <button class="mode-tab" id="tabCamera" onclick="openCamera()">📷 صور المكونات</button>
         </div>
 
-        <!-- Search Panel -->
         <div id="searchPanel">
           <div class="search-box">
             <input type="text" class="search-input" id="searchInput" placeholder="مثال: شوفان، تمرة، كبسة، بروست..." autocomplete="off">
@@ -1167,10 +316,9 @@
 
           <div class="suggestions" id="suggestions"></div>
 
-          <!-- بطاقة إضافة منتج جديد -->
           <div class="add-product-card" id="addProductCard">
             <div class="add-title">🛒 منتج جديد؟</div>
-            <div class="add-desc">لم نجد "{searchTerm}" في المكتبة. يمكنك إضافته الآن لتصبح متاحاً دائماً.</div>
+            <div class="add-desc">لم نجد "<span id="noResultTerm"></span>" في المكتبة.</div>
             <div class="add-actions">
               <button class="btn-add btn-scan" onclick="openCamera()">📷 صور المكونات</button>
               <button class="btn-add btn-manual" onclick="openManualAdd()">⌨️ إضافة يدوية</button>
@@ -1178,7 +326,6 @@
           </div>
         </div>
 
-        <!-- Library Panel -->
         <div id="libraryPanel" style="display:none;">
           <div id="libraryList">
             <div class="library-empty">
@@ -1188,7 +335,6 @@
           </div>
         </div>
 
-        <!-- Weight Section -->
         <div class="weight-section" id="weightSection">
           <div class="selected-item">
             <div class="sel-icon" id="selIcon">❓</div>
@@ -1214,24 +360,14 @@
             <button class="preset-btn" onclick="setWeight(250)">250g</button>
           </div>
 
-          <!-- النتيجة المباشرة -->
           <div class="inline-result" id="inlineResult">
             <div class="result-carb-value" id="resultCarbs">--</div>
             <div class="result-carb-label">جرام كاربوهيدرات</div>
             
             <div class="macros-row">
-              <div class="macro-box">
-                <div class="macro-val" id="resultCal">--</div>
-                <div class="macro-lbl">سعرة</div>
-              </div>
-              <div class="macro-box">
-                <div class="macro-val" id="resultProtein">--</div>
-                <div class="macro-lbl">بروتين</div>
-              </div>
-              <div class="macro-box">
-                <div class="macro-val" id="resultFat">--</div>
-                <div class="macro-lbl">دهون</div>
-              </div>
+              <div class="macro-box"><div class="macro-val" id="resultCal">--</div><div class="macro-lbl">سعرة</div></div>
+              <div class="macro-box"><div class="macro-val" id="resultProtein">--</div><div class="macro-lbl">بروتين</div></div>
+              <div class="macro-box"><div class="macro-val" id="resultFat">--</div><div class="macro-lbl">دهون</div></div>
             </div>
 
             <div class="result-actions">
@@ -1242,21 +378,18 @@
           </div>
 
           <button class="analyze-btn" id="calcBtn" onclick="calculateAndShow()" disabled>
-            <span>⚡</span>
-            <span>احسب الوجبة الآن</span>
+            <span>⚡</span><span>احسب الوجبة الآن</span>
           </button>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Sticky Summary -->
   <div class="sticky-summary" id="stickySummary">
     <span class="sticky-label">الكارب الإجمالي</span>
     <span class="sticky-val" id="stickyVal">0g</span>
   </div>
 
-  <!-- Bottom Nav -->
   <nav class="bottom-nav">
     <a href="index.html" class="nav-item"><span class="nav-icon">🏠</span>الرئيسية</a>
     <a href="meal-analyzer.html" class="nav-item active"><span class="nav-icon">🍽️</span>المحلل</a>
@@ -1264,19 +397,13 @@
     <a href="daily-guide.html" class="nav-item"><span class="nav-icon">📋</span>يومي</a>
   </nav>
 
-  <!-- Toast -->
   <div class="toast" id="toast"></div>
 
-  <!-- مودال تصدير البطاقة -->
   <div class="export-modal" id="exportModal" onclick="closeExportModal(event)">
     <div class="export-card" onclick="event.stopPropagation()">
       <div class="export-title">🎴 بطاقة SugarMind</div>
       <div class="export-desc">اضغط مطولاً على الصورة في الواتساب لفتح التطبيق مباشرة</div>
-      
-      <div class="export-preview" id="cardPreview">
-        <!-- Canvas يُولد هنا -->
-      </div>
-      
+      <div class="export-preview" id="cardPreview"></div>
       <div class="export-actions">
         <button class="btn btn-primary btn-full" onclick="downloadCard()">💾 حفظ في الألبوم</button>
         <button class="btn btn-card" onclick="shareCardNative()">📤 مشاركة مباشرة</button>
@@ -1285,34 +412,36 @@
     </div>
   </div>
 
-  <!-- مودال الكاميرا -->
+  <!-- تعديل 2: كاميرا محسنة مع دعم اللمس للفوكس -->
   <div class="camera-modal" id="cameraModal">
     <div class="camera-header">
       <div class="camera-title">📷 صور جدول العناصر الغذائية</div>
       <button class="camera-close" onclick="closeCamera()">✕</button>
     </div>
-    <div class="camera-preview">
+    <div class="camera-preview" id="cameraPreviewArea">
       <video class="camera-video" id="cameraVideo" autoplay playsinline></video>
       <div class="camera-overlay">
-        <div class="scan-frame">
-          <div class="scan-line"></div>
+        <div class="focus-frame" id="focusFrame">
+          <!-- إزالة خط المسح -->
         </div>
+        <div class="focus-point" id="focusPoint"></div>
       </div>
-      <div class="camera-hint">وجّه الكاميرا على مربع "العناصر الغذائية" في المنتج</div>
+      <div class="camera-hint">
+        انقر على الشاشة للتركيز<br>
+        <small style="opacity:0.8;">وجّه المربع على جدول "العناصر الغذائية"</small>
+      </div>
     </div>
     <div class="camera-capture">
       <button class="btn-capture" onclick="captureImage()"></button>
     </div>
   </div>
 
-  <!-- OCR Processing -->
   <div class="ocr-processing" id="ocrProcessing">
     <div class="ocr-spinner"></div>
     <div class="ocr-text">جاري قراءة الأرقام...</div>
   </div>
 
   <script>
-    // === الربط بالمكتبة الأصلية ===
     const BASE_LIBRARY = (Array.isArray(window.FOOD_DATABASE) ? window.FOOD_DATABASE : []).map((item, index) => {
       const safeId = item.id || `food-${index + 1}`;
       const aliases = Array.isArray(item.aliases) ? item.aliases : [item.name_ar, item.name_en].filter(Boolean);
@@ -1338,7 +467,6 @@
       };
     });
 
-    // State
     let selectedMeal = null;
     let currentWeight = 100;
     let lastResult = null;
@@ -1346,12 +474,13 @@
     let searchTerm = '';
     let cardCanvas = null;
     let currentStream = null;
+    let track = null;
 
-    // DOM Elements
     const els = {
       searchInput: document.getElementById('searchInput'),
       suggestions: document.getElementById('suggestions'),
       addProductCard: document.getElementById('addProductCard'),
+      noResultTerm: document.getElementById('noResultTerm'),
       weightSection: document.getElementById('weightSection'),
       selIcon: document.getElementById('selIcon'),
       selName: document.getElementById('selName'),
@@ -1373,10 +502,11 @@
       cardPreview: document.getElementById('cardPreview'),
       cameraModal: document.getElementById('cameraModal'),
       cameraVideo: document.getElementById('cameraVideo'),
+      cameraPreviewArea: document.getElementById('cameraPreviewArea'),
+      focusPoint: document.getElementById('focusPoint'),
       ocrProcessing: document.getElementById('ocrProcessing')
     };
 
-    // Helpers
     function showToast(msg) {
       els.toast.textContent = msg;
       els.toast.classList.add('show');
@@ -1402,7 +532,6 @@
       if (mode === 'library') renderLibrary();
     }
 
-    // Search Logic
     function search(query) {
       searchTerm = query;
       if (!query || query.length < 2) {
@@ -1424,28 +553,20 @@
       if (!results.length) {
         els.suggestions.innerHTML = '';
         els.suggestions.classList.remove('show');
-        els.addProductCard.querySelector('.add-desc').textContent = `لم نجد "${query}" في المكتبة. يمكنك إضافته الآن لتصبح متاحاً دائماً.`;
+        els.noResultTerm.textContent = query;
         els.addProductCard.classList.add('show');
       } else {
         els.addProductCard.classList.remove('show');
         els.suggestions.innerHTML = results.map(item => {
-          const carbsLabel = item.mode === 'estimated_ratio' 
-            ? `${Math.round((item.carb_ratio || 0) * 100)}g تقديري`
-            : `${item.carbs}g/100g`;
-          
-          const confClass = item.confidence === 'high' ? 'conf-high' : 
-                           item.confidence === 'medium' ? 'conf-medium' : 'conf-est';
-          const confText = item.confidence === 'high' ? 'دقيق' : 
-                          item.confidence === 'medium' ? 'متوسط' : 'تقديري';
+          const carbsLabel = item.mode === 'estimated_ratio' ? `${Math.round((item.carb_ratio || 0) * 100)}g تقديري` : `${item.carbs}g/100g`;
+          const confClass = item.confidence === 'high' ? 'conf-high' : item.confidence === 'medium' ? 'conf-medium' : 'conf-est';
+          const confText = item.confidence === 'high' ? 'دقيق' : item.confidence === 'medium' ? 'متوسط' : 'تقديري';
 
           return `
           <div class="sugg-item" onclick="selectMeal('${item.id}')">
             <div class="sugg-icon">${item.icon || '🍽️'}</div>
             <div class="sugg-info">
-              <div class="sugg-name">
-                ${item.name_ar}
-                ${item.name_en ? `<span class="sugg-en">${item.name_en}</span>` : ''}
-              </div>
+              <div class="sugg-name">${item.name_ar}${item.name_en ? `<span class="sugg-en">${item.name_en}</span>` : ''}</div>
               <div class="sugg-meta">
                 <span class="sugg-badge">${carbsLabel}</span>
                 <span>${item.category}</span>
@@ -1582,7 +703,6 @@
         </div>
       `).join('');
 
-      // إضافة events للضغط المطول
       recent.forEach((r, idx) => {
         const chip = document.querySelector(`.recent-chip[data-idx="${idx}"]`);
         const menu = document.getElementById(`menu-${idx}`);
@@ -1590,24 +710,22 @@
 
         chip.addEventListener('click', () => quickRecalc(r.id, r.weight));
         
-        chip.addEventListener('touchstart', (e) => {
+        const startPress = (e) => {
+          if (e.button === 2) return;
           pressTimer = setTimeout(() => {
             e.preventDefault();
             menu.classList.add('show');
           }, 600);
-        });
+        };
         
-        chip.addEventListener('touchend', () => clearTimeout(pressTimer));
-        chip.addEventListener('touchmove', () => clearTimeout(pressTimer));
+        const endPress = () => clearTimeout(pressTimer);
         
-        chip.addEventListener('mousedown', (e) => {
-          if (e.button === 2) return;
-          pressTimer = setTimeout(() => menu.classList.add('show'), 600);
-        });
+        chip.addEventListener('touchstart', startPress);
+        chip.addEventListener('touchend', endPress);
+        chip.addEventListener('touchmove', endPress);
+        chip.addEventListener('mousedown', startPress);
+        chip.addEventListener('mouseup', endPress);
         
-        chip.addEventListener('mouseup', () => clearTimeout(pressTimer));
-        
-        // إخفاء المنيو عند النقر خارجها
         document.addEventListener('click', (e) => {
           if (!chip.contains(e.target)) menu.classList.remove('show');
         });
@@ -1676,7 +794,7 @@
       showToast('📚 تمت الإضافة لمكتبتك');
     }
 
-    // === نظام تصدير البطاقة (Smart Card Export) ===
+    // === نظام البطاقة ===
     function generateAndShowCard() {
       if (!lastResult) { showToast('احسب الوجبة أولاً'); return; }
       
@@ -1689,7 +807,6 @@
       canvas.height = h;
       cardCanvas = canvas;
 
-      // خلفية متدرجة
       const grd = ctx.createLinearGradient(0, 0, w, h);
       grd.addColorStop(0, '#F6F3EE');
       grd.addColorStop(0.5, '#FFFFFF');
@@ -1697,7 +814,6 @@
       ctx.fillStyle = grd;
       ctx.fillRect(0, 0, w, h);
 
-      // Watermark شفاف
       ctx.save();
       ctx.globalAlpha = 0.03;
       ctx.font = '900 200px Tajawal';
@@ -1706,7 +822,6 @@
       ctx.fillText('SUGARMIND', -200, 800);
       ctx.restore();
 
-      // الشعار
       ctx.fillStyle = '#21283B';
       ctx.font = '800 48px Tajawal';
       ctx.textAlign = 'center';
@@ -1716,24 +831,20 @@
       ctx.font = '500 32px Tajawal';
       ctx.fillText('محلل الوجبة الذكي', w/2, 170);
 
-      // اسم الوجبة
       ctx.fillStyle = '#1D2433';
       ctx.font = '900 72px Tajawal';
       const displayName = lastResult.name.length > 20 ? lastResult.name.substring(0, 18) + '..' : lastResult.name;
       ctx.fillText(displayName, w/2, 380);
 
-      // الرقم الكبير
       ctx.fillStyle = '#7BAA92';
       ctx.font = '900 260px Tajawal';
       const carbText = Math.round(lastResult.carbs).toString();
       ctx.fillText(carbText, w/2, 620);
       
-      // الوحدة
       ctx.fillStyle = '#667085';
       ctx.font = '700 56px Tajawal';
       ctx.fillText('جرام كاربوهيدرات', w/2, 700);
 
-      // خط فاصل
       ctx.beginPath();
       ctx.moveTo(340, 780);
       ctx.lineTo(740, 780);
@@ -1741,30 +852,25 @@
       ctx.lineWidth = 6;
       ctx.stroke();
 
-      // معلومات إضافية
       ctx.fillStyle = '#667085';
       ctx.font = '500 36px Tajawal';
       ctx.fillText(`${Math.round(lastResult.calories)} سعرة | ${lastResult.protein.toFixed(1)}g بروتين`, w/2, 850);
 
-      // QR Code حقيقي
       const qrSize = 360;
       const qrX = (w - qrSize) / 2;
       const qrY = 920;
       
-      // خلفية بيضاء للـ QR
       ctx.fillStyle = '#FFFFFF';
       ctx.fillRect(qrX - 20, qrY - 20, qrSize + 40, qrSize + 40);
       ctx.strokeStyle = '#E6E1D8';
       ctx.lineWidth = 4;
       ctx.strokeRect(qrX - 20, qrY - 20, qrSize + 40, qrSize + 40);
 
-      // إنشاء QR Code
       const qr = qrcode(0, 'M');
       const shareUrl = `https://sugarmindapp-collab.github.io/sugarmind/index.html?utm_source=card&utm_meal=${encodeURIComponent(lastResult.name)}`;
       qr.addData(shareUrl);
       qr.make();
       
-      // رسم QR على Canvas
       const moduleCount = qr.getModuleCount();
       const moduleSize = qrSize / moduleCount;
       
@@ -1777,17 +883,14 @@
         }
       }
 
-      // توجيه الضغط المطول
       ctx.fillStyle = '#8C94A4';
       ctx.font = '500 28px Tajawal';
       ctx.fillText('📱 اضغط مطولاً على المربع لفتح التطبيق', w/2, h - 180);
 
-      // الدومين
       ctx.fillStyle = '#7BAA92';
       ctx.font = '800 40px Tajawal';
       ctx.fillText('sugarmind.app', w/2, h - 100);
 
-      // عرض المعاينة
       els.cardPreview.innerHTML = '';
       const img = document.createElement('img');
       img.src = canvas.toDataURL('image/png');
@@ -1826,19 +929,66 @@
               title: `نتيجة تحليل ${lastResult.name}`,
               text: `احتجت ${Math.round(lastResult.carbs)}g كارب في وجبتي مع SugarMind 🧠`
             });
-          } catch (err) {
-            // المستخدم ألغى
-          }
+          } catch (err) {}
         } else {
           downloadCard();
         }
       }, 'image/png');
     }
 
-    // === نظام إضافة منتج جديد (OCR) ===
-    function openCamera() {
+    // === تعديل 2: كاميرا محسنة مع دعم اللمس للفوكس ===
+    async function openCamera() {
       els.cameraModal.classList.add('show');
-      initCamera();
+      await initCamera();
+      
+      // إضافة دعم اللمس للفوكس
+      const previewArea = els.cameraPreviewArea;
+      
+      previewArea.addEventListener('click', async (e) => {
+        if (!track) return;
+        
+        const rect = previewArea.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // إظهار نقطة الفوكس
+        const focusPoint = els.focusPoint;
+        focusPoint.style.left = x + 'px';
+        focusPoint.style.top = y + 'px';
+        focusPoint.classList.add('show');
+        
+        setTimeout(() => focusPoint.classList.remove('show'), 1000);
+        
+        // تطبيق الفوكس إن وجد الدعم
+        try {
+          const capabilities = track.getCapabilities();
+          if (capabilities.focusMode) {
+            await track.applyConstraints({
+              advanced: [{ focusMode: 'manual' }]
+            });
+          }
+        } catch (err) {
+          console.log('Focus not supported');
+        }
+      });
+    }
+
+    async function initCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+          video: { 
+            facingMode: 'environment',
+            width: { ideal: 1920 },
+            height: { ideal: 1080 }
+          } 
+        });
+        els.cameraVideo.srcObject = stream;
+        currentStream = stream;
+        track = stream.getVideoTracks()[0];
+      } catch (err) {
+        showToast('❌ لا يمكن الوصول للكاميرا');
+        closeCamera();
+      }
     }
 
     function closeCamera() {
@@ -1846,19 +996,7 @@
       if (currentStream) {
         currentStream.getTracks().forEach(track => track.stop());
         currentStream = null;
-      }
-    }
-
-    async function initCamera() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ 
-          video: { facingMode: 'environment' } 
-        });
-        els.cameraVideo.srcObject = stream;
-        currentStream = stream;
-      } catch (err) {
-        showToast('❌ لا يمكن الوصول للكاميرا');
-        closeCamera();
+        track = null;
       }
     }
 
@@ -1878,7 +1016,6 @@
       els.ocrProcessing.classList.add('show');
       
       try {
-        // قص الجزء المركزي فقط (حيث يكون الجدول غالباً)
         const centerCanvas = document.createElement('canvas');
         const w = canvas.width;
         const h = canvas.height;
@@ -1896,14 +1033,12 @@
         const text = result.data.text;
         console.log('OCR Text:', text);
         
-        // استخراج الكارب
         const carbMatch = text.match(/(?:كربوهيدرات|Carbohydrates|الكربوهيدرات)[^\d]*(\d+\.?\d*)/i);
         const caloriesMatch = text.match(/(?:سعرة|Calories|طاقة)[^\d]*(\d+)/i);
         
         let extractedCarbs = carbMatch ? parseFloat(carbMatch[1]) : 0;
         let extractedCal = caloriesMatch ? parseInt(caloriesMatch[1]) : 0;
         
-        // فتح نموذج إضافة يدوي مع البيانات المستخرجة
         openManualAdd(extractedCarbs, extractedCal);
         
       } catch (err) {
@@ -1950,7 +1085,6 @@
       setMode('search');
     }
 
-    // Events
     els.searchInput.addEventListener('input', (e) => {
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => search(e.target.value), 200);
@@ -1967,7 +1101,6 @@
       }
     });
 
-    // Init
     renderRecent();
     goToStep(1);
     els.searchInput.focus();
