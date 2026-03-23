@@ -5,8 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>محلل الوجبة | SugarMind</title>
   
+  <meta name="description" content="احسب الكارب والسعرات بالوزن - محلل ذكي لمرضى السكري" />
+  <meta property="og:image" content="https://sugarmindapp-collab.github.io/sugarmind/share-preview.jpg" />
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- مكتبات خارجية -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
   
   <!-- الربط بالمكتبة الأصلية -->
   <script src="food-database.js"></script>
@@ -21,6 +28,7 @@
       --primary:#7BAA92;
       --ink:#1D2433;
       --ink-2:#667085;
+      --ink-3:#8C94A4;
       --line:#E6E1D8;
       --success:#56D46F;
       --warning:#E6B85C;
@@ -122,6 +130,8 @@
       padding-bottom:4px;
     }
 
+    .recent-chips::-webkit-scrollbar{display:none;}
+
     .recent-chip{
       flex-shrink:0;
       padding:8px 14px;
@@ -135,7 +145,12 @@
       display:flex;
       align-items:center;
       gap:6px;
+      position:relative;
+      user-select:none;
+      -webkit-user-select:none;
     }
+
+    .recent-chip:active{transform:scale(0.96);}
 
     .recent-chip:hover, .recent-chip.active{
       background:var(--primary);
@@ -143,6 +158,42 @@
       border-color:var(--primary);
       transform:translateY(-1px);
     }
+
+    /* منيو الضغط المطول */
+    .chip-context-menu{
+      position:absolute;
+      bottom:100%;
+      left:50%;
+      transform:translateX(-50%) scale(0);
+      background:#fff;
+      border-radius:12px;
+      box-shadow:var(--shadow-lg);
+      padding:8px;
+      min-width:180px;
+      z-index:50;
+      opacity:0;
+      transition:all .2s;
+      pointer-events:none;
+      margin-bottom:8px;
+      border:1px solid var(--line);
+    }
+
+    .chip-context-menu.show{
+      transform:translateX(-50%) scale(1);
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .context-item{
+      padding:10px 14px;
+      border-radius:8px;
+      font-size:13px;
+      cursor:pointer;
+      white-space:nowrap;
+      transition:background .2s;
+    }
+
+    .context-item:hover{background:var(--surface-2);}
 
     .journey-compact{
       display:grid;
@@ -246,7 +297,7 @@
 
     .search-input{
       width:100%;
-      padding:14px 18px 14px 45px;
+      padding:14px 50px 14px 18px;
       border:2px solid var(--line);
       border-radius:999px;
       font-size:16px;
@@ -374,9 +425,67 @@
       font-weight:900;
     }
 
-    .conf-high{background:var(--success-soft);color:var(--success);}
+    .conf-high{background:rgba(86,212,111,.12);color:var(--success);}
     .conf-medium{background:var(--warning-soft);color:#A87912;}
     .conf-est{background:rgba(125,139,174,.12);color:var(--hero-2);}
+
+    /* بطاقة إضافة منتج جديد */
+    .add-product-card{
+      background:linear-gradient(135deg, rgba(123,170,146,.08), rgba(230,184,92,.05));
+      border:2px dashed var(--primary);
+      border-radius:16px;
+      padding:20px;
+      margin-top:12px;
+      text-align:center;
+      display:none;
+    }
+
+    .add-product-card.show{display:block;animation:slideUp .3s;}
+
+    .add-title{
+      font-size:16px;
+      font-weight:900;
+      color:var(--hero);
+      margin-bottom:8px;
+    }
+
+    .add-desc{
+      font-size:13px;
+      color:var(--ink-2);
+      margin-bottom:16px;
+      line-height:1.6;
+    }
+
+    .add-actions{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+    }
+
+    .btn-add{
+      padding:12px 20px;
+      border-radius:12px;
+      border:none;
+      font-size:14px;
+      font-weight:800;
+      cursor:pointer;
+      transition:all .2s;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .btn-scan{
+      background:var(--hero);
+      color:#fff;
+      box-shadow:0 4px 12px rgba(33,40,59,.2);
+    }
+
+    .btn-manual{
+      background:#fff;
+      color:var(--ink);
+      border:1px solid var(--line);
+    }
 
     .library-empty{
       text-align:center;
@@ -587,6 +696,18 @@
 
     .btn-secondary:hover{background:var(--surface-2);}
 
+    .btn-card{
+      background:linear-gradient(135deg,#7BAA92,#5E9A7A);
+      color:#fff;
+      border:none;
+      box-shadow:0 4px 12px rgba(123,170,146,.4);
+    }
+
+    .btn-card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 20px rgba(123,170,146,.5);
+    }
+
     .btn-dark{
       background:var(--hero);
       color:#fff;
@@ -657,34 +778,257 @@
       color:var(--primary);
     }
 
-    .seo-collapsible{
-      margin-top:24px;
-      border-top:1px solid var(--line);
-      padding-top:16px;
+    /* مودال تصدير البطاقة */
+    .export-modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.85);
+      z-index:100;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      backdrop-filter:blur(10px);
     }
 
-    .seo-toggle{
+    .export-modal.show{display:flex;}
+
+    .export-card{
+      background:var(--surface);
+      border-radius:24px;
       width:100%;
+      max-width:400px;
+      max-height:90vh;
+      overflow-y:auto;
+      padding:24px;
       text-align:center;
+    }
+
+    .export-preview{
+      background:#fff;
+      border-radius:16px;
       padding:12px;
-      background:transparent;
-      border:1px dashed var(--line);
+      margin-bottom:20px;
+      box-shadow:0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .export-preview canvas{
+      max-width:100%;
+      height:auto;
       border-radius:12px;
+      display:block;
+      margin:0 auto;
+    }
+
+    .export-title{
+      font-size:18px;
+      font-weight:900;
+      margin-bottom:8px;
+      color:var(--ink);
+    }
+
+    .export-desc{
+      font-size:14px;
       color:var(--ink-2);
-      font-size:13px;
-      font-weight:700;
+      margin-bottom:20px;
+      line-height:1.6;
+    }
+
+    .export-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .btn-full{
+      grid-column:1/-1;
+    }
+
+    /* مودال الكاميرا */
+    .camera-modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.95);
+      z-index:100;
+      display:none;
+      flex-direction:column;
+    }
+
+    .camera-modal.show{display:flex;}
+
+    .camera-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px;
+      color:#fff;
+      background:rgba(255,255,255,0.1);
+      backdrop-filter:blur(10px);
+    }
+
+    .camera-title{
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .camera-close{
+      background:none;
+      border:none;
+      color:#fff;
+      font-size:28px;
       cursor:pointer;
+      width:44px;
+      height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:50%;
     }
 
-    .seo-content{
-      max-height:0;
+    .camera-preview{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
       overflow:hidden;
-      transition:max-height .3s;
     }
 
-    .seo-content.open{
-      max-height:500px;
-      padding-top:16px;
+    .camera-video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .camera-overlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+    }
+
+    .scan-frame{
+      width:280px;
+      height:280px;
+      border:3px solid var(--primary);
+      border-radius:20px;
+      position:relative;
+      box-shadow:0 0 0 4000px rgba(0,0,0,0.5);
+    }
+
+    .scan-frame::before,
+    .scan-frame::after{
+      content:'';
+      position:absolute;
+      width:40px;
+      height:40px;
+      border-color:var(--success);
+      border-style:solid;
+    }
+
+    .scan-frame::before{
+      top:-3px;
+      left:-3px;
+      border-width:6px 0 0 6px;
+      border-radius:16px 0 0 0;
+    }
+
+    .scan-frame::after{
+      bottom:-3px;
+      right:-3px;
+      border-width:0 6px 6px 0;
+      border-radius:0 0 16px 0;
+    }
+
+    .scan-line{
+      position:absolute;
+      width:100%;
+      height:2px;
+      background:var(--success);
+      box-shadow:0 0 10px var(--success);
+      animation:scan 2s infinite;
+      top:20%;
+    }
+
+    @keyframes scan{
+      0%,100%{top:20%;opacity:0;}
+      50%{top:80%;opacity:1;}
+    }
+
+    .camera-hint{
+      position:absolute;
+      bottom:100px;
+      left:0;
+      right:0;
+      text-align:center;
+      color:#fff;
+      font-size:14px;
+      padding:0 40px;
+      line-height:1.6;
+      text-shadow:0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .camera-capture{
+      padding:20px;
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      background:#000;
+    }
+
+    .btn-capture{
+      width:72px;
+      height:72px;
+      border-radius:50%;
+      background:#fff;
+      border:4px solid var(--ink-2);
+      cursor:pointer;
+      position:relative;
+    }
+
+    .btn-capture::after{
+      content:'';
+      position:absolute;
+      inset:8px;
+      border-radius:50%;
+      background:var(--primary);
+    }
+
+    .btn-capture:active::after{
+      background:var(--success);
+    }
+
+    .ocr-processing{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.9);
+      z-index:101;
+      display:none;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+    }
+
+    .ocr-processing.show{display:flex;}
+
+    .ocr-spinner{
+      width:60px;
+      height:60px;
+      border:4px solid rgba(255,255,255,0.2);
+      border-top-color:var(--primary);
+      border-radius:50%;
+      animation:spin 1s linear infinite;
+      margin-bottom:20px;
+    }
+
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    .ocr-text{
+      font-size:16px;
+      font-weight:700;
     }
 
     .bottom-nav{
@@ -737,13 +1081,13 @@
       transform:translateX(-50%) translateY(-100px);
       background:var(--ink);
       color:#fff;
-      padding:12px 24px;
+      padding:14px 28px;
       border-radius:999px;
-      font-size:14px;
+      font-size:15px;
       font-weight:800;
-      z-index:100;
+      z-index:1000;
       transition:transform .3s;
-      box-shadow:0 8px 24px rgba(0,0,0,.2);
+      box-shadow:0 8px 24px rgba(0,0,0,.3);
     }
 
     .toast.show{transform:translateX(-50%) translateY(0);}
@@ -751,7 +1095,9 @@
     @media (max-width:380px){
       .weight-input-row{grid-template-columns:1fr;}
       .result-actions{grid-template-columns:1fr;}
+      .export-actions{grid-template-columns:1fr;}
       .result-carb-value{font-size:48px;}
+      .scan-frame{width:240px;height:240px;}
     }
   </style>
 </head>
@@ -770,7 +1116,7 @@
 
     <!-- Recent Meals Bar -->
     <div class="recent-bar" id="recentBar">
-      <div class="recent-header">⚡ آخر الوجبات المحسوبة (اضغط لإعادة الحساب)</div>
+      <div class="recent-header">⚡ آخر الوجبات (اضغط للحساب السريع، اضغط مطولاً للخيارات)</div>
       <div class="recent-chips" id="recentChips"></div>
     </div>
 
@@ -820,19 +1166,29 @@
           </div>
 
           <div class="suggestions" id="suggestions"></div>
+
+          <!-- بطاقة إضافة منتج جديد -->
+          <div class="add-product-card" id="addProductCard">
+            <div class="add-title">🛒 منتج جديد؟</div>
+            <div class="add-desc">لم نجد "{searchTerm}" في المكتبة. يمكنك إضافته الآن لتصبح متاحاً دائماً.</div>
+            <div class="add-actions">
+              <button class="btn-add btn-scan" onclick="openCamera()">📷 صور المكونات</button>
+              <button class="btn-add btn-manual" onclick="openManualAdd()">⌨️ إضافة يدوية</button>
+            </div>
+          </div>
         </div>
 
         <!-- Library Panel -->
         <div id="libraryPanel" style="display:none;">
           <div id="libraryList">
             <div class="library-empty">
-              لا توجد أصناف في مكتبتك الخاصة<br>
-              <small>احسب أي وجبة ثم اضغط "أضف لمكتبتي"</small>
+              📚 مكتبتك فارغة حالياً<br>
+              <small style="display:block;margin-top:8px;opacity:.7;">احسب أي وجبة ثم اضغط "أضف لمكتبتي"</small>
             </div>
           </div>
         </div>
 
-        <!-- Weight Section (يظهر بعد الاختيار) -->
+        <!-- Weight Section -->
         <div class="weight-section" id="weightSection">
           <div class="selected-item">
             <div class="sel-icon" id="selIcon">❓</div>
@@ -880,7 +1236,7 @@
 
             <div class="result-actions">
               <button class="btn btn-primary" onclick="saveResult()">💾 حفظ</button>
-              <button class="btn btn-secondary" onclick="shareResult()">📤 مشاركة</button>
+              <button class="btn btn-card" onclick="generateAndShowCard()">📸 صدر البطاقة</button>
               <button class="btn btn-dark" onclick="addToLibrary()">📚 مكتبتي</button>
             </div>
           </div>
@@ -889,21 +1245,6 @@
             <span>⚡</span>
             <span>احسب الوجبة الآن</span>
           </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- SEO Collapsible -->
-    <div class="seo-collapsible">
-      <button class="seo-toggle" onclick="toggleSeo()">📖 معلومات إضافية عن حساب الكارب</button>
-      <div class="seo-content" id="seoContent">
-        <div style="font-size:14px;line-height:1.8;color:var(--ink-2);">
-          <p style="margin-bottom:12px;">
-            يتم حساب الكارب بناءً على الوزن الدقيق. كل 100 جرام من الصنف تحتوي على كمية معينة من الكربوهيدرات.
-          </p>
-          <p>
-            للحصول على نتيجة دقيقة، استخدم ميزان مطبخ رقمي. التقدير البصري قد يكون غير دقيق بنسبة 20-40%.
-          </p>
         </div>
       </div>
     </div>
@@ -923,7 +1264,52 @@
     <a href="daily-guide.html" class="nav-item"><span class="nav-icon">📋</span>يومي</a>
   </nav>
 
+  <!-- Toast -->
   <div class="toast" id="toast"></div>
+
+  <!-- مودال تصدير البطاقة -->
+  <div class="export-modal" id="exportModal" onclick="closeExportModal(event)">
+    <div class="export-card" onclick="event.stopPropagation()">
+      <div class="export-title">🎴 بطاقة SugarMind</div>
+      <div class="export-desc">اضغط مطولاً على الصورة في الواتساب لفتح التطبيق مباشرة</div>
+      
+      <div class="export-preview" id="cardPreview">
+        <!-- Canvas يُولد هنا -->
+      </div>
+      
+      <div class="export-actions">
+        <button class="btn btn-primary btn-full" onclick="downloadCard()">💾 حفظ في الألبوم</button>
+        <button class="btn btn-card" onclick="shareCardNative()">📤 مشاركة مباشرة</button>
+        <button class="btn btn-secondary" onclick="closeExportModal()">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- مودال الكاميرا -->
+  <div class="camera-modal" id="cameraModal">
+    <div class="camera-header">
+      <div class="camera-title">📷 صور جدول العناصر الغذائية</div>
+      <button class="camera-close" onclick="closeCamera()">✕</button>
+    </div>
+    <div class="camera-preview">
+      <video class="camera-video" id="cameraVideo" autoplay playsinline></video>
+      <div class="camera-overlay">
+        <div class="scan-frame">
+          <div class="scan-line"></div>
+        </div>
+      </div>
+      <div class="camera-hint">وجّه الكاميرا على مربع "العناصر الغذائية" في المنتج</div>
+    </div>
+    <div class="camera-capture">
+      <button class="btn-capture" onclick="captureImage()"></button>
+    </div>
+  </div>
+
+  <!-- OCR Processing -->
+  <div class="ocr-processing" id="ocrProcessing">
+    <div class="ocr-spinner"></div>
+    <div class="ocr-text">جاري قراءة الأرقام...</div>
+  </div>
 
   <script>
     // === الربط بالمكتبة الأصلية ===
@@ -952,29 +1338,20 @@
       };
     });
 
-    // مكتبة المستخدم
-    function getCustomFoods() {
-      try {
-        const raw = localStorage.getItem('sugarmind_custom_foods_v1');
-        return raw ? JSON.parse(raw) : [];
-      } catch(e) {
-        return [];
-      }
-    }
-
-    function getMergedLibrary() {
-      return [...getCustomFoods(), ...BASE_LIBRARY];
-    }
-
+    // State
     let selectedMeal = null;
     let currentWeight = 100;
     let lastResult = null;
     let debounceTimer = null;
+    let searchTerm = '';
+    let cardCanvas = null;
+    let currentStream = null;
 
-    // عناصر DOM
+    // DOM Elements
     const els = {
       searchInput: document.getElementById('searchInput'),
       suggestions: document.getElementById('suggestions'),
+      addProductCard: document.getElementById('addProductCard'),
       weightSection: document.getElementById('weightSection'),
       selIcon: document.getElementById('selIcon'),
       selName: document.getElementById('selName'),
@@ -991,53 +1368,46 @@
       recentBar: document.getElementById('recentBar'),
       recentChips: document.getElementById('recentChips'),
       libraryList: document.getElementById('libraryList'),
-      toast: document.getElementById('toast')
+      toast: document.getElementById('toast'),
+      exportModal: document.getElementById('exportModal'),
+      cardPreview: document.getElementById('cardPreview'),
+      cameraModal: document.getElementById('cameraModal'),
+      cameraVideo: document.getElementById('cameraVideo'),
+      ocrProcessing: document.getElementById('ocrProcessing')
     };
 
+    // Helpers
     function showToast(msg) {
       els.toast.textContent = msg;
       els.toast.classList.add('show');
-      setTimeout(() => els.toast.classList.remove('show'), 2600);
+      setTimeout(() => els.toast.classList.remove('show'), 3000);
+    }
+
+    function getCustomFoods() {
+      try {
+        const raw = localStorage.getItem('sugarmind_custom_foods_v1');
+        return raw ? JSON.parse(raw) : [];
+      } catch(e) { return []; }
+    }
+
+    function getMergedLibrary() {
+      return [...getCustomFoods(), ...BASE_LIBRARY];
     }
 
     function setMode(mode) {
       document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
       document.getElementById('tab' + (mode === 'search' ? 'Search' : 'Library')).classList.add('active');
-      
       document.getElementById('searchPanel').style.display = mode === 'search' ? 'block' : 'none';
       document.getElementById('libraryPanel').style.display = mode === 'library' ? 'block' : 'none';
-      
       if (mode === 'library') renderLibrary();
     }
 
-    function renderLibrary() {
-      const custom = getCustomFoods();
-      if (!custom.length) {
-        els.libraryList.innerHTML = `
-          <div class="library-empty">
-            📚 مكتبتك فارغة حالياً<br>
-            <small style="display:block;margin-top:8px;opacity:.7;">احسب أي وجبة ثم اضغط "أضف لمكتبتي"</small>
-          </div>`;
-        return;
-      }
-      
-      els.libraryList.innerHTML = custom.map(item => `
-        <div class="sugg-item" onclick="selectMeal('${item.id}')">
-          <div class="sugg-icon">${item.icon || '📚'}</div>
-          <div class="sugg-info">
-            <div class="sugg-name">${item.name_ar}</div>
-            <div class="sugg-meta">
-              <span class="sugg-badge">${item.carbs}g/100g</span>
-              <span>من مكتبتي</span>
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
+    // Search Logic
     function search(query) {
+      searchTerm = query;
       if (!query || query.length < 2) {
         els.suggestions.classList.remove('show');
+        els.addProductCard.classList.remove('show');
         return;
       }
 
@@ -1049,15 +1419,15 @@
           const inAliases = Array.isArray(item.aliases) && item.aliases.some(a => String(a).toLowerCase().includes(q));
           return inAr || inEn || inAliases;
         })
-        .slice(0, 12); // أول 12 نتيجة
+        .slice(0, 12);
 
       if (!results.length) {
-        els.suggestions.innerHTML = `
-          <div style="padding:20px;text-align:center;color:var(--ink-2);">
-            لا توجد نتائج لـ "${query}"<br>
-            <small>جرب اسم آخر أو أضفه لمكتبتك</small>
-          </div>`;
+        els.suggestions.innerHTML = '';
+        els.suggestions.classList.remove('show');
+        els.addProductCard.querySelector('.add-desc').textContent = `لم نجد "${query}" في المكتبة. يمكنك إضافته الآن لتصبح متاحاً دائماً.`;
+        els.addProductCard.classList.add('show');
       } else {
+        els.addProductCard.classList.remove('show');
         els.suggestions.innerHTML = results.map(item => {
           const carbsLabel = item.mode === 'estimated_ratio' 
             ? `${Math.round((item.carb_ratio || 0) * 100)}g تقديري`
@@ -1084,9 +1454,8 @@
             </div>
           </div>`;
         }).join('');
+        els.suggestions.classList.add('show');
       }
-      
-      els.suggestions.classList.add('show');
     }
 
     function quickSearch(term) {
@@ -1099,10 +1468,9 @@
       selectedMeal = getMergedLibrary().find(i => i.id === id);
       if (!selectedMeal) return;
 
-      // إخفاء الاقتراحات والتحديث
       els.suggestions.classList.remove('show');
+      els.addProductCard.classList.remove('show');
       
-      // تحديث UI
       els.weightSection.classList.add('has-selection');
       els.selIcon.textContent = selectedMeal.icon || '🍽️';
       els.selName.textContent = selectedMeal.name_ar;
@@ -1110,22 +1478,18 @@
       
       els.calcBtn.disabled = false;
       
-      // الانتقال للخطوة 2
       goToStep(2);
       els.weightInput.focus();
       els.weightInput.select();
       
-      // تحديث المعاينة المباشرة
       updateStickyPreview();
     }
 
     function setWeight(w) {
       currentWeight = w;
       els.weightInput.value = w;
-      
       document.querySelectorAll('.weight-presets .preset-btn').forEach(b => b.classList.remove('active'));
       event.target.classList.add('active');
-      
       updateStickyPreview();
     }
 
@@ -1134,7 +1498,6 @@
         els.stickySummary.classList.remove('show');
         return;
       }
-
       const w = parseFloat(els.weightInput.value) || 0;
       if (w > 0) {
         const factor = w / 100;
@@ -1147,31 +1510,20 @@
     }
 
     function calculateAndShow() {
-      if (!selectedMeal) {
-        showToast('اختر صنف أولاً');
-        return;
-      }
-
+      if (!selectedMeal) { showToast('اختر صنف أولاً'); return; }
       const w = parseFloat(els.weightInput.value) || 0;
-      if (w <= 0) {
-        showToast('أدخل وزن صحيح');
-        els.weightInput.focus();
-        return;
-      }
+      if (w <= 0) { showToast('أدخل وزن صحيح'); els.weightInput.focus(); return; }
 
       currentWeight = w;
-      
-      // الحساب
-      let carbs, protein, fat, calories, factor;
+      let carbs, protein, fat, calories;
       
       if (selectedMeal.mode === 'estimated_ratio') {
-        factor = w;
-        carbs = (factor * (selectedMeal.carb_ratio || 0));
-        protein = (factor * (selectedMeal.protein_ratio || 0));
-        fat = (factor * (selectedMeal.fat_ratio || 0));
-        calories = (factor * (selectedMeal.calorie_ratio || 0));
+        carbs = w * (selectedMeal.carb_ratio || 0);
+        protein = w * (selectedMeal.protein_ratio || 0);
+        fat = w * (selectedMeal.fat_ratio || 0);
+        calories = w * (selectedMeal.calorie_ratio || 0);
       } else {
-        factor = w / 100;
+        const factor = w / 100;
         carbs = (selectedMeal.carbs || 0) * factor;
         protein = (selectedMeal.protein || 0) * factor;
         fat = (selectedMeal.fat || 0) * factor;
@@ -1184,29 +1536,20 @@
         name_en: selectedMeal.name_en,
         icon: selectedMeal.icon,
         weight: w,
-        carbs: carbs,
-        protein: protein,
-        fat: fat,
-        calories: calories,
+        carbs, protein, fat, calories,
         mode: selectedMeal.mode,
         confidence: selectedMeal.confidence,
         savedAt: new Date().toISOString()
       };
 
-      // عرض النتيجة
       els.resultCarbs.textContent = carbs.toFixed(1);
       els.resultCal.textContent = Math.round(calories);
       els.resultProtein.textContent = protein.toFixed(1) + 'g';
       els.resultFat.textContent = fat.toFixed(1) + 'g';
       
       els.inlineResult.classList.add('show');
-      
-      // حفظ في Recent
       addToRecent(lastResult);
-      
-      // الانتقال للخطوة 3
       goToStep(3);
-      
       showToast('تم حساب الوجبة بنجاح');
     }
 
@@ -1227,24 +1570,58 @@
       }
       
       els.recentBar.classList.add('show');
-      els.recentChips.innerHTML = recent.map(r => `
-        <div class="recent-chip" onclick="loadRecent('${r.id}', ${r.weight})">
+      els.recentChips.innerHTML = recent.map((r, idx) => `
+        <div class="recent-chip" data-idx="${idx}" oncontextmenu="return false;">
           <span>${r.icon || '🍽️'}</span>
           <span>${r.name} (${r.weight}g)</span>
+          <div class="chip-context-menu" id="menu-${idx}">
+            <div class="context-item" onclick="quickRecalc('${r.id}', ${r.weight})">⚡ حساب سريع (${r.weight}g)</div>
+            <div class="context-item" onclick="quickRecalc('${r.id}', 200)">📏 200g</div>
+            <div class="context-item" onclick="quickRecalc('${r.id}', 100)">⚖️ 100g</div>
+          </div>
         </div>
       `).join('');
+
+      // إضافة events للضغط المطول
+      recent.forEach((r, idx) => {
+        const chip = document.querySelector(`.recent-chip[data-idx="${idx}"]`);
+        const menu = document.getElementById(`menu-${idx}`);
+        let pressTimer;
+
+        chip.addEventListener('click', () => quickRecalc(r.id, r.weight));
+        
+        chip.addEventListener('touchstart', (e) => {
+          pressTimer = setTimeout(() => {
+            e.preventDefault();
+            menu.classList.add('show');
+          }, 600);
+        });
+        
+        chip.addEventListener('touchend', () => clearTimeout(pressTimer));
+        chip.addEventListener('touchmove', () => clearTimeout(pressTimer));
+        
+        chip.addEventListener('mousedown', (e) => {
+          if (e.button === 2) return;
+          pressTimer = setTimeout(() => menu.classList.add('show'), 600);
+        });
+        
+        chip.addEventListener('mouseup', () => clearTimeout(pressTimer));
+        
+        // إخفاء المنيو عند النقر خارجها
+        document.addEventListener('click', (e) => {
+          if (!chip.contains(e.target)) menu.classList.remove('show');
+        });
+      });
     }
 
-    function loadRecent(id, weight) {
+    function quickRecalc(id, weight) {
       selectMeal(id);
       els.weightInput.value = weight;
       setTimeout(() => calculateAndShow(), 100);
     }
 
     function goToStep(step) {
-      document.querySelectorAll('.j-step').forEach((s, i) => {
-        s.classList.toggle('active', i + 1 === step);
-      });
+      document.querySelectorAll('.j-step').forEach((s, i) => s.classList.toggle('active', i + 1 === step));
     }
 
     function resetAll() {
@@ -1271,25 +1648,8 @@
       showToast('✅ تم حفظ الوجبة');
     }
 
-    function shareResult() {
-      if (!lastResult) return;
-      const text = `نتيجة تحليل الوجبة - SugarMind\n` +
-                   `الصنف: ${lastResult.name}\n` +
-                   `الوزن: ${lastResult.weight}g\n` +
-                   `الكارب: ${lastResult.carbs.toFixed(1)}g\n` +
-                   `السعرات: ${Math.round(lastResult.calories)}`;
-      
-      if (navigator.share) {
-        navigator.share({ title: lastResult.name, text: text });
-      } else {
-        navigator.clipboard.writeText(text);
-        showToast('📋 تم نسخ النتيجة');
-      }
-    }
-
     function addToLibrary() {
       if (!lastResult) return;
-      
       const name = prompt('اسم الصنف في مكتبتك:', lastResult.name);
       if (!name || !name.trim()) return;
       
@@ -1316,8 +1676,278 @@
       showToast('📚 تمت الإضافة لمكتبتك');
     }
 
-    function toggleSeo() {
-      document.getElementById('seoContent').classList.toggle('open');
+    // === نظام تصدير البطاقة (Smart Card Export) ===
+    function generateAndShowCard() {
+      if (!lastResult) { showToast('احسب الوجبة أولاً'); return; }
+      
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const w = 1080;
+      const h = 1350;
+      
+      canvas.width = w;
+      canvas.height = h;
+      cardCanvas = canvas;
+
+      // خلفية متدرجة
+      const grd = ctx.createLinearGradient(0, 0, w, h);
+      grd.addColorStop(0, '#F6F3EE');
+      grd.addColorStop(0.5, '#FFFFFF');
+      grd.addColorStop(1, 'rgba(123,170,146,0.3)');
+      ctx.fillStyle = grd;
+      ctx.fillRect(0, 0, w, h);
+
+      // Watermark شفاف
+      ctx.save();
+      ctx.globalAlpha = 0.03;
+      ctx.font = '900 200px Tajawal';
+      ctx.fillStyle = '#000';
+      ctx.rotate(-Math.PI / 6);
+      ctx.fillText('SUGARMIND', -200, 800);
+      ctx.restore();
+
+      // الشعار
+      ctx.fillStyle = '#21283B';
+      ctx.font = '800 48px Tajawal';
+      ctx.textAlign = 'center';
+      ctx.fillText('🧠 SugarMind', w/2, 120);
+      
+      ctx.fillStyle = '#667085';
+      ctx.font = '500 32px Tajawal';
+      ctx.fillText('محلل الوجبة الذكي', w/2, 170);
+
+      // اسم الوجبة
+      ctx.fillStyle = '#1D2433';
+      ctx.font = '900 72px Tajawal';
+      const displayName = lastResult.name.length > 20 ? lastResult.name.substring(0, 18) + '..' : lastResult.name;
+      ctx.fillText(displayName, w/2, 380);
+
+      // الرقم الكبير
+      ctx.fillStyle = '#7BAA92';
+      ctx.font = '900 260px Tajawal';
+      const carbText = Math.round(lastResult.carbs).toString();
+      ctx.fillText(carbText, w/2, 620);
+      
+      // الوحدة
+      ctx.fillStyle = '#667085';
+      ctx.font = '700 56px Tajawal';
+      ctx.fillText('جرام كاربوهيدرات', w/2, 700);
+
+      // خط فاصل
+      ctx.beginPath();
+      ctx.moveTo(340, 780);
+      ctx.lineTo(740, 780);
+      ctx.strokeStyle = 'rgba(123,170,146,0.4)';
+      ctx.lineWidth = 6;
+      ctx.stroke();
+
+      // معلومات إضافية
+      ctx.fillStyle = '#667085';
+      ctx.font = '500 36px Tajawal';
+      ctx.fillText(`${Math.round(lastResult.calories)} سعرة | ${lastResult.protein.toFixed(1)}g بروتين`, w/2, 850);
+
+      // QR Code حقيقي
+      const qrSize = 360;
+      const qrX = (w - qrSize) / 2;
+      const qrY = 920;
+      
+      // خلفية بيضاء للـ QR
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(qrX - 20, qrY - 20, qrSize + 40, qrSize + 40);
+      ctx.strokeStyle = '#E6E1D8';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(qrX - 20, qrY - 20, qrSize + 40, qrSize + 40);
+
+      // إنشاء QR Code
+      const qr = qrcode(0, 'M');
+      const shareUrl = `https://sugarmindapp-collab.github.io/sugarmind/index.html?utm_source=card&utm_meal=${encodeURIComponent(lastResult.name)}`;
+      qr.addData(shareUrl);
+      qr.make();
+      
+      // رسم QR على Canvas
+      const moduleCount = qr.getModuleCount();
+      const moduleSize = qrSize / moduleCount;
+      
+      ctx.fillStyle = '#21283B';
+      for (let row = 0; row < moduleCount; row++) {
+        for (let col = 0; col < moduleCount; col++) {
+          if (qr.isDark(row, col)) {
+            ctx.fillRect(qrX + col * moduleSize, qrY + row * moduleSize, moduleSize, moduleSize);
+          }
+        }
+      }
+
+      // توجيه الضغط المطول
+      ctx.fillStyle = '#8C94A4';
+      ctx.font = '500 28px Tajawal';
+      ctx.fillText('📱 اضغط مطولاً على المربع لفتح التطبيق', w/2, h - 180);
+
+      // الدومين
+      ctx.fillStyle = '#7BAA92';
+      ctx.font = '800 40px Tajawal';
+      ctx.fillText('sugarmind.app', w/2, h - 100);
+
+      // عرض المعاينة
+      els.cardPreview.innerHTML = '';
+      const img = document.createElement('img');
+      img.src = canvas.toDataURL('image/png');
+      img.style.maxWidth = '100%';
+      img.style.borderRadius = '12px';
+      els.cardPreview.appendChild(img);
+      
+      els.exportModal.classList.add('show');
+    }
+
+    function closeExportModal(e) {
+      if (!e || e.target === els.exportModal) {
+        els.exportModal.classList.remove('show');
+      }
+    }
+
+    function downloadCard() {
+      if (!cardCanvas) return;
+      const link = document.createElement('a');
+      link.download = `sugarmind_${lastResult.name}_${Date.now()}.png`;
+      link.href = cardCanvas.toDataURL('image/png');
+      link.click();
+      showToast('🎴 تم حفظ البطاقة');
+    }
+
+    async function shareCardNative() {
+      if (!cardCanvas) return;
+      
+      cardCanvas.toBlob(async (blob) => {
+        const file = new File([blob], `sugarmind_${lastResult.name}.png`, { type: 'image/png' });
+        
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({
+              files: [file],
+              title: `نتيجة تحليل ${lastResult.name}`,
+              text: `احتجت ${Math.round(lastResult.carbs)}g كارب في وجبتي مع SugarMind 🧠`
+            });
+          } catch (err) {
+            // المستخدم ألغى
+          }
+        } else {
+          downloadCard();
+        }
+      }, 'image/png');
+    }
+
+    // === نظام إضافة منتج جديد (OCR) ===
+    function openCamera() {
+      els.cameraModal.classList.add('show');
+      initCamera();
+    }
+
+    function closeCamera() {
+      els.cameraModal.classList.remove('show');
+      if (currentStream) {
+        currentStream.getTracks().forEach(track => track.stop());
+        currentStream = null;
+      }
+    }
+
+    async function initCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+          video: { facingMode: 'environment' } 
+        });
+        els.cameraVideo.srcObject = stream;
+        currentStream = stream;
+      } catch (err) {
+        showToast('❌ لا يمكن الوصول للكاميرا');
+        closeCamera();
+      }
+    }
+
+    function captureImage() {
+      const video = els.cameraVideo;
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0);
+      
+      closeCamera();
+      processOCR(canvas);
+    }
+
+    async function processOCR(canvas) {
+      els.ocrProcessing.classList.add('show');
+      
+      try {
+        // قص الجزء المركزي فقط (حيث يكون الجدول غالباً)
+        const centerCanvas = document.createElement('canvas');
+        const w = canvas.width;
+        const h = canvas.height;
+        centerCanvas.width = w * 0.6;
+        centerCanvas.height = h * 0.6;
+        const ctx = centerCanvas.getContext('2d');
+        ctx.drawImage(canvas, w*0.2, h*0.2, w*0.6, h*0.6, 0, 0, w*0.6, h*0.6);
+        
+        const result = await Tesseract.recognize(
+          centerCanvas.toDataURL(),
+          'ara+eng',
+          { logger: m => console.log(m) }
+        );
+        
+        const text = result.data.text;
+        console.log('OCR Text:', text);
+        
+        // استخراج الكارب
+        const carbMatch = text.match(/(?:كربوهيدرات|Carbohydrates|الكربوهيدرات)[^\d]*(\d+\.?\d*)/i);
+        const caloriesMatch = text.match(/(?:سعرة|Calories|طاقة)[^\d]*(\d+)/i);
+        
+        let extractedCarbs = carbMatch ? parseFloat(carbMatch[1]) : 0;
+        let extractedCal = caloriesMatch ? parseInt(caloriesMatch[1]) : 0;
+        
+        // فتح نموذج إضافة يدوي مع البيانات المستخرجة
+        openManualAdd(extractedCarbs, extractedCal);
+        
+      } catch (err) {
+        showToast('⚠️ تعذر القراءة التلقائية، أدخل البيانات يدوياً');
+        openManualAdd();
+      } finally {
+        els.ocrProcessing.classList.remove('show');
+      }
+    }
+
+    function openManualAdd(preCarbs = 0, preCal = 0) {
+      const name = prompt('اسم المنتج:', searchTerm) || searchTerm;
+      if (!name) return;
+      
+      const carbs = prompt('الكارب لكل 100g/ml:', preCarbs || '') || preCarbs;
+      const cal = prompt('السعرات لكل 100g/ml:', preCal || '') || preCal;
+      
+      if (!carbs) { showToast('يجب إدخال الكارب'); return; }
+      
+      const custom = getCustomFoods();
+      const newItem = {
+        id: `custom-${Date.now()}`,
+        name_ar: name,
+        name_en: '',
+        aliases: [name],
+        category: 'منتجات البقالة',
+        icon: '🛒',
+        mode: 'per100g',
+        carbs: parseFloat(carbs),
+        protein: 0,
+        fat: 0,
+        calories: parseInt(cal) || 0,
+        source: 'مكتبتي الخاصة',
+        confidence: 'high',
+        notes: 'تمت إضافته يدوياً',
+        userCreated: true
+      };
+      
+      custom.unshift(newItem);
+      localStorage.setItem('sugarmind_custom_foods_v1', JSON.stringify(custom));
+      
+      showToast('✅ تمت إضافة المنتج');
+      selectMeal(newItem.id);
+      setMode('search');
     }
 
     // Events
@@ -1328,7 +1958,6 @@
 
     els.weightInput.addEventListener('input', () => {
       updateStickyPreview();
-      // إزالة active من الـ presets إذا كان الوزن يدوي
       document.querySelectorAll('.weight-presets .preset-btn').forEach(b => b.classList.remove('active'));
     });
 
